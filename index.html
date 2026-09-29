@@ -3,24 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nat.Nation Sneakers | POS</title>
+
+<title>Nat.Nation Sneakers</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+
 *{
     box-sizing:border-box;
-    margin:0;
-    padding:0;
 }
 
 body{
+    margin:0;
     font-family:Arial,Helvetica,sans-serif;
-    background:#f5f6f8;
+    background:#f4f5f7;
     color:#202124;
 }
 
-button,input,select{
+button,
+input,
+select{
     font:inherit;
 }
 
@@ -38,76 +41,64 @@ button{
 ========================= */
 
 .sidebar{
-    width:240px;
-    background:#111827;
+    width:265px;
+    background:#101827;
     color:white;
-    min-height:100vh;
-    padding:20px 14px;
+    padding:25px 15px;
     position:fixed;
-    left:0;
     top:0;
     bottom:0;
+    left:0;
 }
 
-.logo-area{
+.logo-box{
     text-align:center;
-    padding:10px 5px 25px;
+    margin-bottom:35px;
 }
 
-.logo-area img{
-    width:75px;
-    height:75px;
-    object-fit:contain;
-    border-radius:15px;
-    display:none;
-    margin:auto;
-}
-
-.logo-placeholder{
-    width:70px;
-    height:70px;
+.logo{
+    width:78px;
+    height:78px;
     background:white;
     color:#111827;
-    border-radius:18px;
+    border-radius:20px;
     display:flex;
     align-items:center;
     justify-content:center;
-    margin:auto;
-    font-size:30px;
+    font-size:40px;
     font-weight:bold;
+    margin:0 auto 12px;
 }
 
-.logo-area h2{
-    font-size:18px;
-    margin-top:12px;
+.logo-box h2{
+    margin:0;
+    font-size:22px;
 }
 
-.logo-area p{
-    font-size:11px;
-    color:#aeb5c1;
-    margin-top:4px;
+.logo-box p{
+    margin:5px 0;
+    color:#aeb7c7;
 }
 
 .menu{
     display:flex;
     flex-direction:column;
-    gap:6px;
+    gap:7px;
 }
 
 .menu button{
     border:0;
     background:transparent;
-    color:#d1d5db;
+    color:#e8edf5;
+    padding:15px 14px;
     text-align:left;
-    padding:13px 15px;
-    border-radius:9px;
-    font-size:14px;
+    border-radius:11px;
+    font-size:16px;
 }
 
 .menu button:hover,
 .menu button.active{
-    background:#263244;
-    color:white;
+    background:#29364b;
 }
 
 /* =========================
@@ -115,112 +106,94 @@ button{
 ========================= */
 
 .main{
-    margin-left:240px;
-    width:calc(100% - 240px);
-    min-height:100vh;
+    margin-left:265px;
+    width:calc(100% - 265px);
 }
 
 .topbar{
-    height:65px;
+    height:85px;
     background:white;
-    border-bottom:1px solid #e5e7eb;
+    border-bottom:1px solid #ddd;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    padding:0 25px;
-    position:sticky;
-    top:0;
-    z-index:10;
+    padding:0 30px;
 }
 
-.topbar-title{
+.topbar h1{
+    font-size:22px;
+    margin:0;
+}
+
+.status{
     font-weight:bold;
-    font-size:18px;
 }
 
-.connection{
-    font-size:13px;
-    color:#777;
+.status.ok{
+    color:#138a36;
 }
 
-.content{
-    padding:25px;
+.status.error{
+    color:#d93025;
 }
 
-.page-title{
-    margin-bottom:20px;
-}
-
-.page-title h1{
-    font-size:25px;
-}
-
-.page-title p{
-    color:#6b7280;
-    margin-top:5px;
+.status.loading{
+    color:#d98b00;
 }
 
 /* =========================
-   CARDS
+   CONTENT
 ========================= */
 
-.cards{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:16px;
+.content{
+    padding:30px;
+}
+
+.page-title{
     margin-bottom:25px;
+}
+
+.page-title h2{
+    font-size:30px;
+    margin:0 0 5px;
+}
+
+.page-title p{
+    color:#687386;
+    margin:0;
 }
 
 .card{
     background:white;
-    border-radius:12px;
-    padding:20px;
-    border:1px solid #e5e7eb;
-}
-
-.card-title{
-    font-size:13px;
-    color:#6b7280;
-}
-
-.card-value{
-    font-size:28px;
-    font-weight:bold;
-    margin-top:8px;
-}
-
-/* =========================
-   PANELS
-========================= */
-
-.panel{
-    background:white;
-    border:1px solid #e5e7eb;
-    border-radius:12px;
-    padding:20px;
+    border:1px solid #ddd;
+    border-radius:15px;
+    padding:22px;
     margin-bottom:20px;
 }
 
-.panel-header{
+.toolbar{
     display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:10px;
-    margin-bottom:18px;
+    gap:12px;
+    margin-bottom:20px;
 }
 
-.panel-header h2{
-    font-size:18px;
+.search{
+    flex:1;
 }
 
-/* =========================
-   BUTTONS
-========================= */
+input,
+select{
+    width:100%;
+    padding:13px 14px;
+    border:1px solid #ccd1d8;
+    border-radius:9px;
+    background:white;
+}
 
 .btn{
     border:0;
-    border-radius:8px;
-    padding:10px 15px;
+    border-radius:9px;
+    padding:13px 18px;
     font-weight:bold;
 }
 
@@ -229,70 +202,88 @@ button{
     color:white;
 }
 
-.btn-primary:hover{
-    background:#263244;
-}
-
 .btn-secondary{
-    background:#e5e7eb;
+    background:#e9edf3;
     color:#111827;
 }
 
 .btn-danger{
-    background:#fee2e2;
-    color:#991b1b;
+    background:#d93025;
+    color:white;
 }
 
 .btn-success{
-    background:#dcfce7;
-    color:#166534;
+    background:#188038;
+    color:white;
 }
 
 /* =========================
-   TABLE
+   PRODUCTS
 ========================= */
 
-.table-wrap{
-    overflow-x:auto;
+.products-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
+    gap:18px;
 }
 
-table{
-    width:100%;
-    border-collapse:collapse;
+.product-card{
+    border:1px solid #ddd;
+    border-radius:13px;
+    overflow:hidden;
+    background:white;
 }
 
-th{
-    background:#f9fafb;
-    color:#6b7280;
-    font-size:12px;
-    text-align:left;
-    padding:12px;
-    border-bottom:1px solid #e5e7eb;
-}
-
-td{
-    padding:12px;
-    border-bottom:1px solid #eee;
-    font-size:14px;
-}
-
-.product-thumb{
-    width:48px;
-    height:48px;
-    border-radius:8px;
-    object-fit:cover;
-    background:#f1f3f5;
-}
-
-.no-image{
-    width:48px;
-    height:48px;
-    border-radius:8px;
-    background:#f1f3f5;
+.product-image{
+    height:200px;
+    background:#f0f1f3;
     display:flex;
     align-items:center;
     justify-content:center;
+}
+
+.product-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.no-image{
+    color:#9299a4;
+    font-size:15px;
+}
+
+.product-info{
+    padding:15px;
+}
+
+.product-info h3{
+    margin:0 0 7px;
+}
+
+.product-info p{
+    margin:5px 0;
+    color:#687386;
+}
+
+.price{
     font-size:20px;
+    font-weight:bold;
+    color:#111827;
+}
+
+.stock{
+    font-weight:bold;
+}
+
+.actions{
+    display:flex;
+    gap:7px;
+    margin-top:13px;
+}
+
+.actions button{
+    flex:1;
 }
 
 /* =========================
@@ -308,105 +299,48 @@ td{
 .form-group{
     display:flex;
     flex-direction:column;
-    gap:6px;
+    gap:7px;
+}
+
+.form-group label{
+    font-weight:bold;
 }
 
 .form-group.full{
     grid-column:1/-1;
 }
 
-.form-group label{
-    font-size:13px;
-    font-weight:bold;
-}
-
-.form-group input,
-.form-group select{
-    border:1px solid #d1d5db;
-    border-radius:8px;
-    padding:11px;
-    outline:none;
-    background:white;
-}
-
-.form-group input:focus,
-.form-group select:focus{
-    border-color:#111827;
-}
-
-.form-actions{
-    display:flex;
-    gap:10px;
-    margin-top:18px;
-}
-
-/* =========================
-   SEARCH
-========================= */
-
-.search{
-    width:100%;
-    border:1px solid #d1d5db;
-    padding:12px;
-    border-radius:8px;
-    margin-bottom:15px;
-}
-
-/* =========================
-   PRODUCTS
-========================= */
-
-.product-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:16px;
-}
-
-.product-card{
-    background:white;
-    border:1px solid #e5e7eb;
-    border-radius:12px;
-    overflow:hidden;
-}
-
-.product-card img,
-.product-image-placeholder{
-    width:100%;
-    height:180px;
+.preview{
+    width:150px;
+    height:150px;
     object-fit:cover;
-    background:#f3f4f6;
+    border-radius:12px;
+    border:1px solid #ddd;
+    margin-top:10px;
 }
 
-.product-image-placeholder{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:45px;
+/* =========================
+   TABLE
+========================= */
+
+.table-wrap{
+    overflow-x:auto;
 }
 
-.product-info{
-    padding:15px;
+table{
+    width:100%;
+    border-collapse:collapse;
 }
 
-.product-info h3{
-    font-size:15px;
-    margin-bottom:5px;
+th,
+td{
+    padding:13px;
+    border-bottom:1px solid #e5e7eb;
+    text-align:left;
 }
 
-.product-info p{
-    font-size:13px;
-    color:#6b7280;
-    margin-bottom:4px;
-}
-
-.price{
-    font-size:19px;
-    font-weight:bold;
-    margin:10px 0;
-}
-
-.stock{
-    font-size:12px;
+th{
+    background:#f7f8fa;
 }
 
 /* =========================
@@ -415,134 +349,36 @@ td{
 
 .sale-layout{
     display:grid;
-    grid-template-columns:1fr 380px;
+    grid-template-columns:1.5fr 1fr;
     gap:20px;
-}
-
-.sale-products{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:12px;
-}
-
-.sale-product{
-    border:1px solid #e5e7eb;
-    border-radius:10px;
-    overflow:hidden;
-    background:white;
-}
-
-.sale-product img,
-.sale-product .sale-no-image{
-    width:100%;
-    height:130px;
-    object-fit:cover;
-}
-
-.sale-no-image{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:#f3f4f6;
-    font-size:35px;
-}
-
-.sale-product-info{
-    padding:10px;
-}
-
-.sale-product-info strong{
-    display:block;
-    font-size:13px;
-}
-
-.sale-product-info span{
-    font-size:12px;
-    color:#6b7280;
-}
-
-.sale-product-info button{
-    width:100%;
-    margin-top:8px;
-}
-
-.cart{
-    background:white;
-    border:1px solid #e5e7eb;
-    border-radius:12px;
-    padding:18px;
-    position:sticky;
-    top:85px;
-    height:max-content;
-}
-
-.cart h2{
-    margin-bottom:15px;
 }
 
 .cart-item{
     display:flex;
+    align-items:center;
     justify-content:space-between;
-    gap:8px;
-    padding:10px 0;
     border-bottom:1px solid #eee;
+    padding:13px 0;
 }
 
-.cart-item-info{
-    flex:1;
-}
-
-.cart-item-info strong{
-    font-size:13px;
-    display:block;
-}
-
-.cart-item-info small{
-    color:#6b7280;
-}
-
-.cart-total{
+.qty{
     display:flex;
-    justify-content:space-between;
-    font-size:22px;
-    font-weight:bold;
-    margin:18px 0;
-}
-
-.payment-buttons{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
     gap:7px;
-    margin:10px 0;
+    align-items:center;
 }
 
-.payment-buttons button{
-    padding:10px 4px;
-    border:1px solid #d1d5db;
-    background:white;
+.qty button{
+    width:32px;
+    height:32px;
+    border:0;
     border-radius:7px;
 }
 
-.payment-buttons button.selected{
-    background:#111827;
-    color:white;
-}
-
-.cash-box{
-    display:none;
-    margin-top:10px;
-}
-
-.cash-box input{
-    width:100%;
-    padding:10px;
-    border:1px solid #d1d5db;
-    border-radius:8px;
-}
-
-.change{
-    margin-top:7px;
+.total{
+    font-size:28px;
     font-weight:bold;
+    text-align:right;
+    margin-top:20px;
 }
 
 /* =========================
@@ -556,58 +392,37 @@ td{
     display:none;
     align-items:center;
     justify-content:center;
-    z-index:100;
     padding:20px;
+    z-index:1000;
+}
+
+.modal.show{
+    display:flex;
 }
 
 .modal-box{
-    width:100%;
-    max-width:500px;
+    width:min(650px,100%);
     max-height:90vh;
     overflow:auto;
     background:white;
-    border-radius:14px;
+    border-radius:16px;
     padding:25px;
 }
 
 .modal-header{
     display:flex;
+    align-items:center;
     justify-content:space-between;
     margin-bottom:20px;
 }
 
 .close{
     border:0;
-    background:none;
-    font-size:25px;
-}
-
-/* =========================
-   TICKET
-========================= */
-
-.ticket{
-    width:300px;
-    background:white;
-    padding:20px;
-    margin:auto;
-    font-family:monospace;
-}
-
-.ticket-center{
-    text-align:center;
-}
-
-.ticket-line{
-    border-top:1px dashed #000;
-    margin:10px 0;
-}
-
-.ticket-row{
-    display:flex;
-    justify-content:space-between;
-    gap:10px;
-    margin:5px 0;
+    background:#eee;
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    font-size:20px;
 }
 
 /* =========================
@@ -615,59 +430,72 @@ td{
 ========================= */
 
 .alert{
-    padding:12px 15px;
-    border-radius:8px;
+    padding:15px;
+    border-radius:10px;
     margin-bottom:15px;
+}
+
+.alert-error{
+    background:#fde8e7;
+    color:#a51d15;
+}
+
+.alert-success{
+    background:#e8f5e9;
+    color:#166534;
+}
+
+/* =========================
+   PRINT
+========================= */
+
+.ticket{
     display:none;
 }
 
-.alert.error{
-    background:#fee2e2;
-    color:#991b1b;
-}
+@media print{
 
-.alert.success{
-    background:#dcfce7;
-    color:#166534;
+    body *{
+        visibility:hidden;
+    }
+
+    .ticket,
+    .ticket *{
+        visibility:visible;
+    }
+
+    .ticket{
+        display:block;
+        position:absolute;
+        left:0;
+        top:0;
+        width:80mm;
+        padding:8mm;
+        font-size:12px;
+    }
+
 }
 
 /* =========================
    RESPONSIVE
 ========================= */
 
-@media(max-width:1100px){
-    .cards{
-        grid-template-columns:repeat(2,1fr);
-    }
+@media(max-width:850px){
 
-    .product-grid{
-        grid-template-columns:repeat(3,1fr);
-    }
-
-    .sale-layout{
-        grid-template-columns:1fr;
-    }
-
-    .cart{
-        position:static;
-    }
-}
-
-@media(max-width:800px){
     .sidebar{
-        width:70px;
-        padding:10px 5px;
+        width:80px;
+        padding:15px 8px;
     }
 
-    .logo-area h2,
-    .logo-area p{
+    .logo{
+        width:55px;
+        height:55px;
+        font-size:28px;
+    }
+
+    .logo-box h2,
+    .logo-box p{
         display:none;
-    }
-
-    .logo-placeholder{
-        width:50px;
-        height:50px;
-        font-size:20px;
     }
 
     .menu button{
@@ -675,68 +503,25 @@ td{
         text-align:center;
     }
 
-    .menu button:first-letter{
+    .menu button::first-letter{
         font-size:20px;
     }
 
     .main{
-        margin-left:70px;
-        width:calc(100% - 70px);
+        margin-left:80px;
+        width:calc(100% - 80px);
     }
 
-    .content{
-        padding:15px;
-    }
-
-    .product-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .sale-products{
-        grid-template-columns:repeat(2,1fr);
-    }
-}
-
-@media(max-width:550px){
-    .cards{
-        grid-template-columns:1fr 1fr;
+    .sale-layout{
+        grid-template-columns:1fr;
     }
 
     .form-grid{
         grid-template-columns:1fr;
     }
 
-    .product-grid,
-    .sale-products{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .topbar-title{
-        font-size:14px;
-    }
 }
 
-/* =========================
-   PRINT
-========================= */
-
-@media print{
-    body *{
-        visibility:hidden !important;
-    }
-
-    #ticketPrint,
-    #ticketPrint *{
-        visibility:visible !important;
-    }
-
-    #ticketPrint{
-        position:absolute;
-        left:0;
-        top:0;
-        width:300px;
-    }
-}
 </style>
 </head>
 
@@ -744,73 +529,63 @@ td{
 
 <div class="app">
 
-<!-- =========================
-     SIDEBAR
-========================= -->
+    <aside class="sidebar">
 
-<aside class="sidebar">
+        <div class="logo-box">
 
-    <div class="logo-area">
-        <div class="logo-placeholder">N</div>
-        <img id="logoImg" alt="Logo">
-        <h2>Nat.Nation</h2>
-        <p>Sneakers</p>
-    </div>
+            <div class="logo">
+                N
+            </div>
 
-    <nav class="menu">
+            <h2>Nat.Nation</h2>
+            <p>Sneakers</p>
 
-        <button onclick="mostrarPagina('inicio')" id="menu-inicio">
-            🏠 Inicio
-        </button>
+        </div>
 
-        <button onclick="mostrarPagina('productos')" id="menu-productos">
-            👟 Productos
-        </button>
+        <nav class="menu">
 
-        <button onclick="mostrarPagina('venta')" id="menu-venta">
-            🛒 Nueva venta
-        </button>
+            <button onclick="irInicio()">🏠 Inicio</button>
 
-        <button onclick="mostrarPagina('clientes')" id="menu-clientes">
-            👤 Clientes
-        </button>
+            <button class="active" onclick="irProductos()">
+                👟 Productos
+            </button>
 
-        <button onclick="mostrarPagina('reportes')" id="menu-reportes">
-            📊 Reportes
-        </button>
+            <button onclick="irVenta()">
+                🛒 Nueva venta
+            </button>
 
-    </nav>
+            <button onclick="irClientes()">
+                👤 Clientes
+            </button>
 
-</aside>
+            <button onclick="irReportes()">
+                📊 Reportes
+            </button>
+
+            <button onclick="cargarTodo()">
+                🔄 Actualizar
+            </button>
+
+        </nav>
+
+    </aside>
 
 
-<!-- =========================
-     MAIN
-========================= -->
+    <main class="main">
 
-<main class="main">
+        <header class="topbar">
 
-<header class="topbar">
+            <h1>Nat.Nation Sneakers</h1>
 
-    <div class="topbar-title">
-        Nat.Nation Sneakers
-    </div>
+            <div id="status" class="status loading">
+                🟡 Conectando...
+            </div>
 
-    <div class="connection" id="connection">
-        🟡 Conectando...
-    </div>
+        </header>
 
-</header>
+        <section class="content" id="app-content"></section>
 
-<div class="content">
-
-<div id="alert" class="alert"></div>
-
-<div id="appContent"></div>
-
-</div>
-
-</main>
+    </main>
 
 </div>
 
@@ -821,147 +596,114 @@ td{
 
 <div class="modal" id="productoModal">
 
-<div class="modal-box">
+    <div class="modal-box">
 
-    <div class="modal-header">
+        <div class="modal-header">
 
-        <h2 id="productoModalTitle">
-            Nuevo producto
-        </h2>
+            <h2 id="modalTitulo">
+                Nuevo producto
+            </h2>
 
-        <button class="close" onclick="cerrarProductoModal()">
-            ×
-        </button>
+            <button class="close" onclick="cerrarModal()">
+                ×
+            </button>
+
+        </div>
+
+        <div id="productoError"></div>
+
+        <form id="productoForm">
+
+            <input type="hidden" id="productoId">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>Modelo</label>
+                    <input id="modelo" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Talla</label>
+                    <input id="talla" required>
+                </div>
+
+                <div class="form-group">
+                    <label>SKU</label>
+                    <input id="sku">
+                </div>
+
+                <div class="form-group">
+                    <label>Código de barras</label>
+                    <input id="codigo_barras">
+                </div>
+
+                <div class="form-group">
+                    <label>Precio de venta</label>
+                    <input id="precio" type="number" step="0.01" min="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Costo</label>
+                    <input id="costo" type="number" step="0.01" min="0">
+                </div>
+
+                <div class="form-group">
+                    <label>Stock</label>
+                    <input id="stock" type="number" min="0" required>
+                </div>
+
+                <div class="form-group">
+
+                    <label>Fotografía</label>
+
+                    <input
+                        id="imagen"
+                        type="file"
+                        accept="image/*"
+                    >
+
+                    <img
+                        id="preview"
+                        class="preview"
+                        style="display:none;"
+                    >
+
+                </div>
+
+            </div>
+
+            <br>
+
+            <div style="display:flex;gap:10px;justify-content:flex-end;">
+
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    onclick="cerrarModal()">
+                    Cancelar
+                </button>
+
+                <button
+                    type="submit"
+                    class="btn btn-primary">
+                    Guardar producto
+                </button>
+
+            </div>
+
+        </form>
 
     </div>
-
-    <input type="hidden" id="productoId">
-
-    <div class="form-grid">
-
-        <div class="form-group">
-            <label>SKU</label>
-            <input id="sku" placeholder="Ej. NN001">
-        </div>
-
-        <div class="form-group">
-            <label>Código de barras</label>
-            <input id="codigoBarras" placeholder="Código">
-        </div>
-
-        <div class="form-group full">
-            <label>Modelo</label>
-            <input id="modelo" placeholder="Ej. Urban Black">
-        </div>
-
-        <div class="form-group">
-            <label>Talla</label>
-            <input id="talla" placeholder="Ej. 26">
-        </div>
-
-        <div class="form-group">
-            <label>Precio de venta</label>
-            <input id="precio" type="number" step="0.01">
-        </div>
-
-        <div class="form-group">
-            <label>Costo</label>
-            <input id="costo" type="number" step="0.01">
-        </div>
-
-        <div class="form-group">
-            <label>Stock</label>
-            <input id="stock" type="number" min="0">
-        </div>
-
-        <div class="form-group full">
-            <label>Foto del producto</label>
-            <input id="imagen" type="file" accept="image/*">
-        </div>
-
-    </div>
-
-    <div class="form-actions">
-
-        <button class="btn btn-secondary"
-                onclick="cerrarProductoModal()">
-            Cancelar
-        </button>
-
-        <button class="btn btn-primary"
-                onclick="guardarProducto()">
-            Guardar producto
-        </button>
-
-    </div>
-
-</div>
 
 </div>
 
 
 <!-- =========================
-     MODAL CLIENTE
+     TICKET
 ========================= -->
 
-<div class="modal" id="clienteModal">
-
-<div class="modal-box">
-
-    <div class="modal-header">
-
-        <h2>Nuevo cliente</h2>
-
-        <button class="close"
-                onclick="cerrarClienteModal()">
-            ×
-        </button>
-
-    </div>
-
-    <div class="form-grid">
-
-        <div class="form-group full">
-            <label>Nombre</label>
-            <input id="clienteNombre">
-        </div>
-
-        <div class="form-group">
-            <label>Teléfono</label>
-            <input id="clienteTelefono">
-        </div>
-
-        <div class="form-group">
-            <label>Código de tarjeta</label>
-            <input id="clienteCodigo">
-        </div>
-
-    </div>
-
-    <div class="form-actions">
-
-        <button class="btn btn-secondary"
-                onclick="cerrarClienteModal()">
-            Cancelar
-        </button>
-
-        <button class="btn btn-primary"
-                onclick="guardarCliente()">
-            Guardar cliente
-        </button>
-
-    </div>
-
-</div>
-
-</div>
-
-
-<!-- =========================
-     TICKET OCULTO
-========================= -->
-
-<div id="ticketPrint" style="display:none"></div>
+<div id="ticket" class="ticket"></div>
 
 
 <script>
@@ -971,21 +713,36 @@ td{
 ========================================================= */
 
 const SUPABASE_URL =
-"https://nasvzzdzkljozyhhjize.supabase.co";
+    "https://nasvzzdzkljozyhhjize.supabase.co";
+
+/*
+    IMPORTANTE:
+    aquí va TU clave sb_publishable_...
+    NO uses una sb_secret_...
+*/
 
 const SUPABASE_KEY =
-"sb_publishable_e98PP2bpEDEfYPFFlQ1wDQ_gSSlHXS7";
+    "sb_publishable_e98PP2bpEDEfYPFFlQ1wDQ_gSSlHXS7";
+
 
 const supabaseClient =
-window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
 
 
 /* =========================================================
-   NEGOCIO
+   DATOS
 ========================================================= */
+
+let productos = [];
+let clientes = [];
+let ventas = [];
+let carrito = [];
+
+let paginaActual = "productos";
+
 
 const NEGOCIO = {
 
@@ -994,36 +751,24 @@ const NEGOCIO = {
     direccion:
     "Calle Juan Clímaco Ramírez SNVC, San Andrés, 55780 Jaltenco, Méx.",
 
-    telefono:
-    "5624570336"
+    telefono:"5624570336"
 
 };
-
-
-/* =========================================================
-   VARIABLES
-========================================================= */
-
-let productos = [];
-let clientes = [];
-let ventas = [];
-let carrito = [];
-
-let metodoPago = "efectivo";
-let clienteVenta = null;
 
 
 /* =========================================================
    UTILIDADES
 ========================================================= */
 
-function money(numero){
+function dinero(valor){
 
-    return Number(numero || 0)
-        .toLocaleString("es-MX",{
+    return new Intl.NumberFormat(
+        "es-MX",
+        {
             style:"currency",
             currency:"MXN"
-        });
+        }
+    ).format(Number(valor || 0));
 
 }
 
@@ -1040,20 +785,16 @@ function esc(texto){
 }
 
 
-function mostrarAlert(mensaje,tipo="success"){
+function setStatus(tipo,texto){
 
-    const alert = document.getElementById("alert");
+    const el =
+        document.getElementById("status");
 
-    alert.textContent = mensaje;
+    el.className =
+        "status " + tipo;
 
-    alert.className =
-        "alert " + tipo;
-
-    alert.style.display="block";
-
-    setTimeout(()=>{
-        alert.style.display="none";
-    },4000);
+    el.textContent =
+        texto;
 
 }
 
@@ -1064,65 +805,118 @@ function mostrarAlert(mensaje,tipo="success"){
 
 async function cargarTodo(){
 
+    setStatus(
+        "loading",
+        "🟡 Conectando..."
+    );
+
+    /*
+       Mostramos la interfaz inmediatamente.
+       Así, aunque Supabase tenga un error,
+       la página no queda vacía.
+    */
+
+    mostrarProductos();
+
     try{
 
-        const productosResult =
+        const productosResp =
             await supabaseClient
             .from("productos")
             .select("*")
             .order("created_at",{ascending:false});
 
-        if(productosResult.error)
-            throw productosResult.error;
+        if(productosResp.error){
 
-        productos =
-            productosResult.data || [];
+            throw new Error(
+                "PRODUCTOS: " +
+                productosResp.error.message
+            );
+
+        }
 
 
-        const clientesResult =
+        const clientesResp =
             await supabaseClient
             .from("clientes")
             .select("*")
             .order("created_at",{ascending:false});
 
-        if(clientesResult.error)
-            throw clientesResult.error;
+        if(clientesResp.error){
 
-        clientes =
-            clientesResult.data || [];
+            throw new Error(
+                "CLIENTES: " +
+                clientesResp.error.message
+            );
+
+        }
 
 
-        const ventasResult =
+        const ventasResp =
             await supabaseClient
             .from("ventas")
             .select("*")
             .order("fecha",{ascending:false});
 
-        if(ventasResult.error)
-            throw ventasResult.error;
+        if(ventasResp.error){
+
+            throw new Error(
+                "VENTAS: " +
+                ventasResp.error.message
+            );
+
+        }
+
+
+        productos =
+            productosResp.data || [];
+
+        clientes =
+            clientesResp.data || [];
 
         ventas =
-            ventasResult.data || [];
+            ventasResp.data || [];
 
 
-        document.getElementById("connection").innerHTML =
-            "🟢 Conectado a Supabase";
+        setStatus(
+            "ok",
+            "🟢 Conectado"
+        );
 
 
-        mostrarInicio();
+        if(paginaActual === "productos"){
+            mostrarProductos();
+        }
+
+        if(paginaActual === "inicio"){
+            mostrarInicio();
+        }
+
+        if(paginaActual === "clientes"){
+            mostrarClientes();
+        }
+
+        if(paginaActual === "venta"){
+            mostrarVenta();
+        }
+
+        if(paginaActual === "reportes"){
+            mostrarReportes();
+        }
+
 
     }catch(error){
 
         console.error(error);
 
-        document.getElementById("connection").innerHTML =
-            "🔴 Error de conexión";
+        setStatus(
+            "error",
+            "🔴 Error de conexión"
+        );
 
-        mostrarInicio();
 
-        mostrarAlert(
-            "Supabase respondió con un error. Revisa la consola o mándame captura.",
-            "error"
+        mostrarErrorConexion(
+            error.message
         );
 
     }
@@ -1131,35 +925,52 @@ async function cargarTodo(){
 
 
 /* =========================================================
-   NAVEGACIÓN
+   ERROR
 ========================================================= */
 
-function mostrarPagina(pagina){
+function mostrarErrorConexion(mensaje){
 
-    document.querySelectorAll(".menu button")
-        .forEach(b=>b.classList.remove("active"));
+    const contenedor =
+        document.getElementById("app-content");
 
-    const boton =
-        document.getElementById("menu-"+pagina);
+    contenedor.innerHTML = `
 
-    if(boton)
-        boton.classList.add("active");
+        <div class="page-title">
 
+            <h2>Productos</h2>
 
-    if(pagina==="inicio")
-        mostrarInicio();
+            <p>
+                No se pudo consultar Supabase.
+            </p>
 
-    if(pagina==="productos")
-        mostrarProductos();
+        </div>
 
-    if(pagina==="venta")
-        mostrarVenta();
+        <div class="alert alert-error">
 
-    if(pagina==="clientes")
-        mostrarClientes();
+            <strong>Error real:</strong>
 
-    if(pagina==="reportes")
-        mostrarReportes();
+            <br><br>
+
+            ${esc(mensaje)}
+
+        </div>
+
+        <div class="card">
+
+            <p>
+                La página de GitHub está funcionando.
+                El problema está en la conexión con Supabase.
+            </p>
+
+            <button
+                class="btn btn-primary"
+                onclick="cargarTodo()">
+                🔄 Intentar nuevamente
+            </button>
+
+        </div>
+
+    `;
 
 }
 
@@ -1168,177 +979,85 @@ function mostrarPagina(pagina){
    INICIO
 ========================================================= */
 
+function irInicio(){
+
+    paginaActual = "inicio";
+
+    mostrarInicio();
+
+}
+
+
 function mostrarInicio(){
 
     const totalProductos =
         productos.length;
 
-    const stockTotal =
+    const stock =
         productos.reduce(
-            (sum,p)=>sum + Number(p.stock || 0),
+            (s,p)=>s + Number(p.stock || 0),
             0
         );
 
     const totalClientes =
         clientes.length;
 
-    const ventasHoy =
-        ventas.filter(v=>{
-
-            const fecha =
-                new Date(v.fecha);
-
-            const hoy =
-                new Date();
-
-            return fecha.toDateString() ===
-                   hoy.toDateString();
-
-        });
+    const totalVentas =
+        ventas.length;
 
 
-    const montoHoy =
-        ventasHoy.reduce(
-            (sum,v)=>sum + Number(v.total || 0),
-            0
-        );
-
-
-    document.getElementById("appContent").innerHTML = `
+    document.getElementById("app-content")
+    .innerHTML = `
 
         <div class="page-title">
 
-            <h1>Inicio</h1>
+            <h2>Inicio</h2>
 
             <p>
-                Bienvenida a tu punto de venta.
+                Resumen de Nat.Nation Sneakers.
             </p>
 
         </div>
 
-
-        <div class="cards">
+        <div class="products-grid">
 
             <div class="card">
 
-                <div class="card-title">
-                    Productos
-                </div>
+                <h3>👟 Productos</h3>
 
-                <div class="card-value">
+                <strong style="font-size:30px">
                     ${totalProductos}
-                </div>
+                </strong>
 
             </div>
 
-
             <div class="card">
 
-                <div class="card-title">
-                    Stock total
-                </div>
+                <h3>📦 Stock</h3>
 
-                <div class="card-value">
-                    ${stockTotal}
-                </div>
+                <strong style="font-size:30px">
+                    ${stock}
+                </strong>
 
             </div>
 
-
             <div class="card">
 
-                <div class="card-title">
-                    Clientes
-                </div>
+                <h3>👤 Clientes</h3>
 
-                <div class="card-value">
+                <strong style="font-size:30px">
                     ${totalClientes}
-                </div>
+                </strong>
 
             </div>
-
 
             <div class="card">
 
-                <div class="card-title">
-                    Ventas de hoy
-                </div>
+                <h3>💰 Ventas</h3>
 
-                <div class="card-value">
-                    ${money(montoHoy)}
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="panel">
-
-            <div class="panel-header">
-
-                <h2>
-                    Últimas ventas
-                </h2>
-
-                <button
-                    class="btn btn-primary"
-                    onclick="mostrarPagina('venta')">
-
-                    + Nueva venta
-
-                </button>
-
-            </div>
-
-
-            <div class="table-wrap">
-
-                <table>
-
-                    <thead>
-
-                        <tr>
-                            <th>Folio</th>
-                            <th>Fecha</th>
-                            <th>Total</th>
-                            <th>Pago</th>
-                        </tr>
-
-                    </thead>
-
-                    <tbody>
-
-                    ${
-                        ventas.slice(0,10).map(v=>`
-
-                            <tr>
-
-                                <td>
-                                    ${esc(v.folio)}
-                                </td>
-
-                                <td>
-                                    ${new Date(v.fecha)
-                                      .toLocaleString("es-MX")}
-                                </td>
-
-                                <td>
-                                    ${money(v.total)}
-                                </td>
-
-                                <td>
-                                    ${esc(v.metodo_pago)}
-                                </td>
-
-                            </tr>
-
-                        `).join("")
-                    }
-
-                    </tbody>
-
-                </table>
+                <strong style="font-size:30px">
+                    ${totalVentas}
+                </strong>
 
             </div>
 
@@ -1353,13 +1072,56 @@ function mostrarInicio(){
    PRODUCTOS
 ========================================================= */
 
+function irProductos(){
+
+    paginaActual = "productos";
+
+    mostrarProductos();
+
+}
+
+
 function mostrarProductos(){
 
-    document.getElementById("appContent").innerHTML = `
+    const contenedor =
+        document.getElementById("app-content");
+
+    const termino =
+        document.getElementById("buscarProducto")?.value
+        ?.toLowerCase() || "";
+
+
+    const filtrados =
+        productos.filter(p => {
+
+            return (
+
+                String(p.modelo || "")
+                    .toLowerCase()
+                    .includes(termino)
+
+                ||
+
+                String(p.sku || "")
+                    .toLowerCase()
+                    .includes(termino)
+
+                ||
+
+                String(p.codigo_barras || "")
+                    .toLowerCase()
+                    .includes(termino)
+
+            );
+
+        });
+
+
+    contenedor.innerHTML = `
 
         <div class="page-title">
 
-            <h1>Productos</h1>
+            <h2>Productos</h2>
 
             <p>
                 Administra tu inventario.
@@ -1368,285 +1130,325 @@ function mostrarProductos(){
         </div>
 
 
-        <div class="panel">
+        <div class="card">
 
-            <div class="panel-header">
+            <div class="toolbar">
 
                 <input
-                    class="search"
                     id="buscarProducto"
+                    class="search"
                     placeholder="Buscar producto, SKU o código..."
-                    oninput="filtrarProductos()"
-                    style="margin:0">
+                    value="${esc(termino)}"
+                    oninput="mostrarProductos()"
+                >
 
                 <button
                     class="btn btn-primary"
-                    onclick="abrirProductoModal()">
-
+                    onclick="abrirNuevoProducto()">
                     + Nuevo producto
-
                 </button>
 
             </div>
 
 
-            <div
-                id="productosGrid"
-                class="product-grid">
+            ${
+                filtrados.length === 0
+
+                ?
+
+                `<p>No hay productos registrados.</p>`
+
+                :
+
+                `<div class="products-grid">
+
+                    ${filtrados.map(productoHTML).join("")}
+
+                </div>`
+            }
+
+        </div>
+
+    `;
+
+}
+
+
+function productoHTML(p){
+
+    return `
+
+        <div class="product-card">
+
+            <div class="product-image">
+
+                ${
+                    p.imagen_url
+
+                    ?
+
+                    `<img
+                        src="${esc(p.imagen_url)}"
+                        alt="${esc(p.modelo)}"
+                    >`
+
+                    :
+
+                    `<span class="no-image">
+                        Sin fotografía
+                    </span>`
+                }
+
+            </div>
+
+
+            <div class="product-info">
+
+                <h3>
+                    ${esc(p.modelo)}
+                </h3>
+
+                <p>
+                    Talla: ${esc(p.talla)}
+                </p>
+
+                <p>
+                    SKU:
+                    ${esc(p.sku || "-")}
+                </p>
+
+                <p class="price">
+                    ${dinero(p.precio)}
+                </p>
+
+                <p class="stock">
+                    Stock:
+                    ${Number(p.stock || 0)}
+                </p>
+
+
+                <div class="actions">
+
+                    <button
+                        class="btn btn-secondary"
+                        onclick="editarProducto('${p.id}')">
+                        Editar
+                    </button>
+
+                    <button
+                        class="btn btn-danger"
+                        onclick="eliminarProducto('${p.id}')">
+                        Eliminar
+                    </button>
+
+                </div>
+
             </div>
 
         </div>
 
     `;
 
-    renderProductos(productos);
+}
+
+
+/* =========================================================
+   NUEVO PRODUCTO
+========================================================= */
+
+function abrirNuevoProducto(){
+
+    document.getElementById("productoForm")
+        .reset();
+
+    document.getElementById("productoId")
+        .value = "";
+
+    document.getElementById("modalTitulo")
+        .textContent = "Nuevo producto";
+
+    document.getElementById("preview")
+        .style.display = "none";
+
+    document.getElementById("productoError")
+        .innerHTML = "";
+
+    document.getElementById("productoModal")
+        .classList.add("show");
 
 }
 
 
-function renderProductos(lista){
+function cerrarModal(){
 
-    const grid =
-        document.getElementById("productosGrid");
+    document.getElementById("productoModal")
+        .classList.remove("show");
 
-    if(!grid)
-        return;
+}
 
 
-    if(!lista.length){
+async function editarProducto(id){
 
-        grid.innerHTML = `
+    const p =
+        productos.find(x => x.id === id);
 
-            <div class="panel">
+    if(!p) return;
 
-                No hay productos registrados.
 
-            </div>
+    document.getElementById("productoId")
+        .value = p.id;
 
-        `;
+    document.getElementById("modelo")
+        .value = p.modelo || "";
 
-        return;
+    document.getElementById("talla")
+        .value = p.talla || "";
+
+    document.getElementById("sku")
+        .value = p.sku || "";
+
+    document.getElementById("codigo_barras")
+        .value = p.codigo_barras || "";
+
+    document.getElementById("precio")
+        .value = p.precio || 0;
+
+    document.getElementById("costo")
+        .value = p.costo || 0;
+
+    document.getElementById("stock")
+        .value = p.stock || 0;
+
+
+    const preview =
+        document.getElementById("preview");
+
+
+    if(p.imagen_url){
+
+        preview.src =
+            p.imagen_url;
+
+        preview.style.display =
+            "block";
+
+    }else{
+
+        preview.style.display =
+            "none";
 
     }
 
 
-    grid.innerHTML =
-        lista.map(p=>{
-
-            const imagen =
-                p.imagen_url
-                ? `<img src="${esc(p.imagen_url)}" alt="">`
-                : `<div class="product-image-placeholder">👟</div>`;
+    document.getElementById("modalTitulo")
+        .textContent = "Editar producto";
 
 
-            return `
-
-                <div class="product-card">
-
-                    ${imagen}
-
-                    <div class="product-info">
-
-                        <h3>
-                            ${esc(p.modelo)}
-                        </h3>
-
-                        <p>
-                            Talla: ${esc(p.talla)}
-                        </p>
-
-                        <p>
-                            SKU:
-                            ${esc(p.sku || "-")}
-                        </p>
-
-                        <div class="price">
-                            ${money(p.precio)}
-                        </div>
-
-                        <div class="stock">
-
-                            Stock:
-                            <strong>
-                                ${Number(p.stock || 0)}
-                            </strong>
-
-                        </div>
-
-                        <div class="form-actions">
-
-                            <button
-                                class="btn btn-secondary"
-                                onclick="editarProducto('${p.id}')">
-
-                                Editar
-
-                            </button>
-
-                            <button
-                                class="btn btn-danger"
-                                onclick="eliminarProducto('${p.id}')">
-
-                                Eliminar
-
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            `;
-
-        }).join("");
-
-}
+    document.getElementById("productoError")
+        .innerHTML = "";
 
 
-function filtrarProductos(){
-
-    const texto =
-        document.getElementById("buscarProducto")
-        .value
-        .toLowerCase();
-
-    const filtrados =
-        productos.filter(p=>{
-
-            return (
-
-                String(p.modelo || "")
-                    .toLowerCase()
-                    .includes(texto)
-
-                ||
-
-                String(p.sku || "")
-                    .toLowerCase()
-                    .includes(texto)
-
-                ||
-
-                String(p.codigo_barras || "")
-                    .toLowerCase()
-                    .includes(texto)
-
-            );
-
-        });
-
-
-    renderProductos(filtrados);
+    document.getElementById("productoModal")
+        .classList.add("show");
 
 }
 
 
 /* =========================================================
-   MODAL PRODUCTO
+   PREVISUALIZAR IMAGEN
 ========================================================= */
 
-function abrirProductoModal(id=null){
+document.getElementById("imagen")
+.addEventListener("change",function(){
 
-    document.getElementById("productoModal")
-        .style.display="flex";
+    const archivo =
+        this.files[0];
 
-
-    document.getElementById("productoId")
-        .value = id || "";
-
-
-    if(id){
-
-        const p =
-            productos.find(x=>x.id===id);
-
-        if(!p)
-            return;
+    if(!archivo) return;
 
 
-        document.getElementById("productoModalTitle")
-            .textContent="Editar producto";
+    const preview =
+        document.getElementById("preview");
 
 
-        document.getElementById("sku").value =
-            p.sku || "";
+    preview.src =
+        URL.createObjectURL(archivo);
 
-        document.getElementById("codigoBarras").value =
-            p.codigo_barras || "";
+    preview.style.display =
+        "block";
 
-        document.getElementById("modelo").value =
-            p.modelo || "";
-
-        document.getElementById("talla").value =
-            p.talla || "";
-
-        document.getElementById("precio").value =
-            p.precio || 0;
-
-        document.getElementById("costo").value =
-            p.costo || 0;
-
-        document.getElementById("stock").value =
-            p.stock || 0;
-
-    }else{
-
-        document.getElementById("productoModalTitle")
-            .textContent="Nuevo producto";
+});
 
 
-        [
-            "sku",
-            "codigoBarras",
-            "modelo",
-            "talla",
-            "precio",
-            "costo",
-            "stock"
-        ].forEach(id=>{
+/* =========================================================
+   GUARDAR PRODUCTO
+========================================================= */
 
-            document.getElementById(id).value="";
+document.getElementById("productoForm")
+.addEventListener("submit",async function(e){
 
-        });
-
-    }
-
-}
+    e.preventDefault();
 
 
-function cerrarProductoModal(){
-
-    document.getElementById("productoModal")
-        .style.display="none";
-
-}
+    const errorBox =
+        document.getElementById("productoError");
 
 
-async function guardarProducto(){
+    errorBox.innerHTML = "";
+
+
+    const id =
+        document.getElementById("productoId")
+        .value;
+
+
+    const modelo =
+        document.getElementById("modelo")
+        .value.trim();
+
+
+    const talla =
+        document.getElementById("talla")
+        .value.trim();
+
+
+    const sku =
+        document.getElementById("sku")
+        .value.trim();
+
+
+    const codigo_barras =
+        document.getElementById("codigo_barras")
+        .value.trim();
+
+
+    const precio =
+        Number(document.getElementById("precio").value || 0);
+
+
+    const costo =
+        Number(document.getElementById("costo").value || 0);
+
+
+    const stock =
+        Number(document.getElementById("stock").value || 0);
+
+
+    const archivo =
+        document.getElementById("imagen")
+        .files[0];
+
 
     try{
 
-        const id =
-            document.getElementById("productoId").value;
-
-        const archivo =
-            document.getElementById("imagen").files[0];
+        let imagen_url =
+            productos.find(p => p.id === id)
+            ?.imagen_url || null;
 
 
-        let imagen_url = null;
-
-
-        if(id){
-
-            const existente =
-                productos.find(p=>p.id===id);
-
-            imagen_url =
-                existente?.imagen_url || null;
-
-        }
-
+        /* =========================
+           SUBIR FOTO
+        ========================= */
 
         if(archivo){
 
@@ -1661,12 +1463,16 @@ async function guardarProducto(){
                 `${crypto.randomUUID()}.${extension}`;
 
 
+            const ruta =
+                `productos/${nombreArchivo}`;
+
+
             const upload =
                 await supabaseClient
                 .storage
                 .from("pos")
                 .upload(
-                    `productos/${nombreArchivo}`,
+                    ruta,
                     archivo,
                     {
                         upsert:false,
@@ -1675,17 +1481,22 @@ async function guardarProducto(){
                 );
 
 
-            if(upload.error)
-                throw upload.error;
+            if(upload.error){
+
+                throw new Error(
+                    "No se pudo subir la fotografía: "
+                    +
+                    upload.error.message
+                );
+
+            }
 
 
             const publicUrl =
                 supabaseClient
                 .storage
                 .from("pos")
-                .getPublicUrl(
-                    `productos/${nombreArchivo}`
-                );
+                .getPublicUrl(ruta);
 
 
             imagen_url =
@@ -1696,55 +1507,34 @@ async function guardarProducto(){
 
         const datos = {
 
-            sku:
-                document.getElementById("sku").value
-                .trim() || null,
+            modelo,
+
+            talla,
+
+            sku: sku || null,
 
             codigo_barras:
-                document.getElementById("codigoBarras").value
-                .trim() || null,
+                codigo_barras || null,
 
-            modelo:
-                document.getElementById("modelo").value
-                .trim(),
+            precio,
 
-            talla:
-                document.getElementById("talla").value
-                .trim(),
+            costo,
 
-            precio:
-                Number(document.getElementById("precio").value || 0),
+            stock,
 
-            costo:
-                Number(document.getElementById("costo").value || 0),
+            imagen_url,
 
-            stock:
-                Number(document.getElementById("stock").value || 0),
-
-            imagen_url:
-                imagen_url
+            activo:true
 
         };
 
 
-        if(!datos.modelo || !datos.talla){
-
-            mostrarAlert(
-                "Modelo y talla son obligatorios.",
-                "error"
-            );
-
-            return;
-
-        }
-
-
-        let resultado;
+        let respuesta;
 
 
         if(id){
 
-            resultado =
+            respuesta =
                 await supabaseClient
                 .from("productos")
                 .update(datos)
@@ -1752,7 +1542,7 @@ async function guardarProducto(){
 
         }else{
 
-            resultado =
+            respuesta =
                 await supabaseClient
                 .from("productos")
                 .insert(datos);
@@ -1760,1157 +1550,100 @@ async function guardarProducto(){
         }
 
 
-        if(resultado.error)
-            throw resultado.error;
+        if(respuesta.error){
+
+            throw new Error(
+                respuesta.error.message
+            );
+
+        }
 
 
-        cerrarProductoModal();
+        cerrarModal();
 
         await cargarTodo();
 
-        mostrarPagina("productos");
 
-        mostrarAlert(
+        alert(
+            id
+            ?
+            "Producto actualizado correctamente."
+            :
             "Producto guardado correctamente."
         );
 
+
     }catch(error){
 
         console.error(error);
 
-        mostrarAlert(
-            error.message || "No se pudo guardar el producto.",
-            "error"
-        );
+        errorBox.innerHTML = `
 
-    }
+            <div class="alert alert-error">
 
-}
-
-
-function editarProducto(id){
-
-    abrirProductoModal(id);
-
-}
-
-
-async function eliminarProducto(id){
-
-    if(!confirm(
-        "¿Seguro que quieres eliminar este producto?"
-    ))
-        return;
-
-
-    const resultado =
-        await supabaseClient
-        .from("productos")
-        .delete()
-        .eq("id",id);
-
-
-    if(resultado.error){
-
-        mostrarAlert(
-            resultado.error.message,
-            "error"
-        );
-
-        return;
-
-    }
-
-
-    await cargarTodo();
-
-    mostrarPagina("productos");
-
-}
-
-
-/* =========================================================
-   NUEVA VENTA
-========================================================= */
-
-function mostrarVenta(){
-
-    carrito=[];
-
-    clienteVenta=null;
-
-    metodoPago="efectivo";
-
-
-    document.getElementById("appContent").innerHTML = `
-
-        <div class="page-title">
-
-            <h1>Nueva venta</h1>
-
-            <p>
-                Selecciona los productos para crear el ticket.
-            </p>
-
-        </div>
-
-
-        <div class="sale-layout">
-
-            <div>
-
-                <div class="panel">
-
-                    <input
-                        class="search"
-                        id="buscarVentaProducto"
-                        placeholder="Buscar modelo, SKU o código..."
-                        oninput="filtrarProductosVenta()">
-
-                    <div
-                        id="saleProducts"
-                        class="sale-products">
-                    </div>
-
-                </div>
+                ${esc(error.message)}
 
             </div>
-
-
-            <div class="cart">
-
-                <h2>
-                    🛒 Venta
-                </h2>
-
-                <div
-                    id="cartItems">
-                </div>
-
-
-                <div class="cart-total">
-
-                    <span>Total</span>
-
-                    <span id="cartTotal">
-                        $0.00
-                    </span>
-
-                </div>
-
-
-                <label>
-                    Cliente
-                </label>
-
-                <select
-                    id="ventaCliente"
-                    style="
-                    width:100%;
-                    padding:10px;
-                    margin:7px 0;
-                    border:1px solid #d1d5db;
-                    border-radius:8px;
-                    "
-                    onchange="seleccionarClienteVenta()">
-
-                    <option value="">
-                        Público general
-                    </option>
-
-                    ${
-                        clientes.map(c=>`
-
-                            <option value="${c.id}">
-
-                                ${esc(c.nombre)}
-                                ${c.codigo_tarjeta
-                                    ? " • "+esc(c.codigo_tarjeta)
-                                    : ""}
-
-                            </option>
-
-                        `).join("")
-                    }
-
-                </select>
-
-
-                <div class="payment-buttons">
-
-                    <button
-                        id="pay-efectivo"
-                        class="selected"
-                        onclick="seleccionarPago('efectivo')">
-
-                        💵 Efectivo
-
-                    </button>
-
-                    <button
-                        id="pay-transferencia"
-                        onclick="seleccionarPago('transferencia')">
-
-                        🏦 Transferencia
-
-                    </button>
-
-                    <button
-                        id="pay-tarjeta"
-                        onclick="seleccionarPago('tarjeta')">
-
-                        💳 Tarjeta
-
-                    </button>
-
-                </div>
-
-
-                <div
-                    class="cash-box"
-                    id="cashBox"
-                    style="display:block">
-
-                    <label>
-                        Efectivo recibido
-                    </label>
-
-                    <input
-                        id="efectivoRecibido"
-                        type="number"
-                        step="0.01"
-                        oninput="calcularCambio()">
-
-                    <div
-                        class="change"
-                        id="cambio">
-                        Cambio: $0.00
-                    </div>
-
-                </div>
-
-
-                <button
-                    class="btn btn-primary"
-                    style="
-                    width:100%;
-                    margin-top:15px;
-                    padding:14px;
-                    "
-                    onclick="finalizarVenta()">
-
-                    🧾 Cobrar y generar ticket
-
-                </button>
-
-            </div>
-
-        </div>
-
-    `;
-
-
-    renderProductosVenta(productos);
-
-}
-
-
-function renderProductosVenta(lista){
-
-    const contenedor =
-        document.getElementById("saleProducts");
-
-    if(!contenedor)
-        return;
-
-
-    const disponibles =
-        lista.filter(p=>Number(p.stock || 0)>0);
-
-
-    contenedor.innerHTML =
-        disponibles.map(p=>{
-
-            const imagen =
-                p.imagen_url
-
-                ?
-
-                `<img src="${esc(p.imagen_url)}">`
-
-                :
-
-                `<div class="sale-no-image">👟</div>`;
-
-
-            return `
-
-                <div class="sale-product">
-
-                    ${imagen}
-
-                    <div class="sale-product-info">
-
-                        <strong>
-                            ${esc(p.modelo)}
-                        </strong>
-
-                        <span>
-                            Talla ${esc(p.talla)}
-                        </span>
-
-                        <span>
-                            Stock ${p.stock}
-                        </span>
-
-                        <div style="
-                        font-weight:bold;
-                        margin-top:5px;
-                        ">
-
-                            ${money(p.precio)}
-
-                        </div>
-
-                        <button
-                            class="btn btn-primary"
-                            onclick="agregarCarrito('${p.id}')">
-
-                            Agregar
-
-                        </button>
-
-                    </div>
-
-                </div>
-
-            `;
-
-        }).join("");
-
-
-}
-
-
-function filtrarProductosVenta(){
-
-    const texto =
-        document.getElementById(
-            "buscarVentaProducto"
-        ).value.toLowerCase();
-
-
-    const filtrados =
-        productos.filter(p=>{
-
-            return (
-
-                String(p.modelo||"")
-                .toLowerCase()
-                .includes(texto)
-
-                ||
-
-                String(p.sku||"")
-                .toLowerCase()
-                .includes(texto)
-
-                ||
-
-                String(p.codigo_barras||"")
-                .toLowerCase()
-                .includes(texto)
-
-            );
-
-        });
-
-
-    renderProductosVenta(filtrados);
-
-}
-
-
-function agregarCarrito(id){
-
-    const producto =
-        productos.find(p=>p.id===id);
-
-    if(!producto)
-        return;
-
-
-    const existente =
-        carrito.find(i=>i.producto.id===id);
-
-
-    if(existente){
-
-        if(existente.cantidad >=
-           Number(producto.stock)){
-
-            mostrarAlert(
-                "No hay más stock disponible.",
-                "error"
-            );
-
-            return;
-
-        }
-
-        existente.cantidad++;
-
-    }else{
-
-        carrito.push({
-
-            producto:producto,
-
-            cantidad:1
-
-        });
-
-    }
-
-
-    renderCarrito();
-
-}
-
-
-function quitarCarrito(id){
-
-    const index =
-        carrito.findIndex(
-            i=>i.producto.id===id
-        );
-
-
-    if(index===-1)
-        return;
-
-
-    carrito.splice(index,1);
-
-    renderCarrito();
-
-}
-
-
-function cambiarCantidad(id,cantidad){
-
-    const item =
-        carrito.find(
-            i=>i.producto.id===id
-        );
-
-
-    if(!item)
-        return;
-
-
-    cantidad =
-        Number(cantidad);
-
-
-    if(cantidad<=0){
-
-        quitarCarrito(id);
-
-        return;
-
-    }
-
-
-    if(cantidad >
-       Number(item.producto.stock)){
-
-        mostrarAlert(
-            "Cantidad mayor al stock.",
-            "error"
-        );
-
-        return;
-
-    }
-
-
-    item.cantidad=cantidad;
-
-    renderCarrito();
-
-}
-
-
-function totalCarrito(){
-
-    return carrito.reduce(
-
-        (total,item)=>
-
-            total +
-            Number(item.producto.precio || 0) *
-            item.cantidad,
-
-        0
-
-    );
-
-}
-
-
-function renderCarrito(){
-
-    const contenedor =
-        document.getElementById("cartItems");
-
-    if(!contenedor)
-        return;
-
-
-    if(!carrito.length){
-
-        contenedor.innerHTML = `
-
-            <p style="
-            color:#777;
-            text-align:center;
-            padding:20px 0;
-            ">
-
-                El carrito está vacío.
-
-            </p>
 
         `;
 
-    }else{
-
-        contenedor.innerHTML =
-            carrito.map(item=>`
-
-                <div class="cart-item">
-
-                    <div class="cart-item-info">
-
-                        <strong>
-                            ${esc(item.producto.modelo)}
-                        </strong>
-
-                        <small>
-                            Talla ${esc(item.producto.talla)}
-                            ·
-                            ${money(item.producto.precio)}
-                        </small>
-
-                        <div style="margin-top:6px">
-
-                            <input
-                                type="number"
-                                min="1"
-                                max="${item.producto.stock}"
-                                value="${item.cantidad}"
-                                style="
-                                width:55px;
-                                padding:5px;
-                                "
-                                onchange="
-                                cambiarCantidad(
-                                    '${item.producto.id}',
-                                    this.value
-                                )">
-
-                        </div>
-
-                    </div>
-
-
-                    <div style="text-align:right">
-
-                        <strong>
-                            ${money(
-                                Number(item.producto.precio) *
-                                item.cantidad
-                            )}
-                        </strong>
-
-                        <br>
-
-                        <button
-                            class="btn btn-danger"
-                            style="padding:4px 7px;margin-top:5px"
-                            onclick="
-                            quitarCarrito(
-                                '${item.producto.id}'
-                            )">
-
-                            ×
-
-                        </button>
-
-                    </div>
-
-                </div>
-
-            `).join("");
-
     }
 
-
-    const total =
-        totalCarrito();
-
-
-    document.getElementById("cartTotal")
-        .textContent =
-        money(total);
-
-
-    calcularCambio();
-
-}
-
-
-function seleccionarClienteVenta(){
-
-    const id =
-        document.getElementById(
-            "ventaCliente"
-        ).value;
-
-
-    clienteVenta =
-        clientes.find(c=>c.id===id)
-        || null;
-
-}
-
-
-function seleccionarPago(metodo){
-
-    metodoPago=metodo;
-
-
-    document.querySelectorAll(
-        ".payment-buttons button"
-    ).forEach(b=>{
-        b.classList.remove("selected");
-    });
-
-
-    document.getElementById(
-        "pay-"+metodo
-    ).classList.add("selected");
-
-
-    const caja =
-        document.getElementById("cashBox");
-
-
-    if(metodo==="efectivo"){
-
-        caja.style.display="block";
-
-    }else{
-
-        caja.style.display="none";
-
-    }
-
-}
-
-
-function calcularCambio(){
-
-    if(metodoPago!=="efectivo")
-        return;
-
-
-    const total =
-        totalCarrito();
-
-
-    const recibido =
-        Number(
-            document.getElementById(
-                "efectivoRecibido"
-            )?.value || 0
-        );
-
-
-    const cambio =
-        recibido-total;
-
-
-    const elemento =
-        document.getElementById("cambio");
-
-
-    if(elemento){
-
-        elemento.textContent =
-            "Cambio: " +
-            money(
-                Math.max(0,cambio)
-            );
-
-    }
-
-}
+});
 
 
 /* =========================================================
-   FINALIZAR VENTA
+   ELIMINAR PRODUCTO
 ========================================================= */
 
-async function finalizarVenta(){
+async function eliminarProducto(id){
+
+    const p =
+        productos.find(x => x.id === id);
+
+
+    if(!p) return;
+
+
+    if(!confirm(
+        `¿Eliminar "${p.modelo}"?`
+    )){
+
+        return;
+
+    }
+
 
     try{
 
-        if(!carrito.length){
+        const respuesta =
+            await supabaseClient
+            .from("productos")
+            .delete()
+            .eq("id",id);
 
-            mostrarAlert(
-                "Agrega al menos un producto.",
-                "error"
+
+        if(respuesta.error){
+
+            throw new Error(
+                respuesta.error.message
             );
 
-            return;
-
         }
-
-
-        const total =
-            totalCarrito();
-
-
-        let efectivoRecibido=0;
-        let cambio=0;
-
-
-        if(metodoPago==="efectivo"){
-
-            efectivoRecibido =
-                Number(
-                    document.getElementById(
-                        "efectivoRecibido"
-                    ).value || 0
-                );
-
-
-            if(efectivoRecibido < total){
-
-                mostrarAlert(
-                    "El efectivo recibido no alcanza para cubrir la venta.",
-                    "error"
-                );
-
-                return;
-
-            }
-
-
-            cambio =
-                efectivoRecibido-total;
-
-        }
-
-
-        /* ---------------------------------
-           GENERAR FOLIO
-        --------------------------------- */
-
-        const ahora =
-            new Date();
-
-
-        const fechaFolio =
-            ahora.toISOString()
-            .replace(/[-:TZ.]/g,"")
-            .slice(0,14);
-
-
-        const folio =
-            "NN-" +
-            fechaFolio +
-            "-" +
-            Math.floor(
-                Math.random()*900+100
-            );
-
-
-        const puntosGanados =
-            clienteVenta
-            ? Math.floor(total/10)
-            : 0;
-
-
-        /* ---------------------------------
-           VENTA
-        --------------------------------- */
-
-        const ventaInsert =
-            await supabaseClient
-            .from("ventas")
-            .insert({
-
-                folio:folio,
-
-                total:total,
-
-                metodo_pago:metodoPago,
-
-                cliente_id:
-                    clienteVenta
-                    ? clienteVenta.id
-                    : null,
-
-                efectivo_recibido:
-                    efectivoRecibido,
-
-                cambio:cambio,
-
-                puntos_ganados:
-                    puntosGanados
-
-            })
-            .select()
-            .single();
-
-
-        if(ventaInsert.error)
-            throw ventaInsert.error;
-
-
-        const venta =
-            ventaInsert.data;
-
-
-        /* ---------------------------------
-           DETALLES
-        --------------------------------- */
-
-        const detalles =
-            carrito.map(item=>({
-
-                venta_id:
-                    venta.id,
-
-                producto_id:
-                    item.producto.id,
-
-                producto_nombre:
-                    item.producto.modelo,
-
-                talla:
-                    item.producto.talla,
-
-                cantidad:
-                    item.cantidad,
-
-                precio_unitario:
-                    Number(item.producto.precio),
-
-                subtotal:
-                    Number(item.producto.precio) *
-                    item.cantidad
-
-            }));
-
-
-        const detallesInsert =
-            await supabaseClient
-            .from("venta_detalles")
-            .insert(detalles);
-
-
-        if(detallesInsert.error)
-            throw detallesInsert.error;
-
-
-        /* ---------------------------------
-           ACTUALIZAR STOCK
-        --------------------------------- */
-
-        for(const item of carrito){
-
-            const nuevoStock =
-                Number(item.producto.stock) -
-                item.cantidad;
-
-
-            const update =
-                await supabaseClient
-                .from("productos")
-                .update({
-                    stock:nuevoStock
-                })
-                .eq("id",item.producto.id);
-
-
-            if(update.error)
-                throw update.error;
-
-        }
-
-
-        /* ---------------------------------
-           PUNTOS
-        --------------------------------- */
-
-        if(clienteVenta && puntosGanados>0){
-
-            const nuevosPuntos =
-                Number(clienteVenta.puntos || 0) +
-                puntosGanados;
-
-
-            const updateCliente =
-                await supabaseClient
-                .from("clientes")
-                .update({
-                    puntos:nuevosPuntos
-                })
-                .eq("id",clienteVenta.id);
-
-
-            if(updateCliente.error)
-                throw updateCliente.error;
-
-        }
-
-
-        /* ---------------------------------
-           TICKET
-        --------------------------------- */
-
-        generarTicket(
-            venta,
-            carrito,
-            clienteVenta,
-            efectivoRecibido,
-            cambio,
-            puntosGanados
-        );
 
 
         await cargarTodo();
 
 
-        mostrarAlert(
-            "Venta registrada correctamente."
-        );
-
-
-        setTimeout(()=>{
-
-            window.print();
-
-        },500);
-
-
-        carrito=[];
-
-        clienteVenta=null;
-
-
     }catch(error){
 
-        console.error(error);
-
-        mostrarAlert(
-            error.message ||
-            "No se pudo registrar la venta.",
-            "error"
+        alert(
+            "No se pudo eliminar: "
+            +
+            error.message
         );
 
     }
-
-}
-
-
-/* =========================================================
-   TICKET
-========================================================= */
-
-function generarTicket(
-    venta,
-    items,
-    cliente,
-    efectivo,
-    cambio,
-    puntos
-){
-
-    const ticket =
-        document.getElementById(
-            "ticketPrint"
-        );
-
-
-    ticket.style.display="block";
-
-
-    ticket.innerHTML = `
-
-        <div class="ticket">
-
-            <div class="ticket-center">
-
-                <strong style="font-size:18px">
-                    ${esc(NEGOCIO.nombre)}
-                </strong>
-
-                <br>
-
-                ${esc(NEGOCIO.direccion)}
-
-                <br>
-
-                Tel:
-                ${esc(NEGOCIO.telefono)}
-
-            </div>
-
-
-            <div class="ticket-line"></div>
-
-
-            <div>
-                Folio:
-                ${esc(venta.folio)}
-            </div>
-
-            <div>
-                Fecha:
-                ${new Date(venta.fecha)
-                    .toLocaleString("es-MX")}
-            </div>
-
-
-            ${
-                cliente
-                ?
-                `
-                <div>
-                    Cliente:
-                    ${esc(cliente.nombre)}
-                </div>
-                `
-                :
-                ""
-            }
-
-
-            <div class="ticket-line"></div>
-
-
-            ${
-                items.map(item=>`
-
-                    <div>
-
-                        <strong>
-                            ${esc(item.producto.modelo)}
-                        </strong>
-
-                        <div class="ticket-row">
-
-                            <span>
-                                ${item.cantidad} x
-                                ${money(item.producto.precio)}
-                            </span>
-
-                            <span>
-                                ${money(
-                                    Number(item.producto.precio) *
-                                    item.cantidad
-                                )}
-                            </span>
-
-                        </div>
-
-                        <div>
-                            Talla:
-                            ${esc(item.producto.talla)}
-                        </div>
-
-                    </div>
-
-                `).join("")
-            }
-
-
-            <div class="ticket-line"></div>
-
-
-            <div class="ticket-row">
-
-                <strong>
-                    TOTAL
-                </strong>
-
-                <strong>
-                    ${money(venta.total)}
-                </strong>
-
-            </div>
-
-
-            <div>
-                Pago:
-                ${esc(venta.metodo_pago)}
-            </div>
-
-
-            ${
-                venta.metodo_pago==="efectivo"
-                ?
-                `
-                <div>
-                    Recibido:
-                    ${money(efectivo)}
-                </div>
-
-                <div>
-                    Cambio:
-                    ${money(cambio)}
-                </div>
-                `
-                :
-                ""
-            }
-
-
-            ${
-                cliente && puntos>0
-                ?
-                `
-                <div style="margin-top:10px">
-                    Puntos ganados:
-                    ${puntos}
-                </div>
-                `
-                :
-                ""
-            }
-
-
-            <div class="ticket-line"></div>
-
-
-            <div class="ticket-center">
-
-                ¡Gracias por tu compra!
-
-                <br><br>
-
-                Nat.Nation Sneakers
-
-            </div>
-
-        </div>
-
-    `;
 
 }
 
@@ -2919,45 +1652,45 @@ function generarTicket(
    CLIENTES
 ========================================================= */
 
+function irClientes(){
+
+    paginaActual = "clientes";
+
+    mostrarClientes();
+
+}
+
+
 function mostrarClientes(){
 
-    document.getElementById("appContent").innerHTML = `
+    const contenedor =
+        document.getElementById("app-content");
+
+
+    contenedor.innerHTML = `
 
         <div class="page-title">
 
-            <h1>Clientes</h1>
+            <h2>Clientes</h2>
 
             <p>
-                Administra clientes y puntos.
+                Clientes y puntos de lealtad.
             </p>
 
         </div>
 
 
-        <div class="panel">
+        <div class="card">
 
-            <div class="panel-header">
-
-                <h2>
-                    Clientes
-                </h2>
+            <div class="toolbar">
 
                 <button
                     class="btn btn-primary"
-                    onclick="abrirClienteModal()">
-
+                    onclick="nuevoCliente()">
                     + Nuevo cliente
-
                 </button>
 
             </div>
-
-
-            <input
-                class="search"
-                id="buscarCliente"
-                placeholder="Buscar cliente..."
-                oninput="filtrarClientes()">
 
 
             <div class="table-wrap">
@@ -2968,32 +1701,53 @@ function mostrarClientes(){
 
                         <tr>
 
-                            <th>
-                                Nombre
-                            </th>
-
-                            <th>
-                                Teléfono
-                            </th>
-
-                            <th>
-                                Tarjeta
-                            </th>
-
-                            <th>
-                                Puntos
-                            </th>
-
-                            <th>
-                                Acción
-                            </th>
+                            <th>Nombre</th>
+                            <th>Teléfono</th>
+                            <th>Tarjeta</th>
+                            <th>Puntos</th>
+                            <th>Acciones</th>
 
                         </tr>
 
                     </thead>
 
+                    <tbody>
 
-                    <tbody id="clientesTable">
+                        ${
+                            clientes.map(c => `
+
+                                <tr>
+
+                                    <td>
+                                        ${esc(c.nombre)}
+                                    </td>
+
+                                    <td>
+                                        ${esc(c.telefono || "-")}
+                                    </td>
+
+                                    <td>
+                                        ${esc(c.codigo_tarjeta || "-")}
+                                    </td>
+
+                                    <td>
+                                        ${Number(c.puntos || 0)}
+                                    </td>
+
+                                    <td>
+
+                                        <button
+                                            class="btn btn-danger"
+                                            onclick="eliminarCliente('${c.id}')">
+                                            Eliminar
+                                        </button>
+
+                                    </td>
+
+                                </tr>
+
+                            `).join("")
+                        }
 
                     </tbody>
 
@@ -3005,197 +1759,66 @@ function mostrarClientes(){
 
     `;
 
-
-    renderClientes(clientes);
-
 }
 
 
-function renderClientes(lista){
-
-    const tbody =
-        document.getElementById(
-            "clientesTable"
-        );
-
-
-    if(!tbody)
-        return;
-
-
-    tbody.innerHTML =
-        lista.map(c=>`
-
-            <tr>
-
-                <td>
-                    ${esc(c.nombre)}
-                </td>
-
-                <td>
-                    ${esc(c.telefono || "-")}
-                </td>
-
-                <td>
-                    ${esc(c.codigo_tarjeta || "-")}
-                </td>
-
-                <td>
-                    ⭐ ${Number(c.puntos || 0)}
-                </td>
-
-                <td>
-
-                    <button
-                        class="btn btn-danger"
-                        onclick="eliminarCliente('${c.id}')">
-
-                        Eliminar
-
-                    </button>
-
-                </td>
-
-            </tr>
-
-        `).join("");
-
-}
-
-
-function filtrarClientes(){
-
-    const texto =
-        document.getElementById(
-            "buscarCliente"
-        ).value
-        .toLowerCase();
-
-
-    const lista =
-        clientes.filter(c=>
-
-            String(c.nombre||"")
-                .toLowerCase()
-                .includes(texto)
-
-            ||
-
-            String(c.telefono||"")
-                .toLowerCase()
-                .includes(texto)
-
-            ||
-
-            String(c.codigo_tarjeta||"")
-                .toLowerCase()
-                .includes(texto)
-
-        );
-
-
-    renderClientes(lista);
-
-}
-
-
-function abrirClienteModal(){
-
-    document.getElementById(
-        "clienteModal"
-    ).style.display="flex";
-
-
-    document.getElementById(
-        "clienteNombre"
-    ).value="";
-
-    document.getElementById(
-        "clienteTelefono"
-    ).value="";
-
-    document.getElementById(
-        "clienteCodigo"
-    ).value="";
-
-}
-
-
-function cerrarClienteModal(){
-
-    document.getElementById(
-        "clienteModal"
-    ).style.display="none";
-
-}
-
-
-async function guardarCliente(){
+async function nuevoCliente(){
 
     const nombre =
-        document.getElementById(
-            "clienteNombre"
-        ).value.trim();
+        prompt("Nombre del cliente:");
+
+    if(!nombre) return;
 
 
-    if(!nombre){
+    const telefono =
+        prompt("Teléfono:");
 
-        mostrarAlert(
-            "El nombre es obligatorio.",
-            "error"
+    const tarjeta =
+        prompt("Código de tarjeta:");
+
+    try{
+
+        const respuesta =
+            await supabaseClient
+            .from("clientes")
+            .insert({
+
+                nombre,
+
+                telefono:
+                    telefono || null,
+
+                codigo_tarjeta:
+                    tarjeta || null,
+
+                puntos:0
+
+            });
+
+
+        if(respuesta.error){
+
+            throw new Error(
+                respuesta.error.message
+            );
+
+        }
+
+
+        await cargarTodo();
+
+
+        irClientes();
+
+
+    }catch(error){
+
+        alert(
+            "Error: " +
+            error.message
         );
 
-        return;
-
     }
-
-
-    const datos={
-
-        nombre:nombre,
-
-        telefono:
-            document.getElementById(
-                "clienteTelefono"
-            ).value.trim() || null,
-
-        codigo_tarjeta:
-            document.getElementById(
-                "clienteCodigo"
-            ).value.trim() || null,
-
-        puntos:0
-
-    };
-
-
-    const resultado =
-        await supabaseClient
-        .from("clientes")
-        .insert(datos);
-
-
-    if(resultado.error){
-
-        mostrarAlert(
-            resultado.error.message,
-            "error"
-        );
-
-        return;
-
-    }
-
-
-    cerrarClienteModal();
-
-    await cargarTodo();
-
-    mostrarPagina("clientes");
-
-    mostrarAlert(
-        "Cliente guardado correctamente."
-    );
 
 }
 
@@ -3204,22 +1827,20 @@ async function eliminarCliente(id){
 
     if(!confirm(
         "¿Eliminar este cliente?"
-    ))
-        return;
+    )) return;
 
 
-    const resultado =
+    const respuesta =
         await supabaseClient
         .from("clientes")
         .delete()
         .eq("id",id);
 
 
-    if(resultado.error){
+    if(respuesta.error){
 
-        mostrarAlert(
-            resultado.error.message,
-            "error"
+        alert(
+            respuesta.error.message
         );
 
         return;
@@ -3229,7 +1850,878 @@ async function eliminarCliente(id){
 
     await cargarTodo();
 
-    mostrarPagina("clientes");
+    irClientes();
+
+}
+
+
+/* =========================================================
+   NUEVA VENTA
+========================================================= */
+
+function irVenta(){
+
+    paginaActual = "venta";
+
+    mostrarVenta();
+
+}
+
+
+function mostrarVenta(){
+
+    const contenedor =
+        document.getElementById("app-content");
+
+
+    contenedor.innerHTML = `
+
+        <div class="page-title">
+
+            <h2>Nueva venta</h2>
+
+            <p>
+                Registra una venta.
+            </p>
+
+        </div>
+
+
+        <div class="sale-layout">
+
+
+            <div class="card">
+
+                <h3>Productos</h3>
+
+                <input
+                    id="buscarVenta"
+                    placeholder="Buscar producto..."
+                    oninput="mostrarProductosVenta()"
+                >
+
+                <div
+                    id="productosVenta"
+                    style="margin-top:20px">
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>Ticket</h3>
+
+                <div id="carrito">
+                </div>
+
+                <hr>
+
+                <div class="form-group">
+
+                    <label>Cliente</label>
+
+                    <select id="clienteVenta">
+
+                        <option value="">
+                            Público general
+                        </option>
+
+                        ${
+                            clientes.map(c => `
+
+                                <option value="${c.id}">
+
+                                    ${esc(c.nombre)}
+
+                                    — ${c.puntos || 0} puntos
+
+                                </option>
+
+                            `).join("")
+                        }
+
+                    </select>
+
+                </div>
+
+
+                <br>
+
+
+                <div class="form-group">
+
+                    <label>Método de pago</label>
+
+                    <select id="metodoPago">
+
+                        <option value="efectivo">
+                            Efectivo
+                        </option>
+
+                        <option value="transferencia">
+                            Transferencia
+                        </option>
+
+                        <option value="tarjeta">
+                            Tarjeta
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <br>
+
+
+                <div class="form-group">
+
+                    <label>Efectivo recibido</label>
+
+                    <input
+                        id="efectivoRecibido"
+                        type="number"
+                        step="0.01"
+                        min="0"
+                        value="0"
+                    >
+
+                </div>
+
+
+                <div
+                    id="totalVenta"
+                    class="total">
+                    $0.00
+                </div>
+
+
+                <button
+                    class="btn btn-success"
+                    style="width:100%;margin-top:15px"
+                    onclick="finalizarVenta()">
+
+                    💰 Cobrar
+
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    mostrarProductosVenta();
+
+    mostrarCarrito();
+
+}
+
+
+function mostrarProductosVenta(){
+
+    const termino =
+        document.getElementById("buscarVenta")
+        ?.value
+        ?.toLowerCase() || "";
+
+
+    const lista =
+        productos.filter(p =>
+
+            Number(p.stock || 0) > 0
+
+            &&
+
+            (
+                String(p.modelo || "")
+                    .toLowerCase()
+                    .includes(termino)
+
+                ||
+
+                String(p.sku || "")
+                    .toLowerCase()
+                    .includes(termino)
+
+            )
+
+        );
+
+
+    const contenedor =
+        document.getElementById("productosVenta");
+
+
+    if(!contenedor) return;
+
+
+    contenedor.innerHTML = lista.map(p => `
+
+        <div
+            class="cart-item"
+            style="gap:15px">
+
+            <div style="flex:1">
+
+                <strong>
+                    ${esc(p.modelo)}
+                </strong>
+
+                <br>
+
+                Talla:
+                ${esc(p.talla)}
+
+                <br>
+
+                ${dinero(p.precio)}
+
+                <br>
+
+                Stock:
+                ${p.stock}
+
+            </div>
+
+
+            <button
+                class="btn btn-primary"
+                onclick="agregarCarrito('${p.id}')">
+
+                Agregar
+
+            </button>
+
+        </div>
+
+    `).join("");
+
+}
+
+
+function agregarCarrito(id){
+
+    const producto =
+        productos.find(p => p.id === id);
+
+    if(!producto) return;
+
+
+    const existente =
+        carrito.find(p => p.id === id);
+
+
+    if(existente){
+
+        if(
+            existente.cantidad
+            <
+            Number(producto.stock)
+        ){
+
+            existente.cantidad++;
+
+        }
+
+    }else{
+
+        carrito.push({
+
+            ...producto,
+
+            cantidad:1
+
+        });
+
+    }
+
+
+    mostrarCarrito();
+
+}
+
+
+function cambiarCantidad(id,delta){
+
+    const item =
+        carrito.find(p => p.id === id);
+
+    if(!item) return;
+
+
+    item.cantidad += delta;
+
+
+    if(item.cantidad <= 0){
+
+        carrito =
+            carrito.filter(p => p.id !== id);
+
+    }
+
+
+    const producto =
+        productos.find(p => p.id === id);
+
+
+    if(
+        producto
+        &&
+        item.cantidad > Number(producto.stock)
+    ){
+
+        item.cantidad =
+            Number(producto.stock);
+
+    }
+
+
+    mostrarCarrito();
+
+}
+
+
+function mostrarCarrito(){
+
+    const contenedor =
+        document.getElementById("carrito");
+
+
+    if(!contenedor) return;
+
+
+    if(carrito.length === 0){
+
+        contenedor.innerHTML =
+            "<p>El carrito está vacío.</p>";
+
+        const total =
+            document.getElementById("totalVenta");
+
+        if(total){
+            total.textContent =
+                dinero(0);
+        }
+
+        return;
+
+    }
+
+
+    let total = 0;
+
+
+    contenedor.innerHTML =
+        carrito.map(item => {
+
+            const subtotal =
+                Number(item.precio)
+                *
+                Number(item.cantidad);
+
+
+            total += subtotal;
+
+
+            return `
+
+                <div class="cart-item">
+
+                    <div>
+
+                        <strong>
+                            ${esc(item.modelo)}
+                        </strong>
+
+                        <br>
+
+                        Talla ${esc(item.talla)}
+
+                        <br>
+
+                        ${dinero(subtotal)}
+
+                    </div>
+
+
+                    <div class="qty">
+
+                        <button
+                            onclick="cambiarCantidad('${item.id}',-1)">
+                            −
+                        </button>
+
+                        <strong>
+                            ${item.cantidad}
+                        </strong>
+
+                        <button
+                            onclick="cambiarCantidad('${item.id}',1)">
+                            +
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+
+    const totalEl =
+        document.getElementById("totalVenta");
+
+
+    if(totalEl){
+
+        totalEl.textContent =
+            dinero(total);
+
+    }
+
+}
+
+
+async function finalizarVenta(){
+
+    if(carrito.length === 0){
+
+        alert(
+            "Agrega al menos un producto."
+        );
+
+        return;
+
+    }
+
+
+    const metodo =
+        document.getElementById("metodoPago")
+        .value;
+
+
+    const clienteId =
+        document.getElementById("clienteVenta")
+        .value || null;
+
+
+    const efectivo =
+        Number(
+            document.getElementById(
+                "efectivoRecibido"
+            ).value || 0
+        );
+
+
+    const total =
+        carrito.reduce(
+            (s,p)=>
+                s +
+                Number(p.precio)
+                *
+                Number(p.cantidad),
+            0
+        );
+
+
+    if(
+        metodo === "efectivo"
+        &&
+        efectivo < total
+    ){
+
+        alert(
+            "El efectivo recibido es menor al total."
+        );
+
+        return;
+
+    }
+
+
+    const cambio =
+        metodo === "efectivo"
+        ?
+        efectivo - total
+        :
+        0;
+
+
+    try{
+
+        /* =========================
+           FOLIO
+        ========================= */
+
+        const numero =
+            ventas.length + 1;
+
+        const folio =
+            "NN-" +
+            String(numero)
+                .padStart(6,"0");
+
+
+        /* =========================
+           PUNTOS
+        ========================= */
+
+        const puntosGanados =
+            Math.floor(total);
+
+
+        /* =========================
+           VENTA
+        ========================= */
+
+        const ventaRespuesta =
+            await supabaseClient
+            .from("ventas")
+            .insert({
+
+                folio,
+
+                total,
+
+                metodo_pago:
+                    metodo,
+
+                cliente_id:
+                    clienteId,
+
+                efectivo_recibido:
+                    efectivo,
+
+                cambio,
+
+                puntos_ganados:
+                    puntosGanados
+
+            })
+            .select()
+            .single();
+
+
+        if(ventaRespuesta.error){
+
+            throw new Error(
+                ventaRespuesta.error.message
+            );
+
+        }
+
+
+        const venta =
+            ventaRespuesta.data;
+
+
+        /* =========================
+           DETALLES
+        ========================= */
+
+        const detalles =
+            carrito.map(item => ({
+
+                venta_id:
+                    venta.id,
+
+                producto_id:
+                    item.id,
+
+                producto_nombre:
+                    item.modelo,
+
+                talla:
+                    item.talla,
+
+                cantidad:
+                    item.cantidad,
+
+                precio_unitario:
+                    item.precio,
+
+                subtotal:
+                    Number(item.precio)
+                    *
+                    Number(item.cantidad)
+
+            }));
+
+
+        const detalleRespuesta =
+            await supabaseClient
+            .from("venta_detalles")
+            .insert(detalles);
+
+
+        if(detalleRespuesta.error){
+
+            throw new Error(
+                detalleRespuesta.error.message
+            );
+
+        }
+
+
+        /* =========================
+           ACTUALIZAR STOCK
+        ========================= */
+
+        for(const item of carrito){
+
+            const nuevoStock =
+                Number(item.stock)
+                -
+                Number(item.cantidad);
+
+
+            const respuesta =
+                await supabaseClient
+                .from("productos")
+                .update({
+                    stock:nuevoStock
+                })
+                .eq("id",item.id);
+
+
+            if(respuesta.error){
+
+                throw new Error(
+                    respuesta.error.message
+                );
+
+            }
+
+        }
+
+
+        /* =========================
+           ACTUALIZAR PUNTOS
+        ========================= */
+
+        if(clienteId){
+
+            const cliente =
+                clientes.find(
+                    c => c.id === clienteId
+                );
+
+
+            if(cliente){
+
+                const nuevosPuntos =
+                    Number(cliente.puntos || 0)
+                    +
+                    puntosGanados;
+
+
+                const respuesta =
+                    await supabaseClient
+                    .from("clientes")
+                    .update({
+                        puntos:nuevosPuntos
+                    })
+                    .eq("id",clienteId);
+
+
+                if(respuesta.error){
+
+                    throw new Error(
+                        respuesta.error.message
+                    );
+
+                }
+
+            }
+
+        }
+
+
+        /* =========================
+           TICKET
+        ========================= */
+
+        imprimirTicket({
+
+            folio,
+
+            fecha:new Date(),
+
+            total,
+
+            metodo,
+
+            efectivo,
+
+            cambio,
+
+            puntosGanados
+
+        });
+
+
+        carrito = [];
+
+
+        await cargarTodo();
+
+        irVenta();
+
+
+    }catch(error){
+
+        console.error(error);
+
+        alert(
+            "No se pudo registrar la venta:\n\n"
+            +
+            error.message
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   TICKET
+========================================================= */
+
+function imprimirTicket(datos){
+
+    const ticket =
+        document.getElementById("ticket");
+
+
+    const items =
+        carrito.map(item => `
+
+            <div>
+
+                ${esc(item.modelo)}
+                x${item.cantidad}
+
+                <span style="float:right">
+
+                    ${dinero(
+                        Number(item.precio)
+                        *
+                        Number(item.cantidad)
+                    )}
+
+                </span>
+
+            </div>
+
+        `).join("");
+
+
+    ticket.innerHTML = `
+
+        <div style="text-align:center">
+
+            <h2>
+                ${esc(NEGOCIO.nombre)}
+            </h2>
+
+            <div>
+                ${esc(NEGOCIO.direccion)}
+            </div>
+
+            <div>
+                Tel. ${esc(NEGOCIO.telefono)}
+            </div>
+
+            <hr>
+
+            <strong>
+                TICKET ${esc(datos.folio)}
+            </strong>
+
+            <br>
+
+            ${datos.fecha.toLocaleString("es-MX")}
+
+        </div>
+
+
+        <hr>
+
+
+        ${items}
+
+
+        <hr>
+
+
+        <div>
+
+            <strong>
+                TOTAL
+            </strong>
+
+            <span style="float:right">
+
+                <strong>
+                    ${dinero(datos.total)}
+                </strong>
+
+            </span>
+
+        </div>
+
+
+        <br>
+
+        Pago:
+        ${esc(datos.metodo)}
+
+
+        ${
+            datos.metodo === "efectivo"
+
+            ?
+
+            `
+
+            <br>
+            Recibido:
+            ${dinero(datos.efectivo)}
+
+            <br>
+            Cambio:
+            ${dinero(datos.cambio)}
+
+            `
+
+            :
+
+            ""
+        }
+
+
+        <br><br>
+
+        Puntos ganados:
+        ${datos.puntosGanados}
+
+
+        <br><br>
+
+        <div style="text-align:center">
+
+            ¡Gracias por tu compra!
+
+        </div>
+
+    `;
+
+
+    window.print();
 
 }
 
@@ -3238,199 +2730,128 @@ async function eliminarCliente(id){
    REPORTES
 ========================================================= */
 
+function irReportes(){
+
+    paginaActual = "reportes";
+
+    mostrarReportes();
+
+}
+
+
 function mostrarReportes(){
 
-    const totalVentas =
+    const total =
         ventas.reduce(
-            (sum,v)=>
-                sum+Number(v.total||0),
+            (s,v)=>
+                s + Number(v.total || 0),
             0
         );
 
 
     const efectivo =
         ventas
-        .filter(v=>v.metodo_pago==="efectivo")
+        .filter(v => v.metodo_pago === "efectivo")
         .reduce(
-            (sum,v)=>
-                sum+Number(v.total||0),
-            0
-        );
-
-
-    const tarjeta =
-        ventas
-        .filter(v=>v.metodo_pago==="tarjeta")
-        .reduce(
-            (sum,v)=>
-                sum+Number(v.total||0),
+            (s,v)=>
+                s + Number(v.total || 0),
             0
         );
 
 
     const transferencia =
         ventas
-        .filter(v=>v.metodo_pago==="transferencia")
+        .filter(v => v.metodo_pago === "transferencia")
         .reduce(
-            (sum,v)=>
-                sum+Number(v.total||0),
+            (s,v)=>
+                s + Number(v.total || 0),
             0
         );
 
 
-    document.getElementById("appContent").innerHTML = `
+    const tarjeta =
+        ventas
+        .filter(v => v.metodo_pago === "tarjeta")
+        .reduce(
+            (s,v)=>
+                s + Number(v.total || 0),
+            0
+        );
+
+
+    document.getElementById("app-content")
+    .innerHTML = `
 
         <div class="page-title">
 
-            <h1>Reportes</h1>
+            <h2>Reportes</h2>
 
             <p>
-                Resumen de ventas registradas.
+                Resumen de ventas.
             </p>
 
         </div>
 
 
-        <div class="cards">
+        <div class="products-grid">
 
             <div class="card">
 
-                <div class="card-title">
-                    Ventas
-                </div>
+                <h3>💰 Ventas</h3>
 
-                <div class="card-value">
-                    ${ventas.length}
-                </div>
+                <strong style="font-size:28px">
+
+                    ${dinero(total)}
+
+                </strong>
 
             </div>
 
 
             <div class="card">
 
-                <div class="card-title">
-                    Total vendido
-                </div>
+                <h3>💵 Efectivo</h3>
 
-                <div class="card-value">
-                    ${money(totalVentas)}
-                </div>
+                <strong style="font-size:28px">
 
-            </div>
+                    ${dinero(efectivo)}
 
-
-            <div class="card">
-
-                <div class="card-title">
-                    Efectivo
-                </div>
-
-                <div class="card-value">
-                    ${money(efectivo)}
-                </div>
+                </strong>
 
             </div>
 
 
             <div class="card">
 
-                <div class="card-title">
-                    Tarjeta
-                </div>
+                <h3>🏦 Transferencias</h3>
 
-                <div class="card-value">
-                    ${money(tarjeta)}
-                </div>
+                <strong style="font-size:28px">
+
+                    ${dinero(transferencia)}
+
+                </strong>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>💳 Tarjetas</h3>
+
+                <strong style="font-size:28px">
+
+                    ${dinero(tarjeta)}
+
+                </strong>
 
             </div>
 
         </div>
 
 
-        <div class="panel">
+        <div class="card">
 
-            <div class="panel-header">
-
-                <h2>
-                    Por método de pago
-                </h2>
-
-            </div>
-
-
-            <table>
-
-                <thead>
-
-                    <tr>
-
-                        <th>
-                            Método
-                        </th>
-
-                        <th>
-                            Total
-                        </th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody>
-
-                    <tr>
-
-                        <td>
-                            💵 Efectivo
-                        </td>
-
-                        <td>
-                            ${money(efectivo)}
-                        </td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>
-                            💳 Tarjeta
-                        </td>
-
-                        <td>
-                            ${money(tarjeta)}
-                        </td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>
-                            🏦 Transferencia
-                        </td>
-
-                        <td>
-                            ${money(transferencia)}
-                        </td>
-
-                    </tr>
-
-                </tbody>
-
-            </table>
-
-        </div>
-
-
-        <div class="panel">
-
-            <div class="panel-header">
-
-                <h2>
-                    Historial de ventas
-                </h2>
-
-            </div>
-
+            <h3>Últimas ventas</h3>
 
             <div class="table-wrap">
 
@@ -3440,31 +2861,19 @@ function mostrarReportes(){
 
                         <tr>
 
-                            <th>
-                                Folio
-                            </th>
-
-                            <th>
-                                Fecha
-                            </th>
-
-                            <th>
-                                Total
-                            </th>
-
-                            <th>
-                                Pago
-                            </th>
+                            <th>Folio</th>
+                            <th>Fecha</th>
+                            <th>Total</th>
+                            <th>Pago</th>
 
                         </tr>
 
                     </thead>
 
-
                     <tbody>
 
                         ${
-                            ventas.map(v=>`
+                            ventas.slice(0,20).map(v => `
 
                                 <tr>
 
@@ -3473,12 +2882,18 @@ function mostrarReportes(){
                                     </td>
 
                                     <td>
-                                        ${new Date(v.fecha)
-                                          .toLocaleString("es-MX")}
+                                        ${
+                                            v.fecha
+                                            ?
+                                            new Date(v.fecha)
+                                            .toLocaleString("es-MX")
+                                            :
+                                            "-"
+                                        }
                                     </td>
 
                                     <td>
-                                        ${money(v.total)}
+                                        ${dinero(v.total)}
                                     </td>
 
                                     <td>
@@ -3507,18 +2922,7 @@ function mostrarReportes(){
    INICIAR
 ========================================================= */
 
-document.addEventListener(
-    "DOMContentLoaded",
-    ()=>{
-
-        document
-            .getElementById("menu-inicio")
-            .classList.add("active");
-
-        cargarTodo();
-
-    }
-);
+cargarTodo();
 
 </script>
 
