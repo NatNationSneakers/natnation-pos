@@ -2,452 +2,2383 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#f4a6c1">
-<title>Nat.Nation Sneakers — POS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nat.Nation Sneakers | Punto de Venta</title>
+
 <style>
-:root{
-  --pink:#f49abb;--pink2:#f8c3d7;--pink3:#ffe6ef;
-  --black:#111111;--dark:#171717;--gray:#777;--line:#eeeeee;
-  --white:#fff;--green:#23a566;--red:#e84d6a;
-  --shadow:0 10px 30px rgba(25,15,20,.08);
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,Helvetica,sans-serif;
 }
-*{box-sizing:border-box}
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:#f7f5f6;color:#171717}
-button,input,select{font:inherit}
-button{cursor:pointer;border:0}
-.app{display:flex;min-height:100vh}
-.sidebar{width:240px;background:#101010;color:#fff;padding:22px 16px;position:fixed;left:0;top:0;bottom:0;z-index:20}
-.brand{height:76px;display:flex;align-items:center;justify-content:center;margin-bottom:18px}
-.brand-logo{font-weight:800;font-size:20px;letter-spacing:-1px;text-align:center;line-height:1}
-.brand-logo .heart{display:block;font-size:31px;line-height:24px}
-.brand-logo small{display:block;font-size:10px;letter-spacing:4px;margin-top:6px;color:#fff}
-.nav{display:grid;gap:8px}
-.nav button{width:100%;text-align:left;background:transparent;color:#ddd;padding:13px 14px;border-radius:10px;font-size:14px}
-.nav button:hover,.nav button.active{background:var(--pink);color:#111}
-.main{margin-left:240px;width:calc(100% - 240px);padding:26px 30px}
-.topbar{display:flex;gap:14px;align-items:center;margin-bottom:22px}
-.search{flex:1;background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px 16px;box-shadow:0 2px 10px rgba(0,0,0,.03)}
-.top-actions{display:flex;gap:9px}
-.icon-btn{background:#fff;border:1px solid var(--line);width:44px;height:44px;border-radius:12px}
-.hero{background:linear-gradient(135deg,#fff,#fff5f8);border-radius:22px;padding:24px;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow);margin-bottom:22px}
-.hero h1{margin:0 0 7px;font-size:28px}.hero p{margin:0;color:#777}
-.hero .hero-logo{font-size:25px;font-weight:900;text-align:right}.hero .hero-logo span{color:var(--pink)}
-.section-head{display:flex;align-items:center;justify-content:space-between;margin:18px 0 12px}
-.section-head h2{font-size:19px;margin:0}
-.btn{padding:11px 16px;border-radius:11px;background:#111;color:#fff;font-weight:700}
-.btn.pink{background:var(--pink);color:#111}.btn.light{background:#fff;border:1px solid var(--line);color:#222}.btn.danger{background:#ffe3e8;color:#b51f3e}
-.btn.green{background:#dcf7ea;color:#147a4b}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.stat{background:#fff;border-radius:16px;padding:17px;box-shadow:var(--shadow)}
-.stat .label{font-size:12px;color:#888}.stat .value{font-size:25px;font-weight:800;margin-top:6px}
-.products{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}
-.product-card{background:#fff;border-radius:17px;overflow:hidden;box-shadow:var(--shadow);border:1px solid #f1eef0}
-.product-photo{height:190px;background:#f1eef1;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.product-photo img{width:100%;height:100%;object-fit:cover}
-.no-photo{font-size:46px;color:#aaa}
-.product-info{padding:13px}.product-info h3{margin:0 0 5px;font-size:15px}.meta{color:#888;font-size:12px}.price{font-weight:800;font-size:17px;margin-top:8px}
-.card-actions{display:flex;gap:7px;margin-top:11px}.card-actions button{flex:1;padding:9px;border-radius:9px}
-.sale-layout{display:grid;grid-template-columns:1.4fr .9fr;gap:18px}
-.panel{background:#fff;border-radius:18px;box-shadow:var(--shadow);padding:18px}
-.panel h3{margin:0 0 15px}
-.product-sale-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.sale-product{border:1px solid #eee;border-radius:14px;overflow:hidden;background:#fff;text-align:left}
-.sale-product img{width:100%;height:130px;object-fit:cover;display:block;background:#f4f4f4}
-.sale-product .sp{padding:10px}.sale-product strong{display:block;font-size:13px}.sale-product small{color:#777}.sale-product b{display:block;margin-top:5px}
-.cart-row{display:flex;gap:9px;align-items:center;padding:10px 0;border-bottom:1px solid #eee}
-.cart-row .thumb{width:45px;height:45px;border-radius:8px;object-fit:cover;background:#eee}.cart-row .grow{flex:1}.cart-row strong{font-size:13px}.cart-row small{display:block;color:#888}
-.qty{display:flex;align-items:center;gap:7px}.qty button{width:28px;height:28px;border-radius:8px;background:#f4f4f4}
-.total-box{margin-top:16px;padding-top:13px;border-top:2px solid #eee}
-.total-line{display:flex;justify-content:space-between;margin:7px 0}.grand{font-size:23px;font-weight:900}
-.pay-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
-.pay-grid button{padding:10px;border-radius:10px;background:#f4f4f4}.pay-grid button.selected{background:var(--pink);font-weight:800}
-.field{margin-bottom:11px}.field label{display:block;font-size:12px;font-weight:700;margin-bottom:6px;color:#555}
-.field input,.field select{width:100%;padding:11px 12px;border:1px solid #ddd;border-radius:10px;background:#fff}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.modal-back{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:50;padding:20px}
-.modal-back.open{display:flex}.modal{background:#fff;width:min(760px,100%);max-height:92vh;overflow:auto;border-radius:22px;padding:22px;box-shadow:0 20px 60px rgba(0,0,0,.25)}
-.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.modal-head h2{margin:0}.close{width:38px;height:38px;border-radius:10px;background:#f4f4f4}
-.upload{border:2px dashed #e4c1ce;border-radius:16px;padding:15px;text-align:center;background:#fff8fb}
-.preview{width:150px;height:150px;border-radius:14px;object-fit:cover;margin:10px auto;display:block;background:#f2f2f2}
-.table-wrap{overflow:auto}.table{width:100%;border-collapse:collapse}.table th,.table td{padding:11px;border-bottom:1px solid #eee;text-align:left;font-size:13px}.table th{color:#777}
-.client-card{border:1px solid #eee;border-radius:15px;padding:15px;margin-bottom:10px;display:flex;align-items:center;gap:12px}.avatar{width:44px;height:44px;border-radius:50%;background:var(--pink);display:flex;align-items:center;justify-content:center;font-weight:800}
-.report-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.report-card{background:#fff;border-radius:16px;padding:17px;box-shadow:var(--shadow)}
-.empty{padding:45px;text-align:center;color:#888;background:#fff;border-radius:16px}
-.ticket{width:80mm;background:#fff;color:#111;padding:6mm;font-family:Arial,sans-serif}.ticket-logo{text-align:center;font-size:22px;font-weight:900}.ticket-logo small{display:block;font-size:9px;letter-spacing:3px}.ticket hr{border:0;border-top:1px dashed #111;margin:10px 0}.ticket-row{display:flex;justify-content:space-between;font-size:12px;margin:5px 0}.ticket-total{font-size:17px;font-weight:900}.ticket-center{text-align:center;font-size:11px}.ticket table{width:100%;border-collapse:collapse;font-size:11px}.ticket td{padding:4px 0}.ticket .r{text-align:right}
-.toast{position:fixed;right:22px;bottom:22px;background:#111;color:#fff;padding:13px 16px;border-radius:12px;display:none;z-index:100}.toast.show{display:block}
-@media(max-width:1050px){.products{grid-template-columns:repeat(3,1fr)}.stats{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:800px){.sidebar{width:74px;padding:15px 8px}.brand-logo{font-size:0}.brand-logo .heart{font-size:27px}.brand-logo small{display:none}.nav button{font-size:0;text-align:center;padding:13px 5px}.nav button:first-letter{font-size:19px}.main{margin-left:74px;width:calc(100% - 74px);padding:16px}.products{grid-template-columns:repeat(2,1fr)}.sale-layout{grid-template-columns:1fr}.hero{padding:18px}.hero h1{font-size:22px}.report-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:520px){.stats{grid-template-columns:1fr 1fr}.product-sale-grid{grid-template-columns:repeat(2,1fr)}.products{grid-template-columns:repeat(2,1fr);gap:9px}.product-photo{height:145px}.main{padding:10px}.hero .hero-logo{display:none}.row2{grid-template-columns:1fr}.report-grid{grid-template-columns:1fr}}
+
+body{
+    background:#f7f7f8;
+    color:#171717;
+}
+
+/* =========================
+   ESTRUCTURA
+========================= */
+
+.app{
+    display:flex;
+    min-height:100vh;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar{
+    width:235px;
+    background:#111111;
+    color:white;
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    padding:20px 14px;
+    z-index:100;
+}
+
+.logo{
+    width:150px;
+    height:90px;
+    object-fit:contain;
+    display:block;
+    margin:0 auto 20px;
+}
+
+.brand-fallback{
+    text-align:center;
+    margin-bottom:22px;
+}
+
+.brand-fallback strong{
+    display:block;
+    font-size:22px;
+    font-style:italic;
+}
+
+.brand-fallback span{
+    font-size:11px;
+    letter-spacing:4px;
+    color:#ff2b88;
+}
+
+.menu{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+.menu button{
+    border:0;
+    background:transparent;
+    color:#ddd;
+    padding:13px 15px;
+    border-radius:10px;
+    text-align:left;
+    font-size:14px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.menu button:hover,
+.menu button.active{
+    background:#ff2b88;
+    color:white;
+}
+
+.menu button span{
+    margin-right:10px;
+}
+
+/* =========================
+   CONTENIDO
+========================= */
+
+.main{
+    margin-left:235px;
+    width:calc(100% - 235px);
+    min-height:100vh;
+    padding:25px;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.topbar h1{
+    font-size:26px;
+}
+
+.topbar p{
+    color:#777;
+    margin-top:5px;
+}
+
+.top-actions{
+    display:flex;
+    gap:10px;
+}
+
+/* =========================
+   BOTONES
+========================= */
+
+.btn{
+    border:0;
+    padding:11px 17px;
+    border-radius:9px;
+    cursor:pointer;
+    font-weight:bold;
+    background:#eee;
+}
+
+.btn-pink{
+    background:#ff2b88;
+    color:white;
+}
+
+.btn-black{
+    background:#111;
+    color:white;
+}
+
+.btn-danger{
+    background:#ffe1e9;
+    color:#c50045;
+}
+
+.btn:hover{
+    opacity:.88;
+}
+
+/* =========================
+   DASHBOARD
+========================= */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.stat{
+    background:white;
+    border-radius:15px;
+    padding:20px;
+    box-shadow:0 2px 10px rgba(0,0,0,.05);
+}
+
+.stat small{
+    color:#888;
+}
+
+.stat h2{
+    margin-top:8px;
+    font-size:25px;
+}
+
+/* =========================
+   CATALOGO
+========================= */
+
+.section{
+    background:white;
+    border-radius:17px;
+    padding:22px;
+    margin-bottom:20px;
+    box-shadow:0 2px 10px rgba(0,0,0,.04);
+}
+
+.section-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
+}
+
+.section-header h2{
+    font-size:19px;
+}
+
+.search{
+    width:300px;
+    padding:12px 15px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    outline:none;
+}
+
+.products{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+}
+
+.product{
+    border:1px solid #eee;
+    border-radius:14px;
+    overflow:hidden;
+    background:white;
+    transition:.2s;
+    position:relative;
+}
+
+.product:hover{
+    transform:translateY(-3px);
+    box-shadow:0 7px 20px rgba(0,0,0,.08);
+}
+
+.product-img{
+    width:100%;
+    height:190px;
+    object-fit:cover;
+    background:#f4f4f4;
+}
+
+.product-info{
+    padding:13px;
+}
+
+.product-name{
+    font-weight:bold;
+    margin-bottom:6px;
+}
+
+.product-size{
+    color:#777;
+    font-size:13px;
+}
+
+.product-price{
+    font-size:19px;
+    font-weight:bold;
+    margin-top:8px;
+}
+
+.stock{
+    font-size:12px;
+    color:#777;
+    margin-top:4px;
+}
+
+.product-actions{
+    display:flex;
+    gap:7px;
+    margin-top:12px;
+}
+
+.product-actions button{
+    flex:1;
+}
+
+/* =========================
+   TABLAS
+========================= */
+
+.table-wrap{
+    overflow:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,td{
+    padding:13px 10px;
+    border-bottom:1px solid #eee;
+    text-align:left;
+}
+
+th{
+    color:#777;
+    font-size:13px;
+}
+
+td{
+    font-size:14px;
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    z-index:500;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    background:white;
+    width:min(700px,100%);
+    max-height:90vh;
+    overflow:auto;
+    border-radius:18px;
+    padding:25px;
+}
+
+.modal-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.close{
+    border:0;
+    background:#eee;
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    cursor:pointer;
+    font-size:20px;
+}
+
+.form{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+.field{
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+}
+
+.field.full{
+    grid-column:1/-1;
+}
+
+.field label{
+    font-size:13px;
+    font-weight:bold;
+}
+
+.field input,
+.field select{
+    padding:12px;
+    border:1px solid #ddd;
+    border-radius:9px;
+    outline:none;
+}
+
+.preview{
+    width:150px;
+    height:150px;
+    object-fit:cover;
+    border-radius:12px;
+    border:1px solid #ddd;
+    display:none;
+    margin-top:10px;
+}
+
+/* =========================
+   VENTA
+========================= */
+
+.sale-layout{
+    display:grid;
+    grid-template-columns:1fr 390px;
+    gap:20px;
+}
+
+.sale-products{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+}
+
+.sale-product{
+    border:1px solid #eee;
+    border-radius:12px;
+    overflow:hidden;
+    cursor:pointer;
+}
+
+.sale-product img{
+    width:100%;
+    height:130px;
+    object-fit:cover;
+}
+
+.sale-product-info{
+    padding:10px;
+}
+
+.cart{
+    background:white;
+    border-radius:15px;
+    padding:20px;
+    box-shadow:0 2px 10px rgba(0,0,0,.05);
+}
+
+.cart h3{
+    margin-bottom:15px;
+}
+
+.cart-item{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    padding:12px 0;
+    border-bottom:1px solid #eee;
+}
+
+.cart-total{
+    margin-top:20px;
+    font-size:24px;
+    font-weight:bold;
+}
+
+.payment{
+    margin-top:20px;
+}
+
+.payment select,
+.payment input{
+    width:100%;
+    padding:12px;
+    border:1px solid #ddd;
+    border-radius:9px;
+    margin-top:8px;
+}
+
+/* =========================
+   CLIENTES
+========================= */
+
+.client-card{
+    background:white;
+    border-radius:14px;
+    padding:18px;
+    margin-bottom:10px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+/* =========================
+   TICKET
+========================= */
+
+#printArea{
+    display:none;
+}
+
+.ticket{
+    width:80mm;
+    background:white;
+    padding:10px;
+    font-family:monospace;
+    color:#000;
+}
+
+.ticket-logo{
+    width:55mm;
+    display:block;
+    margin:auto;
+}
+
+.ticket-center{
+    text-align:center;
+}
+
+.ticket-line{
+    border-top:1px dashed #000;
+    margin:8px 0;
+}
+
+.ticket-row{
+    display:flex;
+    justify-content:space-between;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:1000px){
+    .products{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .sale-layout{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:700px){
+    .sidebar{
+        width:75px;
+        padding:12px 8px;
+    }
+
+    .logo{
+        width:55px;
+    }
+
+    .brand-fallback{
+        display:none;
+    }
+
+    .menu button{
+        text-align:center;
+        font-size:0;
+    }
+
+    .menu button span{
+        font-size:20px;
+        margin:0;
+    }
+
+    .main{
+        margin-left:75px;
+        width:calc(100% - 75px);
+        padding:15px;
+    }
+
+    .products{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .form{
+        grid-template-columns:1fr;
+    }
+
+    .field.full{
+        grid-column:auto;
+    }
+
+    .search{
+        width:100%;
+    }
+
+    .section-header{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:10px;
+    }
+}
+
 @media print{
-  body>*{display:none!important}
-  #printRoot{display:block!important;position:static!important}
-  @page{size:80mm auto;margin:0}
-  .ticket{margin:0 auto;width:80mm}
+    body *{
+        visibility:hidden;
+    }
+
+    #printArea,
+    #printArea *{
+        visibility:visible;
+    }
+
+    #printArea{
+        display:block;
+        position:absolute;
+        left:0;
+        top:0;
+    }
 }
-#printRoot{display:none}
 </style>
 </head>
+
 <body>
+
 <div class="app">
-  <aside class="sidebar">
-    <div class="brand">
-      <div class="brand-logo"><span class="heart">♡</span>Nat.Nation<small>SNEAKERS</small></div>
+
+<!-- =========================
+     MENU LATERAL
+========================= -->
+
+<aside class="sidebar">
+
+    <img src="logo.png" class="logo"
+         onerror="this.style.display='none';document.getElementById('brandFallback').style.display='block';">
+
+    <div id="brandFallback" class="brand-fallback" style="display:none;">
+        <strong>Nat.Nation</strong>
+        <span>SNEAKERS</span>
     </div>
-    <nav class="nav">
-      <button data-nav="inicio" onclick="go('inicio')">🏠 Inicio</button>
-      <button data-nav="venta" onclick="go('venta')">🛒 Venta</button>
-      <button data-nav="inventario" onclick="go('inventario')">👟 Inventario</button>
-      <button data-nav="clientes" onclick="go('clientes')">👤 Clientes</button>
-      <button data-nav="reportes" onclick="go('reportes')">📊 Reportes</button>
-      <button data-nav="puntos" onclick="go('puntos')">⭐ Puntos</button>
-      <button data-nav="config" onclick="go('config')">⚙️ Configuración</button>
+
+    <nav class="menu">
+
+        <button onclick="mostrarInicio()" class="active">
+            <span>⌂</span> Inicio
+        </button>
+
+        <button onclick="mostrarVentas()">
+            <span>🛒</span> Ventas
+        </button>
+
+        <button onclick="mostrarProductos()">
+            <span>👟</span> Productos
+        </button>
+
+        <button onclick="mostrarClientes()">
+            <span>👤</span> Clientes
+        </button>
+
+        <button onclick="mostrarPuntos()">
+            <span>⭐</span> Puntos
+        </button>
+
+        <button onclick="mostrarReportes()">
+            <span>📊</span> Reportes
+        </button>
+
+        <button onclick="mostrarConfiguracion()">
+            <span>⚙️</span> Configuración
+        </button>
+
     </nav>
-  </aside>
+</aside>
 
-  <main class="main">
+
+<!-- =========================
+     CONTENIDO
+========================= -->
+
+<main class="main">
+
     <div class="topbar">
-      <input id="globalSearch" class="search" placeholder="Buscar producto, talla o cliente..." oninput="globalSearch(this.value)">
-      <div class="top-actions"><button class="icon-btn" onclick="go('venta')">🛒</button><button class="icon-btn" onclick="go('config')">⚙️</button></div>
+
+        <div>
+            <h1 id="titulo">Inicio</h1>
+            <p id="subtitulo">
+                Punto de venta · Nat.Nation Sneakers
+            </p>
+        </div>
+
+        <div class="top-actions">
+            <button class="btn btn-pink" onclick="abrirProducto()">
+                + Agregar producto
+            </button>
+        </div>
+
     </div>
-    <div id="view"></div>
-  </main>
+
+    <div id="contenido"></div>
+
+</main>
+
 </div>
 
-<div id="modalBack" class="modal-back" onclick="if(event.target.id==='modalBack')closeModal()">
-  <div class="modal"><div class="modal-head"><h2 id="modalTitle"></h2><button class="close" onclick="closeModal()">×</button></div><div id="modalBody"></div></div>
+
+<!-- =========================
+     MODAL
+========================= -->
+
+<div id="modal" class="modal">
+
+    <div class="modal-box">
+
+        <div class="modal-head">
+            <h2 id="modalTitulo">Ventana</h2>
+            <button class="close" onclick="cerrarModal()">×</button>
+        </div>
+
+        <div id="modalContenido"></div>
+
+    </div>
+
 </div>
-<div id="toast" class="toast"></div>
-<div id="printRoot"></div>
+
+
+<div id="printArea"></div>
+
 
 <script>
-const STORE_DEFAULT={
-  name:"Nat.Nation Sneakers",
-  address:"Calle Juan Clímaco Ramírez SNVC, San Andrés, 55780 Jaltenco, Méx.",
-  phone:"5624570336"
-};
-let db;
-let products=JSON.parse(localStorage.getItem("nn_products")||"[]");
-let clients=JSON.parse(localStorage.getItem("nn_clients")||"[]");
-let sales=JSON.parse(localStorage.getItem("nn_sales")||"[]");
-let settings=JSON.parse(localStorage.getItem("nn_settings")||"null")||STORE_DEFAULT;
-let pointsCfg=JSON.parse(localStorage.getItem("nn_points")||"null")||{enabled:true,pointsPer10:1,redeemValue:1};
-let cart=[];
-let payment="Efectivo";
-let saleClientId="";
-let selectedPhotoData="";
 
-function save(){
-  localStorage.setItem("nn_products",JSON.stringify(products));
-  localStorage.setItem("nn_clients",JSON.stringify(clients));
-  localStorage.setItem("nn_sales",JSON.stringify(sales));
-  localStorage.setItem("nn_settings",JSON.stringify(settings));
-  localStorage.setItem("nn_points",JSON.stringify(pointsCfg));
-}
-function money(n){return new Intl.NumberFormat("es-MX",{style:"currency",currency:"MXN"}).format(Number(n)||0)}
-function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
-function toast(t){const x=document.getElementById("toast");x.textContent=t;x.classList.add("show");setTimeout(()=>x.classList.remove("show"),2200)}
-function openModal(title,body){document.getElementById("modalTitle").textContent=title;document.getElementById("modalBody").innerHTML=body;document.getElementById("modalBack").classList.add("open")}
-function closeModal(){document.getElementById("modalBack").classList.remove("open");selectedPhotoData=""}
-function navActive(name){document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.nav===name))}
+/* =====================================================
+   DATOS
+===================================================== */
 
-function openDB(){
- return new Promise((resolve,reject)=>{
-  const req=indexedDB.open("NatNationPOS",1);
-  req.onupgradeneeded=e=>{const d=e.target.result;if(!d.objectStoreNames.contains("images"))d.createObjectStore("images")};
-  req.onsuccess=e=>{db=e.target.result;resolve()};
-  req.onerror=()=>reject(req.error);
- });
-}
-function imagePut(id,data){
- return new Promise((resolve,reject)=>{const tx=db.transaction("images","readwrite");tx.objectStore("images").put(data,id);tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error)})
-}
-function imageGet(id){
- return new Promise(resolve=>{
-  if(!id||!db)return resolve("");
-  const tx=db.transaction("images","readonly");const r=tx.objectStore("images").get(id);r.onsuccess=()=>resolve(r.result||"");r.onerror=()=>resolve("");
- });
-}
-function imageDelete(id){
- if(!id||!db)return;
- const tx=db.transaction("images","readwrite");tx.objectStore("images").delete(id);
-}
-function fileToData(file){
- return new Promise(resolve=>{
-  const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{
-    const max=900,scale=Math.min(1,max/Math.max(im.width,im.height));
-    const c=document.createElement("canvas");c.width=Math.round(im.width*scale);c.height=Math.round(im.height*scale);
-    c.getContext("2d").drawImage(im,0,0,c.width,c.height);resolve(c.toDataURL("image/jpeg",.82));
-  };im.src=r.result};r.readAsDataURL(file);
- });
+let productos = JSON.parse(
+    localStorage.getItem("natnation_productos") || "[]"
+);
+
+let clientes = JSON.parse(
+    localStorage.getItem("natnation_clientes") || "[]"
+);
+
+let ventas = JSON.parse(
+    localStorage.getItem("natnation_ventas") || "[]"
+);
+
+let carrito = [];
+
+let puntosPorPeso = 1;
+
+
+/* =====================================================
+   GUARDAR
+===================================================== */
+
+function guardar(){
+
+    localStorage.setItem(
+        "natnation_productos",
+        JSON.stringify(productos)
+    );
+
+    localStorage.setItem(
+        "natnation_clientes",
+        JSON.stringify(clientes)
+    );
+
+    localStorage.setItem(
+        "natnation_ventas",
+        JSON.stringify(ventas)
+    );
 }
 
-function go(view){
- navActive(view);
- if(view==="inicio")renderHome();
- if(view==="venta")renderSale();
- if(view==="inventario")renderInventory();
- if(view==="clientes")renderClients();
- if(view==="reportes")renderReports();
- if(view==="puntos")renderPoints();
- if(view==="config")renderConfig();
-}
-function globalSearch(q){
- q=q.trim().toLowerCase();
- if(!q)return;
- const p=products.filter(x=>(x.name+" "+x.brand+" "+x.size+" "+x.color).toLowerCase().includes(q));
- if(p.length) {renderInventory(q);return}
- const c=clients.filter(x=>(x.name+" "+x.phone+" "+x.card).toLowerCase().includes(q));
- if(c.length){renderClients(q);return}
+
+/* =====================================================
+   UTILIDADES
+===================================================== */
+
+function dinero(valor){
+    return Number(valor || 0).toLocaleString(
+        "es-MX",
+        {
+            style:"currency",
+            currency:"MXN"
+        }
+    );
 }
 
-function renderHome(){
- const total=sales.reduce((a,s)=>a+Number(s.total),0);
- const today=new Date().toISOString().slice(0,10);
- const todaySales=sales.filter(s=>s.date.slice(0,10)===today);
- const stock=products.reduce((a,p)=>a+Number(p.stock||0),0);
- navActive("inicio");
- document.getElementById("view").innerHTML=`
- <section class="hero">
-   <div><h1>Hola 👋</h1><p>Administra tu tienda de sneakers desde aquí.</p></div>
-   <div class="hero-logo">Nat.<span>Nation</span><br><small>SNEAKERS</small></div>
- </section>
- <div class="stats">
-   <div class="stat"><div class="label">Ventas de hoy</div><div class="value">${money(todaySales.reduce((a,s)=>a+Number(s.total),0))}</div></div>
-   <div class="stat"><div class="label">Ventas totales</div><div class="value">${money(total)}</div></div>
-   <div class="stat"><div class="label">Productos en inventario</div><div class="value">${stock}</div></div>
-   <div class="stat"><div class="label">Clientes</div><div class="value">${clients.length}</div></div>
- </div>
- <div class="section-head"><h2>Productos</h2><button class="btn pink" onclick="go('venta')">+ Nueva venta</button></div>
- <div id="homeProducts" class="products"></div>`;
- renderProductCards(products.slice(0,8),"homeProducts");
-}
-async function renderProductCards(list,id){
- const box=document.getElementById(id); if(!box)return;
- if(!list.length){box.innerHTML='<div class="empty">No hay productos todavía. Ve a Inventario y agrega el primero.</div>';return}
- box.innerHTML="";
- for(const p of list){
-   const img=await imageGet(p.imageId);
-   const div=document.createElement("div");div.className="product-card";
-   div.innerHTML=`<div class="product-photo">${img?`<img src="${img}">`:`<div class="no-photo">👟</div>`}</div>
-   <div class="product-info"><h3>${esc(p.name)}</h3><div class="meta">${esc(p.brand||"")} ${p.color?"· "+esc(p.color):""} · Talla ${esc(p.size)} · Stock ${p.stock}</div><div class="price">${money(p.price)}</div>
-   <div class="card-actions"><button class="btn pink" onclick="addToCart('${p.id}')">Agregar</button><button class="btn light" onclick="editProduct('${p.id}')">Editar</button></div></div>`;
-   box.appendChild(div);
- }
+function esc(texto){
+    return String(texto || "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;");
 }
 
-function renderInventory(filter=""){
- navActive("inventario");
- document.getElementById("view").innerHTML=`
- <div class="section-head"><div><h2>Inventario de productos</h2><p style="color:#888;margin:5px 0">Sube tus fotos directamente desde el iPad o iPhone.</p></div><button class="btn pink" onclick="newProduct()">+ Agregar producto</button></div>
- <div class="panel"><div class="field"><input id="invSearch" value="${esc(filter)}" placeholder="Buscar producto, marca o talla..." oninput="renderInventory(this.value)"></div>
- <div id="inventoryCards" class="products"></div></div>`;
- const q=filter.toLowerCase();
- const list=products.filter(p=>(p.name+" "+p.brand+" "+p.size+" "+p.color).toLowerCase().includes(q));
- renderProductCards(list,"inventoryCards");
-}
-function newProduct(){
- selectedPhotoData="";
- openModal("Agregar producto",productForm({}));
-}
-function productForm(p){
- return `<div class="upload">
-   <img id="photoPreview" class="preview" style="${p.imageId?"":"display:none"}">
-   <div style="font-weight:800">📸 Foto del producto</div><div style="color:#888;font-size:12px;margin:5px 0 10px">Elige una foto de tu carrete o toma una nueva.</div>
-   <input id="photoFile" type="file" accept="image/*" capture="environment" onchange="previewPhoto(this)">
- </div>
- <div class="row2" style="margin-top:14px">
-  <div class="field"><label>Nombre / modelo *</label><input id="pName" value="${esc(p.name||"")}" placeholder="Ej. Samba"></div>
-  <div class="field"><label>Marca</label><input id="pBrand" value="${esc(p.brand||"")}" placeholder="Ej. Adidas"></div>
- </div>
- <div class="row2"><div class="field"><label>Talla *</label><input id="pSize" value="${esc(p.size||"")}" placeholder="Ej. 24.5"></div><div class="field"><label>Color</label><input id="pColor" value="${esc(p.color||"")}" placeholder="Ej. Negro"></div></div>
- <div class="row2"><div class="field"><label>Precio de venta *</label><input id="pPrice" type="number" step="0.01" value="${p.price??""}"></div><div class="field"><label>Existencia *</label><input id="pStock" type="number" min="0" step="1" value="${p.stock??0}"></div></div>
- <div class="field"><label>SKU / código (opcional)</label><input id="pSku" value="${esc(p.sku||"")}" placeholder="Escanea o escribe un código"></div>
- <button class="btn pink" style="width:100%" onclick="saveProduct('${p.id||""}')">Guardar producto</button>`;
-}
-async function previewPhoto(input){
- if(!input.files?.[0])return;
- selectedPhotoData=await fileToData(input.files[0]);
- const img=document.getElementById("photoPreview");img.src=selectedPhotoData;img.style.display="block";
-}
-async function saveProduct(id){
- const name=document.getElementById("pName").value.trim(), size=document.getElementById("pSize").value.trim();
- const price=Number(document.getElementById("pPrice").value),stock=Number(document.getElementById("pStock").value);
- if(!name||!size||!price||stock<0){toast("Completa nombre, talla, precio y existencia");return}
- let p=id?products.find(x=>x.id===id):null;
- if(!p){p={id:"p_"+Date.now(),createdAt:Date.now()};products.push(p)}
- Object.assign(p,{name,brand:document.getElementById("pBrand").value.trim(),size,color:document.getElementById("pColor").value.trim(),price,stock,sku:document.getElementById("pSku").value.trim()});
- if(selectedPhotoData){p.imageId=p.id;await imagePut(p.id,selectedPhotoData)}
- save();closeModal();renderInventory();toast("Producto guardado ✓");
-}
-function editProduct(id){const p=products.find(x=>x.id===id);if(!p)return;selectedPhotoData="";openModal("Editar producto",productForm(p));}
-function deleteProduct(id){
- const p=products.find(x=>x.id===id);if(!p)return;
- if(confirm(`¿Eliminar ${p.name}?`)){products=products.filter(x=>x.id!==id);imageDelete(id);save();renderInventory();toast("Producto eliminado")}
+function cambiarTitulo(titulo,subtitulo=""){
+    document.getElementById("titulo").textContent=titulo;
+    document.getElementById("subtitulo").textContent=subtitulo;
 }
 
-async function renderSale(){
- navActive("venta");
- document.getElementById("view").innerHTML=`
- <div class="section-head"><div><h2>Nueva venta</h2><p style="color:#888;margin:5px 0">Selecciona los productos y cobra.</p></div></div>
- <div class="sale-layout">
-  <div class="panel"><div class="field"><input id="saleSearch" placeholder="🔎 Buscar producto..." oninput="renderSaleProducts(this.value)"></div><div id="saleProducts" class="product-sale-grid"></div></div>
-  <div class="panel"><h3>Carrito</h3><div id="cart"></div><div class="total-box" id="saleTotals"></div></div>
- </div>`;
- renderSaleProducts("");
- renderCart();
-}
-async function renderSaleProducts(q){
- const box=document.getElementById("saleProducts");if(!box)return;
- const list=products.filter(p=>Number(p.stock)>0&&(p.name+" "+p.brand+" "+p.size+" "+p.color).toLowerCase().includes(q.toLowerCase()));
- box.innerHTML="";
- if(!list.length){box.innerHTML='<div class="empty">No hay productos disponibles.</div>';return}
- for(const p of list){
-   const img=await imageGet(p.imageId);
-   const d=document.createElement("button");d.className="sale-product";d.onclick=()=>addToCart(p.id);
-   d.innerHTML=`${img?`<img src="${img}">`:`<div style="height:130px;background:#f1f1f1;display:flex;align-items:center;justify-content:center;font-size:40px">👟</div>`}
-   <div class="sp"><strong>${esc(p.name)}</strong><small>${esc(p.brand||"")} · ${esc(p.color||"")} · Talla ${esc(p.size)}</small><b>${money(p.price)}</b></div>`;
-   box.appendChild(d);
- }
-}
-function addToCart(id){
- const p=products.find(x=>x.id===id);if(!p||p.stock<=0)return;
- const item=cart.find(x=>x.id===id);
- if(item){if(item.qty>=p.stock){toast("No hay más existencias");return}item.qty++}
- else cart.push({id,qty:1});
- renderCart();
-}
-function changeQty(id,n){
- const p=products.find(x=>x.id===id),item=cart.find(x=>x.id===id);if(!item)return;
- item.qty+=n;if(item.qty<=0)cart=cart.filter(x=>x.id!==id);
- if(item&&p&&item.qty>p.stock)item.qty=p.stock;
- renderCart();
-}
-async function renderCart(){
- const box=document.getElementById("cart");const totals=document.getElementById("saleTotals");if(!box)return;
- if(!cart.length){box.innerHTML='<div class="empty">Tu carrito está vacío.</div>';totals.innerHTML="";return}
- box.innerHTML="";
- let total=0;
- for(const item of cart){
-   const p=products.find(x=>x.id===item.id);if(!p)continue;total+=p.price*item.qty;
-   const img=await imageGet(p.imageId);
-   const d=document.createElement("div");d.className="cart-row";
-   d.innerHTML=`${img?`<img class="thumb" src="${img}">`:`<div class="thumb" style="display:flex;align-items:center;justify-content:center">👟</div>`}
-   <div class="grow"><strong>${esc(p.name)}</strong><small>Talla ${esc(p.size)} · ${money(p.price)}</small></div>
-   <div class="qty"><button onclick="changeQty('${p.id}',-1)">−</button><b>${item.qty}</b><button onclick="changeQty('${p.id}',1)">+</button></div>`;
-   box.appendChild(d);
- }
- totals.innerHTML=`<div class="field"><label>Cliente / tarjeta</label><input id="saleCard" placeholder="Escanea o escribe la tarjeta del cliente" oninput="findSaleClient(this.value)"></div>
- <div id="clientFound"></div>
- <div class="field"><label>Forma de pago</label><div class="pay-grid"><button class="${payment==="Efectivo"?"selected":""}" onclick="setPayment('Efectivo')">💵 Efectivo</button><button class="${payment==="Transferencia"?"selected":""}" onclick="setPayment('Transferencia')">🏦 Transferencia</button><button class="${payment==="Tarjeta"?"selected":""}" onclick="setPayment('Tarjeta')">💳 Tarjeta</button></div></div>
- ${payment==="Efectivo"?`<div class="field"><label>Recibido</label><input id="cash" type="number" step="0.01" placeholder="${total.toFixed(2)}" oninput="updateChange(${total})"></div><div id="change" style="font-weight:800;margin:8px 0"></div>`:""}
- <div class="total-line"><span>Subtotal</span><b>${money(total)}</b></div>
- <div class="total-line grand"><span>Total</span><span>${money(total)}</span></div>
- <button class="btn pink" style="width:100%;margin-top:10px" onclick="finalizeSale()">Finalizar venta</button>`;
-}
-function setPayment(p){payment=p;renderCart()}
-function updateChange(total){const c=Number(document.getElementById("cash")?.value||0);document.getElementById("change").textContent=c>=total?"Cambio: "+money(c-total):"Faltan: "+money(total-c)}
-function findSaleClient(v){
- const c=clients.find(x=>x.card.toLowerCase()===v.trim().toLowerCase());
- saleClientId=c?.id||"";
- const box=document.getElementById("clientFound");if(box)box.innerHTML=c?`<div style="background:#fff3f8;border-radius:10px;padding:10px;margin-bottom:10px">👤 <b>${esc(c.name)}</b> · ⭐ ${c.points||0} puntos</div>`:"";
-}
-function finalizeSale(){
- if(!cart.length){toast("Agrega productos");return}
- const total=cart.reduce((a,i)=>{const p=products.find(x=>x.id===i.id);return a+p.price*i.qty},0);
- let received=total,change=0;
- if(payment==="Efectivo"){received=Number(document.getElementById("cash")?.value||0);if(received<total){toast("El efectivo recibido no alcanza");return}change=received-total}
- const client=clients.find(x=>x.id===saleClientId);
- const earned=pointsCfg.enabled?Math.floor(total/10)*Number(pointsCfg.pointsPer10||1):0;
- for(const i of cart){const p=products.find(x=>x.id===i.id);p.stock-=i.qty}
- if(client){client.points=(client.points||0)+earned}
- const sale={id:"V"+Date.now(),date:new Date().toISOString(),products:cart.map(i=>{const p=products.find(x=>x.id===i.id);return{name:p.name,size:p.size,price:p.price,qty:i.qty}}),total,payment,client:client?.name||"Público general",clientId:client?.id||"",earned,received,change};
- sales.push(sale);save();printTicket(sale);cart=[];saleClientId="";payment="Efectivo";renderSale();toast("Venta registrada ✓");
+function modal(titulo,contenido){
+
+    document.getElementById("modalTitulo").textContent=titulo;
+    document.getElementById("modalContenido").innerHTML=contenido;
+
+    document.getElementById("modal").classList.add("show");
 }
 
-function renderClients(filter=""){
- navActive("clientes");
- document.getElementById("view").innerHTML=`<div class="section-head"><div><h2>Clientes</h2><p style="color:#888;margin:5px 0">Tarjetas, puntos e historial.</p></div><button class="btn pink" onclick="newClient()">+ Agregar cliente</button></div>
- <div class="panel"><div class="field"><input value="${esc(filter)}" placeholder="Buscar nombre, teléfono o tarjeta..." oninput="renderClients(this.value)"></div><div id="clientsList"></div></div>`;
- const q=filter.toLowerCase();const list=clients.filter(c=>(c.name+" "+c.phone+" "+c.card).toLowerCase().includes(q));
- const box=document.getElementById("clientsList");
- if(!list.length){box.innerHTML='<div class="empty">No hay clientes.</div>';return}
- box.innerHTML=list.map(c=>`<div class="client-card"><div class="avatar">${esc(c.name[0]||"?")}</div><div style="flex:1"><b>${esc(c.name)}</b><div style="color:#888;font-size:12px">${esc(c.phone||"")} · Tarjeta: ${esc(c.card||"")}</div><div style="margin-top:4px">⭐ ${c.points||0} puntos</div></div><button class="btn light" onclick="editClient('${c.id}')">Editar</button></div>`).join("");
-}
-function newClient(){openModal("Agregar cliente",clientForm({}))}
-function clientForm(c){return `<div class="field"><label>Nombre *</label><input id="cName" value="${esc(c.name||"")}"></div><div class="row2"><div class="field"><label>Teléfono</label><input id="cPhone" value="${esc(c.phone||"")}"></div><div class="field"><label>Tarjeta / código *</label><input id="cCard" value="${esc(c.card||"")}" placeholder="Ej. NN000123"></div></div><button class="btn pink" style="width:100%" onclick="saveClient('${c.id||""}')">Guardar cliente</button>`}
-function saveClient(id){
- const name=document.getElementById("cName").value.trim(),card=document.getElementById("cCard").value.trim();
- if(!name||!card){toast("Nombre y tarjeta son obligatorios");return}
- let c=id?clients.find(x=>x.id===id):null;if(!c){c={id:"c_"+Date.now(),points:0};clients.push(c)}
- Object.assign(c,{name,phone:document.getElementById("cPhone").value.trim(),card});save();closeModal();renderClients();toast("Cliente guardado ✓");
-}
-function editClient(id){const c=clients.find(x=>x.id===id);if(c)openModal("Editar cliente",clientForm(c))}
-
-function renderReports(){
- navActive("reportes");
- const total=sales.reduce((a,s)=>a+s.total,0),cash=sales.filter(s=>s.payment==="Efectivo").reduce((a,s)=>a+s.total,0),tr=sales.filter(s=>s.payment==="Transferencia").reduce((a,s)=>a+s.total,0),card=sales.filter(s=>s.payment==="Tarjeta").reduce((a,s)=>a+s.total,0);
- document.getElementById("view").innerHTML=`<div class="section-head"><h2>Reportes de ventas</h2><button class="btn light" onclick="exportCSV()">Exportar CSV</button></div>
- <div class="report-grid"><div class="report-card"><small>Ventas</small><h2>${money(total)}</h2></div><div class="report-card"><small>Efectivo</small><h2>${money(cash)}</h2></div><div class="report-card"><small>Transferencias</small><h2>${money(tr)}</h2></div><div class="report-card"><small>Tarjeta</small><h2>${money(card)}</h2></div><div class="report-card"><small>Tickets</small><h2>${sales.length}</h2></div><div class="report-card"><small>Puntos otorgados</small><h2>${sales.reduce((a,s)=>a+(s.earned||0),0)}</h2></div></div>
- <div class="section-head"><h2>Últimas ventas</h2></div><div class="panel table-wrap"><table class="table"><thead><tr><th>Folio</th><th>Fecha</th><th>Cliente</th><th>Pago</th><th>Total</th><th></th></tr></thead><tbody>${sales.slice().reverse().slice(0,30).map(s=>`<tr><td>${s.id}</td><td>${new Date(s.date).toLocaleString("es-MX")}</td><td>${esc(s.client)}</td><td>${s.payment}</td><td>${money(s.total)}</td><td><button class="btn light" onclick='printTicket(${JSON.stringify(s)})'>Ticket</button></td></tr>`).join("")}</tbody></table></div>`;
-}
-function exportCSV(){
- const rows=[["Folio","Fecha","Cliente","Pago","Total","Puntos"],...sales.map(s=>[s.id,s.date,s.client,s.payment,s.total,s.earned||0])];
- const csv=rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(",")).join("\n");
- const a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\ufeff"+csv],{type:"text/csv"}));a.download="NatNation_ventas.csv";a.click();
+function cerrarModal(){
+    document.getElementById("modal").classList.remove("show");
 }
 
-function renderPoints(){
- navActive("puntos");
- document.getElementById("view").innerHTML=`<div class="section-head"><h2>Programa de puntos</h2></div><div class="panel">
- <div class="field"><label><input id="ptsEnabled" type="checkbox" ${pointsCfg.enabled?"checked":""}> Activar puntos</label></div>
- <div class="row2"><div class="field"><label>Puntos por cada $10</label><input id="ptsRate" type="number" min="0" value="${pointsCfg.pointsPer10}"></div><div class="field"><label>Valor de 1 punto en pesos</label><input id="ptsValue" type="number" min="0" step=".01" value="${pointsCfg.redeemValue}"></div></div>
- <button class="btn pink" onclick="savePoints()">Guardar configuración</button></div>`;
-}
-function savePoints(){pointsCfg={enabled:document.getElementById("ptsEnabled").checked,pointsPer10:Number(document.getElementById("ptsRate").value),redeemValue:Number(document.getElementById("ptsValue").value)};save();toast("Configuración guardada ✓");renderPoints()}
 
-function renderConfig(){
- navActive("config");
- document.getElementById("view").innerHTML=`<div class="section-head"><h2>Configuración</h2></div><div class="panel">
- <h3>Datos que aparecerán en el ticket</h3>
- <div class="field"><label>Nombre de la tienda</label><input id="sName" value="${esc(settings.name)}"></div>
- <div class="field"><label>Dirección</label><input id="sAddress" value="${esc(settings.address)}"></div>
- <div class="field"><label>Teléfono</label><input id="sPhone" value="${esc(settings.phone)}"></div>
- <button class="btn pink" onclick="saveSettings()">Guardar datos</button>
- <hr style="border:0;border-top:1px solid #eee;margin:22px 0">
- <h3>Logo de la tienda</h3><div class="upload"><input type="file" accept="image/*" onchange="saveLogo(this)"><p style="color:#888;font-size:12px">Selecciona tu logo una sola vez. Se guardará en este dispositivo y se usará en el ticket.</p><img id="logoPreview" class="preview"></div>
- </div>`;
- loadLogoPreview();
-}
-async function saveSettings(){settings={name:document.getElementById("sName").value.trim(),address:document.getElementById("sAddress").value.trim(),phone:document.getElementById("sPhone").value.trim()};save();toast("Datos guardados ✓")}
-async function saveLogo(input){if(!input.files?.[0])return;const data=await fileToData(input.files[0]);await imagePut("STORE_LOGO",data);toast("Logo guardado ✓");loadLogoPreview()}
-async function loadLogoPreview(){const img=document.getElementById("logoPreview");if(!img)return;const d=await imageGet("STORE_LOGO");if(d){img.src=d;img.style.display="block"}else img.style.display="none"}
+/* =====================================================
+   INICIO
+===================================================== */
 
-async function printTicket(sale){
- const logo=await imageGet("STORE_LOGO");
- const rows=sale.products.map(p=>`<tr><td>${esc(p.name)}<br><small>Talla ${esc(p.size)} × ${p.qty}</small></td><td class="r">${money(p.price*p.qty)}</td></tr>`).join("");
- document.getElementById("printRoot").innerHTML=`<div class="ticket">
- ${logo?`<div style="text-align:center"><img src="${logo}" style="max-width:58mm;max-height:28mm;object-fit:contain"></div>`:`<div class="ticket-logo">♡ Nat.Nation<small>SNEAKERS</small></div>`}
- <div class="ticket-center"><b>${esc(settings.name)}</b><br>${esc(settings.address)}<br>Tel. ${esc(settings.phone)}</div>
- <hr><div class="ticket-row"><span>Folio</span><b>${esc(sale.id)}</b></div><div class="ticket-row"><span>Fecha</span><span>${new Date(sale.date).toLocaleString("es-MX")}</span></div><div class="ticket-row"><span>Cliente</span><span>${esc(sale.client)}</span></div>
- <hr><table>${rows}</table><hr>
- <div class="ticket-row"><span>Subtotal</span><span>${money(sale.total)}</span></div>
- <div class="ticket-row ticket-total"><span>TOTAL</span><span>${money(sale.total)}</span></div>
- <div class="ticket-row"><span>Pago</span><span>${esc(sale.payment)}</span></div>
- ${sale.payment==="Efectivo"?`<div class="ticket-row"><span>Recibido</span><span>${money(sale.received)}</span></div><div class="ticket-row"><span>Cambio</span><span>${money(sale.change)}</span></div>`:""}
- <div class="ticket-row"><span>Puntos obtenidos</span><span>⭐ ${sale.earned||0}</span></div>
- <hr><div class="ticket-center">¡Gracias por tu compra!<br>Donde empieza tu estilo.</div>
- </div>`;
- document.getElementById("printRoot").style.display="block";
- setTimeout(()=>{window.print();document.getElementById("printRoot").style.display="none"},100);
+function mostrarInicio(){
+
+    cambiarTitulo(
+        "Inicio",
+        "Punto de venta · Nat.Nation Sneakers"
+    );
+
+    const ventasHoy = ventas.filter(v =>
+        new Date(v.fecha).toDateString() === new Date().toDateString()
+    );
+
+    const totalHoy = ventasHoy.reduce(
+        (a,v)=>a+Number(v.total),
+        0
+    );
+
+    const stock = productos.reduce(
+        (a,p)=>a+Number(p.stock || 0),
+        0
+    );
+
+    document.getElementById("contenido").innerHTML=`
+
+        <div class="stats">
+
+            <div class="stat">
+                <small>Ventas de hoy</small>
+                <h2>${dinero(totalHoy)}</h2>
+            </div>
+
+            <div class="stat">
+                <small>Ventas</small>
+                <h2>${ventasHoy.length}</h2>
+            </div>
+
+            <div class="stat">
+                <small>Productos</small>
+                <h2>${productos.length}</h2>
+            </div>
+
+            <div class="stat">
+                <small>Existencias</small>
+                <h2>${stock}</h2>
+            </div>
+
+        </div>
+
+        <div class="section">
+
+            <div class="section-header">
+
+                <div>
+                    <h2>Productos</h2>
+                    <p style="color:#888;margin-top:5px;">
+                        Selecciona un producto para vender
+                    </p>
+                </div>
+
+                <input
+                    class="search"
+                    id="buscarInicio"
+                    placeholder="Buscar producto..."
+                    oninput="filtrarInicio()"
+                >
+
+            </div>
+
+            <div id="productosInicio" class="products">
+
+                ${renderProductos(productos)}
+
+            </div>
+
+        </div>
+    `;
 }
 
-async function init(){
- await openDB();
- save();
- go("inicio");
+
+function filtrarInicio(){
+
+    const texto =
+        document.getElementById("buscarInicio")
+        .value
+        .toLowerCase();
+
+    const filtrados=productos.filter(p=>
+        p.nombre.toLowerCase().includes(texto) ||
+        String(p.talla).includes(texto)
+    );
+
+    document.getElementById("productosInicio").innerHTML =
+        renderProductos(filtrados);
 }
-init();
+
+
+/* =====================================================
+   PRODUCTOS
+===================================================== */
+
+function mostrarProductos(){
+
+    cambiarTitulo(
+        "Productos",
+        "Inventario de Nat.Nation Sneakers"
+    );
+
+    document.getElementById("contenido").innerHTML=`
+
+        <div class="section">
+
+            <div class="section-header">
+
+                <h2>Inventario</h2>
+
+                <button
+                    class="btn btn-pink"
+                    onclick="abrirProducto()">
+                    + Agregar producto
+                </button>
+
+            </div>
+
+            <div class="table-wrap">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>Imagen</th>
+                            <th>Producto</th>
+                            <th>Talla</th>
+                            <th>Precio</th>
+                            <th>Existencia</th>
+                            <th>Acciones</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        ${productos.map((p,i)=>`
+
+                            <tr>
+
+                                <td>
+                                    <img
+                                        src="${p.foto || ''}"
+                                        style="
+                                        width:55px;
+                                        height:55px;
+                                        object-fit:cover;
+                                        border-radius:8px;
+                                        background:#eee;
+                                        "
+                                    >
+                                </td>
+
+                                <td>
+                                    <strong>${esc(p.nombre)}</strong>
+                                </td>
+
+                                <td>${esc(p.talla)}</td>
+
+                                <td>${dinero(p.precio)}</td>
+
+                                <td>${p.stock}</td>
+
+                                <td>
+
+                                    <button
+                                        class="btn"
+                                        onclick="editarProducto(${i})">
+                                        Editar
+                                    </button>
+
+                                    <button
+                                        class="btn btn-danger"
+                                        onclick="eliminarProducto(${i})">
+                                        Eliminar
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+                        `).join("")}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+    `;
+}
+
+
+function renderProductos(lista){
+
+    if(!lista.length){
+
+        return `
+            <div style="
+                grid-column:1/-1;
+                text-align:center;
+                padding:50px;
+                color:#888;
+            ">
+                No hay productos todavía.
+                <br><br>
+                Agrega tu primer par 👟
+            </div>
+        `;
+    }
+
+    return lista.map(p=>{
+
+        const indice=productos.indexOf(p);
+
+        return `
+
+            <div class="product">
+
+                <img
+                    class="product-img"
+                    src="${p.foto || ''}"
+                    onerror="this.style.display='none'"
+                >
+
+                <div class="product-info">
+
+                    <div class="product-name">
+                        ${esc(p.nombre)}
+                    </div>
+
+                    <div class="product-size">
+                        Talla #${esc(p.talla)}
+                    </div>
+
+                    <div class="product-price">
+                        ${dinero(p.precio)}
+                    </div>
+
+                    <div class="stock">
+                        Existencias: ${p.stock}
+                    </div>
+
+                    <div class="product-actions">
+
+                        <button
+                            class="btn btn-pink"
+                            onclick="agregarVenta(${indice})">
+                            Vender
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+        `;
+
+    }).join("");
+}
+
+
+/* =====================================================
+   AGREGAR PRODUCTO
+===================================================== */
+
+function abrirProducto(indice=null){
+
+    const editar = indice !== null;
+
+    const p = editar ? productos[indice] : {};
+
+    modal(
+        editar ? "Editar producto" : "Agregar producto",
+        `
+
+        <div class="form">
+
+            <div class="field full">
+
+                <label>Foto del producto</label>
+
+                <input
+                    type="file"
+                    id="fotoProducto"
+                    accept="image/*"
+                    onchange="previsualizarFoto()"
+                >
+
+                <img
+                    id="previewFoto"
+                    class="preview"
+                    src="${p.foto || ''}"
+                    style="${p.foto ? 'display:block;' : ''}"
+                >
+
+            </div>
+
+            <div class="field full">
+
+                <label>Nombre / modelo</label>
+
+                <input
+                    id="nombreProducto"
+                    value="${esc(p.nombre || '')}"
+                    placeholder="Ej. Samba OG"
+                >
+
+            </div>
+
+            <div class="field">
+
+                <label>Talla</label>
+
+                <input
+                    id="tallaProducto"
+                    value="${esc(p.talla || '')}"
+                    placeholder="Ej. 25.5"
+                >
+
+            </div>
+
+            <div class="field">
+
+                <label>Precio de venta</label>
+
+                <input
+                    type="number"
+                    id="precioProducto"
+                    value="${p.precio || ''}"
+                    placeholder="899"
+                >
+
+            </div>
+
+            <div class="field">
+
+                <label>Existencias</label>
+
+                <input
+                    type="number"
+                    id="stockProducto"
+                    value="${p.stock ?? ''}"
+                    placeholder="1"
+                >
+
+            </div>
+
+            <div class="field">
+
+                <label>SKU / código</label>
+
+                <input
+                    id="skuProducto"
+                    value="${esc(p.sku || '')}"
+                    placeholder="Opcional"
+                >
+
+            </div>
+
+            <div class="field full">
+
+                <button
+                    class="btn btn-pink"
+                    onclick="guardarProducto(${editar ? indice : 'null'})">
+
+                    ${editar ? "Guardar cambios" : "Agregar producto"}
+
+                </button>
+
+            </div>
+
+        </div>
+
+        `
+    );
+}
+
+
+function previsualizarFoto(){
+
+    const archivo =
+        document.getElementById("fotoProducto").files[0];
+
+    if(!archivo)return;
+
+    const lector=new FileReader();
+
+    lector.onload=function(e){
+
+        const preview=
+            document.getElementById("previewFoto");
+
+        preview.src=e.target.result;
+        preview.style.display="block";
+
+    };
+
+    lector.readAsDataURL(archivo);
+}
+
+
+function guardarProducto(indice){
+
+    const archivo=
+        document.getElementById("fotoProducto").files[0];
+
+    const nombre=
+        document.getElementById("nombreProducto").value.trim();
+
+    const talla=
+        document.getElementById("tallaProducto").value.trim();
+
+    const precio=
+        Number(document.getElementById("precioProducto").value);
+
+    const stock=
+        Number(document.getElementById("stockProducto").value);
+
+    const sku=
+        document.getElementById("skuProducto").value.trim();
+
+    if(!nombre || !talla || !precio){
+
+        alert("Completa nombre, talla y precio.");
+
+        return;
+    }
+
+
+    const guardar=(foto)=>{
+
+        const producto={
+
+            nombre,
+            talla,
+            precio,
+            stock,
+            sku,
+            foto:foto || (indice!==null ? productos[indice].foto : "")
+
+        };
+
+
+        if(indice===null){
+
+            productos.push(producto);
+
+        }else{
+
+            productos[indice]=producto;
+
+        }
+
+
+        guardar();
+
+        cerrarModal();
+
+        mostrarProductos();
+
+    };
+
+
+    if(archivo){
+
+        const lector=new FileReader();
+
+        lector.onload=e=>guardar(e.target.result);
+
+        lector.readAsDataURL(archivo);
+
+    }else{
+
+        guardar();
+
+    }
+}
+
+
+function editarProducto(indice){
+
+    abrirProducto(indice);
+
+}
+
+
+function eliminarProducto(indice){
+
+    if(!confirm("¿Eliminar este producto?"))return;
+
+    productos.splice(indice,1);
+
+    guardar();
+
+    mostrarProductos();
+
+}
+
+
+/* =====================================================
+   VENTAS
+===================================================== */
+
+function mostrarVentas(){
+
+    cambiarTitulo(
+        "Ventas",
+        "Realiza una nueva venta"
+    );
+
+    carrito=[];
+
+    document.getElementById("contenido").innerHTML=`
+
+        <div class="sale-layout">
+
+            <div class="section">
+
+                <div class="section-header">
+
+                    <h2>Productos</h2>
+
+                    <input
+                        class="search"
+                        id="buscarVenta"
+                        placeholder="Buscar..."
+                        oninput="filtrarVenta()"
+                    >
+
+                </div>
+
+                <div
+                    id="productosVenta"
+                    class="sale-products">
+
+                    ${renderProductosVenta(productos)}
+
+                </div>
+
+            </div>
+
+
+            <div class="cart">
+
+                <h3>🛒 Carrito</h3>
+
+                <div id="carrito">
+                    No hay productos.
+                </div>
+
+                <div class="payment">
+
+                    <label>Cliente</label>
+
+                    <select id="clienteVenta">
+
+                        <option value="">
+                            Venta sin cliente
+                        </option>
+
+                        ${clientes.map((c,i)=>`
+
+                            <option value="${i}">
+                                ${esc(c.nombre)}
+                            </option>
+
+                        `).join("")}
+
+                    </select>
+
+
+                    <label style="display:block;margin-top:15px;">
+                        Forma de pago
+                    </label>
+
+                    <select id="pagoVenta"
+                            onchange="actualizarPago()">
+
+                        <option value="Efectivo">
+                            💵 Efectivo
+                        </option>
+
+                        <option value="Transferencia">
+                            🏦 Transferencia
+                        </option>
+
+                        <option value="Tarjeta">
+                            💳 Tarjeta
+                        </option>
+
+                    </select>
+
+
+                    <div id="efectivoBox">
+
+                        <label style="display:block;margin-top:15px;">
+                            Efectivo recibido
+                        </label>
+
+                        <input
+                            type="number"
+                            id="efectivoRecibido"
+                            placeholder="$0"
+                            oninput="actualizarCambio()"
+                        >
+
+                        <div
+                            id="cambio"
+                            style="
+                            margin-top:10px;
+                            font-weight:bold;
+                            "
+                        ></div>
+
+                    </div>
+
+                </div>
+
+                <div
+                    id="totalVenta"
+                    class="cart-total">
+                    Total: $0
+                </div>
+
+                <button
+                    class="btn btn-pink"
+                    style="width:100%;margin-top:15px;"
+                    onclick="finalizarVenta()">
+
+                    COBRAR
+
+                </button>
+
+            </div>
+
+        </div>
+    `;
+}
+
+
+function renderProductosVenta(lista){
+
+    if(!lista.length){
+
+        return `
+            <p style="color:#888;">
+                No hay productos.
+            </p>
+        `;
+    }
+
+    return lista.map(p=>{
+
+        const i=productos.indexOf(p);
+
+        return `
+
+            <div
+                class="sale-product"
+                onclick="agregarVenta(${i})">
+
+                <img
+                    src="${p.foto || ''}"
+                    onerror="this.style.display='none'"
+                >
+
+                <div class="sale-product-info">
+
+                    <strong>
+                        ${esc(p.nombre)}
+                    </strong>
+
+                    <div>
+                        #${esc(p.talla)}
+                    </div>
+
+                    <b>
+                        ${dinero(p.precio)}
+                    </b>
+
+                </div>
+
+            </div>
+        `;
+
+    }).join("");
+}
+
+
+function filtrarVenta(){
+
+    const texto=
+        document.getElementById("buscarVenta")
+        .value.toLowerCase();
+
+    const lista=productos.filter(p=>
+        p.nombre.toLowerCase().includes(texto) ||
+        String(p.talla).includes(texto)
+    );
+
+    document.getElementById("productosVenta").innerHTML=
+        renderProductosVenta(lista);
+}
+
+
+function agregarVenta(indice){
+
+    const producto=productos[indice];
+
+    if(!producto || producto.stock<=0){
+
+        alert("Este producto está agotado.");
+
+        return;
+    }
+
+    const existente=
+        carrito.find(x=>x.indice===indice);
+
+    if(existente){
+
+        if(existente.cantidad>=producto.stock){
+
+            alert("No hay más existencias.");
+
+            return;
+        }
+
+        existente.cantidad++;
+
+    }else{
+
+        carrito.push({
+            indice,
+            cantidad:1
+        });
+
+    }
+
+    renderCarrito();
+
+}
+
+
+function renderCarrito(){
+
+    const contenedor=
+        document.getElementById("carrito");
+
+    if(!contenedor)return;
+
+    if(!carrito.length){
+
+        contenedor.innerHTML="No hay productos.";
+
+        document.getElementById("totalVenta").textContent=
+            "Total: $0";
+
+        return;
+    }
+
+
+    let total=0;
+
+    contenedor.innerHTML=carrito.map((item,i)=>{
+
+        const p=productos[item.indice];
+
+        const subtotal=
+            Number(p.precio)*item.cantidad;
+
+        total+=subtotal;
+
+        return `
+
+            <div class="cart-item">
+
+                <div>
+
+                    <strong>
+                        ${esc(p.nombre)}
+                    </strong>
+
+                    <div style="color:#777;">
+                        #${esc(p.talla)}
+                        × ${item.cantidad}
+                    </div>
+
+                </div>
+
+                <div>
+
+                    ${dinero(subtotal)}
+
+                    <button
+                        class="btn btn-danger"
+                        onclick="quitarCarrito(${i})"
+                        style="padding:5px 8px;margin-left:5px;">
+                        ×
+                    </button>
+
+                </div>
+
+            </div>
+        `;
+
+    }).join("");
+
+
+    document.getElementById("totalVenta").textContent=
+        "Total: "+dinero(total);
+
+    actualizarCambio();
+
+}
+
+
+function quitarCarrito(i){
+
+    carrito.splice(i,1);
+
+    renderCarrito();
+
+}
+
+
+function obtenerTotal(){
+
+    return carrito.reduce((total,item)=>{
+
+        const p=productos[item.indice];
+
+        return total+
+            Number(p.precio)*item.cantidad;
+
+    },0);
+
+}
+
+
+function actualizarPago(){
+
+    const pago=
+        document.getElementById("pagoVenta").value;
+
+    const box=
+        document.getElementById("efectivoBox");
+
+    if(pago==="Efectivo"){
+
+        box.style.display="block";
+
+    }else{
+
+        box.style.display="none";
+
+    }
+
+}
+
+
+function actualizarCambio(){
+
+    const pago=
+        document.getElementById("pagoVenta");
+
+    const recibido=
+        document.getElementById("efectivoRecibido");
+
+    const cambio=
+        document.getElementById("cambio");
+
+    if(!pago || pago.value!=="Efectivo")return;
+
+    const total=obtenerTotal();
+
+    const efectivo=
+        Number(recibido.value || 0);
+
+    if(efectivo>=total){
+
+        cambio.textContent=
+            "Cambio: "+dinero(efectivo-total);
+
+    }else{
+
+        cambio.textContent=
+            "Faltan: "+dinero(total-efectivo);
+
+    }
+}
+
+
+function finalizarVenta(){
+
+    if(!carrito.length){
+
+        alert("Agrega productos al carrito.");
+
+        return;
+    }
+
+    const total=obtenerTotal();
+
+    const pago=
+        document.getElementById("pagoVenta").value;
+
+    const clienteIndice=
+        document.getElementById("clienteVenta").value;
+
+
+    let efectivo=0;
+    let cambio=0;
+
+
+    if(pago==="Efectivo"){
+
+        efectivo=
+            Number(
+                document.getElementById("efectivoRecibido").value || 0
+            );
+
+        if(efectivo<total){
+
+            alert("El efectivo recibido no es suficiente.");
+
+            return;
+        }
+
+        cambio=efectivo-total;
+
+    }
+
+
+    const items=carrito.map(item=>{
+
+        const p=productos[item.indice];
+
+        p.stock-=item.cantidad;
+
+        return {
+
+            nombre:p.nombre,
+            talla:p.talla,
+            cantidad:item.cantidad,
+            precio:p.precio,
+            subtotal:p.precio*item.cantidad
+
+        };
+
+    });
+
+
+    let puntos=0;
+
+    let cliente=null;
+
+
+    if(clienteIndice!==""){
+
+        cliente=clientes[Number(clienteIndice)];
+
+        puntos=Math.floor(total/puntosPorPeso);
+
+        cliente.puntos=
+            Number(cliente.puntos || 0)+puntos;
+
+    }
+
+
+    const venta={
+
+        folio:
+            "NN-"+Date.now(),
+
+        fecha:
+            new Date().toISOString(),
+
+        productos:items,
+
+        total,
+
+        pago,
+
+        cliente:
+            cliente ? cliente.nombre : "",
+
+        puntos,
+
+        efectivo,
+
+        cambio
+
+    };
+
+
+    ventas.push(venta);
+
+    guardar();
+
+    imprimirTicket(venta);
+
+    carrito=[];
+
+    mostrarInicio();
+
+}
+
+
+/* =====================================================
+   CLIENTES
+===================================================== */
+
+function mostrarClientes(){
+
+    cambiarTitulo(
+        "Clientes",
+        "Clientes y programa de puntos"
+    );
+
+    document.getElementById("contenido").innerHTML=`
+
+        <div class="section">
+
+            <div class="section-header">
+
+                <h2>Clientes</h2>
+
+                <button
+                    class="btn btn-pink"
+                    onclick="abrirCliente()">
+
+                    + Agregar cliente
+
+                </button>
+
+            </div>
+
+            ${clientes.length ?
+
+                clientes.map((c,i)=>`
+
+                    <div class="client-card">
+
+                        <div>
+
+                            <strong>
+                                ${esc(c.nombre)}
+                            </strong>
+
+                            <div style="color:#777;">
+                                ${esc(c.telefono || "")}
+                            </div>
+
+                            <div style="margin-top:5px;">
+                                ⭐ ${c.puntos || 0} puntos
+                            </div>
+
+                        </div>
+
+                        <div>
+
+                            <button
+                                class="btn"
+                                onclick="abrirCliente(${i})">
+                                Editar
+                            </button>
+
+                            <button
+                                class="btn btn-danger"
+                                onclick="eliminarCliente(${i})">
+                                Eliminar
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                `).join("")
+
+                :
+
+                `<p style="color:#888;">
+                    Todavía no hay clientes.
+                </p>`
+            }
+
+        </div>
+    `;
+}
+
+
+function abrirCliente(indice=null){
+
+    const editar=indice!==null;
+    const c=editar ? clientes[indice] : {};
+
+    modal(
+        editar ? "Editar cliente" : "Nuevo cliente",
+        `
+
+        <div class="form">
+
+            <div class="field full">
+
+                <label>Nombre</label>
+
+                <input
+                    id="nombreCliente"
+                    value="${esc(c.nombre || '')}"
+                >
+
+            </div>
+
+            <div class="field">
+
+                <label>Teléfono</label>
+
+                <input
+                    id="telefonoCliente"
+                    value="${esc(c.telefono || '')}"
+                >
+
+            </div>
+
+            <div class="field">
+
+                <label>Tarjeta / código</label>
+
+                <input
+                    id="codigoCliente"
+                    value="${esc(c.codigo || '')}"
+                >
+
+            </div>
+
+            <div class="field full">
+
+                <button
+                    class="btn btn-pink"
+                    onclick="guardarCliente(${editar ? indice : 'null'})">
+
+                    Guardar cliente
+
+                </button>
+
+            </div>
+
+        </div>
+        `
+    );
+}
+
+
+function guardarCliente(indice){
+
+    const nombre=
+        document.getElementById("nombreCliente")
+        .value.trim();
+
+    const telefono=
+        document.getElementById("telefonoCliente")
+        .value.trim();
+
+    const codigo=
+        document.getElementById("codigoCliente")
+        .value.trim();
+
+
+    if(!nombre){
+
+        alert("Escribe el nombre.");
+
+        return;
+    }
+
+
+    const cliente={
+
+        nombre,
+        telefono,
+        codigo,
+        puntos:
+            indice!==null
+                ? clientes[indice].puntos || 0
+                : 0
+
+    };
+
+
+    if(indice===null){
+
+        clientes.push(cliente);
+
+    }else{
+
+        clientes[indice]=cliente;
+
+    }
+
+
+    guardar();
+
+    cerrarModal();
+
+    mostrarClientes();
+
+}
+
+
+function eliminarCliente(indice){
+
+    if(!confirm("¿Eliminar cliente?"))return;
+
+    clientes.splice(indice,1);
+
+    guardar();
+
+    mostrarClientes();
+
+}
+
+
+/* =====================================================
+   PUNTOS
+===================================================== */
+
+function mostrarPuntos(){
+
+    cambiarTitulo(
+        "Programa de puntos",
+        "Configura la recompensa de tus clientes"
+    );
+
+    document.getElementById("contenido").innerHTML=`
+
+        <div class="section">
+
+            <h2>Configuración de puntos</h2>
+
+            <p style="color:#777;margin:10px 0 20px;">
+                Actualmente se otorga 1 punto por cada $1 de compra.
+            </p>
+
+            <div class="field">
+
+                <label>
+                    Pesos necesarios por punto
+                </label>
+
+                <input
+                    type="number"
+                    value="${puntosPorPeso}"
+                    min="1"
+                    onchange="
+                        puntosPorPeso=Number(this.value)||1
+                    "
+                >
+
+            </div>
+
+        </div>
+    `;
+}
+
+
+/* =====================================================
+   REPORTES
+===================================================== */
+
+function mostrarReportes(){
+
+    cambiarTitulo(
+        "Reportes",
+        "Ventas y formas de pago"
+    );
+
+    const total=
+        ventas.reduce(
+            (a,v)=>a+Number(v.total),
+            0
+        );
+
+    const efectivo=
+        ventas
+        .filter(v=>v.pago==="Efectivo")
+        .reduce((a,v)=>a+Number(v.total),0);
+
+    const transferencia=
+        ventas
+        .filter(v=>v.pago==="Transferencia")
+        .reduce((a,v)=>a+Number(v.total),0);
+
+    const tarjeta=
+        ventas
+        .filter(v=>v.pago==="Tarjeta")
+        .reduce((a,v)=>a+Number(v.total),0);
+
+
+    document.getElementById("contenido").innerHTML=`
+
+        <div class="stats">
+
+            <div class="stat">
+                <small>Ventas totales</small>
+                <h2>${dinero(total)}</h2>
+            </div>
+
+            <div class="stat">
+                <small>Efectivo</small>
+                <h2>${dinero(efectivo)}</h2>
+            </div>
+
+            <div class="stat">
+                <small>Transferencias</small>
+                <h2>${dinero(transferencia)}</h2>
+            </div>
+
+            <div class="stat">
+                <small>Tarjetas</small>
+                <h2>${dinero(tarjeta)}</h2>
+            </div>
+
+        </div>
+
+
+        <div class="section">
+
+            <h2 style="margin-bottom:15px;">
+                Últimas ventas
+            </h2>
+
+            <div class="table-wrap">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>Folio</th>
+                            <th>Fecha</th>
+                            <th>Cliente</th>
+                            <th>Pago</th>
+                            <th>Total</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        ${ventas.slice(-20).reverse().map(v=>`
+
+                            <tr>
+
+                                <td>${v.folio}</td>
+
+                                <td>
+                                    ${new Date(v.fecha)
+                                    .toLocaleString("es-MX")}
+                                </td>
+
+                                <td>
+                                    ${esc(v.cliente || "Público")}
+                                </td>
+
+                                <td>${v.pago}</td>
+
+                                <td>
+                                    <strong>
+                                        ${dinero(v.total)}
+                                    </strong>
+                                </td>
+
+                            </tr>
+
+                        `).join("")}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+    `;
+}
+
+
+/* =====================================================
+   CONFIGURACIÓN
+===================================================== */
+
+function mostrarConfiguracion(){
+
+    cambiarTitulo(
+        "Configuración",
+        "Nat.Nation Sneakers"
+    );
+
+    document.getElementById("contenido").innerHTML=`
+
+        <div class="section">
+
+            <h2>Datos de la tienda</h2>
+
+            <div style="margin-top:20px;line-height:1.8;">
+
+                <strong>Nat.Nation Sneakers</strong><br>
+
+                Donde empieza tu estilo.<br><br>
+
+                📍 Calle Juan Clímaco Ramírez
+                SNVC, San Andrés,
+                55780 Jaltenco, Estado de México<br>
+
+                📞 5624570336
+
+            </div>
+
+        </div>
+
+
+        <div class="section">
+
+            <h2>Logo</h2>
+
+            <p style="color:#777;margin:10px 0 15px;">
+                Para cambiar el logo de la aplicación,
+                reemplaza el archivo logo.png.
+            </p>
+
+        </div>
+
+    `;
+}
+
+
+/* =====================================================
+   TICKET
+===================================================== */
+
+function imprimirTicket(venta){
+
+    const productosTicket=
+        venta.productos.map(p=>`
+
+            <div class="ticket-row">
+
+                <span>
+                    ${p.cantidad}x ${esc(p.nombre)}
+                </span>
+
+                <span>
+                    ${dinero(p.subtotal)}
+                </span>
+
+            </div>
+
+            <div style="font-size:11px;">
+                Talla #${esc(p.talla)}
+            </div>
+
+        `).join("");
+
+
+    document.getElementById("printArea").innerHTML=`
+
+        <div class="ticket">
+
+            <img
+                src="logo.png"
+                class="ticket-logo"
+            >
+
+            <div class="ticket-center">
+
+                Nat.Nation Sneakers<br>
+
+                Donde empieza tu estilo.<br>
+
+                Calle Juan Clímaco Ramírez SNVC<br>
+                San Andrés, 55780 Jaltenco, Méx.<br>
+
+                Tel. 5624570336
+
+            </div>
+
+            <div class="ticket-line"></div>
+
+            <div>
+                Folio: ${venta.folio}<br>
+                ${new Date(venta.fecha)
+                .toLocaleString("es-MX")}
+            </div>
+
+            <div class="ticket-line"></div>
+
+            ${productosTicket}
+
+            <div class="ticket-line"></div>
+
+            <div class="ticket-row">
+
+                <strong>TOTAL</strong>
+
+                <strong>
+                    ${dinero(venta.total)}
+                </strong>
+
+            </div>
+
+            <div style="margin-top:8px;">
+                Pago: ${venta.pago}
+            </div>
+
+            ${
+                venta.pago==="Efectivo"
+                ?
+                `
+                <div>
+                    Recibido: ${dinero(venta.efectivo)}
+                </div>
+
+                <div>
+                    Cambio: ${dinero(venta.cambio)}
+                </div>
+                `
+                :""
+            }
+
+            ${
+                venta.cliente
+                ?
+                `
+                <div style="margin-top:8px;">
+                    Cliente: ${esc(venta.cliente)}
+                </div>
+
+                <div>
+                    ⭐ Puntos obtenidos:
+                    ${venta.puntos}
+                </div>
+                `
+                :""
+            }
+
+            <div class="ticket-line"></div>
+
+            <div class="ticket-center">
+                ¡Gracias por tu compra!<br>
+                @Nat.Nation
+            </div>
+
+        </div>
+    `;
+
+    window.print();
+
+}
+
+
+/* =====================================================
+   INICIO
+===================================================== */
+
+mostrarInicio();
+
 </script>
+
 </body>
 </html>
