@@ -1,767 +1,532 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nat.Nation Sneakers | Punto de Venta</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nat.Nation Sneakers | Punto de Venta</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f7f7f7;color:#222}
+header{background:#111;color:#fff;padding:20px;text-align:center}
+header h1{margin:0;font-size:28px}
+header p{margin:6px 0 0;color:#ddd}
+main{max-width:1100px;margin:30px auto;padding:20px}
+.welcome{background:#fff;border-radius:15px;padding:30px;box-shadow:0 4px 15px rgba(0,0,0,.08)}
+.welcome h2{margin-top:0}
+.buttons{display:flex;gap:15px;flex-wrap:wrap;margin-top:25px}
+button{border:0;border-radius:10px;padding:14px 20px;font-size:16px;cursor:pointer;background:#111;color:#fff}
+button:hover{opacity:.85}
+.pink{background:#e91e63}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin-top:25px}
+.card{background:#fff;padding:25px;border-radius:15px;box-shadow:0 4px 15px rgba(0,0,0,.06)}
+.card h3{margin-top:0}
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f7f7f7;
-            color: #222;
-        }
-
-        header {
-            background: #111;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 28px;
-        }
-
-        header p {
-            margin: 6px 0 0;
-            color: #ddd;
-        }
-
-        main {
-            max-width: 1100px;
-            margin: 30px auto;
-            padding: 20px;
-        }
-
-        .welcome {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,.08);
-        }
-
-        .welcome h2 {
-            margin-top: 0;
-        }
-
-        .buttons {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-top: 25px;
-        }
-
-        button {
-            border: none;
-            border-radius: 10px;
-            padding: 14px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            background: #111;
-            color: white;
-        }
-
-        button:hover {
-            opacity: .85;
-        }
-
-        .pink {
-            background: #e91e63;
-        }
-
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            margin-top: 25px;
-        }
-
-        .card {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,.06);
-        }
-
-        .card h3 {
-            margin-top: 0;
-        }
-    </style>
+.nn-modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:9999;padding:20px}
+.nn-modal-box{background:#fff;width:min(700px,95vw);max-height:90vh;overflow-y:auto;border-radius:18px;padding:25px;box-shadow:0 15px 50px rgba(0,0,0,.3)}
+.nn-modal h2{margin-top:0;color:#222}
+.nn-form{display:grid;gap:12px}
+.nn-form input,.nn-form select{padding:12px;border:1px solid #ddd;border-radius:10px;font-size:16px;width:100%}
+.nn-btn{border:0;border-radius:10px;padding:12px 18px;cursor:pointer;font-weight:bold;margin:4px}
+.nn-primary{background:#e91e63;color:#fff}
+.nn-dark{background:#222;color:#fff}
+.nn-light{background:#eee;color:#222}
+.nn-danger{background:#c62828;color:#fff}
+.nn-item{border:1px solid #ddd;border-radius:12px;padding:12px;margin:8px 0}
+.nn-total{font-size:24px;font-weight:bold;margin:15px 0}
+.nn-close{float:right;cursor:pointer;font-size:28px;font-weight:bold}
+.nn-empty{padding:15px;text-align:center;color:#666}
+.nn-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}
+</style>
 </head>
-
 <body>
 
 <header>
-    <h1>Nat.Nation Sneakers</h1>
-    <p>Donde empieza tu estilo.</p>
+<h1>Nat.Nation Sneakers</h1>
+<p>Donde empieza tu estilo.</p>
 </header>
 
 <main>
+<section class="welcome">
+<h2>🛍️ Punto de Venta</h2>
+<p>Sistema de ventas e inventario de Nat.Nation Sneakers.</p>
 
-    <section class="welcome">
-        <h2>🛍️ Punto de Venta</h2>
-        <p>
-            Sistema de ventas e inventario de Nat.Nation Sneakers.
-        </p>
+<div class="buttons">
+<button class="pink" onclick="nuevaVenta()">🛒 Nueva venta</button>
+<button onclick="mostrarInventario()">👟 Inventario</button>
+<button onclick="mostrarClientes()">👤 Clientes</button>
+<button onclick="mostrarReportes()">📊 Reportes</button>
+</div>
+</section>
 
-        <div class="buttons">
-            <button class="pink" onclick="alert('Módulo de ventas próximamente')">
-                🛒 Nueva venta
-            </button>
-
-            <button onclick="alert('Módulo de inventario próximamente')">
-                👟 Inventario
-            </button>
-
-            <button onclick="alert('Módulo de clientes próximamente')">
-                👤 Clientes
-            </button>
-
-            <button onclick="alert('Módulo de reportes próximamente')">
-                📊 Reportes
-            </button>
-        </div>
-    </section>
-
-    <section class="cards">
-
-        <div class="card">
-            <h3>👟 Inventario</h3>
-            <p>Control de modelos, tallas, precios y existencias.</p>
-        </div>
-
-        <div class="card">
-            <h3>🛒 Ventas</h3>
-            <p>Registra productos y genera tickets.</p>
-        </div>
-
-        <div class="card">
-            <h3>⭐ Clientes</h3>
-            <p>Registra clientes y acumula puntos.</p>
-        </div>
-
-        <div class="card">
-            <h3>💳 Pagos</h3>
-            <p>Efectivo, transferencia y tarjeta.</p>
-        </div>
-
-    </section>
-
+<section class="cards">
+<div class="card"><h3>👟 Inventario</h3><p>Control de modelos, tallas, precios y existencias.</p></div>
+<div class="card"><h3>🛒 Ventas</h3><p>Registra productos y genera ventas.</p></div>
+<div class="card"><h3>⭐ Clientes</h3><p>Registra clientes y acumula puntos.</p></div>
+<div class="card"><h3>💳 Pagos</h3><p>Efectivo, transferencia y tarjeta.</p></div>
+</section>
 </main>
 
-    <!-- =========================
-     NAT.NATION POS - SISTEMA
-     ========================= -->
-
-<style>
-.nn-modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.55);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  padding: 20px;
-}
-
-.nn-modal-box {
-  background: white;
-  width: min(700px, 95vw);
-  max-height: 90vh;
-  overflow-y: auto;
-  border-radius: 18px;
-  padding: 25px;
-  box-shadow: 0 15px 50px rgba(0,0,0,.3);
-}
-
-.nn-modal h2 {
-  margin-top: 0;
-  color: #222;
-}
-
-.nn-form {
-  display: grid;
-  gap: 12px;
-}
-
-.nn-form input,
-.nn-form select {
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  font-size: 16px;
-}
-
-.nn-btn {
-  border: 0;
-  border-radius: 10px;
-  padding: 12px 18px;
-  cursor: pointer;
-  font-weight: bold;
-  margin: 4px;
-}
-
-.nn-primary {
-  background: #e91e63;
-  color: white;
-}
-
-.nn-dark {
-  background: #222;
-  color: white;
-}
-
-.nn-light {
-  background: #eee;
-  color: #222;
-}
-
-.nn-item {
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  padding: 12px;
-  margin: 8px 0;
-}
-
-.nn-total {
-  font-size: 24px;
-  font-weight: bold;
-  margin: 15px 0;
-}
-
-.nn-close {
-  float: right;
-  cursor: pointer;
-  font-size: 24px;
-}
-</style>
-
-<!-- MODAL PRINCIPAL -->
-<div id="nnModal" class="nn-modal">
-  <div class="nn-modal-box">
-    <span class="nn-close" onclick="nnCerrar()">×</span>
-    <div id="nnContenido"></div>
-  </div>
+<div id="nnModal" class="nn-modal" onclick="nnCerrarPorFondo(event)">
+<div class="nn-modal-box">
+<span class="nn-close" onclick="nnCerrar()">×</span>
+<div id="nnContenido"></div>
+</div>
 </div>
 
 <script>
-/* =========================
-   DATOS DEL POS
-   ========================= */
-
 let inventario = JSON.parse(localStorage.getItem("nn_inventario") || "[]");
 let clientes = JSON.parse(localStorage.getItem("nn_clientes") || "[]");
 let ventas = JSON.parse(localStorage.getItem("nn_ventas") || "[]");
 let carrito = [];
 
-
-/* =========================
-   FUNCIONES GENERALES
-   ========================= */
-
-function nnGuardar() {
-  localStorage.setItem("nn_inventario", JSON.stringify(inventario));
-  localStorage.setItem("nn_clientes", JSON.stringify(clientes));
-  localStorage.setItem("nn_ventas", JSON.stringify(ventas));
+function nnGuardar(){
+localStorage.setItem("nn_inventario",JSON.stringify(inventario));
+localStorage.setItem("nn_clientes",JSON.stringify(clientes));
+localStorage.setItem("nn_ventas",JSON.stringify(ventas));
 }
 
-function nnAbrir(html) {
-  document.getElementById("nnContenido").innerHTML = html;
-  document.getElementById("nnModal").style.display = "flex";
+function nnAbrir(html){
+const contenido=document.getElementById("nnContenido");
+const modal=document.getElementById("nnModal");
+if(!contenido || !modal){alert("No se pudo abrir el módulo.");return;}
+contenido.innerHTML=html;
+modal.style.display="flex";
 }
 
-function nnCerrar() {
-  document.getElementById("nnModal").style.display = "none";
+function nnCerrar(){
+document.getElementById("nnModal").style.display="none";
 }
 
-
-/* =========================
-   NUEVA VENTA
-   ========================= */
-
-function nuevaVenta() {
-
-  carrito = [];
-
-  let opciones = inventario.map((p, i) =>
-    `<option value="${i}">
-      ${p.modelo} | Talla ${p.talla} | $${p.precio} | Stock: ${p.stock}
-    </option>`
-  ).join("");
-
-  if (!opciones) {
-    opciones = `<option value="">Primero agrega productos al inventario</option>`;
-  }
-
-  nnAbrir(`
-    <h2>🛒 Nueva venta</h2>
-
-    <div class="nn-form">
-
-      <label>Producto</label>
-
-      <select id="nnProducto">
-        ${opciones}
-      </select>
-
-      <button class="nn-btn nn-primary"
-        onclick="nnAgregarProducto()">
-        Agregar al carrito
-      </button>
-
-      <div id="nnCarrito"></div>
-
-      <div class="nn-total">
-        Total: $<span id="nnTotal">0.00</span>
-      </div>
-
-      <label>Forma de pago</label>
-
-      <select id="nnPago">
-        <option value="Efectivo">💵 Efectivo</option>
-        <option value="Transferencia">🏦 Transferencia</option>
-        <option value="Tarjeta">💳 Tarjeta</option>
-      </select>
-
-      <label>Cliente (opcional)</label>
-
-      <select id="nnCliente">
-        <option value="">Venta sin cliente</option>
-        ${clientes.map((c,i) =>
-          `<option value="${i}">${c.nombre} - ${c.telefono}</option>`
-        ).join("")}
-      </select>
-
-      <button class="nn-btn nn-primary"
-        onclick="nnFinalizarVenta()">
-        💰 Finalizar venta
-      </button>
-
-    </div>
-  `);
+function nnCerrarPorFondo(event){
+if(event.target===event.currentTarget) nnCerrar();
 }
 
-function nnAgregarProducto() {
+function nuevaVenta(){
+carrito=[];
 
-  const i = document.getElementById("nnProducto").value;
+let opciones=inventario.map((p,i)=>`
+<option value="${i}" ${Number(p.stock)<=0 ? "disabled" : ""}>
+${p.modelo} | Talla ${p.talla} | $${Number(p.precio).toFixed(2)} | Stock: ${Number(p.stock)}
+</option>`).join("");
 
-  if (i === "" || !inventario[i]) {
-    alert("Selecciona un producto.");
-    return;
-  }
-
-  const producto = inventario[i];
-
-  if (producto.stock <= 0) {
-    alert("Este producto no tiene existencias.");
-    return;
-  }
-
-  carrito.push({
-    inventarioIndex: Number(i),
-    modelo: producto.modelo,
-    talla: producto.talla,
-    precio: Number(producto.precio)
-  });
-
-  nnMostrarCarrito();
+if(!opciones){
+opciones=`<option value="">Primero agrega productos al inventario</option>`;
 }
 
-function nnMostrarCarrito() {
+nnAbrir(`
+<h2>🛒 Nueva venta</h2>
 
-  const contenedor = document.getElementById("nnCarrito");
+<div class="nn-form">
+<label for="nnProducto">Producto</label>
+<select id="nnProducto">${opciones}</select>
 
-  if (!carrito.length) {
-    contenedor.innerHTML = "<p>Carrito vacío.</p>";
-    document.getElementById("nnTotal").textContent = "0.00";
-    return;
-  }
+<button class="nn-btn nn-primary" onclick="nnAgregarProducto()">Agregar al carrito</button>
 
-  let total = carrito.reduce((s,p) => s + p.precio, 0);
+<div id="nnCarrito" class="nn-empty">Carrito vacío.</div>
 
-  contenedor.innerHTML = carrito.map((p,i) => `
-    <div class="nn-item">
-      <strong>${p.modelo}</strong><br>
-      Talla: ${p.talla}<br>
-      $${p.precio.toFixed(2)}
+<div class="nn-total">Total: $<span id="nnTotal">0.00</span></div>
 
-      <button class="nn-btn nn-light"
-        onclick="nnEliminarCarrito(${i})">
-        Quitar
-      </button>
-    </div>
-  `).join("");
+<label for="nnPago">Forma de pago</label>
+<select id="nnPago">
+<option value="Efectivo">💵 Efectivo</option>
+<option value="Transferencia">🏦 Transferencia</option>
+<option value="Tarjeta">💳 Tarjeta</option>
+</select>
 
-  document.getElementById("nnTotal").textContent =
-    total.toFixed(2);
+<label for="nnCliente">Cliente (opcional)</label>
+<select id="nnCliente">
+<option value="">Venta sin cliente</option>
+${clientes.map((c,i)=>`<option value="${i}">${c.nombre} - ${c.telefono}</option>`).join("")}
+</select>
+
+<div class="nn-actions">
+<button class="nn-btn nn-primary" onclick="nnFinalizarVenta()">💰 Finalizar venta</button>
+<button class="nn-btn nn-light" onclick="nnCerrar()">Cancelar</button>
+</div>
+</div>
+`);
 }
 
-function nnEliminarCarrito(i) {
-  carrito.splice(i,1);
-  nnMostrarCarrito();
+function nnAgregarProducto(){
+const select=document.getElementById("nnProducto");
+if(!select)return;
+
+const i=select.value;
+if(i==="" || !inventario[i]){
+alert("Selecciona un producto.");
+return;
 }
 
+const producto=inventario[i];
+const stock=Number(producto.stock)||0;
+const cantidadEnCarrito=carrito.filter(p=>p.inventarioIndex===Number(i)).length;
 
-/* =========================
-   FINALIZAR VENTA
-   ========================= */
-
-function nnFinalizarVenta() {
-
-  if (!carrito.length) {
-    alert("Agrega al menos un producto.");
-    return;
-  }
-
-  const pago = document.getElementById("nnPago").value;
-  const clienteIndex = document.getElementById("nnCliente").value;
-
-  const total = carrito.reduce((s,p) => s + p.precio, 0);
-
-  /* descontar inventario */
-  carrito.forEach(p => {
-    if (inventario[p.inventarioIndex]) {
-      inventario[p.inventarioIndex].stock--;
-    }
-  });
-
-  /* puntos: 1 punto por cada $10 */
-  let puntosGanados = Math.floor(total / 10);
-
-  if (clienteIndex !== "") {
-    clientes[clienteIndex].puntos =
-      Number(clientes[clienteIndex].puntos || 0) + puntosGanados;
-  }
-
-  const venta = {
-    id: Date.now(),
-    fecha: new Date().toLocaleString("es-MX"),
-    productos: carrito,
-    total: total,
-    pago: pago,
-    cliente: clienteIndex !== ""
-      ? clientes[clienteIndex].nombre
-      : "Público general",
-    puntos: puntosGanados
-  };
-
-  ventas.push(venta);
-
-  nnGuardar();
-
-  alert(
-    "¡Venta registrada!\\n\\n" +
-    "Total: $" + total.toFixed(2) +
-    "\\nPago: " + pago +
-    "\\nPuntos: +" + puntosGanados
-  );
-
-  carrito = [];
-  nnCerrar();
+if(stock<=cantidadEnCarrito){
+alert("No puedes agregar más unidades de este producto de las que hay en existencia.");
+return;
 }
 
-
-/* =========================
-   INVENTARIO
-   ========================= */
-
-function mostrarInventario() {
-
-  nnAbrir(`
-    <h2>📦 Inventario</h2>
-
-    <button class="nn-btn nn-primary"
-      onclick="nnAgregarInventario()">
-      + Agregar producto
-    </button>
-
-    <div id="nnListaInventario"></div>
-  `);
-
-  nnListaInventario();
-}
-
-function nnListaInventario() {
-
-  const lista = document.getElementById("nnListaInventario");
-
-  if (!inventario.length) {
-    lista.innerHTML = "<p>No hay productos registrados.</p>";
-    return;
-  }
-
-  lista.innerHTML = inventario.map((p,i) => `
-    <div class="nn-item">
-      <strong>${p.modelo}</strong><br>
-      Talla: ${p.talla}<br>
-      Precio: $${Number(p.precio).toFixed(2)}<br>
-      Existencias: <strong>${p.stock}</strong>
-
-      <br>
-
-      <button class="nn-btn nn-light"
-        onclick="nnEliminarInventario(${i})">
-        Eliminar
-      </button>
-    </div>
-  `).join("");
-}
-
-function nnAgregarInventario() {
-
-  nnAbrir(`
-    <h2>➕ Agregar producto</h2>
-
-    <div class="nn-form">
-
-      <input id="nnModelo"
-        placeholder="Modelo del tenis">
-
-      <input id="nnTalla"
-        placeholder="Talla">
-
-      <input id="nnPrecio"
-        type="number"
-        placeholder="Precio de venta">
-
-      <input id="nnStock"
-        type="number"
-        placeholder="Existencias">
-
-      <button class="nn-btn nn-primary"
-        onclick="nnGuardarProducto()">
-        Guardar producto
-      </button>
-
-    </div>
-  `);
-}
-
-function nnGuardarProducto() {
-
-  const modelo = document.getElementById("nnModelo").value.trim();
-  const talla = document.getElementById("nnTalla").value.trim();
-  const precio = Number(document.getElementById("nnPrecio").value);
-  const stock = Number(document.getElementById("nnStock").value);
-
-  if (!modelo || !talla || !precio || stock < 0) {
-    alert("Completa correctamente todos los campos.");
-    return;
-  }
-
-  inventario.push({
-    id: Date.now(),
-    modelo,
-    talla,
-    precio,
-    stock
-  });
-
-  nnGuardar();
-
-  alert("Producto agregado correctamente.");
-
-  mostrarInventario();
-}
-
-function nnEliminarInventario(i) {
-
-  if (!confirm("¿Eliminar este producto?")) return;
-
-  inventario.splice(i,1);
-  nnGuardar();
-  nnListaInventario();
-}
-
-
-/* =========================
-   CLIENTES
-   ========================= */
-
-function mostrarClientes() {
-
-  nnAbrir(`
-    <h2>👤 Clientes</h2>
-
-    <button class="nn-btn nn-primary"
-      onclick="nnAgregarCliente()">
-      + Nuevo cliente
-    </button>
-
-    <div id="nnListaClientes"></div>
-  `);
-
-  nnListaClientes();
-}
-
-function nnListaClientes() {
-
-  const lista = document.getElementById("nnListaClientes");
-
-  if (!clientes.length) {
-    lista.innerHTML = "<p>No hay clientes registrados.</p>";
-    return;
-  }
-
-  lista.innerHTML = clientes.map(c => `
-    <div class="nn-item">
-      <strong>${c.nombre}</strong><br>
-      Teléfono: ${c.telefono}<br>
-      Puntos: ⭐ <strong>${c.puntos || 0}</strong>
-    </div>
-  `).join("");
-}
-
-function nnAgregarCliente() {
-
-  nnAbrir(`
-    <h2>👤 Nuevo cliente</h2>
-
-    <div class="nn-form">
-
-      <input id="nnClienteNombre"
-        placeholder="Nombre completo">
-
-      <input id="nnClienteTelefono"
-        placeholder="Teléfono">
-
-      <button class="nn-btn nn-primary"
-        onclick="nnGuardarCliente()">
-        Guardar cliente
-      </button>
-
-    </div>
-  `);
-}
-
-function nnGuardarCliente() {
-
-  const nombre =
-    document.getElementById("nnClienteNombre").value.trim();
-
-  const telefono =
-    document.getElementById("nnClienteTelefono").value.trim();
-
-  if (!nombre || !telefono) {
-    alert("Escribe nombre y teléfono.");
-    return;
-  }
-
-  clientes.push({
-    id: Date.now(),
-    nombre,
-    telefono,
-    puntos: 0
-  });
-
-  nnGuardar();
-
-  alert("Cliente registrado.");
-
-  mostrarClientes();
-}
-
-
-/* =========================
-   REPORTES
-   ========================= */
-
-function mostrarReportes() {
-
-  const totalVentas =
-    ventas.reduce((s,v) => s + Number(v.total), 0);
-
-  const efectivo =
-    ventas.filter(v => v.pago === "Efectivo")
-    .reduce((s,v) => s + Number(v.total), 0);
-
-  const transferencia =
-    ventas.filter(v => v.pago === "Transferencia")
-    .reduce((s,v) => s + Number(v.total), 0);
-
-  const tarjeta =
-    ventas.filter(v => v.pago === "Tarjeta")
-    .reduce((s,v) => s + Number(v.total), 0);
-
-  nnAbrir(`
-    <h2>📊 Reportes</h2>
-
-    <div class="nn-item">
-      Ventas realizadas:
-      <strong>${ventas.length}</strong>
-    </div>
-
-    <div class="nn-item">
-      Ventas totales:
-      <strong>$${totalVentas.toFixed(2)}</strong>
-    </div>
-
-    <div class="nn-item">
-      💵 Efectivo:
-      <strong>$${efectivo.toFixed(2)}</strong>
-    </div>
-
-    <div class="nn-item">
-      🏦 Transferencias:
-      <strong>$${transferencia.toFixed(2)}</strong>
-    </div>
-
-    <div class="nn-item">
-      💳 Tarjeta:
-      <strong>$${tarjeta.toFixed(2)}</strong>
-    </div>
-  `);
-}
-
-
-/* =========================
-   CONECTAR BOTONES ACTUALES
-   ========================= */
-
-document.addEventListener("DOMContentLoaded", function() {
-
-    const botones = document.querySelectorAll("button");
-
-    botones.forEach(btn => {
-
-        const texto = btn.innerText.trim().toLowerCase();
-
-        if (texto.includes("nueva venta")) {
-            btn.onclick = function() {
-                nuevaVenta();
-            };
-        }
-
-        if (texto === "inventario") {
-            btn.onclick = function() {
-                mostrarInventario();
-            };
-        }
-
-        if (texto === "clientes") {
-            btn.onclick = function() {
-                mostrarClientes();
-            };
-        }
-
-        if (texto === "reportes") {
-            btn.onclick = function() {
-                mostrarReportes();
-            };
-        }
-
-    });
-
+carrito.push({
+inventarioIndex:Number(i),
+modelo:producto.modelo,
+talla:producto.talla,
+precio:Number(producto.precio)||0
 });
 
+nnMostrarCarrito();
+}
+
+function nnMostrarCarrito(){
+const contenedor=document.getElementById("nnCarrito");
+const totalElemento=document.getElementById("nnTotal");
+if(!contenedor || !totalElemento)return;
+
+if(!carrito.length){
+contenedor.innerHTML="Carrito vacío.";
+contenedor.className="nn-empty";
+totalElemento.textContent="0.00";
+return;
+}
+
+contenedor.className="";
+contenedor.innerHTML=carrito.map((p,i)=>`
+<div class="nn-item">
+<strong>${p.modelo}</strong><br>
+Talla: ${p.talla}<br>
+Precio: $${p.precio.toFixed(2)}
+<button class="nn-btn nn-light" onclick="nnEliminarCarrito(${i})">Quitar</button>
+</div>
+`).join("");
+
+const total=carrito.reduce((s,p)=>s+Number(p.precio),0);
+totalElemento.textContent=total.toFixed(2);
+}
+
+function nnEliminarCarrito(i){
+carrito.splice(i,1);
+nnMostrarCarrito();
+}
+
+function nnFinalizarVenta(){
+if(!carrito.length){
+alert("Agrega al menos un producto.");
+return;
+}
+
+const pago=document.getElementById("nnPago").value;
+const clienteIndex=document.getElementById("nnCliente").value;
+const total=carrito.reduce((s,p)=>s+Number(p.precio),0);
+
+const cantidades={};
+for(const p of carrito){
+cantidades[p.inventarioIndex]=(cantidades[p.inventarioIndex]||0)+1;
+}
+
+for(const indice in cantidades){
+const producto=inventario[indice];
+if(!producto || Number(producto.stock)<cantidades[indice]){
+alert("No hay suficiente existencia para uno de los productos.");
+return;
+}
+}
+
+for(const indice in cantidades){
+inventario[indice].stock=Number(inventario[indice].stock)-cantidades[indice];
+}
+
+const puntosGanados=Math.floor(total/10);
+
+if(clienteIndex!==""){
+const cliente=clientes[Number(clienteIndex)];
+if(cliente){
+cliente.puntos=Number(cliente.puntos||0)+puntosGanados;
+}
+}
+
+const venta={
+id:Date.now(),
+fecha:new Date().toLocaleString("es-MX"),
+productos:carrito.map(p=>({...p})),
+total:total,
+pago:pago,
+cliente:clienteIndex!=="" && clientes[Number(clienteIndex)]
+? clientes[Number(clienteIndex)].nombre
+: "Público general",
+puntos:puntosGanados
+};
+
+ventas.push(venta);
+nnGuardar();
+
+alert(
+"¡Venta registrada!\\n\\n"+
+"Total: $"+total.toFixed(2)+
+"\\nPago: "+pago+
+"\\nPuntos: +"+puntosGanados
+);
+
+carrito=[];
+nnCerrar();
+}
+
+function mostrarInventario(){
+nnAbrir(`
+<h2>📦 Inventario</h2>
+
+<button class="nn-btn nn-primary" onclick="nnAgregarInventario()">➕ Agregar producto</button>
+
+<div id="nnListaInventario"></div>
+`);
+nnListaInventario();
+}
+
+function nnListaInventario(){
+const lista=document.getElementById("nnListaInventario");
+if(!lista)return;
+
+if(!inventario.length){
+lista.innerHTML='<p class="nn-empty">No hay productos registrados.</p>';
+return;
+}
+
+lista.innerHTML=inventario.map((p,i)=>`
+<div class="nn-item">
+<strong>${p.modelo}</strong><br>
+Talla: ${p.talla}<br>
+Precio: $${Number(p.precio).toFixed(2)}<br>
+Existencias: <strong>${Number(p.stock)}</strong><br>
+
+<button class="nn-btn nn-light" onclick="nnEditarInventario(${i})">Editar</button>
+<button class="nn-btn nn-danger" onclick="nnEliminarInventario(${i})">Eliminar</button>
+</div>
+`).join("");
+}
+
+function nnAgregarInventario(){
+nnAbrir(`
+<h2>➕ Agregar producto</h2>
+
+<div class="nn-form">
+<input id="nnModelo" placeholder="Modelo del tenis">
+<input id="nnTalla" placeholder="Talla">
+<input id="nnPrecio" type="number" min="0" step="0.01" placeholder="Precio de venta">
+<input id="nnStock" type="number" min="0" step="1" placeholder="Existencias">
+
+<button class="nn-btn nn-primary" onclick="nnGuardarProducto()">Guardar producto</button>
+<button class="nn-btn nn-light" onclick="mostrarInventario()">Cancelar</button>
+</div>
+`);
+}
+
+function nnGuardarProducto(){
+const modelo=document.getElementById("nnModelo").value.trim();
+const talla=document.getElementById("nnTalla").value.trim();
+const precio=Number(document.getElementById("nnPrecio").value);
+const stock=Number(document.getElementById("nnStock").value);
+
+if(!modelo || !talla || !Number.isFinite(precio) || precio<=0 || !Number.isInteger(stock) || stock<0){
+alert("Completa correctamente modelo, talla, precio y existencias.");
+return;
+}
+
+inventario.push({
+id:Date.now(),
+modelo:modelo,
+talla:talla,
+precio:precio,
+stock:stock
+});
+
+nnGuardar();
+alert("Producto agregado correctamente.");
+mostrarInventario();
+}
+
+function nnEditarInventario(i){
+const p=inventario[i];
+if(!p)return;
+
+nnAbrir(`
+<h2>✏️ Editar producto</h2>
+
+<div class="nn-form">
+<input id="nnModeloEdit" value="${nnEscapar(p.modelo)}" placeholder="Modelo del tenis">
+<input id="nnTallaEdit" value="${nnEscapar(p.talla)}" placeholder="Talla">
+<input id="nnPrecioEdit" type="number" min="0" step="0.01" value="${Number(p.precio)}" placeholder="Precio">
+<input id="nnStockEdit" type="number" min="0" step="1" value="${Number(p.stock)}" placeholder="Existencias">
+
+<button class="nn-btn nn-primary" onclick="nnActualizarInventario(${i})">Guardar cambios</button>
+<button class="nn-btn nn-light" onclick="mostrarInventario()">Cancelar</button>
+</div>
+`);
+}
+
+function nnActualizarInventario(i){
+const modelo=document.getElementById("nnModeloEdit").value.trim();
+const talla=document.getElementById("nnTallaEdit").value.trim();
+const precio=Number(document.getElementById("nnPrecioEdit").value);
+const stock=Number(document.getElementById("nnStockEdit").value);
+
+if(!modelo || !talla || !Number.isFinite(precio) || precio<=0 || !Number.isInteger(stock) || stock<0){
+alert("Completa correctamente los datos.");
+return;
+}
+
+inventario[i].modelo=modelo;
+inventario[i].talla=talla;
+inventario[i].precio=precio;
+inventario[i].stock=stock;
+
+nnGuardar();
+alert("Producto actualizado.");
+mostrarInventario();
+}
+
+function nnEliminarInventario(i){
+if(!inventario[i])return;
+if(!confirm("¿Eliminar este producto del inventario?"))return;
+
+inventario.splice(i,1);
+nnGuardar();
+nnListaInventario();
+}
+
+function mostrarClientes(){
+nnAbrir(`
+<h2>👤 Clientes</h2>
+
+<button class="nn-btn nn-primary" onclick="nnAgregarCliente()">➕ Nuevo cliente</button>
+
+<div id="nnListaClientes"></div>
+`);
+nnListaClientes();
+}
+
+function nnListaClientes(){
+const lista=document.getElementById("nnListaClientes");
+if(!lista)return;
+
+if(!clientes.length){
+lista.innerHTML='<p class="nn-empty">No hay clientes registrados.</p>';
+return;
+}
+
+lista.innerHTML=clientes.map((c,i)=>`
+<div class="nn-item">
+<strong>${nnEscapar(c.nombre)}</strong><br>
+Teléfono: ${nnEscapar(c.telefono)}<br>
+Puntos: ⭐ <strong>${Number(c.puntos||0)}</strong><br>
+<button class="nn-btn nn-light" onclick="nnEditarCliente(${i})">Editar</button>
+<button class="nn-btn nn-danger" onclick="nnEliminarCliente(${i})">Eliminar</button>
+</div>
+`).join("");
+}
+
+function nnAgregarCliente(){
+nnAbrir(`
+<h2>👤 Nuevo cliente</h2>
+
+<div class="nn-form">
+<input id="nnClienteNombre" placeholder="Nombre completo">
+<input id="nnClienteTelefono" placeholder="Teléfono">
+
+<button class="nn-btn nn-primary" onclick="nnGuardarCliente()">Guardar cliente</button>
+<button class="nn-btn nn-light" onclick="mostrarClientes()">Cancelar</button>
+</div>
+`);
+}
+
+function nnGuardarCliente(){
+const nombre=document.getElementById("nnClienteNombre").value.trim();
+const telefono=document.getElementById("nnClienteTelefono").value.trim();
+
+if(!nombre || !telefono){
+alert("Escribe nombre y teléfono.");
+return;
+}
+
+clientes.push({
+id:Date.now(),
+nombre:nombre,
+telefono:telefono,
+puntos:0
+});
+
+nnGuardar();
+alert("Cliente registrado.");
+mostrarClientes();
+}
+
+function nnEditarCliente(i){
+const c=clientes[i];
+if(!c)return;
+
+nnAbrir(`
+<h2>✏️ Editar cliente</h2>
+
+<div class="nn-form">
+<input id="nnClienteNombreEdit" value="${nnEscapar(c.nombre)}" placeholder="Nombre completo">
+<input id="nnClienteTelefonoEdit" value="${nnEscapar(c.telefono)}" placeholder="Teléfono">
+
+<button class="nn-btn nn-primary" onclick="nnActualizarCliente(${i})">Guardar cambios</button>
+<button class="nn-btn nn-light" onclick="mostrarClientes()">Cancelar</button>
+</div>
+`);
+}
+
+function nnActualizarCliente(i){
+const nombre=document.getElementById("nnClienteNombreEdit").value.trim();
+const telefono=document.getElementById("nnClienteTelefonoEdit").value.trim();
+
+if(!nombre || !telefono){
+alert("Escribe nombre y teléfono.");
+return;
+}
+
+clientes[i].nombre=nombre;
+clientes[i].telefono=telefono;
+
+nnGuardar();
+alert("Cliente actualizado.");
+mostrarClientes();
+}
+
+function nnEliminarCliente(i){
+if(!clientes[i])return;
+if(!confirm("¿Eliminar este cliente?"))return;
+
+clientes.splice(i,1);
+nnGuardar();
+nnListaClientes();
+}
+
+function mostrarReportes(){
+const totalVentas=ventas.reduce((s,v)=>s+Number(v.total||0),0);
+const efectivo=ventas.filter(v=>v.pago==="Efectivo").reduce((s,v)=>s+Number(v.total||0),0);
+const transferencia=ventas.filter(v=>v.pago==="Transferencia").reduce((s,v)=>s+Number(v.total||0),0);
+const tarjeta=ventas.filter(v=>v.pago==="Tarjeta").reduce((s,v)=>s+Number(v.total||0),0);
+const puntos=ventas.reduce((s,v)=>s+Number(v.puntos||0),0);
+
+nnAbrir(`
+<h2>📊 Reportes</h2>
+
+<div class="nn-item">Ventas realizadas: <strong>${ventas.length}</strong></div>
+<div class="nn-item">Ventas totales: <strong>$${totalVentas.toFixed(2)}</strong></div>
+<div class="nn-item">💵 Efectivo: <strong>$${efectivo.toFixed(2)}</strong></div>
+<div class="nn-item">🏦 Transferencias: <strong>$${transferencia.toFixed(2)}</strong></div>
+<div class="nn-item">💳 Tarjeta: <strong>$${tarjeta.toFixed(2)}</strong></div>
+<div class="nn-item">⭐ Puntos generados: <strong>${puntos}</strong></div>
+`);
+}
+
+function nnEscapar(valor){
+return String(valor??"")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+}
 </script>
 </body>
 </html>
