@@ -1256,6 +1256,81 @@ h2{
 
     </div>
 
+
+<!-- =====================================================
+     RESTAURAR DATOS DE PRUEBA
+===================================================== -->
+
+    <div
+        class="panel"
+        style="
+            border:2px solid #f23886;
+            margin-top:0;
+        "
+    >
+
+        <h3 style="margin-top:0">
+
+            🧹 Restaurar datos de prueba
+
+        </h3>
+
+
+        <p
+            style="
+                color:#666;
+                line-height:1.6;
+            "
+        >
+
+            Si estás haciendo compras de prueba, puedes utilizar
+            este botón para limpiar todos los tickets simulados.
+
+            Se eliminarán las ventas y sus detalles, se devolverá
+            el stock utilizado y se revertirán los puntos generados
+            por esas ventas.
+
+        </p>
+
+
+        <div
+            style="
+                background:#fff3f8;
+                border-radius:10px;
+                padding:15px;
+                margin:15px 0;
+                color:#8b174b;
+            "
+        >
+
+            <strong>
+                ⚠️ Importante:
+            </strong>
+
+            <br><br>
+
+            Esta acción eliminará todas las ventas que actualmente
+            estén registradas en el sistema.
+
+            <br><br>
+
+            Úsala únicamente cuando estés haciendo pruebas.
+
+        </div>
+
+
+        <button
+            type="button"
+            class="btn btn-danger"
+            onclick="restaurarDatosPrueba()"
+        >
+
+            🧹 Restaurar ventas de prueba
+
+        </button>
+
+    </div>
+
 </section>
 
 
@@ -4468,6 +4543,423 @@ function prepararTicket(
 function imprimirTicket(){
 
     window.print();
+
+}
+
+
+/* =====================================================
+   RESTAURAR DATOS DE PRUEBA
+===================================================== */
+
+async function restaurarDatosPrueba(){
+
+    const confirmar =
+    confirm(
+        "⚠️ ATENCIÓN\n\n" +
+
+        "Esta acción eliminará TODAS las ventas y tickets " +
+        "registrados actualmente.\n\n" +
+
+        "También devolverá al inventario los productos " +
+        "vendidos en esas ventas y revertirá los puntos " +
+        "generados.\n\n" +
+
+        "Tus productos, clientes y logo NO serán eliminados.\n\n" +
+
+        "¿Quieres continuar?"
+    );
+
+
+    if(!confirmar){
+
+        return;
+
+    }
+
+
+    const confirmar2 =
+    confirm(
+        "ÚLTIMA CONFIRMACIÓN\n\n" +
+
+        "¿Seguro que quieres borrar todas las ventas " +
+        "de prueba?"
+    );
+
+
+    if(!confirmar2){
+
+        return;
+
+    }
+
+
+    try{
+
+        mostrarAlerta(
+            "Restaurando datos de prueba..."
+        );
+
+
+        /* =====================================================
+           1. OBTENER TODAS LAS VENTAS
+        ===================================================== */
+
+        const resultadoVentas =
+        await supabaseClient
+            .from("ventas")
+            .select("*");
+
+
+        if(resultadoVentas.error){
+
+            throw resultadoVentas.error;
+
+        }
+
+
+        const ventasExistentes =
+        resultadoVentas.data || [];
+
+
+        if(!ventasExistentes.length){
+
+            ocultarAlerta();
+
+            alert(
+                "No hay ventas registradas para restaurar."
+            );
+
+            return;
+
+        }
+
+
+        /* =====================================================
+           2. OBTENER TODOS LOS DETALLES
+        ===================================================== */
+
+        const resultadoDetalles =
+        await supabaseClient
+            .from("venta_detalles")
+            .select("*");
+
+
+        if(resultadoDetalles.error){
+
+            throw resultadoDetalles.error;
+
+        }
+
+
+        const detalles =
+        resultadoDetalles.data || [];
+
+
+        /* =====================================================
+           3. DEVOLVER STOCK
+        ===================================================== */
+
+        const cantidadesPorProducto = {};
+
+
+        detalles.forEach(function(detalle){
+
+            const productoId =
+            detalle.producto_id;
+
+
+            if(!productoId){
+
+                return;
+
+            }
+
+
+            const cantidad =
+            Number(
+                detalle.cantidad || 0
+            );
+
+
+            if(!cantidadesPorProducto[productoId]){
+
+                cantidadesPorProducto[productoId] = 0;
+
+            }
+
+
+            cantidadesPorProducto[productoId] +=
+            cantidad;
+
+        });
+
+
+        for(
+            const productoId
+            of Object.keys(cantidadesPorProducto)
+        ){
+
+            const cantidadDevuelta =
+            cantidadesPorProducto[productoId];
+
+
+            const producto =
+            productos.find(function(p){
+
+                return p.id === productoId;
+
+            });
+
+
+            if(!producto){
+
+                console.warn(
+                    "Producto no encontrado:",
+                    productoId
+                );
+
+                continue;
+
+            }
+
+
+            const stockActual =
+            Number(
+                producto.stock || 0
+            );
+
+
+            const nuevoStock =
+            stockActual +
+            cantidadDevuelta;
+
+
+            const resultadoStock =
+            await supabaseClient
+                .from("productos")
+                .update({
+                    stock:nuevoStock
+                })
+                .eq(
+                    "id",
+                    productoId
+                );
+
+
+            if(resultadoStock.error){
+
+                throw resultadoStock.error;
+
+            }
+
+        }
+
+
+        /* =====================================================
+           4. REVERTIR PUNTOS
+        ===================================================== */
+
+        const puntosPorCliente = {};
+
+
+        ventasExistentes.forEach(function(venta){
+
+            const clienteId =
+            venta.cliente_id;
+
+
+            if(!clienteId){
+
+                return;
+
+            }
+
+
+            const puntos =
+            Number(
+                venta.puntos_ganados ??
+                venta.puntos ??
+                0
+            );
+
+
+            if(!puntos){
+
+                return;
+
+            }
+
+
+            if(!puntosPorCliente[clienteId]){
+
+                puntosPorCliente[clienteId] = 0;
+
+            }
+
+
+            puntosPorCliente[clienteId] +=
+            puntos;
+
+        });
+
+
+        for(
+            const clienteId
+            of Object.keys(puntosPorCliente)
+        ){
+
+            const cliente =
+            clientes.find(function(c){
+
+                return c.id === clienteId;
+
+            });
+
+
+            if(!cliente){
+
+                continue;
+
+            }
+
+
+            const puntosActuales =
+            Number(
+                cliente.puntos || 0
+            );
+
+
+            const puntosRestar =
+            puntosPorCliente[clienteId];
+
+
+            const nuevosPuntos =
+            Math.max(
+                0,
+                puntosActuales -
+                puntosRestar
+            );
+
+
+            const resultadoPuntos =
+            await supabaseClient
+                .from("clientes")
+                .update({
+                    puntos:nuevosPuntos
+                })
+                .eq(
+                    "id",
+                    clienteId
+                );
+
+
+            if(resultadoPuntos.error){
+
+                throw resultadoPuntos.error;
+
+            }
+
+        }
+
+
+        /* =====================================================
+           5. ELIMINAR DETALLES
+        ===================================================== */
+
+        const resultadoEliminarDetalles =
+        await supabaseClient
+            .from("venta_detalles")
+            .delete()
+            .not(
+                "id",
+                "is",
+                null
+            );
+
+
+        if(resultadoEliminarDetalles.error){
+
+            throw resultadoEliminarDetalles.error;
+
+        }
+
+
+        /* =====================================================
+           6. ELIMINAR VENTAS
+        ===================================================== */
+
+        const resultadoEliminarVentas =
+        await supabaseClient
+            .from("ventas")
+            .delete()
+            .not(
+                "id",
+                "is",
+                null
+            );
+
+
+        if(resultadoEliminarVentas.error){
+
+            throw resultadoEliminarVentas.error;
+
+        }
+
+
+        /* =====================================================
+           7. LIMPIAR CARRITO
+        ===================================================== */
+
+        carrito = [];
+
+
+        /* =====================================================
+           8. RECARGAR TODO
+        ===================================================== */
+
+        await cargarTodo();
+
+
+        renderCarrito();
+
+
+        mostrarSeccion(
+            "inicio"
+        );
+
+
+        ocultarAlerta();
+
+
+        alert(
+            "✅ Sistema restaurado correctamente.\n\n" +
+
+            "• Ventas eliminadas\n" +
+            "• Tickets eliminados\n" +
+            "• Stock restaurado\n" +
+            "• Puntos revertidos\n\n" +
+
+            "Ya puedes comenzar nuevamente tus pruebas."
+        );
+
+
+    }catch(error){
+
+        console.error(
+            "ERROR AL RESTAURAR:",
+            error
+        );
+
+
+        ocultarAlerta();
+
+
+        alert(
+            "❌ No se pudo restaurar el sistema.\n\n" +
+            error.message
+        );
+
+    }
 
 }
 
