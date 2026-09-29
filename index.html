@@ -6,2379 +6,1515 @@
 <title>Nat.Nation Sneakers | Punto de Venta</title>
 
 <style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-    font-family:Arial,Helvetica,sans-serif;
-}
-
+*{box-sizing:border-box}
 body{
-    background:#f7f7f8;
-    color:#171717;
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f7f7f8;
+  color:#222;
 }
-
-/* =========================
-   ESTRUCTURA
-========================= */
+button,input,select{font:inherit}
+button{cursor:pointer;border:0}
 
 .app{
-    display:flex;
-    min-height:100vh;
+  min-height:100vh;
+  display:flex;
 }
 
-/* =========================
-   SIDEBAR
-========================= */
-
+/* ===== BARRA LATERAL TIPO LOYVERSE ===== */
 .sidebar{
-    width:235px;
-    background:#111111;
-    color:white;
-    position:fixed;
+  width:245px;
+  background:#101010;
+  color:white;
+  min-height:100vh;
+  padding:24px 16px;
+  position:fixed;
+  left:0;
+  top:0;
+  bottom:0;
+  z-index:20;
+}
+.logo-box{
+  text-align:center;
+  margin-bottom:28px;
+}
+.logo-preview{
+  width:74px;
+  height:74px;
+  border-radius:18px;
+  object-fit:cover;
+  display:block;
+  margin:0 auto 10px;
+  background:#222;
+}
+.logo-text{
+  font-size:20px;
+  font-weight:800;
+  line-height:1.05;
+}
+.logo-sub{
+  color:#f58ab4;
+  font-size:11px;
+  margin-top:5px;
+}
+.menu{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.menu button{
+  width:100%;
+  text-align:left;
+  padding:13px 14px;
+  border-radius:10px;
+  background:transparent;
+  color:#ddd;
+  font-weight:700;
+}
+.menu button:hover{background:#292929}
+.menu button.active{
+  background:#ef4d8d;
+  color:#fff;
+}
+.sidebar-bottom{
+  position:absolute;
+  left:16px;
+  right:16px;
+  bottom:18px;
+}
+.sidebar-bottom button{
+  width:100%;
+  background:#222;
+  color:#ddd;
+  padding:11px;
+  border-radius:10px;
+}
+
+/* ===== CONTENIDO ===== */
+.main{
+  margin-left:245px;
+  width:calc(100% - 245px);
+  min-height:100vh;
+}
+.topbar{
+  height:72px;
+  background:white;
+  border-bottom:1px solid #e5e5e5;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 30px;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+.page-title{
+  font-size:24px;
+  font-weight:800;
+}
+.top-actions{
+  display:flex;
+  gap:10px;
+}
+.btn{
+  padding:11px 17px;
+  border-radius:9px;
+  font-weight:700;
+}
+.btn-pink{background:#ef4d8d;color:white}
+.btn-dark{background:#191919;color:white}
+.btn-light{background:#eee;color:#222}
+.content{
+  padding:28px;
+}
+
+/* ===== TARJETAS / DASHBOARD ===== */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+  margin-bottom:24px;
+}
+.card{
+  background:white;
+  border:1px solid #e8e8e8;
+  border-radius:15px;
+  padding:20px;
+  box-shadow:0 3px 12px rgba(0,0,0,.04);
+}
+.card-label{color:#777;font-size:13px}
+.card-value{font-size:27px;font-weight:800;margin-top:7px}
+
+/* ===== PRODUCTOS ===== */
+.toolbar{
+  background:white;
+  border:1px solid #e8e8e8;
+  border-radius:14px;
+  padding:15px;
+  display:flex;
+  gap:12px;
+  margin-bottom:18px;
+}
+.search{
+  flex:1;
+  padding:12px 14px;
+  border:1px solid #ddd;
+  border-radius:9px;
+}
+.product-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
+  gap:18px;
+}
+.product-card{
+  background:white;
+  border:1px solid #e5e5e5;
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 3px 10px rgba(0,0,0,.04);
+}
+.product-photo{
+  width:100%;
+  height:175px;
+  object-fit:cover;
+  background:#f0f0f0;
+}
+.no-photo{
+  height:175px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:50px;
+  background:#f4f4f4;
+}
+.product-info{padding:13px}
+.product-name{font-weight:800}
+.product-meta{color:#777;font-size:13px;margin-top:4px}
+.product-price{font-size:19px;font-weight:800;margin-top:9px}
+.stock{font-size:12px;margin-top:5px}
+.stock.low{color:#d13d3d;font-weight:700}
+.product-actions{display:flex;gap:7px;margin-top:12px}
+.product-actions button{flex:1;padding:9px;border-radius:8px}
+
+/* ===== TABLAS ===== */
+.table-wrap{
+  background:white;
+  border:1px solid #e5e5e5;
+  border-radius:14px;
+  overflow:auto;
+}
+table{width:100%;border-collapse:collapse}
+th,td{padding:14px;border-bottom:1px solid #eee;text-align:left}
+th{font-size:13px;color:#777;background:#fafafa}
+
+/* ===== MODAL ===== */
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  z-index:50;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+.modal.show{display:flex}
+.modal-box{
+  width:min(760px,100%);
+  max-height:92vh;
+  overflow:auto;
+  background:white;
+  border-radius:18px;
+  padding:25px;
+}
+.close{
+  float:right;
+  font-size:28px;
+  color:#777;
+  background:none;
+}
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+.field label{
+  display:block;
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:6px;
+}
+.field input,.field select{
+  width:100%;
+  padding:11px;
+  border:1px solid #ddd;
+  border-radius:8px;
+}
+.full{grid-column:1/-1}
+
+/* FOTO */
+.photo-upload{
+  border:2px dashed #ddd;
+  border-radius:14px;
+  padding:18px;
+  text-align:center;
+}
+.photo-preview{
+  width:150px;
+  height:150px;
+  object-fit:cover;
+  border-radius:12px;
+  display:none;
+  margin:0 auto 12px;
+}
+.photo-upload input{display:none}
+.upload-btn{
+  display:inline-block;
+  background:#ef4d8d;
+  color:white;
+  padding:11px 18px;
+  border-radius:9px;
+  font-weight:700;
+}
+.form-actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  margin-top:20px;
+}
+
+/* ===== VENTA ===== */
+.sale-layout{
+  display:grid;
+  grid-template-columns:1fr 370px;
+  gap:20px;
+}
+.sale-products{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+.sale-product{
+  background:white;
+  border:1px solid #e5e5e5;
+  border-radius:13px;
+  overflow:hidden;
+  cursor:pointer;
+}
+.sale-product img,.sale-product .no-photo{
+  width:100%;
+  height:145px;
+  object-fit:cover;
+}
+.sale-product .no-photo{height:145px}
+.sale-product-info{padding:10px}
+.cart{
+  background:white;
+  border:1px solid #e5e5e5;
+  border-radius:15px;
+  padding:18px;
+  position:sticky;
+  top:92px;
+  height:max-content;
+}
+.cart-row{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  padding:10px 0;
+  border-bottom:1px solid #eee;
+}
+.cart-row img{
+  width:48px;height:48px;object-fit:cover;border-radius:7px;
+}
+.cart-row-info{flex:1}
+.total-box{
+  margin-top:15px;
+  padding-top:15px;
+  border-top:2px solid #222;
+}
+.total-line{
+  display:flex;
+  justify-content:space-between;
+  margin:8px 0;
+}
+.total-line.total{
+  font-size:23px;
+  font-weight:800;
+}
+.payment-select{
+  width:100%;
+  padding:11px;
+  border:1px solid #ddd;
+  border-radius:8px;
+  margin:8px 0;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:900px){
+  .sidebar{width:190px}
+  .main{margin-left:190px;width:calc(100% - 190px)}
+  .cards{grid-template-columns:repeat(2,1fr)}
+  .sale-layout{grid-template-columns:1fr}
+  .cart{position:static}
+}
+@media(max-width:650px){
+  .sidebar{
+    width:72px;
+    padding:12px 8px;
+  }
+  .logo-text,.logo-sub,.menu span,.sidebar-bottom{display:none}
+  .logo-preview{width:50px;height:50px}
+  .menu button{text-align:center;padding:13px 5px;font-size:20px}
+  .main{margin-left:72px;width:calc(100% - 72px)}
+  .topbar{padding:0 15px}
+  .page-title{font-size:18px}
+  .content{padding:15px}
+  .cards{grid-template-columns:1fr 1fr}
+  .product-grid{grid-template-columns:1fr 1fr}
+  .sale-products{grid-template-columns:1fr 1fr}
+  .form-grid{grid-template-columns:1fr}
+  .full{grid-column:auto}
+}
+
+/* IMPRESIÓN */
+#printArea{display:none}
+@media print{
+  body *{visibility:hidden}
+  #printArea,#printArea *{visibility:visible}
+  #printArea{
+    display:block;
+    position:absolute;
     left:0;
     top:0;
-    bottom:0;
-    padding:20px 14px;
-    z-index:100;
-}
-
-.logo{
-    width:150px;
-    height:90px;
-    object-fit:contain;
-    display:block;
-    margin:0 auto 20px;
-}
-
-.brand-fallback{
-    text-align:center;
-    margin-bottom:22px;
-}
-
-.brand-fallback strong{
-    display:block;
-    font-size:22px;
-    font-style:italic;
-}
-
-.brand-fallback span{
-    font-size:11px;
-    letter-spacing:4px;
-    color:#ff2b88;
-}
-
-.menu{
-    display:flex;
-    flex-direction:column;
-    gap:6px;
-}
-
-.menu button{
-    border:0;
-    background:transparent;
-    color:#ddd;
-    padding:13px 15px;
-    border-radius:10px;
-    text-align:left;
-    font-size:14px;
-    cursor:pointer;
-    transition:.2s;
-}
-
-.menu button:hover,
-.menu button.active{
-    background:#ff2b88;
-    color:white;
-}
-
-.menu button span{
-    margin-right:10px;
-}
-
-/* =========================
-   CONTENIDO
-========================= */
-
-.main{
-    margin-left:235px;
-    width:calc(100% - 235px);
-    min-height:100vh;
-    padding:25px;
-}
-
-.topbar{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:25px;
-}
-
-.topbar h1{
-    font-size:26px;
-}
-
-.topbar p{
-    color:#777;
-    margin-top:5px;
-}
-
-.top-actions{
-    display:flex;
-    gap:10px;
-}
-
-/* =========================
-   BOTONES
-========================= */
-
-.btn{
-    border:0;
-    padding:11px 17px;
-    border-radius:9px;
-    cursor:pointer;
-    font-weight:bold;
-    background:#eee;
-}
-
-.btn-pink{
-    background:#ff2b88;
-    color:white;
-}
-
-.btn-black{
-    background:#111;
-    color:white;
-}
-
-.btn-danger{
-    background:#ffe1e9;
-    color:#c50045;
-}
-
-.btn:hover{
-    opacity:.88;
-}
-
-/* =========================
-   DASHBOARD
-========================= */
-
-.stats{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:15px;
-    margin-bottom:25px;
-}
-
-.stat{
-    background:white;
-    border-radius:15px;
-    padding:20px;
-    box-shadow:0 2px 10px rgba(0,0,0,.05);
-}
-
-.stat small{
-    color:#888;
-}
-
-.stat h2{
-    margin-top:8px;
-    font-size:25px;
-}
-
-/* =========================
-   CATALOGO
-========================= */
-
-.section{
-    background:white;
-    border-radius:17px;
-    padding:22px;
-    margin-bottom:20px;
-    box-shadow:0 2px 10px rgba(0,0,0,.04);
-}
-
-.section-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:18px;
-}
-
-.section-header h2{
-    font-size:19px;
-}
-
-.search{
-    width:300px;
-    padding:12px 15px;
-    border:1px solid #ddd;
-    border-radius:10px;
-    outline:none;
-}
-
-.products{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:18px;
-}
-
-.product{
-    border:1px solid #eee;
-    border-radius:14px;
-    overflow:hidden;
-    background:white;
-    transition:.2s;
-    position:relative;
-}
-
-.product:hover{
-    transform:translateY(-3px);
-    box-shadow:0 7px 20px rgba(0,0,0,.08);
-}
-
-.product-img{
-    width:100%;
-    height:190px;
-    object-fit:cover;
-    background:#f4f4f4;
-}
-
-.product-info{
-    padding:13px;
-}
-
-.product-name{
-    font-weight:bold;
-    margin-bottom:6px;
-}
-
-.product-size{
-    color:#777;
-    font-size:13px;
-}
-
-.product-price{
-    font-size:19px;
-    font-weight:bold;
-    margin-top:8px;
-}
-
-.stock{
-    font-size:12px;
-    color:#777;
-    margin-top:4px;
-}
-
-.product-actions{
-    display:flex;
-    gap:7px;
-    margin-top:12px;
-}
-
-.product-actions button{
-    flex:1;
-}
-
-/* =========================
-   TABLAS
-========================= */
-
-.table-wrap{
-    overflow:auto;
-}
-
-table{
-    width:100%;
-    border-collapse:collapse;
-}
-
-th,td{
-    padding:13px 10px;
-    border-bottom:1px solid #eee;
-    text-align:left;
-}
-
-th{
-    color:#777;
-    font-size:13px;
-}
-
-td{
-    font-size:14px;
-}
-
-/* =========================
-   MODAL
-========================= */
-
-.modal{
-    display:none;
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.55);
-    z-index:500;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-}
-
-.modal.show{
-    display:flex;
-}
-
-.modal-box{
-    background:white;
-    width:min(700px,100%);
-    max-height:90vh;
-    overflow:auto;
-    border-radius:18px;
-    padding:25px;
-}
-
-.modal-head{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:20px;
-}
-
-.close{
-    border:0;
-    background:#eee;
-    width:35px;
-    height:35px;
-    border-radius:50%;
-    cursor:pointer;
-    font-size:20px;
-}
-
-.form{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:15px;
-}
-
-.field{
-    display:flex;
-    flex-direction:column;
-    gap:7px;
-}
-
-.field.full{
-    grid-column:1/-1;
-}
-
-.field label{
-    font-size:13px;
-    font-weight:bold;
-}
-
-.field input,
-.field select{
-    padding:12px;
-    border:1px solid #ddd;
-    border-radius:9px;
-    outline:none;
-}
-
-.preview{
-    width:150px;
-    height:150px;
-    object-fit:cover;
-    border-radius:12px;
-    border:1px solid #ddd;
-    display:none;
-    margin-top:10px;
-}
-
-/* =========================
-   VENTA
-========================= */
-
-.sale-layout{
-    display:grid;
-    grid-template-columns:1fr 390px;
-    gap:20px;
-}
-
-.sale-products{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:12px;
-}
-
-.sale-product{
-    border:1px solid #eee;
-    border-radius:12px;
-    overflow:hidden;
-    cursor:pointer;
-}
-
-.sale-product img{
-    width:100%;
-    height:130px;
-    object-fit:cover;
-}
-
-.sale-product-info{
-    padding:10px;
-}
-
-.cart{
-    background:white;
-    border-radius:15px;
-    padding:20px;
-    box-shadow:0 2px 10px rgba(0,0,0,.05);
-}
-
-.cart h3{
-    margin-bottom:15px;
-}
-
-.cart-item{
-    display:flex;
-    justify-content:space-between;
-    gap:10px;
-    padding:12px 0;
-    border-bottom:1px solid #eee;
-}
-
-.cart-total{
-    margin-top:20px;
-    font-size:24px;
-    font-weight:bold;
-}
-
-.payment{
-    margin-top:20px;
-}
-
-.payment select,
-.payment input{
-    width:100%;
-    padding:12px;
-    border:1px solid #ddd;
-    border-radius:9px;
-    margin-top:8px;
-}
-
-/* =========================
-   CLIENTES
-========================= */
-
-.client-card{
-    background:white;
-    border-radius:14px;
-    padding:18px;
-    margin-bottom:10px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-/* =========================
-   TICKET
-========================= */
-
-#printArea{
-    display:none;
-}
-
-.ticket{
     width:80mm;
     background:white;
-    padding:10px;
-    font-family:monospace;
-    color:#000;
-}
-
-.ticket-logo{
-    width:55mm;
-    display:block;
-    margin:auto;
-}
-
-.ticket-center{
-    text-align:center;
-}
-
-.ticket-line{
-    border-top:1px dashed #000;
-    margin:8px 0;
-}
-
-.ticket-row{
-    display:flex;
-    justify-content:space-between;
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
-
-@media(max-width:1000px){
-    .products{
-        grid-template-columns:repeat(3,1fr);
-    }
-
-    .stats{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .sale-layout{
-        grid-template-columns:1fr;
-    }
-}
-
-@media(max-width:700px){
-    .sidebar{
-        width:75px;
-        padding:12px 8px;
-    }
-
-    .logo{
-        width:55px;
-    }
-
-    .brand-fallback{
-        display:none;
-    }
-
-    .menu button{
-        text-align:center;
-        font-size:0;
-    }
-
-    .menu button span{
-        font-size:20px;
-        margin:0;
-    }
-
-    .main{
-        margin-left:75px;
-        width:calc(100% - 75px);
-        padding:15px;
-    }
-
-    .products{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .stats{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .form{
-        grid-template-columns:1fr;
-    }
-
-    .field.full{
-        grid-column:auto;
-    }
-
-    .search{
-        width:100%;
-    }
-
-    .section-header{
-        flex-direction:column;
-        align-items:flex-start;
-        gap:10px;
-    }
-}
-
-@media print{
-    body *{
-        visibility:hidden;
-    }
-
-    #printArea,
-    #printArea *{
-        visibility:visible;
-    }
-
-    #printArea{
-        display:block;
-        position:absolute;
-        left:0;
-        top:0;
-    }
+  }
 }
 </style>
 </head>
 
 <body>
-
 <div class="app">
 
-<!-- =========================
-     MENU LATERAL
-========================= -->
-
-<aside class="sidebar">
-
-    <img src="logo.png" class="logo"
-         onerror="this.style.display='none';document.getElementById('brandFallback').style.display='block';">
-
-    <div id="brandFallback" class="brand-fallback" style="display:none;">
-        <strong>Nat.Nation</strong>
-        <span>SNEAKERS</span>
+  <aside class="sidebar">
+    <div class="logo-box">
+      <img id="logoImg" class="logo-preview" alt="Logo">
+      <div class="logo-text">Nat.Nation</div>
+      <div class="logo-sub">DONDE EMPIEZA TU ESTILO</div>
     </div>
 
     <nav class="menu">
-
-        <button onclick="mostrarInicio()" class="active">
-            <span>⌂</span> Inicio
-        </button>
-
-        <button onclick="mostrarVentas()">
-            <span>🛒</span> Ventas
-        </button>
-
-        <button onclick="mostrarProductos()">
-            <span>👟</span> Productos
-        </button>
-
-        <button onclick="mostrarClientes()">
-            <span>👤</span> Clientes
-        </button>
-
-        <button onclick="mostrarPuntos()">
-            <span>⭐</span> Puntos
-        </button>
-
-        <button onclick="mostrarReportes()">
-            <span>📊</span> Reportes
-        </button>
-
-        <button onclick="mostrarConfiguracion()">
-            <span>⚙️</span> Configuración
-        </button>
-
+      <button id="navVenta" onclick="ir('venta')">🛒 <span>Venta</span></button>
+      <button id="navProductos" onclick="ir('productos')">👟 <span>Productos</span></button>
+      <button id="navClientes" onclick="ir('clientes')">👤 <span>Clientes</span></button>
+      <button id="navPuntos" onclick="ir('puntos')">⭐ <span>Puntos</span></button>
+      <button id="navReportes" onclick="ir('reportes')">📊 <span>Reportes</span></button>
+      <button id="navConfig" onclick="ir('config')">⚙️ <span>Configuración</span></button>
     </nav>
-</aside>
 
-
-<!-- =========================
-     CONTENIDO
-========================= -->
-
-<main class="main">
-
-    <div class="topbar">
-
-        <div>
-            <h1 id="titulo">Inicio</h1>
-            <p id="subtitulo">
-                Punto de venta · Nat.Nation Sneakers
-            </p>
-        </div>
-
-        <div class="top-actions">
-            <button class="btn btn-pink" onclick="abrirProducto()">
-                + Agregar producto
-            </button>
-        </div>
-
+    <div class="sidebar-bottom">
+      <button onclick="alert('Nat.Nation Sneakers\\nPunto de Venta')">ℹ️ Acerca de</button>
     </div>
+  </aside>
 
-    <div id="contenido"></div>
+  <main class="main">
+    <header class="topbar">
+      <div class="page-title" id="pageTitle">Venta</div>
+      <div class="top-actions">
+        <button class="btn btn-light" onclick="ir('productos')">👟 Productos</button>
+        <button class="btn btn-pink" onclick="abrirProducto()">＋ Agregar producto</button>
+      </div>
+    </header>
 
-</main>
-
+    <section class="content" id="appContent"></section>
+  </main>
 </div>
 
-
-<!-- =========================
-     MODAL
-========================= -->
-
-<div id="modal" class="modal">
-
-    <div class="modal-box">
-
-        <div class="modal-head">
-            <h2 id="modalTitulo">Ventana</h2>
-            <button class="close" onclick="cerrarModal()">×</button>
-        </div>
-
-        <div id="modalContenido"></div>
-
-    </div>
-
+<div class="modal" id="modal">
+  <div class="modal-box" id="modalBox"></div>
 </div>
-
 
 <div id="printArea"></div>
 
-
 <script>
+/* =========================================================
+   NAT.NATION SNEAKERS - POS
+   Fotos: se pueden subir directamente desde el dispositivo.
+   En esta versión se guardan localmente en el navegador.
+   ========================================================= */
 
-/* =====================================================
-   DATOS
-===================================================== */
-
-let productos = JSON.parse(
-    localStorage.getItem("natnation_productos") || "[]"
-);
-
-let clientes = JSON.parse(
-    localStorage.getItem("natnation_clientes") || "[]"
-);
-
-let ventas = JSON.parse(
-    localStorage.getItem("natnation_ventas") || "[]"
-);
-
+let inventario = leer("nn_inventario", []);
+let clientes = leer("nn_clientes", []);
+let ventas = leer("nn_ventas", []);
+let configuracion = leer("nn_config", {
+  logo:"",
+  puntosPorPeso:0.1
+});
 let carrito = [];
+let fotoTemporal = "";
+let paginaActual = "venta";
 
-let puntosPorPeso = 1;
-
-
-/* =====================================================
-   GUARDAR
-===================================================== */
+function leer(clave, defecto){
+  try{
+    const x = localStorage.getItem(clave);
+    return x ? JSON.parse(x) : defecto;
+  }catch(e){
+    return defecto;
+  }
+}
 
 function guardar(){
-
-    localStorage.setItem(
-        "natnation_productos",
-        JSON.stringify(productos)
-    );
-
-    localStorage.setItem(
-        "natnation_clientes",
-        JSON.stringify(clientes)
-    );
-
-    localStorage.setItem(
-        "natnation_ventas",
-        JSON.stringify(ventas)
-    );
+  localStorage.setItem("nn_inventario",JSON.stringify(inventario));
+  localStorage.setItem("nn_clientes",JSON.stringify(clientes));
+  localStorage.setItem("nn_ventas",JSON.stringify(ventas));
+  localStorage.setItem("nn_config",JSON.stringify(configuracion));
 }
 
-
-/* =====================================================
-   UTILIDADES
-===================================================== */
-
-function dinero(valor){
-    return Number(valor || 0).toLocaleString(
-        "es-MX",
-        {
-            style:"currency",
-            currency:"MXN"
-        }
-    );
+function dinero(n){
+  return Number(n||0).toLocaleString("es-MX",{
+    style:"currency",
+    currency:"MXN"
+  });
 }
 
-function esc(texto){
-    return String(texto || "")
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;");
+function esc(s){
+  return String(s??"").replace(/[&<>"']/g,m=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+  }[m]));
 }
 
-function cambiarTitulo(titulo,subtitulo=""){
-    document.getElementById("titulo").textContent=titulo;
-    document.getElementById("subtitulo").textContent=subtitulo;
+function abrirModal(html){
+  document.getElementById("modalBox").innerHTML=html;
+  document.getElementById("modal").classList.add("show");
 }
-
-function modal(titulo,contenido){
-
-    document.getElementById("modalTitulo").textContent=titulo;
-    document.getElementById("modalContenido").innerHTML=contenido;
-
-    document.getElementById("modal").classList.add("show");
-}
-
 function cerrarModal(){
-    document.getElementById("modal").classList.remove("show");
+  document.getElementById("modal").classList.remove("show");
+}
+document.getElementById("modal").addEventListener("click",e=>{
+  if(e.target.id==="modal") cerrarModal();
+});
+
+function activarNav(id){
+  document.querySelectorAll(".menu button").forEach(b=>b.classList.remove("active"));
+  const b=document.getElementById(id);
+  if(b)b.classList.add("active");
 }
 
+function ir(pagina){
+  paginaActual=pagina;
 
-/* =====================================================
-   INICIO
-===================================================== */
+  const titulos={
+    venta:"Venta",
+    productos:"Productos",
+    clientes:"Clientes",
+    puntos:"Programa de puntos",
+    reportes:"Reportes",
+    config:"Configuración"
+  };
 
-function mostrarInicio(){
+  document.getElementById("pageTitle").textContent=titulos[pagina]||"Nat.Nation";
 
-    cambiarTitulo(
-        "Inicio",
-        "Punto de venta · Nat.Nation Sneakers"
-    );
+  const nav={
+    venta:"navVenta",
+    productos:"navProductos",
+    clientes:"navClientes",
+    puntos:"navPuntos",
+    reportes:"navReportes",
+    config:"navConfig"
+  };
 
-    const ventasHoy = ventas.filter(v =>
-        new Date(v.fecha).toDateString() === new Date().toDateString()
-    );
+  activarNav(nav[pagina]);
 
-    const totalHoy = ventasHoy.reduce(
-        (a,v)=>a+Number(v.total),
-        0
-    );
+  if(pagina==="venta") renderVenta();
+  if(pagina==="productos") renderProductos();
+  if(pagina==="clientes") renderClientes();
+  if(pagina==="puntos") renderPuntos();
+  if(pagina==="reportes") renderReportes();
+  if(pagina==="config") renderConfig();
+}
 
-    const stock = productos.reduce(
-        (a,p)=>a+Number(p.stock || 0),
-        0
-    );
+/* =========================
+   PRODUCTOS / INVENTARIO
+   ========================= */
 
-    document.getElementById("contenido").innerHTML=`
+function renderProductos(){
+  const totalExistencias=inventario.reduce((a,p)=>a+Number(p.stock||0),0);
 
-        <div class="stats">
+  document.getElementById("appContent").innerHTML=`
+    <div class="cards">
+      <div class="card">
+        <div class="card-label">Productos</div>
+        <div class="card-value">${inventario.length}</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Pares en existencia</div>
+        <div class="card-value">${totalExistencias}</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Valor del inventario</div>
+        <div class="card-value">${dinero(inventario.reduce((a,p)=>a+Number(p.price||0)*Number(p.stock||0),0))}</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Stock bajo</div>
+        <div class="card-value">${inventario.filter(p=>Number(p.stock)<=2).length}</div>
+      </div>
+    </div>
 
-            <div class="stat">
-                <small>Ventas de hoy</small>
-                <h2>${dinero(totalHoy)}</h2>
-            </div>
+    <div class="toolbar">
+      <input id="buscarProducto" class="search"
+        placeholder="🔎 Buscar por modelo, talla, color o SKU..."
+        oninput="filtrarProductos()">
+      <button class="btn btn-pink" onclick="abrirProducto()">＋ Agregar producto</button>
+    </div>
 
-            <div class="stat">
-                <small>Ventas</small>
-                <h2>${ventasHoy.length}</h2>
-            </div>
+    <div id="productosGrid" class="product-grid"></div>
+  `;
 
-            <div class="stat">
-                <small>Productos</small>
-                <h2>${productos.length}</h2>
-            </div>
+  pintarProductos(inventario);
+}
 
-            <div class="stat">
-                <small>Existencias</small>
-                <h2>${stock}</h2>
-            </div>
+function pintarProductos(lista){
+  const grid=document.getElementById("productosGrid");
+  if(!grid)return;
 
+  if(!lista.length){
+    grid.innerHTML=`
+      <div class="card" style="grid-column:1/-1;text-align:center;padding:50px">
+        <div style="font-size:55px">👟</div>
+        <h2>Aún no tienes productos</h2>
+        <p>Agrega tu primer par y podrás subirle su foto desde tu dispositivo.</p>
+        <button class="btn btn-pink" onclick="abrirProducto()">＋ Agregar producto</button>
+      </div>`;
+    return;
+  }
+
+  grid.innerHTML=lista.map((p,i)=>{
+    const realIndex=inventario.indexOf(p);
+    return `
+      <div class="product-card">
+        ${p.photo
+          ? `<img class="product-photo" src="${p.photo}" alt="${esc(p.model)}">`
+          : `<div class="no-photo">👟</div>`}
+
+        <div class="product-info">
+          <div class="product-name">${esc(p.model)}</div>
+          <div class="product-meta">
+            Talla ${esc(p.size)}
+            ${p.color ? " · "+esc(p.color) : ""}
+          </div>
+          ${p.sku ? `<div class="product-meta">SKU: ${esc(p.sku)}</div>` : ""}
+          <div class="product-price">${dinero(p.price)}</div>
+          <div class="stock ${Number(p.stock)<=2?"low":""}">
+            Existencia: ${Number(p.stock)}
+          </div>
+
+          <div class="product-actions">
+            <button class="btn-light" onclick="editarProducto(${realIndex})">✏️ Editar</button>
+            <button class="btn-dark" onclick="eliminarProducto(${realIndex})">🗑️</button>
+          </div>
         </div>
-
-        <div class="section">
-
-            <div class="section-header">
-
-                <div>
-                    <h2>Productos</h2>
-                    <p style="color:#888;margin-top:5px;">
-                        Selecciona un producto para vender
-                    </p>
-                </div>
-
-                <input
-                    class="search"
-                    id="buscarInicio"
-                    placeholder="Buscar producto..."
-                    oninput="filtrarInicio()"
-                >
-
-            </div>
-
-            <div id="productosInicio" class="products">
-
-                ${renderProductos(productos)}
-
-            </div>
-
-        </div>
+      </div>
     `;
+  }).join("");
 }
 
+function filtrarProductos(){
+  const q=(document.getElementById("buscarProducto")?.value||"").toLowerCase().trim();
 
-function filtrarInicio(){
+  const lista=inventario.filter(p=>
+    String(p.model||"").toLowerCase().includes(q) ||
+    String(p.size||"").toLowerCase().includes(q) ||
+    String(p.color||"").toLowerCase().includes(q) ||
+    String(p.sku||"").toLowerCase().includes(q)
+  );
 
-    const texto =
-        document.getElementById("buscarInicio")
-        .value
-        .toLowerCase();
-
-    const filtrados=productos.filter(p=>
-        p.nombre.toLowerCase().includes(texto) ||
-        String(p.talla).includes(texto)
-    );
-
-    document.getElementById("productosInicio").innerHTML =
-        renderProductos(filtrados);
+  pintarProductos(lista);
 }
-
-
-/* =====================================================
-   PRODUCTOS
-===================================================== */
-
-function mostrarProductos(){
-
-    cambiarTitulo(
-        "Productos",
-        "Inventario de Nat.Nation Sneakers"
-    );
-
-    document.getElementById("contenido").innerHTML=`
-
-        <div class="section">
-
-            <div class="section-header">
-
-                <h2>Inventario</h2>
-
-                <button
-                    class="btn btn-pink"
-                    onclick="abrirProducto()">
-                    + Agregar producto
-                </button>
-
-            </div>
-
-            <div class="table-wrap">
-
-                <table>
-
-                    <thead>
-
-                        <tr>
-                            <th>Imagen</th>
-                            <th>Producto</th>
-                            <th>Talla</th>
-                            <th>Precio</th>
-                            <th>Existencia</th>
-                            <th>Acciones</th>
-                        </tr>
-
-                    </thead>
-
-                    <tbody>
-
-                        ${productos.map((p,i)=>`
-
-                            <tr>
-
-                                <td>
-                                    <img
-                                        src="${p.foto || ''}"
-                                        style="
-                                        width:55px;
-                                        height:55px;
-                                        object-fit:cover;
-                                        border-radius:8px;
-                                        background:#eee;
-                                        "
-                                    >
-                                </td>
-
-                                <td>
-                                    <strong>${esc(p.nombre)}</strong>
-                                </td>
-
-                                <td>${esc(p.talla)}</td>
-
-                                <td>${dinero(p.precio)}</td>
-
-                                <td>${p.stock}</td>
-
-                                <td>
-
-                                    <button
-                                        class="btn"
-                                        onclick="editarProducto(${i})">
-                                        Editar
-                                    </button>
-
-                                    <button
-                                        class="btn btn-danger"
-                                        onclick="eliminarProducto(${i})">
-                                        Eliminar
-                                    </button>
-
-                                </td>
-
-                            </tr>
-
-                        `).join("")}
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </div>
-    `;
-}
-
-
-function renderProductos(lista){
-
-    if(!lista.length){
-
-        return `
-            <div style="
-                grid-column:1/-1;
-                text-align:center;
-                padding:50px;
-                color:#888;
-            ">
-                No hay productos todavía.
-                <br><br>
-                Agrega tu primer par 👟
-            </div>
-        `;
-    }
-
-    return lista.map(p=>{
-
-        const indice=productos.indexOf(p);
-
-        return `
-
-            <div class="product">
-
-                <img
-                    class="product-img"
-                    src="${p.foto || ''}"
-                    onerror="this.style.display='none'"
-                >
-
-                <div class="product-info">
-
-                    <div class="product-name">
-                        ${esc(p.nombre)}
-                    </div>
-
-                    <div class="product-size">
-                        Talla #${esc(p.talla)}
-                    </div>
-
-                    <div class="product-price">
-                        ${dinero(p.precio)}
-                    </div>
-
-                    <div class="stock">
-                        Existencias: ${p.stock}
-                    </div>
-
-                    <div class="product-actions">
-
-                        <button
-                            class="btn btn-pink"
-                            onclick="agregarVenta(${indice})">
-                            Vender
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-        `;
-
-    }).join("");
-}
-
-
-/* =====================================================
-   AGREGAR PRODUCTO
-===================================================== */
 
 function abrirProducto(indice=null){
+  fotoTemporal = indice!==null ? (inventario[indice].photo||"") : "";
 
-    const editar = indice !== null;
+  abrirModal(`
+    <button class="close" onclick="cerrarModal()">×</button>
+    <h2>${indice===null?"＋ Agregar producto":"✏️ Editar producto"}</h2>
+    <p style="color:#777">Puedes seleccionar la foto directamente desde tu iPhone, iPad, Mac o computadora.</p>
 
-    const p = editar ? productos[indice] : {};
+    <div class="form-grid">
 
-    modal(
-        editar ? "Editar producto" : "Agregar producto",
-        `
+      <div class="field full">
+        <label>Foto del producto</label>
+        <div class="photo-upload">
+          <img id="previewFoto" class="photo-preview"
+               src="${fotoTemporal}" style="${fotoTemporal?"display:block":""}">
+          <div id="fotoIcono" style="${fotoTemporal?"display:none":""};font-size:45px">👟</div>
+          <p id="fotoTexto">${fotoTemporal?"Foto seleccionada":"No hay foto seleccionada"}</p>
 
-        <div class="form">
+          <label class="upload-btn">
+            📷 Subir foto
+            <input id="fotoProducto" type="file" accept="image/*" onchange="cargarFoto(this)">
+          </label>
 
-            <div class="field full">
-
-                <label>Foto del producto</label>
-
-                <input
-                    type="file"
-                    id="fotoProducto"
-                    accept="image/*"
-                    onchange="previsualizarFoto()"
-                >
-
-                <img
-                    id="previewFoto"
-                    class="preview"
-                    src="${p.foto || ''}"
-                    style="${p.foto ? 'display:block;' : ''}"
-                >
-
-            </div>
-
-            <div class="field full">
-
-                <label>Nombre / modelo</label>
-
-                <input
-                    id="nombreProducto"
-                    value="${esc(p.nombre || '')}"
-                    placeholder="Ej. Samba OG"
-                >
-
-            </div>
-
-            <div class="field">
-
-                <label>Talla</label>
-
-                <input
-                    id="tallaProducto"
-                    value="${esc(p.talla || '')}"
-                    placeholder="Ej. 25.5"
-                >
-
-            </div>
-
-            <div class="field">
-
-                <label>Precio de venta</label>
-
-                <input
-                    type="number"
-                    id="precioProducto"
-                    value="${p.precio || ''}"
-                    placeholder="899"
-                >
-
-            </div>
-
-            <div class="field">
-
-                <label>Existencias</label>
-
-                <input
-                    type="number"
-                    id="stockProducto"
-                    value="${p.stock ?? ''}"
-                    placeholder="1"
-                >
-
-            </div>
-
-            <div class="field">
-
-                <label>SKU / código</label>
-
-                <input
-                    id="skuProducto"
-                    value="${esc(p.sku || '')}"
-                    placeholder="Opcional"
-                >
-
-            </div>
-
-            <div class="field full">
-
-                <button
-                    class="btn btn-pink"
-                    onclick="guardarProducto(${editar ? indice : 'null'})">
-
-                    ${editar ? "Guardar cambios" : "Agregar producto"}
-
-                </button>
-
-            </div>
-
+          ${fotoTemporal?`<button class="btn btn-light" type="button" onclick="quitarFoto()">Quitar foto</button>`:""}
         </div>
+      </div>
 
-        `
-    );
+      <div class="field">
+        <label>Modelo *</label>
+        <input id="prodModelo" value="${indice!==null?esc(inventario[indice].model):""}" placeholder="Ej. Nike Air Force">
+      </div>
+
+      <div class="field">
+        <label>SKU / Código</label>
+        <input id="prodSKU" value="${indice!==null?esc(inventario[indice].sku||""):""}" placeholder="Ej. AF-001">
+      </div>
+
+      <div class="field">
+        <label>Talla *</label>
+        <input id="prodTalla" value="${indice!==null?esc(inventario[indice].size):""}" placeholder="Ej. 29">
+      </div>
+
+      <div class="field">
+        <label>Color</label>
+        <input id="prodColor" value="${indice!==null?esc(inventario[indice].color||""):""}" placeholder="Ej. Blanco">
+      </div>
+
+      <div class="field">
+        <label>Precio de venta *</label>
+        <input id="prodPrecio" type="number" step="0.01" min="0"
+          value="${indice!==null?Number(inventario[indice].price):""}" placeholder="899">
+      </div>
+
+      <div class="field">
+        <label>Existencia *</label>
+        <input id="prodStock" type="number" min="0" step="1"
+          value="${indice!==null?Number(inventario[indice].stock):""}" placeholder="5">
+      </div>
+
+    </div>
+
+    <div class="form-actions">
+      <button class="btn btn-light" onclick="cerrarModal()">Cancelar</button>
+      <button class="btn btn-pink" onclick="guardarProducto(${indice===null?"null":indice})">
+        💾 Guardar producto
+      </button>
+    </div>
+  `);
 }
 
+function cargarFoto(input){
+  const file=input.files?.[0];
+  if(!file)return;
 
-function previsualizarFoto(){
+  if(!file.type.startsWith("image/")){
+    alert("Selecciona una imagen.");
+    return;
+  }
 
-    const archivo =
-        document.getElementById("fotoProducto").files[0];
+  const reader=new FileReader();
 
-    if(!archivo)return;
+  reader.onload=function(e){
+    fotoTemporal=e.target.result;
 
-    const lector=new FileReader();
+    const img=document.getElementById("previewFoto");
+    const icon=document.getElementById("fotoIcono");
+    const texto=document.getElementById("fotoTexto");
 
-    lector.onload=function(e){
+    if(img){
+      img.src=fotoTemporal;
+      img.style.display="block";
+    }
+    if(icon)icon.style.display="none";
+    if(texto)texto.textContent=file.name;
+  };
 
-        const preview=
-            document.getElementById("previewFoto");
-
-        preview.src=e.target.result;
-        preview.style.display="block";
-
-    };
-
-    lector.readAsDataURL(archivo);
+  reader.readAsDataURL(file);
 }
 
+function quitarFoto(){
+  fotoTemporal="";
+  const img=document.getElementById("previewFoto");
+  const icon=document.getElementById("fotoIcono");
+  const texto=document.getElementById("fotoTexto");
+
+  if(img){
+    img.src="";
+    img.style.display="none";
+  }
+  if(icon)icon.style.display="block";
+  if(texto)texto.textContent="No hay foto seleccionada";
+}
 
 function guardarProducto(indice){
+  const model=document.getElementById("prodModelo").value.trim();
+  const sku=document.getElementById("prodSKU").value.trim();
+  const size=document.getElementById("prodTalla").value.trim();
+  const color=document.getElementById("prodColor").value.trim();
+  const price=Number(document.getElementById("prodPrecio").value);
+  const stock=Number(document.getElementById("prodStock").value);
 
-    const archivo=
-        document.getElementById("fotoProducto").files[0];
+  if(!model || !size || !Number.isFinite(price) || price<0 ||
+     !Number.isInteger(stock) || stock<0){
+    alert("Completa modelo, talla, precio y existencia correctamente.");
+    return;
+  }
 
-    const nombre=
-        document.getElementById("nombreProducto").value.trim();
+  const producto={
+    model,size,color,sku,
+    price,stock,
+    photo:fotoTemporal
+  };
 
-    const talla=
-        document.getElementById("tallaProducto").value.trim();
+  if(indice===null){
+    inventario.push(producto);
+  }else{
+    inventario[indice]=producto;
+  }
 
-    const precio=
-        Number(document.getElementById("precioProducto").value);
-
-    const stock=
-        Number(document.getElementById("stockProducto").value);
-
-    const sku=
-        document.getElementById("skuProducto").value.trim();
-
-    if(!nombre || !talla || !precio){
-
-        alert("Completa nombre, talla y precio.");
-
-        return;
-    }
-
-
-    const guardar=(foto)=>{
-
-        const producto={
-
-            nombre,
-            talla,
-            precio,
-            stock,
-            sku,
-            foto:foto || (indice!==null ? productos[indice].foto : "")
-
-        };
-
-
-        if(indice===null){
-
-            productos.push(producto);
-
-        }else{
-
-            productos[indice]=producto;
-
-        }
-
-
-        guardar();
-
-        cerrarModal();
-
-        mostrarProductos();
-
-    };
-
-
-    if(archivo){
-
-        const lector=new FileReader();
-
-        lector.onload=e=>guardar(e.target.result);
-
-        lector.readAsDataURL(archivo);
-
-    }else{
-
-        guardar();
-
-    }
+  guardar();
+  cerrarModal();
+  renderProductos();
 }
-
 
 function editarProducto(indice){
-
-    abrirProducto(indice);
-
+  abrirProducto(indice);
 }
-
 
 function eliminarProducto(indice){
+  if(!confirm("¿Eliminar este producto del inventario?"))return;
 
-    if(!confirm("¿Eliminar este producto?"))return;
-
-    productos.splice(indice,1);
-
-    guardar();
-
-    mostrarProductos();
-
+  inventario.splice(indice,1);
+  guardar();
+  renderProductos();
 }
 
+/* =========================
+   VENTA
+   ========================= */
 
-/* =====================================================
-   VENTAS
-===================================================== */
+function renderVenta(){
+  const productosDisponibles=inventario.filter(p=>Number(p.stock)>0);
 
-function mostrarVentas(){
+  document.getElementById("appContent").innerHTML=`
+    <div class="toolbar">
+      <input id="buscarVenta" class="search"
+        placeholder="🔎 Buscar producto para vender..."
+        oninput="filtrarVenta()">
+      <button class="btn btn-light" onclick="limpiarCarrito()">Vaciar carrito</button>
+    </div>
 
-    cambiarTitulo(
-        "Ventas",
-        "Realiza una nueva venta"
-    );
+    <div class="sale-layout">
+      <div>
+        <div id="saleProducts" class="sale-products"></div>
+      </div>
 
-    carrito=[];
+      <aside class="cart">
+        <h2 style="margin-top:0">🛒 Venta actual</h2>
+        <div id="cartItems"></div>
 
-    document.getElementById("contenido").innerHTML=`
+        <div class="total-box">
+          <div class="total-line">
+            <span>Subtotal</span>
+            <strong id="subtotalVenta">${dinero(0)}</strong>
+          </div>
 
-        <div class="sale-layout">
+          <div class="total-line total">
+            <span>Total</span>
+            <span id="totalVenta">${dinero(0)}</span>
+          </div>
 
-            <div class="section">
+          <label style="font-size:13px;font-weight:700">Cliente</label>
+          <select id="clienteVenta" class="payment-select">
+            <option value="">Sin cliente</option>
+            ${clientes.map((c,i)=>`
+              <option value="${i}">
+                ${esc(c.name)} ${c.cardCode?"· "+esc(c.cardCode):""}
+              </option>
+            `).join("")}
+          </select>
 
-                <div class="section-header">
+          <label style="font-size:13px;font-weight:700">Forma de pago</label>
+          <select id="pagoVenta" class="payment-select" onchange="actualizarPago()">
+            <option value="Efectivo">💵 Efectivo</option>
+            <option value="Transferencia">🏦 Transferencia</option>
+            <option value="Tarjeta">💳 Tarjeta / Clip</option>
+          </select>
 
-                    <h2>Productos</h2>
+          <div id="efectivoBox">
+            <label style="font-size:13px;font-weight:700">Efectivo recibido</label>
+            <input id="efectivoRecibido" class="payment-select" type="number"
+              min="0" step="0.01" oninput="actualizarPago()" placeholder="0.00">
 
-                    <input
-                        class="search"
-                        id="buscarVenta"
-                        placeholder="Buscar..."
-                        oninput="filtrarVenta()"
-                    >
-
-                </div>
-
-                <div
-                    id="productosVenta"
-                    class="sale-products">
-
-                    ${renderProductosVenta(productos)}
-
-                </div>
-
+            <div class="total-line">
+              <span>Cambio</span>
+              <strong id="cambioVenta">${dinero(0)}</strong>
             </div>
+          </div>
 
-
-            <div class="cart">
-
-                <h3>🛒 Carrito</h3>
-
-                <div id="carrito">
-                    No hay productos.
-                </div>
-
-                <div class="payment">
-
-                    <label>Cliente</label>
-
-                    <select id="clienteVenta">
-
-                        <option value="">
-                            Venta sin cliente
-                        </option>
-
-                        ${clientes.map((c,i)=>`
-
-                            <option value="${i}">
-                                ${esc(c.nombre)}
-                            </option>
-
-                        `).join("")}
-
-                    </select>
-
-
-                    <label style="display:block;margin-top:15px;">
-                        Forma de pago
-                    </label>
-
-                    <select id="pagoVenta"
-                            onchange="actualizarPago()">
-
-                        <option value="Efectivo">
-                            💵 Efectivo
-                        </option>
-
-                        <option value="Transferencia">
-                            🏦 Transferencia
-                        </option>
-
-                        <option value="Tarjeta">
-                            💳 Tarjeta
-                        </option>
-
-                    </select>
-
-
-                    <div id="efectivoBox">
-
-                        <label style="display:block;margin-top:15px;">
-                            Efectivo recibido
-                        </label>
-
-                        <input
-                            type="number"
-                            id="efectivoRecibido"
-                            placeholder="$0"
-                            oninput="actualizarCambio()"
-                        >
-
-                        <div
-                            id="cambio"
-                            style="
-                            margin-top:10px;
-                            font-weight:bold;
-                            "
-                        ></div>
-
-                    </div>
-
-                </div>
-
-                <div
-                    id="totalVenta"
-                    class="cart-total">
-                    Total: $0
-                </div>
-
-                <button
-                    class="btn btn-pink"
-                    style="width:100%;margin-top:15px;"
-                    onclick="finalizarVenta()">
-
-                    COBRAR
-
-                </button>
-
-            </div>
-
+          <button class="btn btn-pink" style="width:100%;margin-top:10px"
+            onclick="finalizarVenta()">
+            💳 Cobrar
+          </button>
         </div>
+      </aside>
+    </div>
+  `;
+
+  pintarVenta(productosDisponibles);
+  pintarCarrito();
+}
+
+function pintarVenta(lista){
+  const box=document.getElementById("saleProducts");
+  if(!box)return;
+
+  if(!lista.length){
+    box.innerHTML=`
+      <div class="card" style="grid-column:1/-1;text-align:center;padding:45px">
+        <div style="font-size:50px">👟</div>
+        <h2>No hay productos disponibles</h2>
+        <p>Agrega productos al inventario para comenzar una venta.</p>
+        <button class="btn btn-pink" onclick="abrirProducto()">＋ Agregar producto</button>
+      </div>`;
+    return;
+  }
+
+  box.innerHTML=lista.map(p=>{
+    const index=inventario.indexOf(p);
+
+    return `
+      <div class="sale-product" onclick="agregarCarrito(${index})">
+        ${p.photo
+          ? `<img src="${p.photo}" alt="${esc(p.model)}">`
+          : `<div class="no-photo">👟</div>`}
+
+        <div class="sale-product-info">
+          <div style="font-weight:800">${esc(p.model)}</div>
+          <div style="font-size:12px;color:#777">
+            Talla ${esc(p.size)}${p.color?" · "+esc(p.color):""}
+          </div>
+          <div style="font-size:18px;font-weight:800;margin-top:5px">
+            ${dinero(p.price)}
+          </div>
+          <div style="font-size:12px;color:#777">
+            ${p.stock} disponibles
+          </div>
+        </div>
+      </div>
     `;
+  }).join("");
 }
-
-
-function renderProductosVenta(lista){
-
-    if(!lista.length){
-
-        return `
-            <p style="color:#888;">
-                No hay productos.
-            </p>
-        `;
-    }
-
-    return lista.map(p=>{
-
-        const i=productos.indexOf(p);
-
-        return `
-
-            <div
-                class="sale-product"
-                onclick="agregarVenta(${i})">
-
-                <img
-                    src="${p.foto || ''}"
-                    onerror="this.style.display='none'"
-                >
-
-                <div class="sale-product-info">
-
-                    <strong>
-                        ${esc(p.nombre)}
-                    </strong>
-
-                    <div>
-                        #${esc(p.talla)}
-                    </div>
-
-                    <b>
-                        ${dinero(p.precio)}
-                    </b>
-
-                </div>
-
-            </div>
-        `;
-
-    }).join("");
-}
-
 
 function filtrarVenta(){
+  const q=(document.getElementById("buscarVenta")?.value||"").toLowerCase().trim();
 
-    const texto=
-        document.getElementById("buscarVenta")
-        .value.toLowerCase();
+  const lista=inventario.filter(p=>
+    Number(p.stock)>0 &&
+    (
+      String(p.model||"").toLowerCase().includes(q) ||
+      String(p.size||"").toLowerCase().includes(q) ||
+      String(p.color||"").toLowerCase().includes(q) ||
+      String(p.sku||"").toLowerCase().includes(q)
+    )
+  );
 
-    const lista=productos.filter(p=>
-        p.nombre.toLowerCase().includes(texto) ||
-        String(p.talla).includes(texto)
-    );
-
-    document.getElementById("productosVenta").innerHTML=
-        renderProductosVenta(lista);
+  pintarVenta(lista);
 }
 
+function agregarCarrito(indice){
+  const p=inventario[indice];
+  if(!p || Number(p.stock)<=0){
+    alert("Producto sin existencia.");
+    return;
+  }
 
-function agregarVenta(indice){
+  const existente=carrito.find(x=>x.index===indice);
 
-    const producto=productos[indice];
-
-    if(!producto || producto.stock<=0){
-
-        alert("Este producto está agotado.");
-
-        return;
+  if(existente){
+    if(existente.qty>=Number(p.stock)){
+      alert("No hay más existencia disponible.");
+      return;
     }
+    existente.qty++;
+  }else{
+    carrito.push({index:indice,qty:1});
+  }
 
-    const existente=
-        carrito.find(x=>x.indice===indice);
-
-    if(existente){
-
-        if(existente.cantidad>=producto.stock){
-
-            alert("No hay más existencias.");
-
-            return;
-        }
-
-        existente.cantidad++;
-
-    }else{
-
-        carrito.push({
-            indice,
-            cantidad:1
-        });
-
-    }
-
-    renderCarrito();
-
+  pintarCarrito();
 }
-
-
-function renderCarrito(){
-
-    const contenedor=
-        document.getElementById("carrito");
-
-    if(!contenedor)return;
-
-    if(!carrito.length){
-
-        contenedor.innerHTML="No hay productos.";
-
-        document.getElementById("totalVenta").textContent=
-            "Total: $0";
-
-        return;
-    }
-
-
-    let total=0;
-
-    contenedor.innerHTML=carrito.map((item,i)=>{
-
-        const p=productos[item.indice];
-
-        const subtotal=
-            Number(p.precio)*item.cantidad;
-
-        total+=subtotal;
-
-        return `
-
-            <div class="cart-item">
-
-                <div>
-
-                    <strong>
-                        ${esc(p.nombre)}
-                    </strong>
-
-                    <div style="color:#777;">
-                        #${esc(p.talla)}
-                        × ${item.cantidad}
-                    </div>
-
-                </div>
-
-                <div>
-
-                    ${dinero(subtotal)}
-
-                    <button
-                        class="btn btn-danger"
-                        onclick="quitarCarrito(${i})"
-                        style="padding:5px 8px;margin-left:5px;">
-                        ×
-                    </button>
-
-                </div>
-
-            </div>
-        `;
-
-    }).join("");
-
-
-    document.getElementById("totalVenta").textContent=
-        "Total: "+dinero(total);
-
-    actualizarCambio();
-
-}
-
 
 function quitarCarrito(i){
+  carrito.splice(i,1);
+  pintarCarrito();
+}
 
+function cambiarCantidad(i,delta){
+  const item=carrito[i];
+  const p=inventario[item.index];
+  item.qty+=delta;
+
+  if(item.qty<=0){
     carrito.splice(i,1);
+  }else if(item.qty>Number(p.stock)){
+    item.qty=Number(p.stock);
+  }
 
-    renderCarrito();
-
+  pintarCarrito();
 }
 
-
-function obtenerTotal(){
-
-    return carrito.reduce((total,item)=>{
-
-        const p=productos[item.indice];
-
-        return total+
-            Number(p.precio)*item.cantidad;
-
-    },0);
-
+function limpiarCarrito(){
+  carrito=[];
+  pintarCarrito();
 }
 
+function totalCarrito(){
+  return carrito.reduce((sum,item)=>{
+    const p=inventario[item.index];
+    return sum+(Number(p.price)||0)*item.qty;
+  },0);
+}
+
+function pintarCarrito(){
+  const box=document.getElementById("cartItems");
+  if(!box)return;
+
+  if(!carrito.length){
+    box.innerHTML=`
+      <div style="text-align:center;color:#888;padding:30px 5px">
+        El carrito está vacío.<br>
+        Toca un producto para agregarlo.
+      </div>`;
+  }else{
+    box.innerHTML=carrito.map((item,i)=>{
+      const p=inventario[item.index];
+
+      return `
+        <div class="cart-row">
+          ${p.photo
+            ? `<img src="${p.photo}">`
+            : `<div style="width:48px;height:48px;border-radius:7px;background:#eee;display:flex;align-items:center;justify-content:center">👟</div>`}
+
+          <div class="cart-row-info">
+            <div style="font-weight:700">${esc(p.model)}</div>
+            <div style="font-size:12px;color:#777">
+              Talla ${esc(p.size)}
+            </div>
+            <div>${dinero(p.price)}</div>
+          </div>
+
+          <button class="btn-light" onclick="cambiarCantidad(${i},-1)">−</button>
+          <strong>${item.qty}</strong>
+          <button class="btn-light" onclick="cambiarCantidad(${i},1)">＋</button>
+          <button class="btn-light" onclick="quitarCarrito(${i})">🗑️</button>
+        </div>
+      `;
+    }).join("");
+  }
+
+  const total=totalCarrito();
+
+  const sub=document.getElementById("subtotalVenta");
+  const tot=document.getElementById("totalVenta");
+
+  if(sub)sub.textContent=dinero(total);
+  if(tot)tot.textContent=dinero(total);
+
+  actualizarPago();
+}
 
 function actualizarPago(){
+  const pago=document.getElementById("pagoVenta");
+  const box=document.getElementById("efectivoBox");
+  if(!pago)return;
 
-    const pago=
-        document.getElementById("pagoVenta").value;
+  if(pago.value==="Efectivo"){
+    if(box)box.style.display="block";
 
-    const box=
-        document.getElementById("efectivoBox");
+    const recibido=Number(document.getElementById("efectivoRecibido")?.value||0);
+    const cambio=Math.max(0,recibido-totalCarrito());
 
-    if(pago==="Efectivo"){
-
-        box.style.display="block";
-
-    }else{
-
-        box.style.display="none";
-
-    }
-
+    const c=document.getElementById("cambioVenta");
+    if(c)c.textContent=dinero(cambio);
+  }else{
+    if(box)box.style.display="none";
+  }
 }
-
-
-function actualizarCambio(){
-
-    const pago=
-        document.getElementById("pagoVenta");
-
-    const recibido=
-        document.getElementById("efectivoRecibido");
-
-    const cambio=
-        document.getElementById("cambio");
-
-    if(!pago || pago.value!=="Efectivo")return;
-
-    const total=obtenerTotal();
-
-    const efectivo=
-        Number(recibido.value || 0);
-
-    if(efectivo>=total){
-
-        cambio.textContent=
-            "Cambio: "+dinero(efectivo-total);
-
-    }else{
-
-        cambio.textContent=
-            "Faltan: "+dinero(total-efectivo);
-
-    }
-}
-
 
 function finalizarVenta(){
+  if(!carrito.length){
+    alert("Agrega al menos un producto.");
+    return;
+  }
 
-    if(!carrito.length){
+  const total=totalCarrito();
+  const pago=document.getElementById("pagoVenta").value;
+  const recibido=Number(document.getElementById("efectivoRecibido")?.value||0);
 
-        alert("Agrega productos al carrito.");
+  if(pago==="Efectivo" && recibido<total){
+    alert("El efectivo recibido es menor que el total.");
+    return;
+  }
 
-        return;
+  /* Verificar stock antes de descontar */
+  for(const item of carrito){
+    const p=inventario[item.index];
+
+    if(!p || Number(p.stock)<item.qty){
+      alert("La existencia cambió. Revisa el inventario.");
+      renderVenta();
+      return;
     }
+  }
 
-    const total=obtenerTotal();
+  const clienteIndex=document.getElementById("clienteVenta").value;
+  let cliente=null;
+  let puntos=0;
 
-    const pago=
-        document.getElementById("pagoVenta").value;
+  if(clienteIndex!==""){
+    cliente=clientes[Number(clienteIndex)];
+    puntos=Math.floor(total*Number(configuracion.puntosPorPeso||0.1));
+    cliente.points=Number(cliente.points||0)+puntos;
+  }
 
-    const clienteIndice=
-        document.getElementById("clienteVenta").value;
+  const productos=carrito.map(item=>{
+    const p=inventario[item.index];
 
+    p.stock-=item.qty;
 
-    let efectivo=0;
-    let cambio=0;
-
-
-    if(pago==="Efectivo"){
-
-        efectivo=
-            Number(
-                document.getElementById("efectivoRecibido").value || 0
-            );
-
-        if(efectivo<total){
-
-            alert("El efectivo recibido no es suficiente.");
-
-            return;
-        }
-
-        cambio=efectivo-total;
-
-    }
-
-
-    const items=carrito.map(item=>{
-
-        const p=productos[item.indice];
-
-        p.stock-=item.cantidad;
-
-        return {
-
-            nombre:p.nombre,
-            talla:p.talla,
-            cantidad:item.cantidad,
-            precio:p.precio,
-            subtotal:p.precio*item.cantidad
-
-        };
-
-    });
-
-
-    let puntos=0;
-
-    let cliente=null;
-
-
-    if(clienteIndice!==""){
-
-        cliente=clientes[Number(clienteIndice)];
-
-        puntos=Math.floor(total/puntosPorPeso);
-
-        cliente.puntos=
-            Number(cliente.puntos || 0)+puntos;
-
-    }
-
-
-    const venta={
-
-        folio:
-            "NN-"+Date.now(),
-
-        fecha:
-            new Date().toISOString(),
-
-        productos:items,
-
-        total,
-
-        pago,
-
-        cliente:
-            cliente ? cliente.nombre : "",
-
-        puntos,
-
-        efectivo,
-
-        cambio
-
+    return {
+      model:p.model,
+      size:p.size,
+      color:p.color,
+      price:Number(p.price),
+      qty:item.qty,
+      photo:p.photo||""
     };
+  });
 
+  const venta={
+    folio:"NN-"+Date.now(),
+    date:new Date().toISOString(),
+    products:productos,
+    total,
+    payment:pago,
+    client:cliente?cliente.name:"",
+    points:puntos,
+    cashReceived:pago==="Efectivo"?recibido:0,
+    change:pago==="Efectivo"?Math.max(0,recibido-total):0
+  };
 
-    ventas.push(venta);
+  ventas.push(venta);
+  guardar();
 
-    guardar();
+  imprimirTicket(venta);
+  carrito=[];
 
-    imprimirTicket(venta);
-
-    carrito=[];
-
-    mostrarInicio();
-
+  alert("Venta registrada correctamente.");
+  ir("venta");
 }
 
-
-/* =====================================================
+/* =========================
    CLIENTES
-===================================================== */
+   ========================= */
 
-function mostrarClientes(){
+function renderClientes(){
+  document.getElementById("appContent").innerHTML=`
+    <div class="toolbar">
+      <input id="buscarCliente" class="search"
+        placeholder="🔎 Buscar cliente..."
+        oninput="filtrarClientes()">
+      <button class="btn btn-pink" onclick="abrirCliente()">＋ Nuevo cliente</button>
+    </div>
 
-    cambiarTitulo(
-        "Clientes",
-        "Clientes y programa de puntos"
-    );
+    <div id="clientesTable"></div>
+  `;
 
-    document.getElementById("contenido").innerHTML=`
-
-        <div class="section">
-
-            <div class="section-header">
-
-                <h2>Clientes</h2>
-
-                <button
-                    class="btn btn-pink"
-                    onclick="abrirCliente()">
-
-                    + Agregar cliente
-
-                </button>
-
-            </div>
-
-            ${clientes.length ?
-
-                clientes.map((c,i)=>`
-
-                    <div class="client-card">
-
-                        <div>
-
-                            <strong>
-                                ${esc(c.nombre)}
-                            </strong>
-
-                            <div style="color:#777;">
-                                ${esc(c.telefono || "")}
-                            </div>
-
-                            <div style="margin-top:5px;">
-                                ⭐ ${c.puntos || 0} puntos
-                            </div>
-
-                        </div>
-
-                        <div>
-
-                            <button
-                                class="btn"
-                                onclick="abrirCliente(${i})">
-                                Editar
-                            </button>
-
-                            <button
-                                class="btn btn-danger"
-                                onclick="eliminarCliente(${i})">
-                                Eliminar
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                `).join("")
-
-                :
-
-                `<p style="color:#888;">
-                    Todavía no hay clientes.
-                </p>`
-            }
-
-        </div>
-    `;
+  pintarClientes(clientes);
 }
 
+function pintarClientes(lista){
+  const box=document.getElementById("clientesTable");
+  if(!box)return;
+
+  box.innerHTML=`
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Cliente</th>
+            <th>Teléfono</th>
+            <th>Tarjeta / código</th>
+            <th>Puntos</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${lista.length ? lista.map(c=>{
+            const i=clientes.indexOf(c);
+            return `
+              <tr>
+                <td><strong>${esc(c.name)}</strong></td>
+                <td>${esc(c.phone||"")}</td>
+                <td>${esc(c.cardCode||"")}</td>
+                <td><strong>${Number(c.points||0)}</strong></td>
+                <td>
+                  <button class="btn btn-light" onclick="abrirCliente(${i})">✏️</button>
+                  <button class="btn btn-dark" onclick="eliminarCliente(${i})">🗑️</button>
+                </td>
+              </tr>
+            `;
+          }).join("") : `
+            <tr><td colspan="5" style="text-align:center;padding:35px">
+              No hay clientes registrados.
+            </td></tr>
+          `}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+function filtrarClientes(){
+  const q=(document.getElementById("buscarCliente")?.value||"").toLowerCase();
+
+  pintarClientes(clientes.filter(c=>
+    String(c.name||"").toLowerCase().includes(q) ||
+    String(c.phone||"").toLowerCase().includes(q) ||
+    String(c.cardCode||"").toLowerCase().includes(q)
+  ));
+}
 
 function abrirCliente(indice=null){
+  const c=indice===null?{}:clientes[indice];
 
-    const editar=indice!==null;
-    const c=editar ? clientes[indice] : {};
+  abrirModal(`
+    <button class="close" onclick="cerrarModal()">×</button>
+    <h2>${indice===null?"＋ Nuevo cliente":"✏️ Editar cliente"}</h2>
 
-    modal(
-        editar ? "Editar cliente" : "Nuevo cliente",
-        `
+    <div class="form-grid">
+      <div class="field">
+        <label>Nombre *</label>
+        <input id="cliNombre" value="${esc(c.name||"")}" placeholder="Nombre del cliente">
+      </div>
 
-        <div class="form">
+      <div class="field">
+        <label>Teléfono</label>
+        <input id="cliTelefono" value="${esc(c.phone||"")}" placeholder="55...">
+      </div>
 
-            <div class="field full">
+      <div class="field">
+        <label>Tarjeta / código escaneable</label>
+        <input id="cliTarjeta" value="${esc(c.cardCode||"")}"
+          placeholder="Escanea o escribe el código">
+      </div>
+    </div>
 
-                <label>Nombre</label>
-
-                <input
-                    id="nombreCliente"
-                    value="${esc(c.nombre || '')}"
-                >
-
-            </div>
-
-            <div class="field">
-
-                <label>Teléfono</label>
-
-                <input
-                    id="telefonoCliente"
-                    value="${esc(c.telefono || '')}"
-                >
-
-            </div>
-
-            <div class="field">
-
-                <label>Tarjeta / código</label>
-
-                <input
-                    id="codigoCliente"
-                    value="${esc(c.codigo || '')}"
-                >
-
-            </div>
-
-            <div class="field full">
-
-                <button
-                    class="btn btn-pink"
-                    onclick="guardarCliente(${editar ? indice : 'null'})">
-
-                    Guardar cliente
-
-                </button>
-
-            </div>
-
-        </div>
-        `
-    );
+    <div class="form-actions">
+      <button class="btn btn-light" onclick="cerrarModal()">Cancelar</button>
+      <button class="btn btn-pink" onclick="guardarCliente(${indice===null?"null":indice})">
+        💾 Guardar cliente
+      </button>
+    </div>
+  `);
 }
-
 
 function guardarCliente(indice){
+  const name=document.getElementById("cliNombre").value.trim();
+  const phone=document.getElementById("cliTelefono").value.trim();
+  const cardCode=document.getElementById("cliTarjeta").value.trim();
 
-    const nombre=
-        document.getElementById("nombreCliente")
-        .value.trim();
+  if(!name){
+    alert("Escribe el nombre del cliente.");
+    return;
+  }
 
-    const telefono=
-        document.getElementById("telefonoCliente")
-        .value.trim();
+  const cliente={
+    name,
+    phone,
+    cardCode,
+    points:indice===null?0:Number(clientes[indice].points||0)
+  };
 
-    const codigo=
-        document.getElementById("codigoCliente")
-        .value.trim();
+  if(indice===null)clientes.push(cliente);
+  else clientes[indice]=cliente;
 
-
-    if(!nombre){
-
-        alert("Escribe el nombre.");
-
-        return;
-    }
-
-
-    const cliente={
-
-        nombre,
-        telefono,
-        codigo,
-        puntos:
-            indice!==null
-                ? clientes[indice].puntos || 0
-                : 0
-
-    };
-
-
-    if(indice===null){
-
-        clientes.push(cliente);
-
-    }else{
-
-        clientes[indice]=cliente;
-
-    }
-
-
-    guardar();
-
-    cerrarModal();
-
-    mostrarClientes();
-
+  guardar();
+  cerrarModal();
+  renderClientes();
 }
 
-
-function eliminarCliente(indice){
-
-    if(!confirm("¿Eliminar cliente?"))return;
-
-    clientes.splice(indice,1);
-
-    guardar();
-
-    mostrarClientes();
-
+function eliminarCliente(i){
+  if(!confirm("¿Eliminar este cliente?"))return;
+  clientes.splice(i,1);
+  guardar();
+  renderClientes();
 }
 
-
-/* =====================================================
+/* =========================
    PUNTOS
-===================================================== */
+   ========================= */
 
-function mostrarPuntos(){
+function renderPuntos(){
+  const puntosTotales=clientes.reduce((a,c)=>a+Number(c.points||0),0);
 
-    cambiarTitulo(
-        "Programa de puntos",
-        "Configura la recompensa de tus clientes"
-    );
+  document.getElementById("appContent").innerHTML=`
+    <div class="cards">
+      <div class="card">
+        <div class="card-label">Clientes</div>
+        <div class="card-value">${clientes.length}</div>
+      </div>
 
-    document.getElementById("contenido").innerHTML=`
+      <div class="card">
+        <div class="card-label">Puntos acumulados</div>
+        <div class="card-value">${puntosTotales}</div>
+      </div>
+    </div>
 
-        <div class="section">
+    <div class="card">
+      <h2>⭐ Configuración de puntos</h2>
+      <p>Actualmente se asignan puntos de acuerdo con el monto de la compra.</p>
 
-            <h2>Configuración de puntos</h2>
+      <div class="field" style="max-width:350px">
+        <label>Puntos por cada $1 MXN</label>
+        <input id="puntosPorPeso" type="number" step="0.01" min="0"
+          value="${Number(configuracion.puntosPorPeso||0.1)}">
+      </div>
 
-            <p style="color:#777;margin:10px 0 20px;">
-                Actualmente se otorga 1 punto por cada $1 de compra.
-            </p>
+      <button class="btn btn-pink" style="margin-top:15px" onclick="guardarConfigPuntos()">
+        💾 Guardar configuración
+      </button>
+    </div>
 
-            <div class="field">
+    <br>
 
-                <label>
-                    Pesos necesarios por punto
-                </label>
-
-                <input
-                    type="number"
-                    value="${puntosPorPeso}"
-                    min="1"
-                    onchange="
-                        puntosPorPeso=Number(this.value)||1
-                    "
-                >
-
-            </div>
-
-        </div>
-    `;
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Cliente</th>
+            <th>Tarjeta</th>
+            <th>Puntos</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${clientes.map(c=>`
+            <tr>
+              <td>${esc(c.name)}</td>
+              <td>${esc(c.cardCode||"")}</td>
+              <td><strong>${Number(c.points||0)}</strong></td>
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>
+    </div>
+  `;
 }
 
+function guardarConfigPuntos(){
+  configuracion.puntosPorPeso=Number(document.getElementById("puntosPorPeso").value||0);
+  guardar();
+  alert("Configuración guardada.");
+}
 
-/* =====================================================
+/* =========================
    REPORTES
-===================================================== */
+   ========================= */
 
-function mostrarReportes(){
+function renderReportes(){
+  const total=ventas.reduce((a,v)=>a+Number(v.total||0),0);
+  const efectivo=ventas.filter(v=>v.payment==="Efectivo").reduce((a,v)=>a+Number(v.total||0),0);
+  const transferencia=ventas.filter(v=>v.payment==="Transferencia").reduce((a,v)=>a+Number(v.total||0),0);
+  const tarjeta=ventas.filter(v=>v.payment==="Tarjeta").reduce((a,v)=>a+Number(v.total||0),0);
 
-    cambiarTitulo(
-        "Reportes",
-        "Ventas y formas de pago"
-    );
+  document.getElementById("appContent").innerHTML=`
+    <div class="cards">
+      <div class="card">
+        <div class="card-label">Ventas</div>
+        <div class="card-value">${ventas.length}</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Ventas totales</div>
+        <div class="card-value">${dinero(total)}</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Efectivo</div>
+        <div class="card-value">${dinero(efectivo)}</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Tarjeta</div>
+        <div class="card-value">${dinero(tarjeta)}</div>
+      </div>
+    </div>
 
-    const total=
-        ventas.reduce(
-            (a,v)=>a+Number(v.total),
-            0
-        );
+    <div class="card">
+      <h2>🏦 Formas de pago</h2>
+      <p>Transferencia: <strong>${dinero(transferencia)}</strong></p>
+      <p>Tarjeta / Clip: <strong>${dinero(tarjeta)}</strong></p>
+      <p>Efectivo: <strong>${dinero(efectivo)}</strong></p>
+    </div>
 
-    const efectivo=
-        ventas
-        .filter(v=>v.pago==="Efectivo")
-        .reduce((a,v)=>a+Number(v.total),0);
+    <br>
 
-    const transferencia=
-        ventas
-        .filter(v=>v.pago==="Transferencia")
-        .reduce((a,v)=>a+Number(v.total),0);
-
-    const tarjeta=
-        ventas
-        .filter(v=>v.pago==="Tarjeta")
-        .reduce((a,v)=>a+Number(v.total),0);
-
-
-    document.getElementById("contenido").innerHTML=`
-
-        <div class="stats">
-
-            <div class="stat">
-                <small>Ventas totales</small>
-                <h2>${dinero(total)}</h2>
-            </div>
-
-            <div class="stat">
-                <small>Efectivo</small>
-                <h2>${dinero(efectivo)}</h2>
-            </div>
-
-            <div class="stat">
-                <small>Transferencias</small>
-                <h2>${dinero(transferencia)}</h2>
-            </div>
-
-            <div class="stat">
-                <small>Tarjetas</small>
-                <h2>${dinero(tarjeta)}</h2>
-            </div>
-
-        </div>
-
-
-        <div class="section">
-
-            <h2 style="margin-bottom:15px;">
-                Últimas ventas
-            </h2>
-
-            <div class="table-wrap">
-
-                <table>
-
-                    <thead>
-
-                        <tr>
-                            <th>Folio</th>
-                            <th>Fecha</th>
-                            <th>Cliente</th>
-                            <th>Pago</th>
-                            <th>Total</th>
-                        </tr>
-
-                    </thead>
-
-                    <tbody>
-
-                        ${ventas.slice(-20).reverse().map(v=>`
-
-                            <tr>
-
-                                <td>${v.folio}</td>
-
-                                <td>
-                                    ${new Date(v.fecha)
-                                    .toLocaleString("es-MX")}
-                                </td>
-
-                                <td>
-                                    ${esc(v.cliente || "Público")}
-                                </td>
-
-                                <td>${v.pago}</td>
-
-                                <td>
-                                    <strong>
-                                        ${dinero(v.total)}
-                                    </strong>
-                                </td>
-
-                            </tr>
-
-                        `).join("")}
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </div>
-    `;
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Folio</th>
+            <th>Fecha</th>
+            <th>Cliente</th>
+            <th>Pago</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${ventas.slice().reverse().slice(0,50).map(v=>`
+            <tr>
+              <td>${esc(v.folio)}</td>
+              <td>${new Date(v.date).toLocaleString("es-MX")}</td>
+              <td>${esc(v.client||"Público general")}</td>
+              <td>${esc(v.payment)}</td>
+              <td><strong>${dinero(v.total)}</strong></td>
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>
+    </div>
+  `;
 }
 
-
-/* =====================================================
+/* =========================
    CONFIGURACIÓN
-===================================================== */
+   ========================= */
 
-function mostrarConfiguracion(){
+function renderConfig(){
+  document.getElementById("appContent").innerHTML=`
+    <div class="card">
+      <h2>⚙️ Configuración de la tienda</h2>
+      <p style="color:#777">
+        Aquí podrás personalizar la información que aparece en el sistema.
+      </p>
 
-    cambiarTitulo(
-        "Configuración",
-        "Nat.Nation Sneakers"
-    );
+      <div class="form-grid">
+        <div class="field full">
+          <label>Logo de Nat.Nation</label>
 
-    document.getElementById("contenido").innerHTML=`
+          <div class="photo-upload">
+            <img id="previewLogo" class="photo-preview"
+              src="${configuracion.logo||""}"
+              style="${configuracion.logo?"display:block":""}">
 
-        <div class="section">
-
-            <h2>Datos de la tienda</h2>
-
-            <div style="margin-top:20px;line-height:1.8;">
-
-                <strong>Nat.Nation Sneakers</strong><br>
-
-                Donde empieza tu estilo.<br><br>
-
-                📍 Calle Juan Clímaco Ramírez
-                SNVC, San Andrés,
-                55780 Jaltenco, Estado de México<br>
-
-                📞 5624570336
-
+            <div id="logoIcono" style="${configuracion.logo?"display:none":""};font-size:45px">
+              🖼️
             </div>
 
+            <p>Sube el logo desde tu dispositivo</p>
+
+            <label class="upload-btn">
+              📷 Subir logo
+              <input type="file" accept="image/*" onchange="cargarLogo(this)">
+            </label>
+          </div>
         </div>
+      </div>
 
-
-        <div class="section">
-
-            <h2>Logo</h2>
-
-            <p style="color:#777;margin:10px 0 15px;">
-                Para cambiar el logo de la aplicación,
-                reemplaza el archivo logo.png.
-            </p>
-
-        </div>
-
-    `;
+      <div class="form-actions">
+        <button class="btn btn-pink" onclick="guardarConfiguracion()">💾 Guardar cambios</button>
+      </div>
+    </div>
+  `;
 }
 
+function cargarLogo(input){
+  const file=input.files?.[0];
+  if(!file)return;
 
-/* =====================================================
+  const reader=new FileReader();
+
+  reader.onload=e=>{
+    configuracion.logo=e.target.result;
+
+    const img=document.getElementById("previewLogo");
+    const icon=document.getElementById("logoIcono");
+
+    if(img){
+      img.src=configuracion.logo;
+      img.style.display="block";
+    }
+    if(icon)icon.style.display="none";
+  };
+
+  reader.readAsDataURL(file);
+}
+
+function guardarConfiguracion(){
+  guardar();
+  actualizarLogo();
+  alert("Configuración guardada.");
+}
+
+function actualizarLogo(){
+  const img=document.getElementById("logoImg");
+
+  if(configuracion.logo){
+    img.src=configuracion.logo;
+  }else{
+    img.removeAttribute("src");
+    img.alt="NN";
+  }
+}
+
+/* =========================
    TICKET
-===================================================== */
+   ========================= */
 
 function imprimirTicket(venta){
+  document.getElementById("printArea").innerHTML=`
+    <div style="font-family:Arial,sans-serif;font-size:12px;padding:8px">
+      <div style="text-align:center">
+        <h2 style="margin:0">Nat.Nation Sneakers</h2>
+        <div>Donde empieza tu estilo.</div>
+        <div style="margin-top:8px">${esc(venta.folio)}</div>
+        <div>${new Date(venta.date).toLocaleString("es-MX")}</div>
+      </div>
 
-    const productosTicket=
-        venta.productos.map(p=>`
+      <hr>
 
-            <div class="ticket-row">
-
-                <span>
-                    ${p.cantidad}x ${esc(p.nombre)}
-                </span>
-
-                <span>
-                    ${dinero(p.subtotal)}
-                </span>
-
-            </div>
-
-            <div style="font-size:11px;">
-                Talla #${esc(p.talla)}
-            </div>
-
-        `).join("");
-
-
-    document.getElementById("printArea").innerHTML=`
-
-        <div class="ticket">
-
-            <img
-                src="logo.png"
-                class="ticket-logo"
-            >
-
-            <div class="ticket-center">
-
-                Nat.Nation Sneakers<br>
-
-                Donde empieza tu estilo.<br>
-
-                Calle Juan Clímaco Ramírez SNVC<br>
-                San Andrés, 55780 Jaltenco, Méx.<br>
-
-                Tel. 5624570336
-
-            </div>
-
-            <div class="ticket-line"></div>
-
-            <div>
-                Folio: ${venta.folio}<br>
-                ${new Date(venta.fecha)
-                .toLocaleString("es-MX")}
-            </div>
-
-            <div class="ticket-line"></div>
-
-            ${productosTicket}
-
-            <div class="ticket-line"></div>
-
-            <div class="ticket-row">
-
-                <strong>TOTAL</strong>
-
-                <strong>
-                    ${dinero(venta.total)}
-                </strong>
-
-            </div>
-
-            <div style="margin-top:8px;">
-                Pago: ${venta.pago}
-            </div>
-
-            ${
-                venta.pago==="Efectivo"
-                ?
-                `
-                <div>
-                    Recibido: ${dinero(venta.efectivo)}
-                </div>
-
-                <div>
-                    Cambio: ${dinero(venta.cambio)}
-                </div>
-                `
-                :""
-            }
-
-            ${
-                venta.cliente
-                ?
-                `
-                <div style="margin-top:8px;">
-                    Cliente: ${esc(venta.cliente)}
-                </div>
-
-                <div>
-                    ⭐ Puntos obtenidos:
-                    ${venta.puntos}
-                </div>
-                `
-                :""
-            }
-
-            <div class="ticket-line"></div>
-
-            <div class="ticket-center">
-                ¡Gracias por tu compra!<br>
-                @Nat.Nation
-            </div>
-
+      ${venta.products.map(p=>`
+        <div style="display:flex;justify-content:space-between;margin:5px 0">
+          <span>${esc(p.model)} x${p.qty}</span>
+          <span>${dinero(p.price*p.qty)}</span>
         </div>
-    `;
+      `).join("")}
 
-    window.print();
+      <hr>
 
+      <div style="display:flex;justify-content:space-between;font-weight:bold">
+        <span>TOTAL</span>
+        <span>${dinero(venta.total)}</span>
+      </div>
+
+      <div style="margin-top:7px">Pago: ${esc(venta.payment)}</div>
+
+      ${venta.payment==="Efectivo"
+        ? `<div>Recibido: ${dinero(venta.cashReceived)}</div>
+           <div>Cambio: ${dinero(venta.change)}</div>`
+        : ""}
+
+      ${venta.client?`<div>Cliente: ${esc(venta.client)}</div>`:""}
+      ${venta.points?`<div>Puntos ganados: ${venta.points}</div>`:""}
+
+      <hr>
+
+      <div style="text-align:center">¡Gracias por tu compra!</div>
+    </div>
+  `;
+
+  setTimeout(()=>window.print(),100);
 }
 
-
-/* =====================================================
-   INICIO
-===================================================== */
-
-mostrarInicio();
-
+/* INICIO */
+actualizarLogo();
+ir("venta");
 </script>
-
 </body>
 </html>
