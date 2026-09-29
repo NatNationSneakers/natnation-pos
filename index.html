@@ -3,125 +3,2581 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Nat.Nation Sneakers | Punto de Venta</title>
+
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:#f7f7f9;color:#222}
-header{background:#111;color:#fff;padding:22px 20px;text-align:center}
-header h1{margin:0;font-size:28px} header p{margin:6px 0 0;color:#ddd}
-main{max-width:1150px;margin:28px auto;padding:20px}.welcome{background:#fff;border-radius:18px;padding:28px;box-shadow:0 4px 18px rgba(0,0,0,.08)}
-.buttons{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
-button{border:0;border-radius:11px;padding:12px 18px;font-size:15px;cursor:pointer;background:#111;color:#fff}button:hover{opacity:.88}
-.pink,.primary{background:#e91e63;color:#fff}.light{background:#eee;color:#222}.danger{background:#c62828;color:#fff}.blue{background:#1565c0;color:#fff}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:22px}.card{background:#fff;padding:24px;border-radius:16px;box-shadow:0 4px 15px rgba(0,0,0,.06)}.card h3{margin-top:0}
-.nn-modal{position:fixed;inset:0;background:rgba(0,0,0,.58);display:none;align-items:center;justify-content:center;z-index:9999;padding:16px}.nn-modal-box{background:#fff;width:min(760px,96vw);max-height:92vh;overflow-y:auto;border-radius:18px;padding:24px;box-shadow:0 15px 50px rgba(0,0,0,.3)}
-.nn-close{float:right;cursor:pointer;font-size:28px;font-weight:bold}.nn-form{display:grid;gap:11px}.nn-form input,.nn-form select{padding:12px;border:1px solid #ddd;border-radius:10px;font-size:16px;width:100%}.nn-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.item{border:1px solid #ddd;border-radius:12px;padding:13px;margin:9px 0}.total{font-size:24px;font-weight:800;margin:14px 0}.empty{text-align:center;color:#666;padding:15px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:600px){.grid2{grid-template-columns:1fr}}
-.badge{display:inline-block;padding:4px 8px;border-radius:20px;background:#eee;font-size:12px}.stock-low{color:#c62828;font-weight:700}.ticket{font-family:Arial,sans-serif;max-width:360px;margin:auto}.ticket h2,.ticket p{text-align:center;margin:4px 0}.ticket hr{border:0;border-top:1px dashed #999}.ticket-row{display:flex;justify-content:space-between;gap:10px;margin:6px 0}.ticket-total{font-size:20px;font-weight:800}.small{font-size:12px;color:#555}
-@media print{body>*:not(#printArea){display:none!important}#printArea{display:block!important}.nn-modal{display:none!important}}
-#printArea{display:none}
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  background:#f7f7f9;
+  color:#222;
+}
+
+header{
+  background:#111;
+  color:#fff;
+  padding:22px 20px;
+  text-align:center;
+}
+
+header h1{
+  margin:0;
+  font-size:28px;
+}
+
+header p{
+  margin:6px 0 0;
+  color:#ddd;
+}
+
+main{
+  max-width:1150px;
+  margin:28px auto;
+  padding:20px;
+}
+
+.welcome{
+  background:#fff;
+  border-radius:18px;
+  padding:28px;
+  box-shadow:0 4px 18px rgba(0,0,0,.08);
+}
+
+.buttons{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:22px;
+}
+
+button{
+  border:0;
+  border-radius:11px;
+  padding:12px 18px;
+  font-size:15px;
+  cursor:pointer;
+  background:#111;
+  color:#fff;
+}
+
+button:hover{
+  opacity:.88;
+}
+
+.pink,
+.primary{
+  background:#e91e63;
+  color:#fff;
+}
+
+.light{
+  background:#eee;
+  color:#222;
+}
+
+.danger{
+  background:#c62828;
+  color:#fff;
+}
+
+.blue{
+  background:#1565c0;
+  color:#fff;
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:18px;
+  margin-top:22px;
+}
+
+.card{
+  background:#fff;
+  padding:24px;
+  border-radius:16px;
+  box-shadow:0 4px 15px rgba(0,0,0,.06);
+}
+
+.card h3{
+  margin-top:0;
+}
+
+.nn-modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.58);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+  padding:16px;
+}
+
+.nn-modal-box{
+  background:#fff;
+  width:min(760px,96vw);
+  max-height:92vh;
+  overflow-y:auto;
+  border-radius:18px;
+  padding:24px;
+  box-shadow:0 15px 50px rgba(0,0,0,.3);
+}
+
+.nn-close{
+  float:right;
+  cursor:pointer;
+  font-size:28px;
+  font-weight:bold;
+}
+
+.nn-form{
+  display:grid;
+  gap:11px;
+}
+
+.nn-form input,
+.nn-form select{
+  padding:12px;
+  border:1px solid #ddd;
+  border-radius:10px;
+  font-size:16px;
+  width:100%;
+}
+
+.nn-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:14px;
+}
+
+.item{
+  border:1px solid #ddd;
+  border-radius:12px;
+  padding:13px;
+  margin:9px 0;
+}
+
+.total{
+  font-size:24px;
+  font-weight:800;
+  margin:14px 0;
+}
+
+.empty{
+  text-align:center;
+  color:#666;
+  padding:15px;
+}
+
+.grid2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+@media(max-width:600px){
+  .grid2{
+    grid-template-columns:1fr;
+  }
+}
+
+.badge{
+  display:inline-block;
+  padding:4px 8px;
+  border-radius:20px;
+  background:#eee;
+  font-size:12px;
+}
+
+.stock-low{
+  color:#c62828;
+  font-weight:700;
+}
+
+.ticket{
+  font-family:Arial,sans-serif;
+  max-width:360px;
+  margin:auto;
+}
+
+.ticket h2,
+.ticket p{
+  text-align:center;
+  margin:4px 0;
+}
+
+.ticket hr{
+  border:0;
+  border-top:1px dashed #999;
+}
+
+.ticket-row{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  margin:6px 0;
+}
+
+.ticket-total{
+  font-size:20px;
+  font-weight:800;
+}
+
+.small{
+  font-size:12px;
+  color:#555;
+}
+
+.reset-box{
+  margin-top:20px;
+  padding:16px;
+  border:1px solid #f0b4b4;
+  background:#fff5f5;
+  border-radius:14px;
+}
+
+.reset-box strong{
+  color:#c62828;
+}
+
+.reset-button{
+  background:#8e0000;
+  color:#fff;
+}
+
+.success-box{
+  padding:15px;
+  border-radius:12px;
+  background:#f5f5f5;
+  margin:10px 0;
+}
+
+@media print{
+  body>*:not(#printArea){
+    display:none!important;
+  }
+
+  #printArea{
+    display:block!important;
+  }
+
+  .nn-modal{
+    display:none!important;
+  }
+}
+
+#printArea{
+  display:none;
+}
 </style>
 </head>
-<body>
-<header><h1>Nat.Nation Sneakers</h1><p>Donde empieza tu estilo.</p></header>
-<main>
-<section class="welcome">
-<h2>🛍️ Punto de Venta</h2><p>Sistema de ventas e inventario de Nat.Nation Sneakers.</p>
-<div class="buttons">
-<button class="pink" onclick="nuevaVenta()">🛒 Nueva venta</button>
-<button onclick="mostrarInventario()">👟 Inventario</button>
-<button onclick="mostrarClientes()">👤 Clientes</button>
-<button onclick="mostrarReportes()">📊 Reportes</button>
-</div></section>
-<section class="cards">
-<div class="card"><h3>👟 Inventario</h3><p>Modelos, tallas, precios y existencias.</p></div>
-<div class="card"><h3>🛒 Ventas</h3><p>Registra productos y genera tickets.</p></div>
-<div class="card"><h3>⭐ Clientes</h3><p>Registra clientes y acumula puntos.</p></div>
-<div class="card"><h3>💳 Pagos</h3><p>Efectivo, transferencia y tarjeta.</p></div>
-</section></main>
 
-<div id="modal" class="nn-modal" onclick="cerrarFondo(event)"><div class="nn-modal-box"><span class="nn-close" onclick="cerrar()">×</span><div id="contenido"></div></div></div>
+<body>
+
+<header>
+  <h1>Nat.Nation Sneakers</h1>
+  <p>Donde empieza tu estilo.</p>
+</header>
+
+<main>
+
+<section class="welcome">
+
+  <h2>🛍️ Punto de Venta</h2>
+
+  <p>
+    Sistema de ventas e inventario de Nat.Nation Sneakers.
+  </p>
+
+  <div class="buttons">
+
+    <button class="pink" onclick="nuevaVenta()">
+      🛒 Nueva venta
+    </button>
+
+    <button onclick="mostrarInventario()">
+      👟 Inventario
+    </button>
+
+    <button onclick="mostrarClientes()">
+      👤 Clientes
+    </button>
+
+    <button onclick="mostrarReportes()">
+      📊 Reportes
+    </button>
+
+  </div>
+
+  <div class="reset-box">
+
+    <strong>⚠️ Antes de comenzar a vender oficialmente</strong>
+
+    <p>
+      Usa este botón solamente una vez para eliminar todas las
+      ventas de prueba y comenzar la numeración desde NN-000001.
+    </p>
+
+    <button
+      class="reset-button"
+      onclick="prepararInicioReal()">
+      🧹 Preparar sistema para inicio real
+    </button>
+
+  </div>
+
+</section>
+
+
+<section class="cards">
+
+  <div class="card">
+    <h3>👟 Inventario</h3>
+    <p>
+      Modelos, tallas, precios y existencias.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>🛒 Ventas</h3>
+    <p>
+      Registra productos y genera tickets.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>⭐ Clientes</h3>
+    <p>
+      Registra clientes y acumula puntos.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>💳 Pagos</h3>
+    <p>
+      Efectivo, transferencia y tarjeta.
+    </p>
+  </div>
+
+</section>
+
+</main>
+
+
+<div
+  id="modal"
+  class="nn-modal"
+  onclick="cerrarFondo(event)"
+>
+
+  <div class="nn-modal-box">
+
+    <span
+      class="nn-close"
+      onclick="cerrar()">
+      ×
+    </span>
+
+    <div id="contenido"></div>
+
+  </div>
+
+</div>
+
+
 <div id="printArea"></div>
 
+
 <script>
-let inventario=leer("nn_inventario",[]), clientes=leer("nn_clientes",[]), ventas=leer("nn_ventas",[]), carrito=[];
-function leer(k,def){try{return JSON.parse(localStorage.getItem(k)||JSON.stringify(def))}catch(e){return def}}
-function guardar(){localStorage.setItem("nn_inventario",JSON.stringify(inventario));localStorage.setItem("nn_clientes",JSON.stringify(clientes));localStorage.setItem("nn_ventas",JSON.stringify(ventas))}
-function abrir(html){document.getElementById("contenido").innerHTML=html;document.getElementById("modal").style.display="flex"}
-function cerrar(){document.getElementById("modal").style.display="none"}
-function cerrarFondo(e){if(e.target===e.currentTarget)cerrar()}
-function esc(v){return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
-function dinero(n){return Number(n||0).toLocaleString("es-MX",{minimumFractionDigits:2,maximumFractionDigits:2})}
+
+/* =====================================================
+   DATOS DEL SISTEMA
+   ===================================================== */
+
+let inventario = leer("nn_inventario", []);
+
+let clientes = leer("nn_clientes", []);
+
+let ventas = leer("nn_ventas", []);
+
+let carrito = [];
+
+
+/*
+  Este número controla el siguiente ticket.
+  Si no existe, empieza en 1.
+*/
+
+let numeroFolio = Number(
+  localStorage.getItem("nn_folio") || "1"
+);
+
+
+/* =====================================================
+   FUNCIONES GENERALES
+   ===================================================== */
+
+function leer(clave, defecto){
+
+  try{
+
+    return JSON.parse(
+      localStorage.getItem(clave)
+      || JSON.stringify(defecto)
+    );
+
+  }catch(e){
+
+    return defecto;
+
+  }
+
+}
+
+
+function guardar(){
+
+  localStorage.setItem(
+    "nn_inventario",
+    JSON.stringify(inventario)
+  );
+
+  localStorage.setItem(
+    "nn_clientes",
+    JSON.stringify(clientes)
+  );
+
+  localStorage.setItem(
+    "nn_ventas",
+    JSON.stringify(ventas)
+  );
+
+  localStorage.setItem(
+    "nn_folio",
+    String(numeroFolio)
+  );
+
+}
+
+
+function abrir(html){
+
+  document.getElementById("contenido").innerHTML = html;
+
+  document.getElementById("modal").style.display = "flex";
+
+}
+
+
+function cerrar(){
+
+  document.getElementById("modal").style.display = "none";
+
+}
+
+
+function cerrarFondo(e){
+
+  if(e.target === e.currentTarget){
+
+    cerrar();
+
+  }
+
+}
+
+
+function esc(v){
+
+  return String(v ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+function dinero(n){
+
+  return Number(n || 0).toLocaleString(
+    "es-MX",
+    {
+      minimumFractionDigits:2,
+      maximumFractionDigits:2
+    }
+  );
+
+}
+
+
+/* =====================================================
+   FOLIOS
+   ===================================================== */
+
+function obtenerSiguienteFolio(){
+
+  const folio =
+    "NN-" +
+    String(numeroFolio).padStart(6,"0");
+
+  return folio;
+
+}
+
+
+/*
+  Cuando una venta se registra:
+  1. utiliza el folio actual
+  2. aumenta el siguiente en uno
+*/
+
+function avanzarFolio(){
+
+  numeroFolio++;
+
+  localStorage.setItem(
+    "nn_folio",
+    String(numeroFolio)
+  );
+
+}
+
+
+/* =====================================================
+   PREPARAR INICIO REAL
+   ===================================================== */
+
+function prepararInicioReal(){
+
+  const primeraConfirmacion = confirm(
+    "⚠️ PREPARAR SISTEMA PARA INICIO REAL\n\n" +
+
+    "Se eliminarán TODAS las ventas de prueba.\n" +
+
+    "Los reportes quedarán en $0.\n\n" +
+
+    "También se reiniciarán los puntos de clientes a 0.\n\n" +
+
+    "NO se eliminará el inventario.\n" +
+
+    "NO se eliminarán los clientes.\n\n" +
+
+    "El primer ticket será NN-000001.\n\n" +
+
+    "¿Quieres continuar?"
+  );
+
+
+  if(!primeraConfirmacion){
+
+    return;
+
+  }
+
+
+  const segundaConfirmacion = confirm(
+    "ÚLTIMA CONFIRMACIÓN\n\n" +
+
+    "Esto borrará el historial de ventas que has utilizado para pruebas.\n\n" +
+
+    "Inventario y clientes permanecerán.\n\n" +
+
+    "Después de hacerlo, tu primera venta real será NN-000001.\n\n" +
+
+    "¿CONFIRMAS INICIAR DESDE CERO?"
+  );
+
+
+  if(!segundaConfirmacion){
+
+    return;
+
+  }
+
+
+  /* Borrar ventas de prueba */
+
+  ventas = [];
+
+
+  /* Reiniciar puntos de clientes */
+
+  clientes.forEach(function(cliente){
+
+    cliente.puntos = 0;
+
+  });
+
+
+  /* Reiniciar folio */
+
+  numeroFolio = 1;
+
+
+  /* Guardar */
+
+  guardar();
+
+
+  /* Mostrar confirmación */
+
+  abrir(`
+
+    <h2>🎉 Sistema listo</h2>
+
+    <div class="success-box">
+
+      <p>
+        <strong>El sistema ya está preparado para comenzar.</strong>
+      </p>
+
+      <p>
+        Primera venta:
+        <strong>NN-000001</strong>
+      </p>
+
+      <p>
+        Las ventas de prueba fueron eliminadas.
+      </p>
+
+      <p>
+        Tu inventario y tus clientes se conservaron.
+      </p>
+
+    </div>
+
+    <button
+      class="primary"
+      onclick="cerrar()">
+      Continuar
+    </button>
+
+  `);
+
+}
+
+
+/* =====================================================
+   NUEVA VENTA
+   ===================================================== */
 
 function nuevaVenta(){
- carrito=[]; renderVenta();
+
+  carrito = [];
+
+  renderVenta();
+
 }
+
+
 function renderVenta(){
- const opciones=inventario.length?inventario.map((p,i)=>`<option value="${i}" ${Number(p.stock)<=0?"disabled":""}>${esc(p.modelo)} | Talla ${esc(p.talla)} | $${dinero(p.precio)} | Stock: ${Number(p.stock)}</option>`).join(""):"<option value=\"\">Primero agrega productos al inventario</option>";
- const clientesHtml=clientes.map((c,i)=>`<option value="${i}">${esc(c.nombre)}${c.codigo?" | "+esc(c.codigo):""} | ${esc(c.telefono)}</option>`).join("");
- abrir(`<h2>🛒 Nueva venta</h2><div class="nn-form">
- <label>Producto</label><select id="producto">${opciones}</select>
- <div class="grid2"><button class="primary" onclick="agregarCarrito()">➕ Agregar al carrito</button><button class="light" onclick="mostrarClientes();">👤 Ver clientes</button></div>
- <div id="carrito"></div><div class="total">Total: $<span id="total">0.00</span></div>
- <label>Forma de pago</label><select id="pago" onchange="cambioPago()"><option value="Efectivo">💵 Efectivo</option><option value="Transferencia">🏦 Transferencia</option><option value="Tarjeta">💳 Tarjeta</option></select>
- <div id="efectivoBox"><label>Recibido en efectivo</label><input id="recibido" type="number" min="0" step="0.01" placeholder="Ej. 500" oninput="calcularCambio()"><div id="cambio" class="badge">Cambio: $0.00</div></div>
- <label>Cliente (opcional)</label><select id="cliente"><option value="">Público general</option>${clientesHtml}</select>
- <label>Código de tarjeta del cliente (opcional)</label><input id="codigoCliente" placeholder="Si escaneas una tarjeta, el código queda aquí">
- <div class="nn-actions"><button class="primary" onclick="finalizarVenta()">💰 Finalizar venta</button><button class="light" onclick="cerrar()">Cancelar</button></div>
- </div>`); mostrarCarrito();
+
+  const opciones =
+    inventario.length
+
+    ?
+
+    inventario.map(function(p,i){
+
+      return `
+
+        <option
+          value="${i}"
+          ${Number(p.stock) <= 0 ? "disabled" : ""}
+        >
+
+          ${esc(p.modelo)}
+          |
+          Talla ${esc(p.talla)}
+          |
+          $${dinero(p.precio)}
+          |
+          Stock: ${Number(p.stock)}
+
+        </option>
+
+      `;
+
+    }).join("")
+
+    :
+
+    `<option value="">
+      Primero agrega productos al inventario
+    </option>`;
+
+
+  const clientesHtml =
+    clientes.map(function(c,i){
+
+      return `
+
+        <option value="${i}">
+
+          ${esc(c.nombre)}
+
+          ${c.codigo
+            ? " | " + esc(c.codigo)
+            : ""
+          }
+
+          | ${esc(c.telefono)}
+
+        </option>
+
+      `;
+
+    }).join("");
+
+
+  abrir(`
+
+    <h2>🛒 Nueva venta</h2>
+
+    <div class="nn-form">
+
+      <label>Producto</label>
+
+      <select id="producto">
+
+        ${opciones}
+
+      </select>
+
+
+      <div class="grid2">
+
+        <button
+          class="primary"
+          onclick="agregarCarrito()">
+
+          ➕ Agregar al carrito
+
+        </button>
+
+
+        <button
+          class="light"
+          onclick="mostrarClientes()">
+
+          👤 Ver clientes
+
+        </button>
+
+      </div>
+
+
+      <div id="carrito"></div>
+
+
+      <div class="total">
+
+        Total:
+        $
+        <span id="total">
+          0.00
+        </span>
+
+      </div>
+
+
+      <label>
+        Forma de pago
+      </label>
+
+
+      <select
+        id="pago"
+        onchange="cambioPago()">
+
+        <option value="Efectivo">
+          💵 Efectivo
+        </option>
+
+        <option value="Transferencia">
+          🏦 Transferencia
+        </option>
+
+        <option value="Tarjeta">
+          💳 Tarjeta
+        </option>
+
+      </select>
+
+
+      <div id="efectivoBox">
+
+        <label>
+          Recibido en efectivo
+        </label>
+
+        <input
+          id="recibido"
+          type="number"
+          min="0"
+          step="0.01"
+          placeholder="Ej. 500"
+          oninput="calcularCambio()"
+        >
+
+        <div
+          id="cambio"
+          class="badge">
+
+          Cambio: $0.00
+
+        </div>
+
+      </div>
+
+
+      <label>
+        Cliente (opcional)
+      </label>
+
+
+      <select id="cliente">
+
+        <option value="">
+          Público general
+        </option>
+
+        ${clientesHtml}
+
+      </select>
+
+
+      <label>
+        Código de tarjeta del cliente (opcional)
+      </label>
+
+
+      <input
+        id="codigoCliente"
+        placeholder="Si escaneas una tarjeta, el código queda aquí"
+      >
+
+
+      <div class="nn-actions">
+
+        <button
+          class="primary"
+          onclick="finalizarVenta()">
+
+          💰 Finalizar venta
+
+        </button>
+
+
+        <button
+          class="light"
+          onclick="cerrar()">
+
+          Cancelar
+
+        </button>
+
+      </div>
+
+    </div>
+
+  `);
+
+
+  mostrarCarrito();
+
 }
+
+
+/* =====================================================
+   CARRITO
+   ===================================================== */
+
 function agregarCarrito(){
- const i=document.getElementById("producto")?.value;if(i===""||!inventario[i])return alert("Selecciona un producto.");
- const p=inventario[i];const usados=carrito.filter(x=>x.idx===Number(i)).length;if(Number(p.stock)<=usados)return alert("No hay más existencias de este producto.");
- carrito.push({idx:Number(i),modelo:p.modelo,talla:p.talla,precio:Number(p.precio)});mostrarCarrito();
+
+  const elemento =
+    document.getElementById("producto");
+
+
+  const i =
+    elemento?.value;
+
+
+  if(i === "" || !inventario[i]){
+
+    alert("Selecciona un producto.");
+
+    return;
+
+  }
+
+
+  const producto =
+    inventario[i];
+
+
+  const usados =
+    carrito.filter(
+      x => x.idx === Number(i)
+    ).length;
+
+
+  if(
+    Number(producto.stock)
+    <=
+    usados
+  ){
+
+    alert(
+      "No hay más existencias de este producto."
+    );
+
+    return;
+
+  }
+
+
+  carrito.push({
+
+    idx:Number(i),
+
+    modelo:producto.modelo,
+
+    talla:producto.talla,
+
+    precio:Number(producto.precio)
+
+  });
+
+
+  mostrarCarrito();
+
 }
-function mostrarCarrito(){const c=document.getElementById("carrito"),t=document.getElementById("total");if(!c||!t)return;if(!carrito.length){c.innerHTML='<div class="empty">Carrito vacío.</div>';t.textContent="0.00";return}
- c.innerHTML=carrito.map((p,i)=>`<div class="item"><strong>${esc(p.modelo)}</strong> · Talla ${esc(p.talla)}<br>$${dinero(p.precio)} <button class="light" onclick="quitarCarrito(${i})">Quitar</button></div>`).join("");t.textContent=dinero(carrito.reduce((s,p)=>s+p.precio,0));calcularCambio()}
-function quitarCarrito(i){carrito.splice(i,1);mostrarCarrito()}
-function cambioPago(){const p=document.getElementById("pago")?.value,b=document.getElementById("efectivoBox");if(b)b.style.display=p==="Efectivo"?"block":"none";calcularCambio()}
-function calcularCambio(){const t=carrito.reduce((s,p)=>s+p.precio,0),r=Number(document.getElementById("recibido")?.value||0),c=document.getElementById("cambio");if(c)c.textContent="Cambio: $"+dinero(Math.max(0,r-t))}
+
+
+function mostrarCarrito(){
+
+  const contenedor =
+    document.getElementById("carrito");
+
+  const totalElemento =
+    document.getElementById("total");
+
+
+  if(!contenedor || !totalElemento){
+
+    return;
+
+  }
+
+
+  if(!carrito.length){
+
+    contenedor.innerHTML =
+      '<div class="empty">Carrito vacío.</div>';
+
+    totalElemento.textContent =
+      "0.00";
+
+    calcularCambio();
+
+    return;
+
+  }
+
+
+  contenedor.innerHTML =
+    carrito.map(function(p,i){
+
+      return `
+
+        <div class="item">
+
+          <strong>
+            ${esc(p.modelo)}
+          </strong>
+
+          · Talla ${esc(p.talla)}
+
+          <br>
+
+          $${dinero(p.precio)}
+
+          <button
+            class="light"
+            onclick="quitarCarrito(${i})">
+
+            Quitar
+
+          </button>
+
+        </div>
+
+      `;
+
+    }).join("");
+
+
+  const total =
+    carrito.reduce(
+      (s,p) => s + p.precio,
+      0
+    );
+
+
+  totalElemento.textContent =
+    dinero(total);
+
+
+  calcularCambio();
+
+}
+
+
+function quitarCarrito(i){
+
+  carrito.splice(i,1);
+
+  mostrarCarrito();
+
+}
+
+
+/* =====================================================
+   PAGOS
+   ===================================================== */
+
+function cambioPago(){
+
+  const pago =
+    document.getElementById("pago")?.value;
+
+  const caja =
+    document.getElementById("efectivoBox");
+
+
+  if(caja){
+
+    caja.style.display =
+      pago === "Efectivo"
+      ? "block"
+      : "none";
+
+  }
+
+
+  calcularCambio();
+
+}
+
+
+function calcularCambio(){
+
+  const total =
+    carrito.reduce(
+      (s,p) => s + p.precio,
+      0
+    );
+
+
+  const recibido =
+    Number(
+      document.getElementById(
+        "recibido"
+      )?.value || 0
+    );
+
+
+  const cambio =
+    document.getElementById(
+      "cambio"
+    );
+
+
+  if(cambio){
+
+    cambio.textContent =
+      "Cambio: $" +
+      dinero(
+        Math.max(
+          0,
+          recibido - total
+        )
+      );
+
+  }
+
+}
+
+
+/* =====================================================
+   FINALIZAR VENTA
+   ===================================================== */
+
 function finalizarVenta(){
- if(!carrito.length)return alert("Agrega al menos un producto.");
- const pago=document.getElementById("pago").value,total=carrito.reduce((s,p)=>s+p.precio,0),r=Number(document.getElementById("recibido")?.value||0);
- if(pago==="Efectivo"&&r<total)return alert("El efectivo recibido es menor al total.");
- const clienteIndex=document.getElementById("cliente").value, cantidades={};
- for(const p of carrito)cantidades[p.idx]=(cantidades[p.idx]||0)+1;
- for(const i in cantidades)if(!inventario[i]||Number(inventario[i].stock)<cantidades[i])return alert("No hay suficiente existencia.");
- for(const i in cantidades)inventario[i].stock=Number(inventario[i].stock)-cantidades[i];
- const puntos=Math.floor(total/10);let cliente="Público general",clienteObj=null;
- if(clienteIndex!==""&&clientes[Number(clienteIndex)]){clienteObj=clientes[Number(clienteIndex)];clienteObj.puntos=Number(clienteObj.puntos||0)+puntos;cliente=clienteObj.nombre}
- const venta={id:Date.now(),folio:"NN-"+String(Date.now()).slice(-6),fecha:new Date().toLocaleString("es-MX"),productos:carrito.map(x=>({...x})),total,pago,cliente,puntos,recibido:pago==="Efectivo"?r:null,cambio:pago==="Efectivo"?r-total:null};
- ventas.push(venta);guardar();
- imprimirTicket(venta,clienteObj);
- carrito=[];cerrar();
- setTimeout(()=>alert("¡Venta registrada!\n\nTotal: $"+dinero(total)+"\nPago: "+pago+"\nPuntos: +"+puntos),100);
+
+  if(!carrito.length){
+
+    alert(
+      "Agrega al menos un producto."
+    );
+
+    return;
+
+  }
+
+
+  const pago =
+    document.getElementById(
+      "pago"
+    ).value;
+
+
+  const total =
+    carrito.reduce(
+      (s,p) => s + p.precio,
+      0
+    );
+
+
+  const recibido =
+    Number(
+      document.getElementById(
+        "recibido"
+      )?.value || 0
+    );
+
+
+  if(
+    pago === "Efectivo"
+    &&
+    recibido < total
+  ){
+
+    alert(
+      "El efectivo recibido es menor al total."
+    );
+
+    return;
+
+  }
+
+
+  const clienteIndex =
+    document.getElementById(
+      "cliente"
+    ).value;
+
+
+  const cantidades = {};
+
+
+  for(
+    const producto
+    of carrito
+  ){
+
+    cantidades[producto.idx] =
+      (
+        cantidades[producto.idx]
+        || 0
+      ) + 1;
+
+  }
+
+
+  /* Verificar inventario */
+
+  for(
+    const i in cantidades
+  ){
+
+    if(
+      !inventario[i]
+      ||
+      Number(inventario[i].stock)
+      <
+      cantidades[i]
+    ){
+
+      alert(
+        "No hay suficiente existencia."
+      );
+
+      return;
+
+    }
+
+  }
+
+
+  /* Descontar inventario */
+
+  for(
+    const i in cantidades
+  ){
+
+    inventario[i].stock =
+      Number(
+        inventario[i].stock
+      )
+      -
+      cantidades[i];
+
+  }
+
+
+  /* Puntos */
+
+  const puntos =
+    Math.floor(
+      total / 10
+    );
+
+
+  let cliente =
+    "Público general";
+
+
+  let clienteObj =
+    null;
+
+
+  if(
+    clienteIndex !== ""
+    &&
+    clientes[
+      Number(clienteIndex)
+    ]
+  ){
+
+    clienteObj =
+      clientes[
+        Number(clienteIndex)
+      ];
+
+
+    clienteObj.puntos =
+      Number(
+        clienteObj.puntos || 0
+      )
+      +
+      puntos;
+
+
+    cliente =
+      clienteObj.nombre;
+
+  }
+
+
+  /* Folio consecutivo */
+
+  const folio =
+    obtenerSiguienteFolio();
+
+
+  const venta = {
+
+    id:Date.now(),
+
+    folio:folio,
+
+    fecha:
+      new Date().toLocaleString(
+        "es-MX"
+      ),
+
+    productos:
+      carrito.map(
+        x => ({...x})
+      ),
+
+    total:total,
+
+    pago:pago,
+
+    cliente:cliente,
+
+    puntos:puntos,
+
+    recibido:
+      pago === "Efectivo"
+      ? recibido
+      : null,
+
+    cambio:
+      pago === "Efectivo"
+      ? recibido - total
+      : null
+
+  };
+
+
+  /* Guardar venta */
+
+  ventas.push(venta);
+
+
+  /* Avanzar folio */
+
+  avanzarFolio();
+
+
+  /* Guardar todo */
+
+  guardar();
+
+
+  /* Imprimir ticket */
+
+  imprimirTicket(
+    venta,
+    clienteObj
+  );
+
+
+  /* Limpiar carrito */
+
+  carrito = [];
+
+
+  cerrar();
+
+
+  setTimeout(
+    function(){
+
+      alert(
+
+        "¡Venta registrada!\n\n" +
+
+        "Ticket: " +
+        folio +
+        "\n\n" +
+
+        "Total: $" +
+        dinero(total) +
+        "\n" +
+
+        "Pago: " +
+        pago +
+        "\n" +
+
+        "Puntos: +" +
+        puntos
+
+      );
+
+    },
+    100
+  );
+
 }
 
-function imprimirTicket(v,clienteObj){
- const productos=v.productos.map(p=>`<div class="ticket-row"><span>${esc(p.modelo)} T${esc(p.talla)}</span><span>$${dinero(p.precio)}</span></div>`).join("");
- document.getElementById("printArea").innerHTML=`<div class="ticket"><h2>Nat.Nation Sneakers</h2><p>Donde empieza tu estilo.</p><hr><p><b>Ticket ${esc(v.folio)}</b></p><p class="small">${esc(v.fecha)}</p><p class="small">Cliente: ${esc(v.cliente)}</p><hr>${productos}<hr><div class="ticket-row ticket-total"><span>TOTAL</span><span>$${dinero(v.total)}</span></div><p>Pago: <b>${esc(v.pago)}${v.pago==="Tarjeta"?" (terminal)":""}</b></p>${v.pago==="Efectivo"?`<p>Recibido: $${dinero(v.recibido)} · Cambio: $${dinero(v.cambio)}</p>`:""}<p>Puntos ganados: ⭐ ${v.puntos}</p><hr><p>¡Gracias por tu compra!</p></div>`;
- window.print();
+
+/* =====================================================
+   TICKET
+   ===================================================== */
+
+function imprimirTicket(
+  venta,
+  clienteObj
+){
+
+  const productos =
+    venta.productos
+      .map(function(p){
+
+        return `
+
+          <div class="ticket-row">
+
+            <span>
+              ${esc(p.modelo)}
+              T${esc(p.talla)}
+            </span>
+
+            <span>
+              $${dinero(p.precio)}
+            </span>
+
+          </div>
+
+        `;
+
+      })
+      .join("");
+
+
+  document.getElementById(
+    "printArea"
+  ).innerHTML = `
+
+    <div class="ticket">
+
+      <h2>
+        Nat.Nation Sneakers
+      </h2>
+
+      <p>
+        Donde empieza tu estilo.
+      </p>
+
+      <hr>
+
+
+      <p>
+        <b>
+          Ticket ${esc(venta.folio)}
+        </b>
+      </p>
+
+
+      <p class="small">
+        ${esc(venta.fecha)}
+      </p>
+
+
+      <p class="small">
+        Cliente:
+        ${esc(venta.cliente)}
+      </p>
+
+
+      <hr>
+
+
+      ${productos}
+
+
+      <hr>
+
+
+      <div class="ticket-row ticket-total">
+
+        <span>
+          TOTAL
+        </span>
+
+        <span>
+          $${dinero(venta.total)}
+        </span>
+
+      </div>
+
+
+      <p>
+
+        Pago:
+        <b>
+
+          ${esc(venta.pago)}
+
+          ${
+            venta.pago === "Tarjeta"
+            ? " (terminal)"
+            : ""
+          }
+
+        </b>
+
+      </p>
+
+
+      ${
+        venta.pago === "Efectivo"
+
+        ?
+
+        `
+
+          <p>
+
+            Recibido:
+            $${dinero(venta.recibido)}
+
+            ·
+
+            Cambio:
+            $${dinero(venta.cambio)}
+
+          </p>
+
+        `
+
+        :
+
+        ""
+
+      }
+
+
+      <p>
+        Puntos ganados:
+        ⭐ ${venta.puntos}
+      </p>
+
+
+      <hr>
+
+
+      <p>
+        ¡Gracias por tu compra!
+      </p>
+
+    </div>
+
+  `;
+
+
+  window.print();
+
 }
 
-function mostrarInventario(){abrir(`<h2>👟 Inventario</h2><button class="primary" onclick="agregarInventario()">➕ Agregar producto</button><div id="listaInv"></div>`);listaInventario()}
-function listaInventario(){const l=document.getElementById("listaInv");if(!l)return;if(!inventario.length){l.innerHTML='<div class="empty">No hay productos. Agrega el primero.</div>';return}l.innerHTML=inventario.map((p,i)=>`<div class="item"><strong>${esc(p.modelo)}</strong> · Talla ${esc(p.talla)}<br>Precio: <b>$${dinero(p.precio)}</b> · Stock: <b class="${Number(p.stock)<=2?"stock-low":""}">${Number(p.stock)}</b><div class="nn-actions"><button class="light" onclick="editarInventario(${i})">✏️ Editar</button><button class="danger" onclick="eliminarInventario(${i})">🗑️ Eliminar</button></div></div>`).join("")}
-function agregarInventario(){abrir(`<h2>➕ Agregar producto</h2><div class="nn-form"><input id="m" placeholder="Modelo del tenis"><input id="t" placeholder="Talla"><input id="pr" type="number" min="0.01" step="0.01" placeholder="Precio de venta"><input id="s" type="number" min="0" step="1" placeholder="Existencias"><div class="nn-actions"><button class="primary" onclick="guardarProducto()">Guardar</button><button class="light" onclick="mostrarInventario()">Cancelar</button></div></div>`)}
-function guardarProducto(){const m=document.getElementById("m").value.trim(),t=document.getElementById("t").value.trim(),pr=Number(document.getElementById("pr").value),s=Number(document.getElementById("s").value);if(!m||!t||pr<=0||!Number.isInteger(s)||s<0)return alert("Completa modelo, talla, precio y existencias correctamente.");inventario.push({id:Date.now(),modelo:m,talla:t,precio:pr,stock:s});guardar();mostrarInventario()}
-function editarInventario(i){const p=inventario[i];abrir(`<h2>✏️ Editar producto</h2><div class="nn-form"><input id="em" value="${esc(p.modelo)}"><input id="et" value="${esc(p.talla)}"><input id="ep" type="number" min="0.01" step="0.01" value="${p.precio}"><input id="es" type="number" min="0" step="1" value="${p.stock}"><div class="nn-actions"><button class="primary" onclick="actualizarInventario(${i})">Guardar cambios</button><button class="light" onclick="mostrarInventario()">Cancelar</button></div></div>`)}
-function actualizarInventario(i){const m=document.getElementById("em").value.trim(),t=document.getElementById("et").value.trim(),p=Number(document.getElementById("ep").value),s=Number(document.getElementById("es").value);if(!m||!t||p<=0||!Number.isInteger(s)||s<0)return alert("Datos inválidos.");Object.assign(inventario[i],{modelo:m,talla:t,precio:p,stock:s});guardar();mostrarInventario()}
-function eliminarInventario(i){if(confirm("¿Eliminar este producto?")){inventario.splice(i,1);guardar();listaInventario()}}
 
-function mostrarClientes(){abrir(`<h2>👤 Clientes y puntos</h2><button class="primary" onclick="agregarCliente()">➕ Nuevo cliente</button><div id="listaCli"></div>`);listaClientes()}
-function listaClientes(){const l=document.getElementById("listaCli");if(!l)return;if(!clientes.length){l.innerHTML='<div class="empty">No hay clientes registrados.</div>';return}l.innerHTML=clientes.map((c,i)=>`<div class="item"><strong>${esc(c.nombre)}</strong><br>Tarjeta/código: ${esc(c.codigo||"Sin código")}<br>Teléfono: ${esc(c.telefono)}<br>⭐ Puntos: <b>${Number(c.puntos||0)}</b><div class="nn-actions"><button class="light" onclick="editarCliente(${i})">✏️ Editar</button><button class="danger" onclick="eliminarCliente(${i})">🗑️ Eliminar</button></div></div>`).join("")}
-function agregarCliente(){abrir(`<h2>➕ Nuevo cliente</h2><div class="nn-form"><input id="cn" placeholder="Nombre completo"><input id="ct" placeholder="Teléfono"><input id="cc" placeholder="Código de tarjeta del cliente"><p class="small">Si usas una tarjeta con código de barras/QR y un lector, el código puede guardarse aquí.</p><div class="nn-actions"><button class="primary" onclick="guardarCliente()">Guardar cliente</button><button class="light" onclick="mostrarClientes()">Cancelar</button></div></div>`)}
-function guardarCliente(){const n=document.getElementById("cn").value.trim(),t=document.getElementById("ct").value.trim(),c=document.getElementById("cc").value.trim();if(!n||!t)return alert("Escribe nombre y teléfono.");clientes.push({id:Date.now(),nombre:n,telefono:t,codigo:c,puntos:0});guardar();mostrarClientes()}
-function editarCliente(i){const c=clientes[i];abrir(`<h2>✏️ Editar cliente</h2><div class="nn-form"><input id="ecn" value="${esc(c.nombre)}"><input id="ect" value="${esc(c.telefono)}"><input id="ecc" value="${esc(c.codigo||"")}"><div class="nn-actions"><button class="primary" onclick="actualizarCliente(${i})">Guardar cambios</button><button class="light" onclick="mostrarClientes()">Cancelar</button></div></div>`)}
-function actualizarCliente(i){const n=document.getElementById("ecn").value.trim(),t=document.getElementById("ect").value.trim(),c=document.getElementById("ecc").value.trim();if(!n||!t)return alert("Completa nombre y teléfono.");Object.assign(clientes[i],{nombre:n,telefono:t,codigo:c});guardar();mostrarClientes()}
-function eliminarCliente(i){if(confirm("¿Eliminar este cliente? Sus ventas históricas se conservan.")){clientes.splice(i,1);guardar();listaClientes()}}
+/* =====================================================
+   INVENTARIO
+   ===================================================== */
 
-function mostrarReportes(){const total=ventas.reduce((s,v)=>s+v.total,0),ef=ventas.filter(v=>v.pago==="Efectivo").reduce((s,v)=>s+v.total,0),tr=ventas.filter(v=>v.pago==="Transferencia").reduce((s,v)=>s+v.total,0),ta=ventas.filter(v=>v.pago==="Tarjeta").reduce((s,v)=>s+v.total,0),pts=ventas.reduce((s,v)=>s+v.puntos,0);abrir(`<h2>📊 Reportes</h2><div class="item">Ventas realizadas: <b>${ventas.length}</b></div><div class="item">Ventas totales: <b>$${dinero(total)}</b></div><div class="item">💵 Efectivo: <b>$${dinero(ef)}</b></div><div class="item">🏦 Transferencia: <b>$${dinero(tr)}</b></div><div class="item">💳 Tarjeta: <b>$${dinero(ta)}</b></div><div class="item">⭐ Puntos generados: <b>${pts}</b></div><h3>Últimas ventas</h3>${ventas.slice().reverse().slice(0,10).map(v=>`<div class="item"><b>${esc(v.folio)}</b> · ${esc(v.fecha)}<br>${esc(v.cliente)} · ${esc(v.pago)} · <b>$${dinero(v.total)}</b></div>`).join("")||'<div class="empty">Todavía no hay ventas.</div>'}`)}
+function mostrarInventario(){
 
-// Permite que un lector de código de barras escriba un código y encuentre al cliente.
-document.addEventListener("input",function(e){if(e.target&&e.target.id==="codigoCliente"){const code=e.target.value.trim();if(!code)return;const i=clientes.findIndex(c=>String(c.codigo||"")===code);if(i>=0){const s=document.getElementById("cliente");if(s)s.value=String(i)}}});
+  abrir(`
+
+    <h2>
+      👟 Inventario
+    </h2>
+
+    <button
+      class="primary"
+      onclick="agregarInventario()">
+
+      ➕ Agregar producto
+
+    </button>
+
+    <div id="listaInv"></div>
+
+  `);
+
+
+  listaInventario();
+
+}
+
+
+function listaInventario(){
+
+  const lista =
+    document.getElementById(
+      "listaInv"
+    );
+
+
+  if(!lista){
+
+    return;
+
+  }
+
+
+  if(!inventario.length){
+
+    lista.innerHTML =
+      '<div class="empty">No hay productos. Agrega el primero.</div>';
+
+    return;
+
+  }
+
+
+  lista.innerHTML =
+    inventario.map(
+      function(p,i){
+
+        return `
+
+          <div class="item">
+
+            <strong>
+              ${esc(p.modelo)}
+            </strong>
+
+            · Talla ${esc(p.talla)}
+
+            <br>
+
+            Precio:
+            <b>
+              $${dinero(p.precio)}
+            </b>
+
+            ·
+
+            Stock:
+
+            <b
+              class="${
+                Number(p.stock) <= 2
+                ? "stock-low"
+                : ""
+              }">
+
+              ${Number(p.stock)}
+
+            </b>
+
+
+            <div class="nn-actions">
+
+              <button
+                class="light"
+                onclick="editarInventario(${i})">
+
+                ✏️ Editar
+
+              </button>
+
+
+              <button
+                class="danger"
+                onclick="eliminarInventario(${i})">
+
+                🗑️ Eliminar
+
+              </button>
+
+            </div>
+
+          </div>
+
+        `;
+
+      }
+    ).join("");
+
+}
+
+
+function agregarInventario(){
+
+  abrir(`
+
+    <h2>
+      ➕ Agregar producto
+    </h2>
+
+    <div class="nn-form">
+
+      <input
+        id="m"
+        placeholder="Modelo del tenis"
+      >
+
+
+      <input
+        id="t"
+        placeholder="Talla"
+      >
+
+
+      <input
+        id="pr"
+        type="number"
+        min="0.01"
+        step="0.01"
+        placeholder="Precio de venta"
+      >
+
+
+      <input
+        id="s"
+        type="number"
+        min="0"
+        step="1"
+        placeholder="Existencias"
+      >
+
+
+      <div class="nn-actions">
+
+        <button
+          class="primary"
+          onclick="guardarProducto()">
+
+          Guardar
+
+        </button>
+
+
+        <button
+          class="light"
+          onclick="mostrarInventario()">
+
+          Cancelar
+
+        </button>
+
+      </div>
+
+    </div>
+
+  `);
+
+}
+
+
+function guardarProducto(){
+
+  const modelo =
+    document.getElementById(
+      "m"
+    ).value.trim();
+
+
+  const talla =
+    document.getElementById(
+      "t"
+    ).value.trim();
+
+
+  const precio =
+    Number(
+      document.getElementById(
+        "pr"
+      ).value
+    );
+
+
+  const stock =
+    Number(
+      document.getElementById(
+        "s"
+      ).value
+    );
+
+
+  if(
+    !modelo
+    ||
+    !talla
+    ||
+    precio <= 0
+    ||
+    !Number.isInteger(stock)
+    ||
+    stock < 0
+  ){
+
+    alert(
+      "Completa modelo, talla, precio y existencias correctamente."
+    );
+
+    return;
+
+  }
+
+
+  inventario.push({
+
+    id:Date.now(),
+
+    modelo:modelo,
+
+    talla:talla,
+
+    precio:precio,
+
+    stock:stock
+
+  });
+
+
+  guardar();
+
+  mostrarInventario();
+
+}
+
+
+function editarInventario(i){
+
+  const producto =
+    inventario[i];
+
+
+  abrir(`
+
+    <h2>
+      ✏️ Editar producto
+    </h2>
+
+    <div class="nn-form">
+
+      <input
+        id="em"
+        value="${esc(producto.modelo)}"
+      >
+
+
+      <input
+        id="et"
+        value="${esc(producto.talla)}"
+      >
+
+
+      <input
+        id="ep"
+        type="number"
+        min="0.01"
+        step="0.01"
+        value="${producto.precio}"
+      >
+
+
+      <input
+        id="es"
+        type="number"
+        min="0"
+        step="1"
+        value="${producto.stock}"
+      >
+
+
+      <div class="nn-actions">
+
+        <button
+          class="primary"
+          onclick="actualizarInventario(${i})">
+
+          Guardar cambios
+
+        </button>
+
+
+        <button
+          class="light"
+          onclick="mostrarInventario()">
+
+          Cancelar
+
+        </button>
+
+      </div>
+
+    </div>
+
+  `);
+
+}
+
+
+function actualizarInventario(i){
+
+  const modelo =
+    document.getElementById(
+      "em"
+    ).value.trim();
+
+
+  const talla =
+    document.getElementById(
+      "et"
+    ).value.trim();
+
+
+  const precio =
+    Number(
+      document.getElementById(
+        "ep"
+      ).value
+    );
+
+
+  const stock =
+    Number(
+      document.getElementById(
+        "es"
+      ).value
+    );
+
+
+  if(
+    !modelo
+    ||
+    !talla
+    ||
+    precio <= 0
+    ||
+    !Number.isInteger(stock)
+    ||
+    stock < 0
+  ){
+
+    alert(
+      "Datos inválidos."
+    );
+
+    return;
+
+  }
+
+
+  Object.assign(
+    inventario[i],
+    {
+      modelo:modelo,
+      talla:talla,
+      precio:precio,
+      stock:stock
+    }
+  );
+
+
+  guardar();
+
+  mostrarInventario();
+
+}
+
+
+function eliminarInventario(i){
+
+  if(
+    confirm(
+      "¿Eliminar este producto?"
+    )
+  ){
+
+    inventario.splice(i,1);
+
+    guardar();
+
+    listaInventario();
+
+  }
+
+}
+
+
+/* =====================================================
+   CLIENTES
+   ===================================================== */
+
+function mostrarClientes(){
+
+  abrir(`
+
+    <h2>
+      👤 Clientes y puntos
+    </h2>
+
+    <button
+      class="primary"
+      onclick="agregarCliente()">
+
+      ➕ Nuevo cliente
+
+    </button>
+
+    <div id="listaCli"></div>
+
+  `);
+
+
+  listaClientes();
+
+}
+
+
+function listaClientes(){
+
+  const lista =
+    document.getElementById(
+      "listaCli"
+    );
+
+
+  if(!lista){
+
+    return;
+
+  }
+
+
+  if(!clientes.length){
+
+    lista.innerHTML =
+      '<div class="empty">No hay clientes registrados.</div>';
+
+    return;
+
+  }
+
+
+  lista.innerHTML =
+    clientes.map(
+      function(c,i){
+
+        return `
+
+          <div class="item">
+
+            <strong>
+              ${esc(c.nombre)}
+            </strong>
+
+            <br>
+
+            Tarjeta/código:
+            ${esc(
+              c.codigo ||
+              "Sin código"
+            )}
+
+            <br>
+
+            Teléfono:
+            ${esc(c.telefono)}
+
+            <br>
+
+            ⭐ Puntos:
+            <b>
+              ${Number(c.puntos || 0)}
+            </b>
+
+
+            <div class="nn-actions">
+
+              <button
+                class="light"
+                onclick="editarCliente(${i})">
+
+                ✏️ Editar
+
+              </button>
+
+
+              <button
+                class="danger"
+                onclick="eliminarCliente(${i})">
+
+                🗑️ Eliminar
+
+              </button>
+
+            </div>
+
+          </div>
+
+        `;
+
+      }
+    ).join("");
+
+}
+
+
+function agregarCliente(){
+
+  abrir(`
+
+    <h2>
+      ➕ Nuevo cliente
+    </h2>
+
+    <div class="nn-form">
+
+      <input
+        id="cn"
+        placeholder="Nombre completo"
+      >
+
+
+      <input
+        id="ct"
+        placeholder="Teléfono"
+      >
+
+
+      <input
+        id="cc"
+        placeholder="Código de tarjeta del cliente"
+      >
+
+
+      <p class="small">
+
+        Si usas una tarjeta con código
+        de barras/QR y un lector,
+        el código puede guardarse aquí.
+
+      </p>
+
+
+      <div class="nn-actions">
+
+        <button
+          class="primary"
+          onclick="guardarCliente()">
+
+          Guardar cliente
+
+        </button>
+
+
+        <button
+          class="light"
+          onclick="mostrarClientes()">
+
+          Cancelar
+
+        </button>
+
+      </div>
+
+    </div>
+
+  `);
+
+}
+
+
+function guardarCliente(){
+
+  const nombre =
+    document.getElementById(
+      "cn"
+    ).value.trim();
+
+
+  const telefono =
+    document.getElementById(
+      "ct"
+    ).value.trim();
+
+
+  const codigo =
+    document.getElementById(
+      "cc"
+    ).value.trim();
+
+
+  if(!nombre || !telefono){
+
+    alert(
+      "Escribe nombre y teléfono."
+    );
+
+    return;
+
+  }
+
+
+  clientes.push({
+
+    id:Date.now(),
+
+    nombre:nombre,
+
+    telefono:telefono,
+
+    codigo:codigo,
+
+    puntos:0
+
+  });
+
+
+  guardar();
+
+  mostrarClientes();
+
+}
+
+
+function editarCliente(i){
+
+  const cliente =
+    clientes[i];
+
+
+  abrir(`
+
+    <h2>
+      ✏️ Editar cliente
+    </h2>
+
+    <div class="nn-form">
+
+      <input
+        id="ecn"
+        value="${esc(cliente.nombre)}"
+      >
+
+
+      <input
+        id="ect"
+        value="${esc(cliente.telefono)}"
+      >
+
+
+      <input
+        id="ecc"
+        value="${esc(cliente.codigo || "")}"
+      >
+
+
+      <div class="nn-actions">
+
+        <button
+          class="primary"
+          onclick="actualizarCliente(${i})">
+
+          Guardar cambios
+
+        </button>
+
+
+        <button
+          class="light"
+          onclick="mostrarClientes()">
+
+          Cancelar
+
+        </button>
+
+      </div>
+
+    </div>
+
+  `);
+
+}
+
+
+function actualizarCliente(i){
+
+  const nombre =
+    document.getElementById(
+      "ecn"
+    ).value.trim();
+
+
+  const telefono =
+    document.getElementById(
+      "ect"
+    ).value.trim();
+
+
+  const codigo =
+    document.getElementById(
+      "ecc"
+    ).value.trim();
+
+
+  if(!nombre || !telefono){
+
+    alert(
+      "Completa nombre y teléfono."
+    );
+
+    return;
+
+  }
+
+
+  Object.assign(
+    clientes[i],
+    {
+      nombre:nombre,
+      telefono:telefono,
+      codigo:codigo
+    }
+  );
+
+
+  guardar();
+
+  mostrarClientes();
+
+}
+
+
+function eliminarCliente(i){
+
+  if(
+    confirm(
+      "¿Eliminar este cliente? Sus ventas históricas se conservan."
+    )
+  ){
+
+    clientes.splice(i,1);
+
+    guardar();
+
+    listaClientes();
+
+  }
+
+}
+
+
+/* =====================================================
+   REPORTES
+   ===================================================== */
+
+function mostrarReportes(){
+
+  const total =
+    ventas.reduce(
+      (s,v) =>
+        s + Number(v.total || 0),
+      0
+    );
+
+
+  const efectivo =
+    ventas
+      .filter(
+        v => v.pago === "Efectivo"
+      )
+      .reduce(
+        (s,v) =>
+          s + Number(v.total || 0),
+        0
+      );
+
+
+  const transferencia =
+    ventas
+      .filter(
+        v => v.pago === "Transferencia"
+      )
+      .reduce(
+        (s,v) =>
+          s + Number(v.total || 0),
+        0
+      );
+
+
+  const tarjeta =
+    ventas
+      .filter(
+        v => v.pago === "Tarjeta"
+      )
+      .reduce(
+        (s,v) =>
+          s + Number(v.total || 0),
+        0
+      );
+
+
+  const puntos =
+    ventas.reduce(
+      (s,v) =>
+        s + Number(v.puntos || 0),
+      0
+    );
+
+
+  abrir(`
+
+    <h2>
+      📊 Reportes
+    </h2>
+
+
+    <div class="item">
+
+      Ventas realizadas:
+
+      <b>
+        ${ventas.length}
+      </b>
+
+    </div>
+
+
+    <div class="item">
+
+      Ventas totales:
+
+      <b>
+        $${dinero(total)}
+      </b>
+
+    </div>
+
+
+    <div class="item">
+
+      💵 Efectivo:
+
+      <b>
+        $${dinero(efectivo)}
+      </b>
+
+    </div>
+
+
+    <div class="item">
+
+      🏦 Transferencia:
+
+      <b>
+        $${dinero(transferencia)}
+      </b>
+
+    </div>
+
+
+    <div class="item">
+
+      💳 Tarjeta:
+
+      <b>
+        $${dinero(tarjeta)}
+      </b>
+
+    </div>
+
+
+    <div class="item">
+
+      ⭐ Puntos generados:
+
+      <b>
+        ${puntos}
+      </b>
+
+    </div>
+
+
+    <h3>
+      Últimas ventas
+    </h3>
+
+
+    ${
+      ventas
+        .slice()
+        .reverse()
+        .slice(0,10)
+        .map(function(v){
+
+          return `
+
+            <div class="item">
+
+              <b>
+                ${esc(v.folio)}
+              </b>
+
+              ·
+
+              ${esc(v.fecha)}
+
+              <br>
+
+              ${esc(v.cliente)}
+
+              ·
+
+              ${esc(v.pago)}
+
+              ·
+
+              <b>
+                $${dinero(v.total)}
+              </b>
+
+            </div>
+
+          `;
+
+        })
+        .join("")
+
+      ||
+
+      '<div class="empty">Todavía no hay ventas.</div>'
+
+    }
+
+  `);
+
+}
+
+
+/* =====================================================
+   LECTOR DE TARJETA / CÓDIGO DEL CLIENTE
+   ===================================================== */
+
+document.addEventListener(
+  "input",
+  function(e){
+
+    if(
+      e.target
+      &&
+      e.target.id ===
+      "codigoCliente"
+    ){
+
+      const codigo =
+        e.target.value.trim();
+
+
+      if(!codigo){
+
+        return;
+
+      }
+
+
+      const indice =
+        clientes.findIndex(
+          c =>
+            String(
+              c.codigo || ""
+            ) === codigo
+        );
+
+
+      if(indice >= 0){
+
+        const selectCliente =
+          document.getElementById(
+            "cliente"
+          );
+
+
+        if(selectCliente){
+
+          selectCliente.value =
+            String(indice);
+
+        }
+
+      }
+
+    }
+
+  }
+);
+
 </script>
+
 </body>
 </html>
