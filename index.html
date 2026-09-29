@@ -1,29 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nat.Nation Sneakers | POS</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-
 <style>
-
-/* =====================================================
-   GENERAL
-===================================================== */
-
-*{
-    box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
     margin:0;
@@ -32,9 +17,7 @@ body{
     color:#171717;
 }
 
-button,
-input,
-select{
+button,input,select{
     font:inherit;
 }
 
@@ -43,10 +26,9 @@ button{
     border:0;
 }
 
-
-/* =====================================================
+/* =========================
    ESTRUCTURA
-===================================================== */
+========================= */
 
 .app{
     display:flex;
@@ -55,15 +37,14 @@ button{
 
 .sidebar{
     width:265px;
-    background:#050505;
-    color:white;
+    background:#080808;
+    color:#fff;
     padding:28px 18px;
     position:fixed;
     left:0;
     top:0;
     bottom:0;
     overflow-y:auto;
-    z-index:50;
 }
 
 .main{
@@ -71,10 +52,9 @@ button{
     width:calc(100% - 265px);
 }
 
-
-/* =====================================================
+/* =========================
    LOGO
-===================================================== */
+========================= */
 
 .logo{
     text-align:center;
@@ -87,14 +67,11 @@ button{
     background:#f23886;
     color:white;
     border-radius:22px;
-
     display:flex;
     align-items:center;
     justify-content:center;
-
     font-size:46px;
     font-weight:bold;
-
     margin:auto;
     overflow:hidden;
 }
@@ -103,7 +80,7 @@ button{
     width:100%;
     height:100%;
     object-fit:contain;
-    background:white;
+    background:#fff;
 }
 
 .logo h2{
@@ -113,31 +90,24 @@ button{
 
 .logo span{
     color:#f23886;
-    font-size:11px;
+    font-size:12px;
     font-weight:bold;
     letter-spacing:2px;
 }
 
-
-/* =====================================================
+/* =========================
    MENU
-===================================================== */
+========================= */
 
 .menu button{
     width:100%;
     background:transparent;
     color:#eeeeee;
-
     padding:15px 14px;
-
     border-radius:12px;
-
     text-align:left;
-
     margin-bottom:5px;
-
     font-weight:bold;
-
     transition:.2s;
 }
 
@@ -147,30 +117,23 @@ button{
 
 .menu button.active{
     background:#f23886;
-    color:white;
+    color:#fff;
 }
 
-
-/* =====================================================
+/* =========================
    TOPBAR
-===================================================== */
+========================= */
 
 .topbar{
     height:86px;
-
-    background:white;
-
+    background:#fff;
     border-bottom:1px solid #e4e4e4;
-
     display:flex;
     align-items:center;
     justify-content:space-between;
-
     padding:0 34px;
-
     position:sticky;
     top:0;
-
     z-index:20;
 }
 
@@ -181,11 +144,8 @@ button{
 
 .status{
     font-weight:bold;
-
     padding:10px 15px;
-
     border-radius:30px;
-
     background:#fff3d5;
     color:#7c5b00;
 }
@@ -200,10 +160,9 @@ button{
     background:#ffe7e7;
 }
 
-
-/* =====================================================
+/* =========================
    CONTENIDO
-===================================================== */
+========================= */
 
 .content{
     padding:34px;
@@ -222,35 +181,26 @@ h2{
 .alert{
     background:#ffe2e2;
     color:#b42318;
-
     padding:15px 18px;
-
     border-radius:10px;
-
     margin-bottom:20px;
 }
 
-
-/* =====================================================
+/* =========================
    CARDS
-===================================================== */
+========================= */
 
 .cards{
     display:grid;
     grid-template-columns:repeat(4,1fr);
-
     gap:18px;
-
     margin-bottom:28px;
 }
 
 .card{
-    background:white;
-
+    background:#fff;
     border:1px solid #e4e4e4;
-
     border-radius:16px;
-
     padding:24px;
 }
 
@@ -261,50 +211,35 @@ h2{
 
 .card strong{
     display:block;
-
     font-size:31px;
-
     margin-top:10px;
 }
 
-
-/* =====================================================
+/* =========================
    PANELES
-===================================================== */
+========================= */
 
 .panel{
-    background:white;
-
+    background:#fff;
     border:1px solid #e4e4e4;
-
     border-radius:16px;
-
     padding:24px;
-
     margin-bottom:24px;
 }
 
 .panel-header{
     display:flex;
-
     justify-content:space-between;
-
     align-items:center;
-
     gap:15px;
-
     margin-bottom:20px;
 }
 
 .search{
     width:100%;
-
     border:1px solid #d2d2d2;
-
     border-radius:10px;
-
     padding:14px;
-
     outline:none;
 }
 
@@ -312,24 +247,20 @@ h2{
     border-color:#f23886;
 }
 
-
-/* =====================================================
+/* =========================
    BOTONES
-===================================================== */
+========================= */
 
 .btn{
     padding:13px 18px;
-
     border-radius:10px;
-
     font-weight:bold;
-
     transition:.2s;
 }
 
 .btn-primary{
     background:#f23886;
-    color:white;
+    color:#fff;
 }
 
 .btn-primary:hover{
@@ -346,8 +277,8 @@ h2{
 }
 
 .btn-dark{
-    background:#080808;
-    color:white;
+    background:#0a0a0a;
+    color:#fff;
 }
 
 .btn-danger{
@@ -359,48 +290,36 @@ h2{
     background:#ffd1d1;
 }
 
-
-/* =====================================================
+/* =========================
    PRODUCTOS
-===================================================== */
+========================= */
 
 .products-grid{
     display:grid;
-
-    grid-template-columns:
-    repeat(auto-fill,minmax(230px,1fr));
-
+    grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
     gap:18px;
 }
 
 .product{
     border:1px solid #e2e2e2;
-
     border-radius:14px;
-
     overflow:hidden;
-
-    background:white;
+    background:#fff;
 }
 
 .product-img{
     width:100%;
     height:210px;
-
     background:#f2f2f2;
-
     display:flex;
-
     align-items:center;
     justify-content:center;
-
     overflow:hidden;
 }
 
 .product-img img{
     width:100%;
     height:100%;
-
     object-fit:cover;
 }
 
@@ -424,19 +343,14 @@ h2{
 
 .price{
     font-size:21px;
-
     font-weight:bold;
-
     color:#f23886;
-
     margin-top:10px!important;
 }
 
 .product-actions{
     display:flex;
-
     gap:8px;
-
     margin-top:13px;
 }
 
@@ -444,23 +358,19 @@ h2{
     flex:1;
 }
 
-
-/* =====================================================
+/* =========================
    TABLAS
-===================================================== */
+========================= */
 
 .table{
     width:100%;
-
     border-collapse:collapse;
 }
 
 .table th,
 .table td{
     padding:13px;
-
     border-bottom:1px solid #eee;
-
     text-align:left;
 }
 
@@ -471,32 +381,22 @@ h2{
 
 .empty{
     padding:35px;
-
     text-align:center;
-
     color:#687386;
 }
 
-
-/* =====================================================
+/* =========================
    MODALES
-===================================================== */
+========================= */
 
 .modal{
     position:fixed;
-
     inset:0;
-
     background:rgba(0,0,0,.65);
-
     display:none;
-
     align-items:center;
-
     justify-content:center;
-
     z-index:1000;
-
     padding:20px;
 }
 
@@ -505,59 +405,43 @@ h2{
 }
 
 .modal-box{
-    background:white;
-
+    background:#fff;
     width:min(700px,100%);
-
     max-height:92vh;
-
     overflow:auto;
-
     border-radius:17px;
-
     padding:28px;
 }
 
 .modal-header{
     display:flex;
-
     justify-content:space-between;
-
     align-items:center;
-
     margin-bottom:22px;
 }
 
 .modal-header h3{
     margin:0;
-
     font-size:24px;
 }
 
 .close{
     background:#eee;
-
     width:38px;
     height:38px;
-
     border-radius:50%;
-
     font-size:22px;
 }
 
 .form-grid{
     display:grid;
-
     grid-template-columns:1fr 1fr;
-
     gap:16px;
 }
 
 .field{
     display:flex;
-
     flex-direction:column;
-
     gap:7px;
 }
 
@@ -572,161 +456,116 @@ h2{
 .field input,
 .field select{
     padding:13px;
-
     border:1px solid #ccd1d9;
-
     border-radius:9px;
 }
 
 .preview{
     width:150px;
     height:150px;
-
     border-radius:12px;
-
     background:#f1f2f4;
-
     display:flex;
-
     align-items:center;
     justify-content:center;
-
     overflow:hidden;
-
     margin-bottom:10px;
 }
 
 .preview img{
     width:100%;
     height:100%;
-
     object-fit:cover;
 }
 
 .modal-actions{
     display:flex;
-
     justify-content:flex-end;
-
     gap:10px;
-
     margin-top:25px;
 }
 
-
-/* =====================================================
+/* =========================
    CARRITO
-===================================================== */
+========================= */
 
 .cart-layout{
     display:grid;
-
     grid-template-columns:1fr 400px;
-
     gap:20px;
 }
 
 .cart-item{
     display:flex;
-
     justify-content:space-between;
-
     align-items:center;
-
     padding:15px 0;
-
     border-bottom:1px solid #eee;
 }
 
 .qty{
     display:flex;
-
     align-items:center;
-
     gap:10px;
 }
 
 .qty button{
     width:32px;
     height:32px;
-
     border-radius:7px;
-
     background:#eef1f5;
 }
 
 .total{
     font-size:27px;
-
     font-weight:bold;
-
     display:flex;
-
     justify-content:space-between;
-
     margin:20px 0;
 }
 
-
-/* =====================================================
+/* =========================
    CONFIGURACIÓN
-===================================================== */
+========================= */
 
 .config-grid{
     display:grid;
-
     grid-template-columns:1fr 1fr;
-
     gap:20px;
 }
 
 .logo-upload{
     display:flex;
-
     flex-direction:column;
-
     align-items:center;
-
     justify-content:center;
-
     min-height:300px;
-
     border:2px dashed #ddd;
-
     border-radius:15px;
-
     padding:25px;
 }
 
 .logo-preview{
     width:150px;
     height:150px;
-
     border-radius:25px;
-
     overflow:hidden;
-
     background:#f2f2f2;
-
     display:flex;
-
     align-items:center;
     justify-content:center;
-
     margin-bottom:20px;
 }
 
 .logo-preview img{
     width:100%;
     height:100%;
-
     object-fit:contain;
 }
 
-
-/* =====================================================
+/* =========================
    TICKET
-===================================================== */
+========================= */
 
 .ticket{
     display:none;
@@ -745,29 +584,20 @@ h2{
 
     .ticket{
         display:block;
-
         position:absolute;
-
         left:0;
         top:0;
-
         width:80mm;
-
         padding:5mm;
-
         font-family:Arial,sans-serif;
-
         color:#000;
-
-        background:white;
+        background:#fff;
     }
-
 }
 
-
-/* =====================================================
+/* =========================
    RESPONSIVE
-===================================================== */
+========================= */
 
 @media(max-width:1000px){
 
@@ -789,15 +619,12 @@ h2{
 
     .sidebar{
         position:relative;
-
         width:100%;
-
         height:auto;
     }
 
     .main{
         margin-left:0;
-
         width:100%;
     }
 
@@ -825,42 +652,17 @@ h2{
         padding:0 18px;
     }
 
-    .topbar h1{
-        font-size:19px;
-    }
-
-    .topbar .btn{
-        display:none;
-    }
-
     .panel-header{
         flex-direction:column;
-
         align-items:stretch;
     }
-
 }
-
-
-/* =====================================================
-   SPINNER
-===================================================== */
-
-.loading{
-    opacity:.6;
-    pointer-events:none;
-}
-
 </style>
-
 </head>
-
 
 <body>
 
-
 <div class="app">
-
 
 <!-- =====================================================
      SIDEBAR
@@ -868,95 +670,65 @@ h2{
 
 <aside class="sidebar">
 
-
     <div class="logo">
 
-
-        <div
-            class="logo-box"
-            id="logoSidebar"
-        >
+        <div class="logo-box" id="logoSidebar">
             N
         </div>
 
+        <h2>Nat.Nation</h2>
 
-        <h2>
-            Nat.Nation
-        </h2>
-
-
-        <span>
-            DONDE EMPIEZA TU ESTILO
-        </span>
-
+        <span>DONDE EMPIEZA TU ESTILO</span>
 
     </div>
-
 
     <div class="menu">
 
-
         <button
             id="menuInicio"
-            onclick="mostrarSeccion('inicio')"
-        >
+            onclick="mostrarSeccion('inicio')">
             🏠 &nbsp; Inicio
         </button>
 
-
         <button
             id="menuVenta"
-            onclick="mostrarSeccion('venta')"
-        >
+            onclick="mostrarSeccion('venta')">
             🛒 &nbsp; Nueva venta
         </button>
 
-
         <button
             id="menuProductos"
-            onclick="mostrarSeccion('productos')"
-        >
+            onclick="mostrarSeccion('productos')">
             👟 &nbsp; Productos
         </button>
 
-
         <button
             id="menuClientes"
-            onclick="mostrarSeccion('clientes')"
-        >
+            onclick="mostrarSeccion('clientes')">
             👤 &nbsp; Clientes
         </button>
 
-
         <button
             id="menuPuntos"
-            onclick="mostrarSeccion('puntos')"
-        >
+            onclick="mostrarSeccion('puntos')">
             ⭐ &nbsp; Puntos
         </button>
 
-
         <button
             id="menuReportes"
-            onclick="mostrarSeccion('reportes')"
-        >
+            onclick="mostrarSeccion('reportes')">
             📊 &nbsp; Reportes
         </button>
 
-
         <button
             id="menuConfiguracion"
-            onclick="mostrarSeccion('configuracion')"
-        >
+            onclick="mostrarSeccion('configuracion')">
             ⚙️ &nbsp; Configuración
         </button>
 
-
     </div>
 
-
 </aside>
-
 
 
 <!-- =====================================================
@@ -965,56 +737,36 @@ h2{
 
 <main class="main">
 
-
 <header class="topbar">
-
 
     <h1 id="tituloSeccion">
         Inicio
     </h1>
 
+    <div style="display:flex;align-items:center;gap:12px">
 
-    <div
-        style="
-            display:flex;
-            align-items:center;
-            gap:12px
-        "
-    >
-
-
-        <div
-            id="estado"
-            class="status"
-        >
+        <div id="estado" class="status">
             🟡 Conectando...
         </div>
 
-
         <button
             class="btn btn-primary"
-            onclick="mostrarSeccion('venta')"
-        >
+            onclick="mostrarSeccion('venta')">
             + Nueva venta
         </button>
 
-
     </div>
-
 
 </header>
 
 
-
 <div class="content">
-
 
 <div
     id="alerta"
     class="alert"
-    style="display:none"
-></div>
-
+    style="display:none">
+</div>
 
 
 <!-- =====================================================
@@ -1023,78 +775,38 @@ h2{
 
 <section id="inicio">
 
-
-    <h2>
-        Inicio
-    </h2>
-
+    <h2>Inicio</h2>
 
     <div class="subtitle">
         Bienvenida a tu punto de venta.
     </div>
 
-
     <div class="cards">
 
-
         <div class="card">
-
-            <small>
-                Productos
-            </small>
-
-            <strong id="totalProductos">
-                0
-            </strong>
-
+            <small>Productos</small>
+            <strong id="totalProductos">0</strong>
         </div>
 
-
         <div class="card">
-
-            <small>
-                Stock total
-            </small>
-
-            <strong id="stockTotal">
-                0
-            </strong>
-
+            <small>Stock total</small>
+            <strong id="stockTotal">0</strong>
         </div>
 
-
         <div class="card">
-
-            <small>
-                Clientes
-            </small>
-
-            <strong id="totalClientes">
-                0
-            </strong>
-
+            <small>Clientes</small>
+            <strong id="totalClientes">0</strong>
         </div>
 
-
         <div class="card">
-
-            <small>
-                Ventas de hoy
-            </small>
-
-            <strong id="ventasHoy">
-                $0.00
-            </strong>
-
+            <small>Ventas de hoy</small>
+            <strong id="ventasHoy">$0.00</strong>
         </div>
-
 
     </div>
 
 
-
     <div class="panel">
-
 
         <div class="panel-header">
 
@@ -1102,25 +814,19 @@ h2{
                 Últimas ventas
             </h3>
 
-
             <button
                 class="btn btn-primary"
-                onclick="mostrarSeccion('venta')"
-            >
+                onclick="mostrarSeccion('venta')">
                 + Nueva venta
             </button>
 
         </div>
 
-
         <div id="ultimasVentas"></div>
-
 
     </div>
 
-
 </section>
-
 
 
 <!-- =====================================================
@@ -1129,56 +835,40 @@ h2{
 
 <section
     id="productos"
-    style="display:none"
->
+    style="display:none">
 
-
-    <h2>
-        Productos
-    </h2>
-
+    <h2>Productos</h2>
 
     <div class="subtitle">
         Administra tu inventario.
     </div>
 
-
     <div class="panel">
 
-
         <div class="panel-header">
-
 
             <input
                 id="buscarProducto"
                 class="search"
-                placeholder="Buscar producto o SKU..."
-                oninput="renderProductos()"
-            >
-
+                placeholder="Buscar producto, SKU o código..."
+                oninput="renderProductos()">
 
             <button
                 class="btn btn-primary"
-                onclick="abrirProducto()"
-            >
+                onclick="abrirProducto()">
                 + Nuevo producto
             </button>
 
-
         </div>
-
 
         <div
             id="listaProductos"
-            class="products-grid"
-        ></div>
-
+            class="products-grid">
+        </div>
 
     </div>
 
-
 </section>
-
 
 
 <!-- =====================================================
@@ -1187,55 +877,41 @@ h2{
 
 <section
     id="venta"
-    style="display:none"
->
+    style="display:none">
 
-
-    <h2>
-        Nueva venta
-    </h2>
-
+    <h2>Nueva venta</h2>
 
     <div class="subtitle">
         Selecciona los productos y registra el pago.
     </div>
-
 
     <div class="cart-layout">
 
 
         <div class="panel">
 
-
             <input
                 id="buscarVenta"
                 class="search"
                 placeholder="Buscar producto..."
-                oninput="renderProductosVenta()"
-            >
-
+                oninput="renderProductosVenta()">
 
             <div
                 id="productosVenta"
                 class="products-grid"
-                style="margin-top:20px"
-            ></div>
-
+                style="margin-top:20px">
+            </div>
 
         </div>
 
 
-
         <div class="panel">
-
 
             <h3>
                 Carrito
             </h3>
 
-
             <div id="carrito"></div>
-
 
             <div class="total">
 
@@ -1250,13 +926,11 @@ h2{
             </div>
 
 
-
             <div class="field">
 
                 <label>
                     Cliente
                 </label>
-
 
                 <select id="clienteVenta">
 
@@ -1268,7 +942,6 @@ h2{
 
             </div>
 
-
             <br>
 
 
@@ -1278,37 +951,30 @@ h2{
                     Forma de pago
                 </label>
 
-
                 <select
                     id="metodoPago"
-                    onchange="mostrarEfectivo()"
-                >
+                    onchange="mostrarEfectivo()">
 
-                    <option value="Efectivo">
+                    <option value="efectivo">
                         Efectivo
                     </option>
 
-
-                    <option value="Transferencia">
+                    <option value="transferencia">
                         Transferencia
                     </option>
 
-
-                    <option value="Tarjeta">
+                    <option value="tarjeta">
                         Tarjeta / Clip
                     </option>
 
                 </select>
 
-
             </div>
-
 
 
             <div
                 id="campoEfectivo"
-                style="margin-top:15px"
-            >
+                style="margin-top:15px">
 
                 <div class="field">
 
@@ -1316,55 +982,39 @@ h2{
                         Efectivo recibido
                     </label>
 
-
                     <input
                         id="efectivoRecibido"
                         type="number"
                         min="0"
                         step="0.01"
-                        oninput="calcularCambio()"
-                    >
+                        oninput="calcularCambio()">
 
                 </div>
 
-
                 <p>
-
                     Cambio:
-
                     <strong id="cambio">
                         $0.00
                     </strong>
-
                 </p>
 
             </div>
 
 
-
             <button
-                id="btnCobrar"
                 class="btn btn-primary"
-                style="
-                    width:100%;
-                    margin-top:15px
-                "
-                onclick="registrarVenta()"
-            >
+                style="width:100%;margin-top:15px"
+                onclick="registrarVenta()">
 
                 Cobrar
 
             </button>
 
-
         </div>
-
 
     </div>
 
-
 </section>
-
 
 
 <!-- =====================================================
@@ -1373,53 +1023,39 @@ h2{
 
 <section
     id="clientes"
-    style="display:none"
->
+    style="display:none">
 
-
-    <h2>
-        Clientes
-    </h2>
-
+    <h2>Clientes</h2>
 
     <div class="subtitle">
         Administra clientes y puntos.
     </div>
 
-
     <div class="panel">
 
-
         <div class="panel-header">
-
 
             <input
                 id="buscarCliente"
                 class="search"
                 placeholder="Buscar cliente..."
-                oninput="renderClientes()"
-            >
-
+                oninput="renderClientes()">
 
             <button
                 class="btn btn-primary"
-                onclick="abrirCliente()"
-            >
-                + Nuevo cliente
-            </button>
+                onclick="abrirCliente()">
 
+                + Nuevo cliente
+
+            </button>
 
         </div>
 
-
         <div id="tablaClientes"></div>
-
 
     </div>
 
-
 </section>
-
 
 
 <!-- =====================================================
@@ -1428,19 +1064,15 @@ h2{
 
 <section
     id="puntos"
-    style="display:none"
->
-
+    style="display:none">
 
     <h2>
         Puntos
     </h2>
 
-
     <div class="subtitle">
         Consulta los puntos acumulados de tus clientes.
     </div>
-
 
     <div class="panel">
 
@@ -1448,9 +1080,7 @@ h2{
 
     </div>
 
-
 </section>
-
 
 
 <!-- =====================================================
@@ -1459,22 +1089,17 @@ h2{
 
 <section
     id="reportes"
-    style="display:none"
->
-
+    style="display:none">
 
     <h2>
         Reportes
     </h2>
 
-
     <div class="subtitle">
         Consulta las ventas registradas.
     </div>
 
-
     <div class="cards">
-
 
         <div class="card">
 
@@ -1488,7 +1113,6 @@ h2{
 
         </div>
 
-
         <div class="card">
 
             <small>
@@ -1501,9 +1125,7 @@ h2{
 
         </div>
 
-
     </div>
-
 
     <div class="panel">
 
@@ -1511,9 +1133,7 @@ h2{
 
     </div>
 
-
 </section>
-
 
 
 <!-- =====================================================
@@ -1522,14 +1142,11 @@ h2{
 
 <section
     id="configuracion"
-    style="display:none"
->
-
+    style="display:none">
 
     <h2>
         Configuración
     </h2>
-
 
     <div class="subtitle">
         Configura la información de Nat.Nation.
@@ -1541,14 +1158,11 @@ h2{
 
         <div class="panel">
 
-
             <h3>
                 Información del negocio
             </h3>
 
-
             <br>
-
 
             <div class="field">
 
@@ -1558,14 +1172,11 @@ h2{
 
                 <input
                     value="Nat.Nation Sneakers"
-                    readonly
-                >
+                    readonly>
 
             </div>
 
-
             <br>
-
 
             <div class="field">
 
@@ -1575,14 +1186,11 @@ h2{
 
                 <input
                     value="5624570336"
-                    readonly
-                >
+                    readonly>
 
             </div>
 
-
             <br>
-
 
             <div class="field">
 
@@ -1592,100 +1200,69 @@ h2{
 
                 <input
                     value="Calle Juan Clímaco Ramírez SNVC, San Andrés, 55780 Jaltenco, Méx."
-                    readonly
-                >
+                    readonly>
 
             </div>
-
 
         </div>
 
 
-
         <div class="panel">
-
 
             <h3>
                 Logo
             </h3>
 
-
             <br>
-
 
             <div class="logo-upload">
 
-
                 <div
                     id="logoPreview"
-                    class="logo-preview"
-                >
+                    class="logo-preview">
 
-                    <span
-                        style="
-                            font-size:55px;
-                            font-weight:bold
-                        "
-                    >
+                    <span style="font-size:55px">
                         N
                     </span>
 
                 </div>
-
 
                 <input
                     id="archivoLogo"
                     type="file"
                     accept="image/*"
                     onchange="previsualizarLogo(event)"
-                    style="margin-bottom:15px"
-                >
-
+                    style="margin-bottom:15px">
 
                 <button
-                    id="btnGuardarLogo"
                     class="btn btn-primary"
-                    onclick="subirLogo()"
-                >
+                    onclick="subirLogo()">
 
                     Guardar logo
 
                 </button>
 
-
                 <p
-                    style="
-                        color:#777;
-                        text-align:center
-                    "
-                >
+                    style="color:#777;text-align:center">
 
                     El logo se guarda en Supabase
                     para que aparezca en todos tus dispositivos.
 
                 </p>
 
-
             </div>
-
 
         </div>
 
-
     </div>
-
 
 </section>
 
 
 </div>
-
-
 </main>
 
-
 </div>
-
 
 
 <!-- =====================================================
@@ -1694,43 +1271,32 @@ h2{
 
 <div
     id="modalProducto"
-    class="modal"
->
-
+    class="modal">
 
 <div class="modal-box">
 
-
     <div class="modal-header">
-
 
         <h3 id="tituloProducto">
             Nuevo producto
         </h3>
 
-
         <button
             class="close"
-            onclick="cerrarProducto()"
-        >
+            onclick="cerrarProducto()">
             ×
         </button>
-
 
     </div>
 
 
-
     <form
         id="formProducto"
-        onsubmit="guardarProducto(event)"
-    >
-
+        onsubmit="guardarProducto(event)">
 
         <input
             type="hidden"
-            id="productoId"
-        >
+            id="productoId">
 
 
         <div class="form-grid">
@@ -1744,8 +1310,7 @@ h2{
 
                 <input
                     id="modelo"
-                    required
-                >
+                    required>
 
             </div>
 
@@ -1758,8 +1323,7 @@ h2{
 
                 <input
                     id="talla"
-                    required
-                >
+                    required>
 
             </div>
 
@@ -1778,10 +1342,10 @@ h2{
             <div class="field">
 
                 <label>
-                    Color
+                    Código de barras
                 </label>
 
-                <input id="color">
+                <input id="codigoBarras">
 
             </div>
 
@@ -1797,8 +1361,7 @@ h2{
                     type="number"
                     min="0"
                     step="0.01"
-                    required
-                >
+                    required>
 
             </div>
 
@@ -1814,8 +1377,7 @@ h2{
                     type="number"
                     min="0"
                     step="0.01"
-                    value="0"
-                >
+                    value="0">
 
             </div>
 
@@ -1832,8 +1394,7 @@ h2{
                     min="0"
                     step="1"
                     value="0"
-                    required
-                >
+                    required>
 
             </div>
 
@@ -1848,8 +1409,7 @@ h2{
                     id="imagen"
                     type="file"
                     accept="image/*"
-                    onchange="previsualizarImagen(event)"
-                >
+                    onchange="previsualizarImagen(event)">
 
             </div>
 
@@ -1860,11 +1420,9 @@ h2{
                     Vista previa
                 </label>
 
-
                 <div
                     class="preview"
-                    id="preview"
-                >
+                    id="preview">
 
                     <span class="no-img">
                         👟
@@ -1872,49 +1430,36 @@ h2{
 
                 </div>
 
-
             </div>
-
 
         </div>
 
 
-
         <div class="modal-actions">
-
 
             <button
                 type="button"
                 class="btn btn-secondary"
-                onclick="cerrarProducto()"
-            >
+                onclick="cerrarProducto()">
 
                 Cancelar
 
             </button>
 
-
             <button
-                id="btnGuardarProducto"
                 type="submit"
-                class="btn btn-primary"
-            >
+                class="btn btn-primary">
 
                 Guardar producto
 
             </button>
 
-
         </div>
-
 
     </form>
 
-
 </div>
-
 </div>
-
 
 
 <!-- =====================================================
@@ -1923,37 +1468,26 @@ h2{
 
 <div
     id="modalCliente"
-    class="modal"
->
-
+    class="modal">
 
 <div class="modal-box">
 
-
     <div class="modal-header">
-
 
         <h3>
             Nuevo cliente
         </h3>
 
-
         <button
             class="close"
-            onclick="cerrarCliente()"
-        >
+            onclick="cerrarCliente()">
             ×
         </button>
-
 
     </div>
 
 
-
-    <form
-        onsubmit="guardarCliente(event)"
-    >
-
+    <form onsubmit="guardarCliente(event)">
 
         <div class="form-grid">
 
@@ -1966,8 +1500,7 @@ h2{
 
                 <input
                     id="clienteNombre"
-                    required
-                >
+                    required>
 
             </div>
 
@@ -1979,8 +1512,7 @@ h2{
                 </label>
 
                 <input
-                    id="clienteTelefono"
-                >
+                    id="clienteTelefono">
 
             </div>
 
@@ -1988,12 +1520,11 @@ h2{
             <div class="field">
 
                 <label>
-                    Tarjeta de puntos
+                    Código de tarjeta
                 </label>
 
                 <input
-                    id="clienteTarjeta"
-                >
+                    id="clienteTarjeta">
 
             </div>
 
@@ -2001,15 +1532,12 @@ h2{
         </div>
 
 
-
         <div class="modal-actions">
-
 
             <button
                 type="button"
                 class="btn btn-secondary"
-                onclick="cerrarCliente()"
-            >
+                onclick="cerrarCliente()">
 
                 Cancelar
 
@@ -2018,24 +1546,18 @@ h2{
 
             <button
                 type="submit"
-                class="btn btn-primary"
-            >
+                class="btn btn-primary">
 
                 Guardar cliente
 
             </button>
 
-
         </div>
-
 
     </form>
 
-
 </div>
-
 </div>
-
 
 
 <!-- =====================================================
@@ -2044,27 +1566,17 @@ h2{
 
 <div
     class="ticket"
-    id="ticket"
->
-
+    id="ticket">
 
     <div style="text-align:center">
 
-
-        <h2
-            style="
-                margin:0;
-                font-size:20px
-            "
-        >
+        <h2 style="margin:0;font-size:20px">
             Nat.Nation Sneakers
         </h2>
-
 
         <p style="margin:4px 0">
             Donde empieza tu estilo.
         </p>
-
 
         <p style="margin:4px 0">
 
@@ -2076,81 +1588,51 @@ h2{
 
         </p>
 
-
     </div>
 
-
     <hr>
 
-
     <p>
-
         Folio:
-
         <strong id="ticketFolio"></strong>
-
     </p>
-
 
     <p>
-
         Fecha:
-
         <span id="ticketFecha"></span>
-
     </p>
 
-
     <hr>
-
 
     <div id="ticketProductos"></div>
 
-
     <hr>
 
-
     <div
-        style="
-            display:flex;
-            justify-content:space-between
-        "
-    >
+        style="display:flex;justify-content:space-between">
 
         <strong>
             TOTAL
         </strong>
 
-
         <strong id="ticketTotal"></strong>
 
     </div>
 
-
     <p>
-
         Pago:
-
         <span id="ticketPago"></span>
-
     </p>
-
 
     <p id="ticketCambio"></p>
 
-
     <hr>
 
-
     <p style="text-align:center">
-
         ¡Gracias por tu compra!
-
     </p>
 
-
 </div>
-
 
 
 <!-- =====================================================
@@ -2158,7 +1640,6 @@ h2{
 ===================================================== -->
 
 <script>
-
 
 /* =====================================================
    SUPABASE
@@ -2175,7 +1656,6 @@ window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
 );
-
 
 
 /* =====================================================
@@ -2195,17 +1675,12 @@ const NEGOCIO = {
 
 
 let productos = [];
-
 let clientes = [];
-
 let ventas = [];
-
 let carrito = [];
 
 let productoEditando = null;
-
 let imagenActual = null;
-
 
 
 /* =====================================================
@@ -2228,9 +1703,8 @@ document.addEventListener(
 );
 
 
-
 /* =====================================================
-   CARGAR TODO
+   CARGAR DATOS
 ===================================================== */
 
 async function cargarTodo(){
@@ -2238,10 +1712,8 @@ async function cargarTodo(){
     const estado =
     document.getElementById("estado");
 
-
     estado.textContent =
     "🟡 Conectando...";
-
 
     estado.className =
     "status";
@@ -2249,83 +1721,69 @@ async function cargarTodo(){
 
     try{
 
-
-        const productosResult =
+        const resultadoProductos =
         await supabaseClient
-        .from("productos")
-        .select("*")
-        .order(
-            "created_at",
-            {
-                ascending:false
-            }
-        );
+            .from("productos")
+            .select("*")
+            .order(
+                "created_at",
+                {ascending:false}
+            );
 
 
-        if(productosResult.error){
+        if(resultadoProductos.error){
 
-            throw productosResult.error;
+            throw resultadoProductos.error;
 
         }
 
 
-
-        const clientesResult =
+        const resultadoClientes =
         await supabaseClient
-        .from("clientes")
-        .select("*")
-        .order(
-            "created_at",
-            {
-                ascending:false
-            }
-        );
+            .from("clientes")
+            .select("*")
+            .order(
+                "created_at",
+                {ascending:false}
+            );
 
 
-        if(clientesResult.error){
+        if(resultadoClientes.error){
 
-            throw clientesResult.error;
+            throw resultadoClientes.error;
 
         }
 
 
-
-        const ventasResult =
+        const resultadoVentas =
         await supabaseClient
-        .from("ventas")
-        .select("*")
-        .order(
-            "fecha",
-            {
-                ascending:false
-            }
-        );
+            .from("ventas")
+            .select("*")
+            .order(
+                "fecha",
+                {ascending:false}
+            );
 
 
-        if(ventasResult.error){
+        if(resultadoVentas.error){
 
-            throw ventasResult.error;
+            throw resultadoVentas.error;
 
         }
-
 
 
         productos =
-        productosResult.data || [];
-
+        resultadoProductos.data || [];
 
         clientes =
-        clientesResult.data || [];
-
+        resultadoClientes.data || [];
 
         ventas =
-        ventasResult.data || [];
-
+        resultadoVentas.data || [];
 
 
         estado.textContent =
         "🟢 Conectado";
-
 
         estado.className =
         "status ok";
@@ -2338,19 +1796,18 @@ async function cargarTodo(){
 
         renderProductos();
 
-        renderProductosVenta();
-
         renderClientes();
 
         renderPuntos();
 
-        renderReportes();
-
         cargarClientesVenta();
+
+        renderProductosVenta();
+
+        renderReportes();
 
 
     }catch(error){
-
 
         console.error(
             "ERROR SUPABASE:",
@@ -2359,8 +1816,7 @@ async function cargarTodo(){
 
 
         estado.textContent =
-        "🔴 Error";
-
+        "🔴 Error de conexión";
 
         estado.className =
         "status error";
@@ -2379,19 +1835,17 @@ async function cargarTodo(){
 }
 
 
-
 /* =====================================================
    NAVEGACIÓN
 ===================================================== */
 
 function mostrarSeccion(nombre){
 
-
     const secciones = [
 
         "inicio",
-        "venta",
         "productos",
+        "venta",
         "clientes",
         "puntos",
         "reportes",
@@ -2400,43 +1854,30 @@ function mostrarSeccion(nombre){
     ];
 
 
-    secciones.forEach(
-        function(seccion){
+    secciones.forEach(function(seccion){
 
-            const elemento =
-            document.getElementById(
-                seccion
-            );
+        const elemento =
+        document.getElementById(seccion);
 
+        if(elemento){
 
-            if(elemento){
-
-                elemento.style.display =
-                seccion === nombre
-                ? "block"
-                : "none";
-
-            }
+            elemento.style.display =
+            seccion === nombre
+            ? "block"
+            : "none";
 
         }
-    );
 
+    });
 
 
     document
-    .querySelectorAll(
-        ".menu button"
-    )
-    .forEach(
-        function(boton){
+    .querySelectorAll(".menu button")
+    .forEach(function(boton){
 
-            boton.classList.remove(
-                "active"
-            );
+        boton.classList.remove("active");
 
-        }
-    );
-
+    });
 
 
     const mapa = {
@@ -2458,20 +1899,17 @@ function mostrarSeccion(nombre){
     };
 
 
-    const activo =
+    const botonActivo =
     document.getElementById(
         mapa[nombre]
     );
 
 
-    if(activo){
+    if(botonActivo){
 
-        activo.classList.add(
-            "active"
-        );
+        botonActivo.classList.add("active");
 
     }
-
 
 
     const titulos = {
@@ -2499,6 +1937,12 @@ function mostrarSeccion(nombre){
     titulos[nombre] || "Nat.Nation";
 
 
+    if(nombre === "productos"){
+
+        renderProductos();
+
+    }
+
 
     if(nombre === "venta"){
 
@@ -2507,15 +1951,6 @@ function mostrarSeccion(nombre){
         cargarClientesVenta();
 
         renderCarrito();
-
-        mostrarEfectivo();
-
-    }
-
-
-    if(nombre === "productos"){
-
-        renderProductos();
 
     }
 
@@ -2550,21 +1985,16 @@ function mostrarSeccion(nombre){
 }
 
 
-
 /* =====================================================
    INICIO
 ===================================================== */
 
 function actualizarInicio(){
 
-
     document.getElementById(
         "totalProductos"
     ).textContent =
-    productos.filter(
-        p => p.activo !== false
-    ).length;
-
+    productos.length;
 
 
     document.getElementById(
@@ -2572,17 +2002,14 @@ function actualizarInicio(){
     ).textContent =
 
     productos.reduce(
-        function(total,p){
+        function(sum,p){
 
-            return total +
-            Number(
-                p.stock || 0
-            );
+            return sum +
+            Number(p.stock || 0);
 
         },
         0
     );
-
 
 
     document.getElementById(
@@ -2591,38 +2018,29 @@ function actualizarInicio(){
     clientes.length;
 
 
-
     const hoy =
     new Date().toDateString();
 
 
-
     const ventasHoy =
-    ventas.filter(
-        function(v){
+    ventas.filter(function(v){
 
-            return new Date(
-                v.fecha
-            ).toDateString() === hoy;
+        return new Date(v.fecha)
+        .toDateString() === hoy;
 
-        }
-    );
-
+    });
 
 
     const totalHoy =
     ventasHoy.reduce(
-        function(total,v){
+        function(sum,v){
 
-            return total +
-            Number(
-                v.total || 0
-            );
+            return sum +
+            Number(v.total || 0);
 
         },
         0
     );
-
 
 
     document.getElementById(
@@ -2631,21 +2049,16 @@ function actualizarInicio(){
     moneda(totalHoy);
 
 
-
     const ultimas =
     ventas.slice(0,10);
 
 
-
-    const contenedor =
-    document.getElementById(
-        "ultimasVentas"
-    );
-
-
     if(!ultimas.length){
 
-        contenedor.innerHTML =
+        document.getElementById(
+            "ultimasVentas"
+        ).innerHTML =
+
         '<div class="empty">No hay ventas registradas.</div>';
 
         return;
@@ -2653,8 +2066,9 @@ function actualizarInicio(){
     }
 
 
-
-    contenedor.innerHTML = `
+    document.getElementById(
+        "ultimasVentas"
+    ).innerHTML = `
 
         <table class="table">
 
@@ -2674,46 +2088,39 @@ function actualizarInicio(){
 
             </thead>
 
-
             <tbody>
 
-                ${ultimas.map(
-                    function(v){
+                ${ultimas.map(function(v){
 
-                        return `
+                    return `
 
-                            <tr>
+                        <tr>
 
-                                <td>
-                                    ${escapeHTML(
-                                        v.folio
-                                    )}
-                                </td>
+                            <td>
+                                ${escapeHTML(v.folio)}
+                            </td>
 
-                                <td>
-                                    ${fecha(
-                                        v.fecha
-                                    )}
-                                </td>
+                            <td>
+                                ${fecha(v.fecha)}
+                            </td>
 
-                                <td>
-                                    ${moneda(
-                                        v.total
-                                    )}
-                                </td>
+                            <td>
+                                ${moneda(v.total)}
+                            </td>
 
-                                <td>
-                                    ${metodoTexto(
-                                        v.pago
-                                    )}
-                                </td>
+                            <td>
+                                ${escapeHTML(
+                                    v.metodo_pago ||
+                                    v.pago ||
+                                    "—"
+                                )}
+                            </td>
 
-                            </tr>
+                        </tr>
 
-                        `;
+                    `;
 
-                    }
-                ).join("")}
+                }).join("")}
 
             </tbody>
 
@@ -2724,13 +2131,11 @@ function actualizarInicio(){
 }
 
 
-
 /* =====================================================
-   PRODUCTO
+   PRODUCTOS
 ===================================================== */
 
-function abrirProducto(id = null){
-
+function abrirProducto(id){
 
     productoEditando = null;
 
@@ -2738,9 +2143,7 @@ function abrirProducto(id = null){
 
 
     document
-    .getElementById(
-        "formProducto"
-    )
+    .getElementById("formProducto")
     .reset();
 
 
@@ -2761,24 +2164,24 @@ function abrirProducto(id = null){
     '<span class="no-img">👟</span>';
 
 
-
     if(id){
 
-        const producto =
-        productos.find(
-            p => p.id === id
-        );
+        const p =
+        productos.find(function(x){
+
+            return x.id === id;
+
+        });
 
 
-        if(!producto){
+        if(!p){
 
             return;
 
         }
 
 
-        productoEditando =
-        producto;
+        productoEditando = p;
 
 
         document.getElementById(
@@ -2790,103 +2193,90 @@ function abrirProducto(id = null){
         document.getElementById(
             "productoId"
         ).value =
-        producto.id;
+        p.id;
 
 
         document.getElementById(
             "modelo"
         ).value =
-        producto.modelo || "";
+        p.modelo || "";
 
 
         document.getElementById(
             "talla"
         ).value =
-        producto.talla || "";
+        p.talla || "";
 
 
         document.getElementById(
             "sku"
         ).value =
-        producto.sku || "";
+        p.sku || "";
 
 
         document.getElementById(
-            "color"
+            "codigoBarras"
         ).value =
-        producto.color || "";
+        p.codigo_barras || "";
 
 
         document.getElementById(
             "precio"
         ).value =
-        producto.precio || 0;
+        p.precio || 0;
 
 
         document.getElementById(
             "costo"
         ).value =
-        producto.costo || 0;
+        p.costo || 0;
 
 
         document.getElementById(
             "stock"
         ).value =
-        producto.stock || 0;
+        p.stock || 0;
 
 
         imagenActual =
-        producto.photo_url || null;
-
+        p.imagen_url ||
+        p.photo_url ||
+        null;
 
 
         if(imagenActual){
 
             document.getElementById(
                 "preview"
-            ).innerHTML = `
+            ).innerHTML =
 
-                <img
-                    src="${escapeHTML(imagenActual)}"
-                    alt="Producto"
-                >
-
-            `;
+            `<img
+                src="${escapeHTML(imagenActual)}"
+                alt="Producto"
+            >`;
 
         }
 
     }
 
 
-
     document.getElementById(
         "modalProducto"
-    ).classList.add(
-        "show"
-    );
+    ).classList.add("show");
 
 }
-
 
 
 function cerrarProducto(){
 
     document.getElementById(
         "modalProducto"
-    ).classList.remove(
-        "show"
-    );
+    ).classList.remove("show");
 
 }
 
 
-
-/* =====================================================
-   PREVISUALIZAR FOTO
-===================================================== */
-
 function previsualizarImagen(event){
-
 
     const file =
     event.target.files[0];
@@ -2908,14 +2298,12 @@ function previsualizarImagen(event){
 
         document.getElementById(
             "preview"
-        ).innerHTML = `
+        ).innerHTML =
 
-            <img
-                src="${e.target.result}"
-                alt="Vista previa"
-            >
-
-        `;
+        `<img
+            src="${e.target.result}"
+            alt="Vista previa"
+        >`;
 
     };
 
@@ -2925,13 +2313,11 @@ function previsualizarImagen(event){
 }
 
 
-
 /* =====================================================
-   SUBIR FOTO PRODUCTO
+   SUBIR IMAGEN PRODUCTO
 ===================================================== */
 
-async function subirImagenProducto(file){
-
+async function subirImagen(file){
 
     if(!file){
 
@@ -2958,45 +2344,37 @@ async function subirImagenProducto(file){
     nombre;
 
 
-
-    const subida =
+    const resultado =
     await supabaseClient
-    .storage
-    .from("pos")
-    .upload(
-        ruta,
-        file,
-        {
-            upsert:false,
-            contentType:file.type,
-            cacheControl:"3600"
-        }
-    );
+        .storage
+        .from("pos")
+        .upload(
+            ruta,
+            file,
+            {
+                upsert:false,
+                contentType:file.type
+            }
+        );
 
 
-    if(subida.error){
+    if(resultado.error){
 
-        throw subida.error;
+        throw resultado.error;
 
     }
 
 
-
     const publicUrl =
     supabaseClient
-    .storage
-    .from("pos")
-    .getPublicUrl(
-        ruta
-    );
+        .storage
+        .from("pos")
+        .getPublicUrl(ruta);
 
 
-    return publicUrl
-    .data
-    .publicUrl;
+    return publicUrl.data.publicUrl;
 
 }
-
 
 
 /* =====================================================
@@ -3009,9 +2387,7 @@ async function guardarProducto(event){
 
 
     const boton =
-    document.getElementById(
-        "btnGuardarProducto"
-    );
+    event.submitter;
 
 
     boton.disabled = true;
@@ -3020,40 +2396,27 @@ async function guardarProducto(event){
     "Guardando...";
 
 
-
     try{
 
-
-        const archivo =
+        const file =
         document.getElementById(
             "imagen"
         ).files[0];
 
 
-        let photoUrl =
+        let imagenUrl =
         imagenActual;
 
 
+        if(file){
 
-        if(archivo){
-
-            photoUrl =
-            await subirImagenProducto(
-                archivo
-            );
+            imagenUrl =
+            await subirImagen(file);
 
         }
 
 
-
         const datos = {
-
-            sku:
-            document
-            .getElementById("sku")
-            .value
-            .trim() || null,
-
 
             modelo:
             document
@@ -3061,66 +2424,68 @@ async function guardarProducto(event){
             .value
             .trim(),
 
-
             talla:
             document
             .getElementById("talla")
             .value
             .trim(),
 
-
-            color:
+            sku:
             document
-            .getElementById("color")
+            .getElementById("sku")
             .value
-            .trim() || null,
-
+            .trim() ||
+            null,
 
             precio:
             Number(
                 document
                 .getElementById("precio")
-                .value || 0
+                .value ||
+                0
             ),
-
 
             costo:
             Number(
                 document
                 .getElementById("costo")
-                .value || 0
+                .value ||
+                0
             ),
-
 
             stock:
             Number(
                 document
                 .getElementById("stock")
-                .value || 0
+                .value ||
+                0
             ),
-
-
-            photo_url:
-            photoUrl || null,
-
 
             activo:true
 
         };
 
 
+        /*
+         * IMPORTANTE:
+         * Tu código original usa imagen_url.
+         * Lo conservamos.
+         */
+
+        datos.imagen_url =
+        imagenUrl || null;
+
 
         if(productoEditando){
 
-
             const resultado =
             await supabaseClient
-            .from("productos")
-            .update(datos)
-            .eq(
-                "id",
-                productoEditando.id
-            );
+                .from("productos")
+                .update(datos)
+                .eq(
+                    "id",
+                    productoEditando.id
+                );
 
 
             if(resultado.error){
@@ -3129,16 +2494,12 @@ async function guardarProducto(event){
 
             }
 
-
         }else{
-
 
             const resultado =
             await supabaseClient
-            .from("productos")
-            .insert(
-                datos
-            );
+                .from("productos")
+                .insert(datos);
 
 
             if(resultado.error){
@@ -3150,20 +2511,14 @@ async function guardarProducto(event){
         }
 
 
-
         cerrarProducto();
-
 
         await cargarTodo();
 
-
-        mostrarSeccion(
-            "productos"
-        );
+        mostrarSeccion("productos");
 
 
     }catch(error){
-
 
         console.error(error);
 
@@ -3176,7 +2531,6 @@ async function guardarProducto(event){
 
     }finally{
 
-
         boton.disabled = false;
 
         boton.textContent =
@@ -3187,57 +2541,45 @@ async function guardarProducto(event){
 }
 
 
-
 /* =====================================================
-   DESACTIVAR PRODUCTO
+   ELIMINAR PRODUCTO
 ===================================================== */
 
 async function eliminarProducto(id){
 
+    const p =
+    productos.find(function(x){
 
-    const producto =
-    productos.find(
-        p => p.id === id
-    );
+        return x.id === id;
 
-
-    if(!producto){
-
-        return;
-
-    }
+    });
 
 
-
-    const confirmar =
-    confirm(
-        '¿Quieres retirar "' +
-        producto.modelo +
-        '" del inventario?'
-    );
-
-
-    if(!confirmar){
+    if(!p){
 
         return;
 
     }
 
+
+    if(!confirm(
+        '¿Eliminar "' +
+        p.modelo +
+        '" de productos?'
+    )){
+
+        return;
+
+    }
 
 
     try{
 
-
         const resultado =
         await supabaseClient
-        .from("productos")
-        .update({
-            activo:false
-        })
-        .eq(
-            "id",
-            id
-        );
+            .from("productos")
+            .delete()
+            .eq("id",id);
 
 
         if(resultado.error){
@@ -3252,9 +2594,8 @@ async function eliminarProducto(id){
 
     }catch(error){
 
-
         alert(
-            "No se pudo retirar el producto:\n\n" +
+            "No se pudo eliminar:\n\n" +
             error.message
         );
 
@@ -3263,13 +2604,11 @@ async function eliminarProducto(id){
 }
 
 
-
 /* =====================================================
    RENDER PRODUCTOS
 ===================================================== */
 
 function renderProductos(){
-
 
     const contenedor =
     document.getElementById(
@@ -3284,7 +2623,6 @@ function renderProductos(){
     }
 
 
-
     const buscar =
     (
         document.getElementById(
@@ -3296,39 +2634,24 @@ function renderProductos(){
     .trim();
 
 
-
     const filtrados =
-    productos.filter(
-        function(p){
+    productos.filter(function(p){
 
-            if(
-                p.activo === false
-            ){
+        const texto = [
 
-                return false;
+            p.modelo,
+            p.talla,
+            p.sku,
+            p.codigo_barras
 
-            }
-
-
-            const texto = [
-
-                p.modelo,
-                p.talla,
-                p.sku,
-                p.color
-
-            ]
-            .join(" ")
-            .toLowerCase();
+        ]
+        .join(" ")
+        .toLowerCase();
 
 
-            return texto.includes(
-                buscar
-            );
+        return texto.includes(buscar);
 
-        }
-    );
-
+    });
 
 
     if(!filtrados.length){
@@ -3341,145 +2664,100 @@ function renderProductos(){
     }
 
 
-
     contenedor.innerHTML =
 
-    filtrados.map(
-        function(p){
+    filtrados.map(function(p){
+
+        const imagen =
+        p.imagen_url ||
+        p.photo_url ||
+        null;
 
 
-            const imagen =
-            p.photo_url || null;
+        return `
+
+        <div class="product">
+
+            <div class="product-img">
+
+                ${
+                    imagen
+
+                    ?
+
+                    `<img
+                        src="${escapeHTML(imagen)}"
+                        alt="${escapeHTML(p.modelo)}"
+                    >`
+
+                    :
+
+                    `<span class="no-img">
+                        👟
+                    </span>`
+                }
+
+            </div>
 
 
+            <div class="product-info">
 
-            return `
+                <h3>
+                    ${escapeHTML(p.modelo)}
+                </h3>
 
-                <div class="product">
+                <p>
+                    Talla:
+                    ${escapeHTML(p.talla || "")}
+                </p>
 
+                <p>
+                    SKU:
+                    ${escapeHTML(p.sku || "—")}
+                </p>
 
-                    <div class="product-img">
+                <p>
+                    Stock:
+                    <strong>
+                        ${Number(p.stock || 0)}
+                    </strong>
+                </p>
 
-                        ${
-                            imagen
-
-                            ?
-
-                            `
-
-                            <img
-                                src="${escapeHTML(imagen)}"
-                                alt="${escapeHTML(p.modelo)}"
-                            >
-
-                            `
-
-                            :
-
-                            `
-
-                            <span class="no-img">
-                                👟
-                            </span>
-
-                            `
-                        }
-
-                    </div>
+                <p class="price">
+                    ${moneda(p.precio)}
+                </p>
 
 
+                <div class="product-actions">
 
-                    <div class="product-info">
+                    <button
+                        class="btn btn-secondary"
+                        onclick="abrirProducto('${p.id}')">
 
+                        Editar
 
-                        <h3>
-                            ${escapeHTML(
-                                p.modelo
-                            )}
-                        </h3>
-
-
-                        <p>
-                            Talla:
-                            ${escapeHTML(
-                                p.talla || ""
-                            )}
-                        </p>
+                    </button>
 
 
-                        <p>
-                            Color:
-                            ${escapeHTML(
-                                p.color || "—"
-                            )}
-                        </p>
+                    <button
+                        class="btn btn-danger"
+                        onclick="eliminarProducto('${p.id}')">
 
+                        Eliminar
 
-                        <p>
-                            SKU:
-                            ${escapeHTML(
-                                p.sku || "—"
-                            )}
-                        </p>
-
-
-                        <p>
-                            Stock:
-                            <strong>
-                                ${Number(
-                                    p.stock || 0
-                                )}
-                            </strong>
-                        </p>
-
-
-                        <p class="price">
-                            ${moneda(
-                                p.precio
-                            )}
-                        </p>
-
-
-
-                        <div class="product-actions">
-
-
-                            <button
-                                class="btn btn-secondary"
-                                onclick="abrirProducto('${p.id}')"
-                            >
-
-                                Editar
-
-                            </button>
-
-
-
-                            <button
-                                class="btn btn-danger"
-                                onclick="eliminarProducto('${p.id}')"
-                            >
-
-                                Retirar
-
-                            </button>
-
-
-                        </div>
-
-
-                    </div>
-
+                    </button>
 
                 </div>
 
-            `;
+            </div>
 
-        }
-    ).join("");
+        </div>
+
+        `;
+
+    }).join("");
 
 }
-
 
 
 /* =====================================================
@@ -3487,7 +2765,6 @@ function renderProductos(){
 ===================================================== */
 
 function renderProductosVenta(){
-
 
     const contenedor =
     document.getElementById(
@@ -3502,7 +2779,6 @@ function renderProductosVenta(){
     }
 
 
-
     const buscar =
     (
         document.getElementById(
@@ -3514,44 +2790,32 @@ function renderProductosVenta(){
     .trim();
 
 
-
     const filtrados =
-    productos.filter(
-        function(p){
+    productos.filter(function(p){
 
-            const texto = [
+        const texto = [
 
-                p.modelo,
-                p.talla,
-                p.sku,
-                p.color
+            p.modelo,
+            p.talla,
+            p.sku,
+            p.codigo_barras
 
-            ]
-            .join(" ")
-            .toLowerCase();
+        ]
+        .join(" ")
+        .toLowerCase();
 
 
-            return (
+        return (
 
-                texto.includes(
-                    buscar
-                )
+            texto.includes(buscar) &&
 
-                &&
+            Number(p.stock || 0) > 0 &&
 
-                Number(
-                    p.stock || 0
-                ) > 0
+            p.activo !== false
 
-                &&
+        );
 
-                p.activo !== false
-
-            );
-
-        }
-    );
-
+    });
 
 
     if(!filtrados.length){
@@ -3564,114 +2828,81 @@ function renderProductosVenta(){
     }
 
 
-
     contenedor.innerHTML =
 
-    filtrados.map(
-        function(p){
+    filtrados.map(function(p){
+
+        const imagen =
+        p.imagen_url ||
+        p.photo_url ||
+        null;
 
 
-            const imagen =
-            p.photo_url || null;
+        return `
+
+        <div class="product">
+
+            <div class="product-img">
+
+                ${
+                    imagen
+
+                    ?
+
+                    `<img
+                        src="${escapeHTML(imagen)}"
+                        alt="${escapeHTML(p.modelo)}"
+                    >`
+
+                    :
+
+                    `<span class="no-img">
+                        👟
+                    </span>`
+                }
+
+            </div>
 
 
+            <div class="product-info">
 
-            return `
+                <h3>
+                    ${escapeHTML(p.modelo)}
+                </h3>
 
-                <div class="product">
+                <p>
+                    Talla:
+                    ${escapeHTML(p.talla)}
+                </p>
 
+                <p>
+                    Disponible:
+                    ${p.stock}
+                </p>
 
-                    <div class="product-img">
-
-                        ${
-                            imagen
-
-                            ?
-
-                            `
-
-                            <img
-                                src="${escapeHTML(imagen)}"
-                                alt="${escapeHTML(p.modelo)}"
-                            >
-
-                            `
-
-                            :
-
-                            `
-
-                            <span class="no-img">
-                                👟
-                            </span>
-
-                            `
-                        }
-
-                    </div>
+                <p class="price">
+                    ${moneda(p.precio)}
+                </p>
 
 
+                <button
+                    class="btn btn-primary"
+                    style="width:100%;margin-top:10px"
+                    onclick="agregarCarrito('${p.id}')">
 
-                    <div class="product-info">
+                    Agregar
 
+                </button>
 
-                        <h3>
-                            ${escapeHTML(
-                                p.modelo
-                            )}
-                        </h3>
+            </div>
 
+        </div>
 
-                        <p>
-                            Talla:
-                            ${escapeHTML(
-                                p.talla
-                            )}
-                        </p>
+        `;
 
-
-                        <p>
-                            Disponible:
-                            ${Number(
-                                p.stock || 0
-                            )}
-                        </p>
-
-
-                        <p class="price">
-                            ${moneda(
-                                p.precio
-                            )}
-                        </p>
-
-
-
-                        <button
-                            class="btn btn-primary"
-                            style="
-                                width:100%;
-                                margin-top:10px
-                            "
-                            onclick="agregarCarrito('${p.id}')"
-                        >
-
-                            Agregar
-
-                        </button>
-
-
-                    </div>
-
-
-                </div>
-
-            `;
-
-        }
-    ).join("");
+    }).join("");
 
 }
-
 
 
 /* =====================================================
@@ -3680,37 +2911,34 @@ function renderProductosVenta(){
 
 function agregarCarrito(id){
 
+    const p =
+    productos.find(function(x){
 
-    const producto =
-    productos.find(
-        p => p.id === id
-    );
+        return x.id === id;
+
+    });
 
 
-    if(!producto){
+    if(!p){
 
         return;
 
     }
 
 
-
     const existente =
-    carrito.find(
-        item =>
-        item.producto_id === id
-    );
+    carrito.find(function(x){
 
+        return x.producto_id === id;
+
+    });
 
 
     if(existente){
 
-
         if(
             existente.cantidad >=
-            Number(
-                producto.stock
-            )
+            Number(p.stock)
         ){
 
             alert(
@@ -3724,32 +2952,24 @@ function agregarCarrito(id){
 
         existente.cantidad++;
 
-
     }else{
-
 
         carrito.push({
 
-            producto_id:
-            producto.id,
+            producto_id:p.id,
 
-            producto_nombre:
-            producto.modelo,
+            producto_nombre:p.modelo,
 
-            talla:
-            producto.talla,
+            talla:p.talla,
 
             cantidad:1,
 
-            precio:
-            Number(
-                producto.precio || 0
-            )
+            precio_unitario:
+            Number(p.precio || 0)
 
         });
 
     }
-
 
 
     renderCarrito();
@@ -3757,29 +2977,25 @@ function agregarCarrito(id){
 }
 
 
-
-/* =====================================================
-   CAMBIAR CANTIDAD
-===================================================== */
-
 function cambiarCantidad(
     id,
     cantidad
 ){
 
-
     const item =
-    carrito.find(
-        x =>
-        x.producto_id === id
-    );
+    carrito.find(function(x){
+
+        return x.producto_id === id;
+
+    });
 
 
     const producto =
-    productos.find(
-        x =>
-        x.id === id
-    );
+    productos.find(function(x){
+
+        return x.id === id;
+
+    });
 
 
     if(!item || !producto){
@@ -3789,40 +3005,31 @@ function cambiarCantidad(
     }
 
 
-
     cantidad =
     Number(cantidad);
 
 
-
     if(cantidad <= 0){
 
-
         carrito =
-        carrito.filter(
-            x =>
-            x.producto_id !== id
-        );
+        carrito.filter(function(x){
 
+            return x.producto_id !== id;
+
+        });
 
     }else if(
         cantidad >
-        Number(
-            producto.stock
-        )
+        Number(producto.stock)
     ){
-
 
         alert(
             "Cantidad superior al stock."
         );
 
-
         return;
 
-
     }else{
-
 
         item.cantidad =
         cantidad;
@@ -3830,25 +3037,19 @@ function cambiarCantidad(
     }
 
 
-
     renderCarrito();
 
 }
 
-
-
-/* =====================================================
-   QUITAR CARRITO
-===================================================== */
 
 function quitarCarrito(id){
 
-
     carrito =
-    carrito.filter(
-        item =>
-        item.producto_id !== id
-    );
+    carrito.filter(function(x){
+
+        return x.producto_id !== id;
+
+    });
 
 
     renderCarrito();
@@ -3856,27 +3057,14 @@ function quitarCarrito(id){
 }
 
 
-
-/* =====================================================
-   TOTAL
-===================================================== */
-
 function totalCarrito(){
 
-
     return carrito.reduce(
-        function(total,item){
+        function(sum,item){
 
-            return total +
-            (
-                Number(
-                    item.precio || 0
-                )
-                *
-                Number(
-                    item.cantidad || 0
-                )
-            );
+            return sum +
+            item.cantidad *
+            item.precio_unitario;
 
         },
         0
@@ -3885,13 +3073,7 @@ function totalCarrito(){
 }
 
 
-
-/* =====================================================
-   RENDER CARRITO
-===================================================== */
-
 function renderCarrito(){
-
 
     const contenedor =
     document.getElementById(
@@ -3906,9 +3088,7 @@ function renderCarrito(){
     }
 
 
-
     if(!carrito.length){
-
 
         contenedor.innerHTML =
         '<div class="empty">El carrito está vacío.</div>';
@@ -3922,115 +3102,100 @@ function renderCarrito(){
 
         calcularCambio();
 
-
         return;
 
     }
 
 
-
     contenedor.innerHTML =
 
-    carrito.map(
-        function(item){
+    carrito.map(function(item){
 
+        return `
 
-            return `
+        <div class="cart-item">
 
-                <div class="cart-item">
+            <div>
 
+                <strong>
+                    ${escapeHTML(
+                        item.producto_nombre
+                    )}
+                </strong>
 
-                    <div>
-
-
-                        <strong>
-                            ${escapeHTML(
-                                item.producto_nombre
-                            )}
-                        </strong>
-
-
-                        <div>
-                            Talla:
-                            ${escapeHTML(
-                                item.talla || ""
-                            )}
-                        </div>
-
-
-                        <div>
-                            ${moneda(
-                                item.precio
-                            )}
-                        </div>
-
-
-                    </div>
-
-
-
-                    <div class="qty">
-
-
-                        <button
-                            onclick="cambiarCantidad(
-                                '${item.producto_id}',
-                                ${item.cantidad - 1}
-                            )"
-                        >
-                            −
-                        </button>
-
-
-                        <strong>
-                            ${item.cantidad}
-                        </strong>
-
-
-                        <button
-                            onclick="cambiarCantidad(
-                                '${item.producto_id}',
-                                ${item.cantidad + 1}
-                            )"
-                        >
-                            +
-                        </button>
-
-
-                        <button
-                            class="btn btn-danger"
-                            onclick="quitarCarrito(
-                                '${item.producto_id}'
-                            )"
-                        >
-                            ×
-                        </button>
-
-
-                    </div>
-
-
+                <div>
+                    Talla
+                    ${escapeHTML(
+                        item.talla || ""
+                    )}
                 </div>
 
-            `;
+                <div>
+                    ${moneda(
+                        item.precio_unitario
+                    )}
+                </div>
 
-        }
-    ).join("");
+            </div>
 
+
+            <div class="qty">
+
+                <button
+                    onclick="cambiarCantidad(
+                        '${item.producto_id}',
+                        ${item.cantidad - 1}
+                    )">
+
+                    −
+
+                </button>
+
+
+                <strong>
+                    ${item.cantidad}
+                </strong>
+
+
+                <button
+                    onclick="cambiarCantidad(
+                        '${item.producto_id}',
+                        ${item.cantidad + 1}
+                    )">
+
+                    +
+
+                </button>
+
+
+                <button
+                    class="btn btn-danger"
+                    onclick="quitarCarrito(
+                        '${item.producto_id}'
+                    )">
+
+                    ×
+
+                </button>
+
+            </div>
+
+        </div>
+
+        `;
+
+    }).join("");
 
 
     document.getElementById(
         "totalVenta"
     ).textContent =
-    moneda(
-        totalCarrito()
-    );
+    moneda(totalCarrito());
 
 
     calcularCambio();
 
 }
-
 
 
 /* =====================================================
@@ -4039,21 +3204,17 @@ function renderCarrito(){
 
 function mostrarEfectivo(){
 
-
     const metodo =
     document.getElementById(
         "metodoPago"
     ).value;
 
 
-    const campo =
     document.getElementById(
         "campoEfectivo"
-    );
+    ).style.display =
 
-
-    campo.style.display =
-    metodo === "Efectivo"
+    metodo === "efectivo"
     ? "block"
     : "none";
 
@@ -4063,13 +3224,7 @@ function mostrarEfectivo(){
 }
 
 
-
-/* =====================================================
-   CAMBIO
-===================================================== */
-
 function calcularCambio(){
-
 
     const total =
     totalCarrito();
@@ -4107,13 +3262,11 @@ function calcularCambio(){
 }
 
 
-
 /* =====================================================
    CLIENTES EN VENTA
 ===================================================== */
 
 function cargarClientesVenta(){
-
 
     const select =
     document.getElementById(
@@ -4128,41 +3281,25 @@ function cargarClientesVenta(){
     }
 
 
-
     select.innerHTML =
 
-    `
+    '<option value="">Venta sin cliente</option>' +
 
-        <option value="">
-            Venta sin cliente
-        </option>
+    clientes.map(function(c){
 
-    `
+        return `
 
-    +
+            <option value="${c.id}">
 
-    clientes.map(
-        function(cliente){
+                ${escapeHTML(c.nombre)}
 
-            return `
+            </option>
 
-                <option
-                    value="${cliente.id}"
-                >
+        `;
 
-                    ${escapeHTML(
-                        cliente.nombre
-                    )}
-
-                </option>
-
-            `;
-
-        }
-    ).join("");
+    }).join("");
 
 }
-
 
 
 /* =====================================================
@@ -4170,7 +3307,6 @@ function cargarClientesVenta(){
 ===================================================== */
 
 async function registrarVenta(){
-
 
     if(!carrito.length){
 
@@ -4183,91 +3319,82 @@ async function registrarVenta(){
     }
 
 
-
-    const boton =
+    const metodo =
     document.getElementById(
-        "btnCobrar"
-    );
+        "metodoPago"
+    ).value;
 
 
-    boton.disabled = true;
+    const total =
+    totalCarrito();
 
-    boton.textContent =
-    "Registrando...";
 
+    const clienteId =
+    document.getElementById(
+        "clienteVenta"
+    ).value ||
+    null;
+
+
+    const efectivo =
+
+    metodo === "efectivo"
+
+    ?
+
+    Number(
+        document.getElementById(
+            "efectivoRecibido"
+        ).value ||
+        0
+    )
+
+    :
+
+    0;
+
+
+    if(
+        metodo === "efectivo" &&
+        efectivo < total
+    ){
+
+        alert(
+            "El efectivo recibido es menor al total."
+        );
+
+        return;
+
+    }
+
+
+    const cambio =
+
+    metodo === "efectivo"
+
+    ?
+
+    efectivo - total
+
+    :
+
+    0;
 
 
     try{
 
 
-        const metodo =
-        document.getElementById(
-            "metodoPago"
-        ).value;
-
-
-
-        const total =
-        totalCarrito();
-
-
-
-        const clienteId =
-        document.getElementById(
-            "clienteVenta"
-        ).value ||
-        null;
-
-
-
-        const efectivo =
-
-        metodo === "Efectivo"
-
-        ?
-
-        Number(
-            document.getElementById(
-                "efectivoRecibido"
-            ).value ||
-            0
-        )
-
-        :
-
-        0;
-
-
-
-        if(
-            metodo === "Efectivo"
-            &&
-            efectivo < total
-        ){
-
-            throw new Error(
-                "El efectivo recibido es menor al total."
-            );
-
-        }
-
-
-
-        /* =========================================
-           VALIDAR STOCK
-        ========================================= */
-
         for(
             const item of carrito
         ){
 
-
             const producto =
-            productos.find(
-                p =>
-                p.id ===
-                item.producto_id
-            );
+            productos.find(function(p){
+
+                return p.id ===
+                item.producto_id;
+
+            });
 
 
             if(!producto){
@@ -4280,13 +3407,8 @@ async function registrarVenta(){
 
 
             if(
-                Number(
-                    producto.stock
-                )
-                <
-                Number(
-                    item.cantidad
-                )
+                Number(producto.stock) <
+                item.cantidad
             ){
 
                 throw new Error(
@@ -4299,143 +3421,203 @@ async function registrarVenta(){
         }
 
 
-
-        /* =========================================
-           PREPARAR ITEMS
-        ========================================= */
-
-        const itemsRPC =
-        carrito.map(
-            function(item){
-
-                return {
-
-                    producto_id:
-                    item.producto_id,
-
-                    cantidad:
-                    Number(
-                        item.cantidad
-                    )
-
-                };
-
-            }
-        );
-
-
-
-        /* =========================================
-           REGISTRAR CON LA FUNCIÓN DE SUPABASE
-        ========================================= */
-
-        const resultado =
-        await supabaseClient
-        .rpc(
-            "registrar_venta",
-            {
-                p_cliente_id:
-                clienteId,
-
-                p_pago:
-                metodo,
-
-                p_efectivo:
-                efectivo,
-
-                p_items:
-                itemsRPC
-            }
-        );
-
-
-
-        if(resultado.error){
-
-            throw resultado.error;
-
-        }
-
-
-
-        /* =========================================
-           OBTENER RESULTADO
-        ========================================= */
-
-        let ventaRegistrada =
-        resultado.data;
-
-
-
-        if(
-            Array.isArray(
-                ventaRegistrada
-            )
-        ){
-
-            ventaRegistrada =
-            ventaRegistrada[0];
-
-        }
-
-
-
         const folio =
-        ventaRegistrada?.folio ||
-        "—";
+        await generarFolio();
 
 
-
-        const ventaId =
-        ventaRegistrada?.venta_id ||
-        ventaRegistrada?.id ||
-        null;
-
-
-
-        const cambio =
-        metodo === "Efectivo"
+        const puntos =
+        clienteId
         ?
-        efectivo - total
+        Math.floor(total)
         :
         0;
 
 
+        /*
+         * ESTA PARTE CONSERVA EL MISMO
+         * FUNCIONAMIENTO DE TU CÓDIGO.
+         */
 
-        /* =========================================
-           TICKET
-        ========================================= */
+        const ventaDatos = {
+
+            folio:folio,
+
+            total:total,
+
+            metodo_pago:metodo,
+
+            cliente_id:clienteId,
+
+            efectivo_recibido:efectivo,
+
+            cambio:cambio,
+
+            puntos_ganados:puntos
+
+        };
+
+
+        const resultadoVenta =
+        await supabaseClient
+            .from("ventas")
+            .insert(
+                ventaDatos
+            )
+            .select()
+            .single();
+
+
+        if(resultadoVenta.error){
+
+            throw resultadoVenta.error;
+
+        }
+
+
+        const venta =
+        resultadoVenta.data;
+
+
+        const detalles =
+        carrito.map(function(item){
+
+            return {
+
+                venta_id:
+                venta.id,
+
+                producto_id:
+                item.producto_id,
+
+                producto_nombre:
+                item.producto_nombre,
+
+                talla:
+                item.talla,
+
+                cantidad:
+                item.cantidad,
+
+                precio_unitario:
+                item.precio_unitario,
+
+                subtotal:
+                item.cantidad *
+                item.precio_unitario
+
+            };
+
+        });
+
+
+        const resultadoDetalles =
+        await supabaseClient
+            .from("venta_detalles")
+            .insert(detalles);
+
+
+        if(resultadoDetalles.error){
+
+            throw resultadoDetalles.error;
+
+        }
+
+
+        /*
+         * ACTUALIZAR STOCK
+         */
+
+        for(
+            const item of carrito
+        ){
+
+            const producto =
+            productos.find(function(p){
+
+                return p.id ===
+                item.producto_id;
+
+            });
+
+
+            const nuevoStock =
+            Number(producto.stock) -
+            Number(item.cantidad);
+
+
+            const resultadoStock =
+            await supabaseClient
+                .from("productos")
+                .update({
+                    stock:nuevoStock
+                })
+                .eq(
+                    "id",
+                    item.producto_id
+                );
+
+
+            if(resultadoStock.error){
+
+                throw resultadoStock.error;
+
+            }
+
+        }
+
+
+        /*
+         * PUNTOS
+         */
+
+        if(clienteId){
+
+            const cliente =
+            clientes.find(function(c){
+
+                return c.id ===
+                clienteId;
+
+            });
+
+
+            if(cliente){
+
+                const nuevosPuntos =
+                Number(cliente.puntos || 0) +
+                puntos;
+
+
+                const resultadoPuntos =
+                await supabaseClient
+                    .from("clientes")
+                    .update({
+                        puntos:nuevosPuntos
+                    })
+                    .eq(
+                        "id",
+                        clienteId
+                    );
+
+
+                if(resultadoPuntos.error){
+
+                    throw resultadoPuntos.error;
+
+                }
+
+            }
+
+        }
+
 
         prepararTicket(
-
-            {
-                folio:
-                folio,
-
-                fecha:
-                new Date().toISOString(),
-
-                total:
-                total,
-
-                id:
-                ventaId
-
-            },
-
+            venta,
             metodo,
-
             efectivo,
-
             cambio
-
         );
 
-
-
-        /* =========================================
-           LIMPIAR
-        ========================================= */
 
         carrito = [];
 
@@ -4445,60 +3627,65 @@ async function registrarVenta(){
         ).value = "";
 
 
-        document.getElementById(
-            "clienteVenta"
-        ).value = "";
-
-
         renderCarrito();
 
 
-
-        /* =========================================
-           RECARGAR DATOS
-        ========================================= */
-
         await cargarTodo();
 
-
-
-        /* =========================================
-           IMPRIMIR
-        ========================================= */
 
         imprimirTicket();
 
 
     }catch(error){
 
-
-        console.error(
-            "ERROR VENTA:",
-            error
-        );
+        console.error(error);
 
 
         alert(
             "No se pudo registrar la venta:\n\n" +
-            (
-                error.message ||
-                "Error desconocido"
-            )
+            error.message
         );
-
-
-    }finally{
-
-
-        boton.disabled = false;
-
-        boton.textContent =
-        "Cobrar";
 
     }
 
 }
 
+
+/* =====================================================
+   FOLIO
+===================================================== */
+
+async function generarFolio(){
+
+    const resultado =
+    await supabaseClient
+        .from("ventas")
+        .select(
+            "id",
+            {
+                count:"exact",
+                head:true
+            }
+        );
+
+
+    if(resultado.error){
+
+        throw resultado.error;
+
+    }
+
+
+    const numero =
+    Number(resultado.count || 0) +
+    1;
+
+
+    return "NN-" +
+    String(numero)
+    .padStart(6,"0");
+
+}
 
 
 /* =====================================================
@@ -4509,29 +3696,19 @@ function abrirCliente(){
 
     document.getElementById(
         "modalCliente"
-    ).classList.add(
-        "show"
-    );
+    ).classList.add("show");
 
 }
-
 
 
 function cerrarCliente(){
 
     document.getElementById(
         "modalCliente"
-    ).classList.remove(
-        "show"
-    );
+    ).classList.remove("show");
 
 }
 
-
-
-/* =====================================================
-   GUARDAR CLIENTE
-===================================================== */
 
 async function guardarCliente(event){
 
@@ -4539,7 +3716,6 @@ async function guardarCliente(event){
 
 
     try{
-
 
         const datos = {
 
@@ -4551,37 +3727,33 @@ async function guardarCliente(event){
             .value
             .trim(),
 
-
             telefono:
             document
             .getElementById(
                 "clienteTelefono"
             )
             .value
-            .trim() || null,
+            .trim() ||
+            null,
 
-
-            tarjeta:
+            codigo_tarjeta:
             document
             .getElementById(
                 "clienteTarjeta"
             )
             .value
-            .trim() || null,
-
+            .trim() ||
+            null,
 
             puntos:0
 
         };
 
 
-
         const resultado =
         await supabaseClient
-        .from("clientes")
-        .insert(
-            datos
-        );
+            .from("clientes")
+            .insert(datos);
 
 
         if(resultado.error){
@@ -4589,7 +3761,6 @@ async function guardarCliente(event){
             throw resultado.error;
 
         }
-
 
 
         event.target.reset();
@@ -4603,7 +3774,6 @@ async function guardarCliente(event){
 
     }catch(error){
 
-
         alert(
             "No se pudo guardar el cliente:\n\n" +
             error.message
@@ -4614,13 +3784,7 @@ async function guardarCliente(event){
 }
 
 
-
-/* =====================================================
-   RENDER CLIENTES
-===================================================== */
-
 function renderClientes(){
-
 
     const contenedor =
     document.getElementById(
@@ -4635,7 +3799,6 @@ function renderClientes(){
     }
 
 
-
     const buscar =
     (
         document.getElementById(
@@ -4647,29 +3810,23 @@ function renderClientes(){
     .trim();
 
 
-
     const filtrados =
-    clientes.filter(
-        function(cliente){
+    clientes.filter(function(c){
 
-            const texto = [
+        const texto = [
 
-                cliente.nombre,
-                cliente.telefono,
-                cliente.tarjeta
+            c.nombre,
+            c.telefono,
+            c.codigo_tarjeta
 
-            ]
-            .join(" ")
-            .toLowerCase();
+        ]
+        .join(" ")
+        .toLowerCase();
 
 
-            return texto.includes(
-                buscar
-            );
+        return texto.includes(buscar);
 
-        }
-    );
-
+    });
 
 
     if(!filtrados.length){
@@ -4682,11 +3839,9 @@ function renderClientes(){
     }
 
 
-
     contenedor.innerHTML = `
 
         <table class="table">
-
 
             <thead>
 
@@ -4713,61 +3868,46 @@ function renderClientes(){
             </thead>
 
 
-
             <tbody>
 
+                ${filtrados.map(function(c){
 
-                ${filtrados.map(
-                    function(cliente){
+                    return `
 
-                        return `
+                    <tr>
 
-                            <tr>
+                        <td>
+                            ${escapeHTML(c.nombre)}
+                        </td>
 
-                                <td>
-                                    ${escapeHTML(
-                                        cliente.nombre
-                                    )}
-                                </td>
+                        <td>
+                            ${escapeHTML(
+                                c.telefono || "—"
+                            )}
+                        </td>
 
+                        <td>
+                            ${escapeHTML(
+                                c.codigo_tarjeta ||
+                                c.tarjeta ||
+                                "—"
+                            )}
+                        </td>
 
-                                <td>
-                                    ${escapeHTML(
-                                        cliente.telefono ||
-                                        "—"
-                                    )}
-                                </td>
+                        <td>
+                            ⭐
+                            ${Number(
+                                c.puntos || 0
+                            )}
+                        </td>
 
+                    </tr>
 
-                                <td>
-                                    ${escapeHTML(
-                                        cliente.tarjeta ||
-                                        "—"
-                                    )}
-                                </td>
+                    `;
 
-
-                                <td>
-
-                                    ⭐
-
-                                    ${Number(
-                                        cliente.puntos ||
-                                        0
-                                    )}
-
-                                </td>
-
-                            </tr>
-
-                        `;
-
-                    }
-                ).join("")}
-
+                }).join("")}
 
             </tbody>
-
 
         </table>
 
@@ -4776,13 +3916,11 @@ function renderClientes(){
 }
 
 
-
 /* =====================================================
    PUNTOS
 ===================================================== */
 
 function renderPuntos(){
-
 
     const contenedor =
     document.getElementById(
@@ -4797,7 +3935,6 @@ function renderPuntos(){
     }
 
 
-
     if(!clientes.length){
 
         contenedor.innerHTML =
@@ -4808,11 +3945,9 @@ function renderPuntos(){
     }
 
 
-
     contenedor.innerHTML = `
 
         <table class="table">
-
 
             <thead>
 
@@ -4838,66 +3973,48 @@ function renderPuntos(){
 
             </thead>
 
-
-
             <tbody>
 
+                ${clientes.map(function(c){
 
-                ${clientes.map(
-                    function(cliente){
+                    return `
 
-                        return `
+                    <tr>
 
-                            <tr>
+                        <td>
+                            ${escapeHTML(c.nombre)}
+                        </td>
 
-                                <td>
-                                    ${escapeHTML(
-                                        cliente.nombre
-                                    )}
-                                </td>
+                        <td>
+                            ${escapeHTML(
+                                c.telefono || "—"
+                            )}
+                        </td>
 
+                        <td>
+                            ${escapeHTML(
+                                c.codigo_tarjeta ||
+                                c.tarjeta ||
+                                "—"
+                            )}
+                        </td>
 
-                                <td>
-                                    ${escapeHTML(
-                                        cliente.telefono ||
-                                        "—"
-                                    )}
-                                </td>
+                        <td>
+                            ⭐
+                            <strong>
+                                ${Number(
+                                    c.puntos || 0
+                                )}
+                            </strong>
+                        </td>
 
+                    </tr>
 
-                                <td>
-                                    ${escapeHTML(
-                                        cliente.tarjeta ||
-                                        "—"
-                                    )}
-                                </td>
+                    `;
 
-
-                                <td>
-
-                                    ⭐
-
-                                    <strong>
-
-                                        ${Number(
-                                            cliente.puntos ||
-                                            0
-                                        )}
-
-                                    </strong>
-
-                                </td>
-
-                            </tr>
-
-                        `;
-
-                    }
-                ).join("")}
-
+                }).join("")}
 
             </tbody>
-
 
         </table>
 
@@ -4906,56 +4023,50 @@ function renderPuntos(){
 }
 
 
-
 /* =====================================================
    REPORTES
 ===================================================== */
 
 function renderReportes(){
 
-
-    const total =
+    const ventasTotales =
     ventas.reduce(
-        function(suma,venta){
+        function(sum,v){
 
-            return suma +
-            Number(
-                venta.total || 0
-            );
+            return sum +
+            Number(v.total || 0);
 
         },
         0
     );
 
 
-
-    const reporteVentas =
+    const elementoVentas =
     document.getElementById(
         "reporteVentas"
     );
 
 
-    const reporteIngresos =
+    const elementoIngresos =
     document.getElementById(
         "reporteIngresos"
     );
 
 
-    if(reporteVentas){
+    if(elementoVentas){
 
-        reporteVentas.textContent =
+        elementoVentas.textContent =
         ventas.length;
 
     }
 
 
-    if(reporteIngresos){
+    if(elementoIngresos){
 
-        reporteIngresos.textContent =
-        moneda(total);
+        elementoIngresos.textContent =
+        moneda(ventasTotales);
 
     }
-
 
 
     const tabla =
@@ -4971,7 +4082,6 @@ function renderReportes(){
     }
 
 
-
     if(!ventas.length){
 
         tabla.innerHTML =
@@ -4982,11 +4092,9 @@ function renderReportes(){
     }
 
 
-
     tabla.innerHTML = `
 
         <table class="table">
-
 
             <thead>
 
@@ -5013,61 +4121,53 @@ function renderReportes(){
             </thead>
 
 
-
             <tbody>
 
+                ${ventas.map(function(v){
 
-                ${ventas.map(
-                    function(venta){
+                    return `
 
-                        return `
+                    <tr>
 
-                            <tr>
+                        <td>
+                            ${escapeHTML(
+                                v.folio
+                            )}
+                        </td>
 
-                                <td>
-                                    ${escapeHTML(
-                                        venta.folio
-                                    )}
-                                </td>
+                        <td>
+                            ${fecha(
+                                v.fecha
+                            )}
+                        </td>
 
+                        <td>
+                            ${escapeHTML(
+                                v.metodo_pago ||
+                                v.pago ||
+                                "—"
+                            )}
+                        </td>
 
-                                <td>
-                                    ${fecha(
-                                        venta.fecha
-                                    )}
-                                </td>
+                        <td>
+                            ${moneda(
+                                v.total
+                            )}
+                        </td>
 
+                    </tr>
 
-                                <td>
-                                    ${metodoTexto(
-                                        venta.pago
-                                    )}
-                                </td>
+                    `;
 
-
-                                <td>
-                                    ${moneda(
-                                        venta.total
-                                    )}
-                                </td>
-
-                            </tr>
-
-                        `;
-
-                    }
-                ).join("")}
-
+                }).join("")}
 
             </tbody>
-
 
         </table>
 
     `;
 
 }
-
 
 
 /* =====================================================
@@ -5078,20 +4178,17 @@ async function cargarLogo(){
 
     try{
 
-
         const resultado =
         supabaseClient
-        .storage
-        .from("pos")
-        .getPublicUrl(
-            "branding/logo"
-        );
+            .storage
+            .from("pos")
+            .getPublicUrl(
+                "branding/logo"
+            );
 
 
         const url =
-        resultado
-        .data
-        .publicUrl;
+        resultado.data.publicUrl;
 
 
         if(!url){
@@ -5101,12 +4198,10 @@ async function cargarLogo(){
         }
 
 
-
         const urlCache =
         url +
         "?t=" +
         Date.now();
-
 
 
         const sidebar =
@@ -5117,18 +4212,15 @@ async function cargarLogo(){
 
         if(sidebar){
 
-            sidebar.innerHTML = `
+            sidebar.innerHTML =
 
-                <img
-                    src="${urlCache}"
-                    alt="Logo"
-                    onerror="this.parentElement.innerHTML='N'"
-                >
-
-            `;
+            `<img
+                src="${urlCache}"
+                alt="Logo"
+                onerror="this.parentElement.innerHTML='N'"
+            >`;
 
         }
-
 
 
         const preview =
@@ -5139,15 +4231,13 @@ async function cargarLogo(){
 
         if(preview){
 
-            preview.innerHTML = `
+            preview.innerHTML =
 
-                <img
-                    src="${urlCache}"
-                    alt="Logo"
-                    onerror="this.parentElement.innerHTML='<span style=&quot;font-size:55px;font-weight:bold&quot;>N</span>'"
-                >
-
-            `;
+            `<img
+                src="${urlCache}"
+                alt="Logo"
+                onerror="this.parentElement.innerHTML='<span style=&quot;font-size:55px&quot;>N</span>'"
+            >`;
 
         }
 
@@ -5155,7 +4245,7 @@ async function cargarLogo(){
     }catch(error){
 
         console.log(
-            "No hay logo guardado."
+            "No hay logo guardado todavía."
         );
 
     }
@@ -5163,13 +4253,7 @@ async function cargarLogo(){
 }
 
 
-
-/* =====================================================
-   PREVISUALIZAR LOGO
-===================================================== */
-
 function previsualizarLogo(event){
-
 
     const file =
     event.target.files[0];
@@ -5182,7 +4266,6 @@ function previsualizarLogo(event){
     }
 
 
-
     const reader =
     new FileReader();
 
@@ -5190,17 +4273,18 @@ function previsualizarLogo(event){
     reader.onload =
     function(e){
 
-
+        const preview =
         document.getElementById(
             "logoPreview"
-        ).innerHTML = `
+        );
 
-            <img
-                src="${e.target.result}"
-                alt="Logo"
-            >
 
-        `;
+        preview.innerHTML =
+
+        `<img
+            src="${e.target.result}"
+            alt="Logo"
+        >`;
 
     };
 
@@ -5210,13 +4294,7 @@ function previsualizarLogo(event){
 }
 
 
-
-/* =====================================================
-   SUBIR LOGO
-===================================================== */
-
 async function subirLogo(){
-
 
     const input =
     document.getElementById(
@@ -5231,7 +4309,7 @@ async function subirLogo(){
     if(!file){
 
         alert(
-            "Primero selecciona una imagen."
+            "Primero selecciona una imagen para el logo."
         );
 
         return;
@@ -5239,36 +4317,21 @@ async function subirLogo(){
     }
 
 
-
-    const boton =
-    document.getElementById(
-        "btnGuardarLogo"
-    );
-
-
-    boton.disabled = true;
-
-    boton.textContent =
-    "Guardando...";
-
-
-
     try{
-
 
         const resultado =
         await supabaseClient
-        .storage
-        .from("pos")
-        .upload(
-            "branding/logo",
-            file,
-            {
-                upsert:true,
-                contentType:file.type,
-                cacheControl:"0"
-            }
-        );
+            .storage
+            .from("pos")
+            .upload(
+                "branding/logo",
+                file,
+                {
+                    upsert:true,
+                    contentType:file.type,
+                    cacheControl:"0"
+                }
+            );
 
 
         if(resultado.error){
@@ -5278,20 +4341,15 @@ async function subirLogo(){
         }
 
 
-
-        await cargarLogo();
-
-
         alert(
             "Logo guardado correctamente."
         );
 
 
-        input.value = "";
+        await cargarLogo();
 
 
     }catch(error){
-
 
         console.error(error);
 
@@ -5301,19 +4359,9 @@ async function subirLogo(){
             error.message
         );
 
-
-    }finally{
-
-
-        boton.disabled = false;
-
-        boton.textContent =
-        "Guardar logo";
-
     }
 
 }
-
 
 
 /* =====================================================
@@ -5327,7 +4375,6 @@ function prepararTicket(
     cambio
 ){
 
-
     document.getElementById(
         "ticketFolio"
     ).textContent =
@@ -5337,32 +4384,26 @@ function prepararTicket(
     document.getElementById(
         "ticketFecha"
     ).textContent =
-    fecha(
-        venta.fecha
-    );
+    fecha(venta.fecha);
 
 
     document.getElementById(
         "ticketTotal"
     ).textContent =
-    moneda(
-        venta.total
-    );
+    moneda(venta.total);
 
 
     document.getElementById(
         "ticketPago"
     ).textContent =
-    metodoTexto(
-        metodo
-    );
+    metodoTexto(metodo);
 
 
     document.getElementById(
         "ticketCambio"
     ).textContent =
 
-    metodo === "Efectivo"
+    metodo === "efectivo"
 
     ?
 
@@ -5374,79 +4415,61 @@ function prepararTicket(
     "";
 
 
-
     document.getElementById(
         "ticketProductos"
     ).innerHTML =
 
+    carrito.map(function(item){
 
-    carrito.map(
-        function(item){
+        return `
 
+            <div
+                style="
+                    display:flex;
+                    justify-content:space-between;
+                    margin:7px 0;
+                ">
 
-            return `
+                <span>
 
-                <div
-                    style="
-                        display:flex;
-                        justify-content:space-between;
-                        margin:7px 0;
-                    "
-                >
+                    ${item.cantidad} x
+                    ${escapeHTML(
+                        item.producto_nombre
+                    )}
 
+                    <br>
 
-                    <span>
+                    Talla
+                    ${escapeHTML(
+                        item.talla || ""
+                    )}
 
-
-                        ${item.cantidad} x
-                        ${escapeHTML(
-                            item.producto_nombre
-                        )}
-
-
-                        <br>
-
-
-                        Talla:
-                        ${escapeHTML(
-                            item.talla || ""
-                        )}
+                </span>
 
 
-                    </span>
+                <span>
 
+                    ${moneda(
+                        item.cantidad *
+                        item.precio_unitario
+                    )}
 
-                    <span>
+                </span>
 
-                        ${moneda(
-                            item.cantidad *
-                            item.precio
-                        )}
+            </div>
 
-                    </span>
+        `;
 
-
-                </div>
-
-            `;
-
-        }
-    ).join("");
+    }).join("");
 
 }
 
-
-
-/* =====================================================
-   IMPRIMIR
-===================================================== */
 
 function imprimirTicket(){
 
     window.print();
 
 }
-
 
 
 /* =====================================================
@@ -5468,7 +4491,6 @@ function moneda(valor){
 }
 
 
-
 function fecha(valor){
 
     if(!valor){
@@ -5478,9 +4500,8 @@ function fecha(valor){
     }
 
 
-    return new Date(
-        valor
-    ).toLocaleString(
+    return new Date(valor)
+    .toLocaleString(
         "es-MX",
         {
             dateStyle:"short",
@@ -5491,33 +4512,26 @@ function fecha(valor){
 }
 
 
-
 function metodoTexto(metodo){
 
     const nombres = {
 
-        Efectivo:
-        "Efectivo",
+        efectivo:"Efectivo",
 
-        Transferencia:
+        transferencia:
         "Transferencia",
 
-        Tarjeta:
+        tarjeta:
         "Tarjeta / Clip"
 
     };
 
 
-    return nombres[
-        metodo
-    ]
-    ||
-    metodo
-    ||
+    return nombres[metodo] ||
+    metodo ||
     "—";
 
 }
-
 
 
 function escapeHTML(text){
@@ -5525,34 +4539,28 @@ function escapeHTML(text){
     return String(
         text ?? ""
     )
-
     .replace(
         /&/g,
         "&amp;"
     )
-
     .replace(
         /</g,
         "&lt;"
     )
-
     .replace(
         />/g,
         "&gt;"
     )
-
     .replace(
         /"/g,
         "&quot;"
     )
-
     .replace(
         /'/g,
         "&#039;"
     );
 
 }
-
 
 
 function mostrarAlerta(texto){
@@ -5573,7 +4581,6 @@ function mostrarAlerta(texto){
 }
 
 
-
 function ocultarAlerta(){
 
     document.getElementById(
@@ -5584,7 +4591,6 @@ function ocultarAlerta(){
 }
 
 
-
 /* =====================================================
    CERRAR MODALES AL TOCAR AFUERA
 ===================================================== */
@@ -5592,7 +4598,6 @@ function ocultarAlerta(){
 document.addEventListener(
     "click",
     function(event){
-
 
         const modalProducto =
         document.getElementById(
@@ -5606,7 +4611,6 @@ document.addEventListener(
         );
 
 
-
         if(
             event.target ===
             modalProducto
@@ -5615,7 +4619,6 @@ document.addEventListener(
             cerrarProducto();
 
         }
-
 
 
         if(
@@ -5630,10 +4633,7 @@ document.addEventListener(
     }
 );
 
-
 </script>
 
-
 </body>
-
 </html>
