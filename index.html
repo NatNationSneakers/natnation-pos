@@ -11,24 +11,23 @@
 *{box-sizing:border-box}
 
 :root{
-    --pink:#ec5b9f;
-    --pink-dark:#d9468c;
-    --pink-light:#ffe5f1;
-    --dark:#101827;
-    --dark-2:#172235;
-    --text:#202124;
-    --muted:#737b8c;
-    --bg:#f5f6f8;
-    --border:#e2e5ea;
-    --green:#16a34a;
-    --red:#dc2626;
+    --negro:#101010;
+    --negro2:#171717;
+    --rosa:#ff4f9a;
+    --rosa2:#ff77b4;
+    --rosa-claro:#fff0f7;
+    --gris:#f7f7f8;
+    --gris2:#e9e9ec;
+    --texto:#222;
+    --muted:#777;
+    --blanco:#fff;
 }
 
 body{
     margin:0;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
-    background:var(--bg);
-    color:var(--text);
+    font-family:Arial,Helvetica,sans-serif;
+    background:var(--gris);
+    color:var(--texto);
 }
 
 button,input,select{
@@ -45,71 +44,72 @@ button{
     min-height:100vh;
 }
 
-/* =========================================================
-   SIDEBAR
-========================================================= */
+/* =========================
+   SIDEBAR NEGRO
+========================= */
 
 .sidebar{
-    width:265px;
-    background:var(--dark);
+    width:250px;
+    background:var(--negro);
     color:white;
-    padding:24px 17px;
+    padding:25px 16px;
     position:fixed;
     left:0;
     top:0;
     bottom:0;
-    overflow-y:auto;
+    z-index:100;
 }
 
 .logo{
     text-align:center;
-    margin-bottom:30px;
+    margin-bottom:35px;
 }
 
-.logo-box{
-    width:86px;
-    height:86px;
+.logo-button{
+    width:88px;
+    height:88px;
+    margin:auto;
+    border-radius:18px;
+    overflow:hidden;
     background:white;
-    color:var(--pink);
-    border-radius:20px;
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:44px;
-    font-weight:800;
-    margin:auto;
-    overflow:hidden;
-    border:3px solid rgba(255,255,255,.9);
+    border:3px solid #fff;
+    padding:0;
 }
 
-.logo-box img{
+.logo-button img{
     width:100%;
     height:100%;
     object-fit:contain;
 }
 
+.logo-placeholder{
+    color:#111;
+    font-size:38px;
+    font-weight:900;
+}
+
 .logo h2{
-    margin:13px 0 2px;
+    margin:12px 0 2px;
     font-size:22px;
 }
 
 .logo span{
-    color:#b9c1ce;
+    color:#aaa;
     font-size:14px;
 }
 
 .logo-upload{
-    margin-top:14px;
-}
-
-.logo-upload label{
     display:inline-block;
-    background:var(--pink);
+    margin-top:10px;
+    padding:7px 12px;
+    border-radius:8px;
+    background:var(--rosa);
     color:white;
-    padding:8px 12px;
-    border-radius:9px;
     font-size:12px;
-    font-weight:700;
+    font-weight:bold;
     cursor:pointer;
 }
 
@@ -117,58 +117,54 @@ button{
     display:none;
 }
 
-/* =========================================================
+/* =========================
    MENU
-========================================================= */
+========================= */
 
 .menu{
-    margin-top:20px;
+    display:flex;
+    flex-direction:column;
+    gap:5px;
 }
 
 .menu button{
     width:100%;
     background:transparent;
-    color:#e9edf4;
-    padding:15px 14px;
-    border-radius:13px;
+    color:#ddd;
+    padding:14px 15px;
+    border-radius:10px;
     text-align:left;
-    margin-bottom:6px;
     font-weight:600;
-    font-size:15px;
-    transition:.15s;
+    transition:.2s;
 }
 
 .menu button:hover{
-    background:#1e2b40;
+    background:#252525;
+    color:white;
 }
 
 .menu button.active{
-    background:var(--pink);
+    background:var(--rosa);
     color:white;
-    box-shadow:0 5px 18px rgba(236,91,159,.25);
 }
 
-/* =========================================================
+/* =========================
    MAIN
-========================================================= */
+========================= */
 
 .main{
-    margin-left:265px;
-    width:calc(100% - 265px);
-    min-width:0;
+    margin-left:250px;
+    width:calc(100% - 250px);
 }
 
 .topbar{
-    height:78px;
+    height:75px;
     background:white;
-    border-bottom:1px solid var(--border);
+    border-bottom:1px solid var(--gris2);
     display:flex;
     align-items:center;
     justify-content:space-between;
     padding:0 30px;
-    position:sticky;
-    top:0;
-    z-index:20;
 }
 
 .topbar h1{
@@ -178,15 +174,15 @@ button{
 
 .status{
     font-size:14px;
-    font-weight:700;
+    font-weight:bold;
 }
 
 .status.ok{
-    color:var(--green);
+    color:#129447;
 }
 
 .status.error{
-    color:var(--red);
+    color:#d62828;
 }
 
 .content{
@@ -195,70 +191,71 @@ button{
 
 .alert{
     background:#ffe2e2;
-    color:#b42318;
-    padding:15px 18px;
-    border-radius:12px;
+    color:#a40000;
+    padding:15px;
+    border-radius:10px;
     margin-bottom:20px;
 }
 
+/* =========================
+   TITULOS
+========================= */
+
 h2{
-    margin:0 0 7px;
-    font-size:30px;
+    margin:0 0 6px;
+    font-size:29px;
 }
 
 .subtitle{
     color:var(--muted);
-    margin-bottom:26px;
+    margin-bottom:25px;
 }
 
-/* =========================================================
+/* =========================
    CARDS
-========================================================= */
+========================= */
 
 .cards{
     display:grid;
     grid-template-columns:repeat(4,1fr);
-    gap:18px;
-    margin-bottom:26px;
+    gap:16px;
+    margin-bottom:25px;
 }
 
 .card{
     background:white;
-    border:1px solid var(--border);
-    border-radius:17px;
-    padding:23px;
-    box-shadow:0 2px 8px rgba(0,0,0,.025);
+    border:1px solid var(--gris2);
+    border-radius:14px;
+    padding:22px;
 }
 
 .card small{
     color:var(--muted);
-    font-size:14px;
 }
 
 .card strong{
     display:block;
-    font-size:30px;
-    margin-top:9px;
+    font-size:28px;
+    margin-top:8px;
 }
 
-/* =========================================================
-   PANELS
-========================================================= */
+/* =========================
+   PANELES
+========================= */
 
 .panel{
     background:white;
-    border:1px solid var(--border);
-    border-radius:17px;
-    padding:23px;
+    border:1px solid var(--gris2);
+    border-radius:14px;
+    padding:22px;
     margin-bottom:22px;
-    box-shadow:0 2px 8px rgba(0,0,0,.025);
 }
 
 .panel-header{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    gap:14px;
+    gap:15px;
     margin-bottom:20px;
 }
 
@@ -268,63 +265,58 @@ h2{
 
 .search{
     width:100%;
-    border:1px solid #d4d8df;
-    border-radius:11px;
+    border:1px solid #d5d5da;
+    border-radius:9px;
     padding:13px 14px;
     outline:none;
-    background:white;
 }
 
-.search:focus,
-.field input:focus,
-.field select:focus{
-    border-color:var(--pink);
-    box-shadow:0 0 0 3px rgba(236,91,159,.12);
+.search:focus{
+    border-color:var(--rosa);
+    box-shadow:0 0 0 3px rgba(255,79,154,.12);
 }
 
-/* =========================================================
+/* =========================
    BOTONES ROSAS
-========================================================= */
+========================= */
 
 .btn{
     padding:12px 17px;
-    border-radius:10px;
-    font-weight:700;
-    transition:.15s;
+    border-radius:9px;
+    font-weight:bold;
+    transition:.2s;
 }
 
 .btn-primary{
-    background:var(--pink);
+    background:var(--rosa);
     color:white;
 }
 
 .btn-primary:hover{
-    background:var(--pink-dark);
-    transform:translateY(-1px);
+    background:#ed3988;
 }
 
 .btn-secondary{
-    background:#edf0f4;
-    color:#1c2431;
+    background:#f1f1f3;
+    color:#222;
 }
 
 .btn-secondary:hover{
-    background:#e1e5eb;
+    background:#e4e4e7;
 }
 
 .btn-danger{
-    background:#fee2e2;
-    color:#b42318;
+    background:#ffe5ec;
+    color:#c92855;
 }
 
-.btn-pink-light{
-    background:var(--pink-light);
-    color:var(--pink-dark);
+.btn-danger:hover{
+    background:#ffd5e1;
 }
 
-/* =========================================================
+/* =========================
    PRODUCTOS
-========================================================= */
+========================= */
 
 .products-grid{
     display:grid;
@@ -333,16 +325,16 @@ h2{
 }
 
 .product{
-    border:1px solid var(--border);
-    border-radius:15px;
+    border:1px solid var(--gris2);
+    border-radius:13px;
     overflow:hidden;
     background:white;
 }
 
 .product-img{
     width:100%;
-    height:205px;
-    background:#f1f2f5;
+    height:210px;
+    background:#f1f1f3;
     display:flex;
     align-items:center;
     justify-content:center;
@@ -356,17 +348,16 @@ h2{
 }
 
 .no-img{
-    font-size:55px;
-    color:#b8bec9;
+    font-size:50px;
+    color:#bbb;
 }
 
 .product-info{
-    padding:16px;
+    padding:15px;
 }
 
 .product-info h3{
-    margin:0 0 7px;
-    font-size:17px;
+    margin:0 0 6px;
 }
 
 .product-info p{
@@ -375,9 +366,9 @@ h2{
 }
 
 .price{
-    font-size:21px!important;
-    font-weight:800;
-    color:var(--pink-dark)!important;
+    font-size:21px;
+    font-weight:bold;
+    color:#111!important;
     margin-top:10px!important;
 }
 
@@ -391,9 +382,9 @@ h2{
     flex:1;
 }
 
-/* =========================================================
+/* =========================
    TABLAS
-========================================================= */
+========================= */
 
 .table{
     width:100%;
@@ -408,29 +399,29 @@ h2{
 }
 
 .table th{
-    color:#687386;
     font-size:13px;
+    color:#777;
 }
 
 .empty{
     padding:35px;
     text-align:center;
-    color:var(--muted);
+    color:#777;
 }
 
-/* =========================================================
+/* =========================
    MODALES
-========================================================= */
+========================= */
 
 .modal{
     position:fixed;
     inset:0;
-    background:rgba(0,0,0,.58);
+    background:rgba(0,0,0,.65);
     display:none;
     align-items:center;
     justify-content:center;
     z-index:1000;
-    padding:18px;
+    padding:20px;
 }
 
 .modal.show{
@@ -442,12 +433,8 @@ h2{
     width:min(700px,100%);
     max-height:92vh;
     overflow:auto;
-    border-radius:19px;
+    border-radius:16px;
     padding:27px;
-}
-
-.modal-box.clip-box{
-    width:min(520px,100%);
 }
 
 .modal-header{
@@ -467,7 +454,7 @@ h2{
     width:38px;
     height:38px;
     border-radius:50%;
-    font-size:22px;
+    font-size:20px;
 }
 
 .form-grid{
@@ -487,28 +474,32 @@ h2{
 }
 
 .field label{
-    font-weight:700;
+    font-weight:bold;
     font-size:14px;
 }
 
 .field input,
 .field select{
-    padding:13px;
-    border:1px solid #ccd1d9;
+    padding:12px;
+    border:1px solid #d2d2d7;
     border-radius:9px;
     outline:none;
+}
+
+.field input:focus,
+.field select:focus{
+    border-color:var(--rosa);
 }
 
 .preview{
     width:150px;
     height:150px;
-    border-radius:13px;
-    background:#f1f2f4;
+    border-radius:12px;
+    background:#f1f1f3;
     display:flex;
     align-items:center;
     justify-content:center;
     overflow:hidden;
-    margin-bottom:10px;
 }
 
 .preview img{
@@ -524,9 +515,9 @@ h2{
     margin-top:25px;
 }
 
-/* =========================================================
-   CARRITO
-========================================================= */
+/* =========================
+   VENTA
+========================= */
 
 .cart-layout{
     display:grid;
@@ -538,8 +529,7 @@ h2{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    gap:12px;
-    padding:15px 0;
+    padding:14px 0;
     border-bottom:1px solid #eee;
 }
 
@@ -553,111 +543,68 @@ h2{
     width:32px;
     height:32px;
     border-radius:7px;
-    background:#eef1f5;
+    background:#eee;
 }
 
 .total{
-    font-size:27px;
-    font-weight:800;
+    font-size:26px;
+    font-weight:bold;
     display:flex;
     justify-content:space-between;
     margin:20px 0;
 }
 
-/* =========================================================
+/* =========================
    CLIP
-========================================================= */
+========================= */
 
-.clip-payment{
+.clip-box{
+    margin-top:18px;
+    padding:18px;
+    border-radius:13px;
+    background:#fff0f7;
+    border:1px solid #ffc1dc;
     text-align:center;
 }
 
-.clip-logo{
-    width:68px;
-    height:68px;
-    margin:0 auto 15px;
-    background:#ff6a00;
+.clip-icon{
+    width:58px;
+    height:58px;
+    margin:0 auto 10px;
+    border-radius:50%;
+    background:var(--rosa);
     color:white;
-    border-radius:16px;
     display:flex;
     align-items:center;
     justify-content:center;
-    font-weight:900;
-    font-size:23px;
+    font-size:28px;
 }
 
-.clip-payment h2{
-    font-size:24px;
-    margin-bottom:5px;
+.clip-box strong{
+    display:block;
+    font-size:18px;
 }
 
-.clip-amount{
-    font-size:34px;
-    font-weight:900;
-    margin:15px 0 22px;
+.clip-box span{
+    display:block;
+    margin-top:5px;
+    color:#777;
+    font-size:13px;
 }
 
-.clip-terminal{
-    background:#f4f5f7;
-    border-radius:18px;
-    padding:22px;
-    margin-bottom:20px;
-}
-
-.clip-terminal-icon{
-    font-size:60px;
-    margin-bottom:8px;
-}
-
-.clip-spinner{
-    width:42px;
-    height:42px;
-    border:4px solid #ffd1e3;
-    border-top-color:var(--pink);
-    border-radius:50%;
-    animation:giro 1s linear infinite;
-    margin:18px auto;
-}
-
-@keyframes giro{
-    to{transform:rotate(360deg)}
-}
-
-.clip-success{
-    display:none;
-    text-align:center;
-}
-
-.clip-check{
-    width:85px;
-    height:85px;
-    background:var(--pink);
-    color:white;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:48px;
-    margin:10px auto 18px;
-}
-
-.clip-success h2{
-    font-size:25px;
-}
-
-/* =========================================================
+/* =========================
    TICKET
-========================================================= */
+========================= */
 
 .ticket{
     display:none;
 }
 
-/* =========================================================
+/* =========================
    RESPONSIVE
-========================================================= */
+========================= */
 
-@media(max-width:1100px){
+@media(max-width:950px){
 
     .cards{
         grid-template-columns:repeat(2,1fr);
@@ -666,39 +613,9 @@ h2{
     .cart-layout{
         grid-template-columns:1fr;
     }
-
 }
 
-@media(max-width:750px){
-
-    .sidebar{
-        width:220px;
-    }
-
-    .main{
-        margin-left:220px;
-        width:calc(100% - 220px);
-    }
-
-    .content{
-        padding:20px;
-    }
-
-    .form-grid{
-        grid-template-columns:1fr;
-    }
-
-    .field.full{
-        grid-column:auto;
-    }
-
-}
-
-@media(max-width:650px){
-
-    .app{
-        display:block;
-    }
+@media(max-width:700px){
 
     .sidebar{
         position:relative;
@@ -711,29 +628,34 @@ h2{
         width:100%;
     }
 
+    .app{
+        display:block;
+    }
+
     .cards{
         grid-template-columns:1fr;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .field.full{
+        grid-column:auto;
+    }
+
+    .content{
+        padding:18px;
     }
 
     .topbar{
         padding:0 18px;
     }
-
-    .content{
-        padding:16px;
-    }
-
-    .panel-header{
-        flex-direction:column;
-        align-items:stretch;
-    }
-
-    .cart-item{
-        align-items:flex-start;
-        flex-direction:column;
-    }
-
 }
+
+/* =========================
+   IMPRESIÓN
+========================= */
 
 @media print{
 
@@ -755,3411 +677,8 @@ h2{
         padding:5mm;
         font-family:Arial,sans-serif;
         color:#000;
-        background:#fff;
+        background:white;
     }
 }
 </style>
 </head>
-
-<body>
-
-<div class="app">
-
-<!-- =====================================================
-     SIDEBAR
-===================================================== -->
-
-<aside class="sidebar">
-
-    <div class="logo">
-
-        <div class="logo-box" id="logoBox">
-            <span>N</span>
-        </div>
-
-        <h2>Nat.Nation</h2>
-        <span>Sneakers</span>
-
-        <div class="logo-upload">
-
-            <label for="logoInput">
-                ✏️ Cambiar logo
-            </label>
-
-            <input
-                id="logoInput"
-                type="file"
-                accept="image/*"
-                onchange="subirLogo(event)"
-            >
-
-        </div>
-
-    </div>
-
-    <div class="menu">
-
-        <button
-            id="menuInicio"
-            onclick="mostrarSeccion('inicio')"
-        >
-            🏠 &nbsp; Inicio
-        </button>
-
-        <button
-            id="menuProductos"
-            onclick="mostrarSeccion('productos')"
-        >
-            👟 &nbsp; Productos
-        </button>
-
-        <button
-            id="menuVenta"
-            onclick="mostrarSeccion('venta')"
-        >
-            🛒 &nbsp; Nueva venta
-        </button>
-
-        <button
-            id="menuClientes"
-            onclick="mostrarSeccion('clientes')"
-        >
-            👤 &nbsp; Clientes
-        </button>
-
-        <button
-            id="menuReportes"
-            onclick="mostrarSeccion('reportes')"
-        >
-            📊 &nbsp; Reportes
-        </button>
-
-    </div>
-
-</aside>
-
-
-<!-- =====================================================
-     MAIN
-===================================================== -->
-
-<main class="main">
-
-<header class="topbar">
-
-    <h1>Nat.Nation Sneakers</h1>
-
-    <div id="estado" class="status">
-        🟡 Conectando...
-    </div>
-
-</header>
-
-
-<div class="content">
-
-<div
-    id="alerta"
-    class="alert"
-    style="display:none"
-></div>
-
-
-<!-- =====================================================
-     INICIO
-===================================================== -->
-
-<section id="inicio">
-
-    <h2>Inicio</h2>
-
-    <div class="subtitle">
-        Bienvenida a tu punto de venta.
-    </div>
-
-    <div class="cards">
-
-        <div class="card">
-            <small>Productos</small>
-            <strong id="totalProductos">0</strong>
-        </div>
-
-        <div class="card">
-            <small>Stock total</small>
-            <strong id="stockTotal">0</strong>
-        </div>
-
-        <div class="card">
-            <small>Clientes</small>
-            <strong id="totalClientes">0</strong>
-        </div>
-
-        <div class="card">
-            <small>Ventas de hoy</small>
-            <strong id="ventasHoy">$0.00</strong>
-        </div>
-
-    </div>
-
-
-    <div class="panel">
-
-        <div class="panel-header">
-
-            <h3>Últimas ventas</h3>
-
-            <button
-                class="btn btn-primary"
-                onclick="mostrarSeccion('venta')"
-            >
-                + Nueva venta
-            </button>
-
-        </div>
-
-        <div id="ultimasVentas"></div>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     PRODUCTOS
-===================================================== -->
-
-<section
-    id="productos"
-    style="display:none"
->
-
-    <h2>Productos</h2>
-
-    <div class="subtitle">
-        Administra tu inventario.
-    </div>
-
-    <div class="panel">
-
-        <div class="panel-header">
-
-            <input
-                id="buscarProducto"
-                class="search"
-                placeholder="Buscar producto, SKU o código..."
-                oninput="renderProductos()"
-            >
-
-            <button
-                class="btn btn-primary"
-                onclick="abrirProducto()"
-            >
-                + Nuevo producto
-            </button>
-
-        </div>
-
-        <div
-            id="listaProductos"
-            class="products-grid"
-        ></div>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     VENTA
-===================================================== -->
-
-<section
-    id="venta"
-    style="display:none"
->
-
-    <h2>Nueva venta</h2>
-
-    <div class="subtitle">
-        Selecciona los productos y registra el pago.
-    </div>
-
-    <div class="cart-layout">
-
-        <div class="panel">
-
-            <input
-                id="buscarVenta"
-                class="search"
-                placeholder="Buscar producto..."
-                oninput="renderProductosVenta()"
-            >
-
-            <div
-                id="productosVenta"
-                class="products-grid"
-                style="margin-top:20px"
-            ></div>
-
-        </div>
-
-
-        <div class="panel">
-
-            <h3>Carrito</h3>
-
-            <div id="carrito"></div>
-
-            <div class="total">
-
-                <span>Total</span>
-
-                <span id="totalVenta">
-                    $0.00
-                </span>
-
-            </div>
-
-
-            <div class="field">
-
-                <label>Cliente</label>
-
-                <select id="clienteVenta">
-                    <option value="">
-                        Venta sin cliente
-                    </option>
-                </select>
-
-            </div>
-
-            <br>
-
-
-            <div class="field">
-
-                <label>Forma de pago</label>
-
-                <select
-                    id="metodoPago"
-                    onchange="mostrarEfectivo()"
-                >
-
-                    <option value="efectivo">
-                        💵 Efectivo
-                    </option>
-
-                    <option value="transferencia">
-                        🏦 Transferencia
-                    </option>
-
-                    <option value="tarjeta">
-                        💳 Tarjeta / Clip Total 2
-                    </option>
-
-                </select>
-
-            </div>
-
-
-            <div
-                id="campoEfectivo"
-                style="margin-top:15px"
-            >
-
-                <div class="field">
-
-                    <label>
-                        Efectivo recibido
-                    </label>
-
-                    <input
-                        id="efectivoRecibido"
-                        type="number"
-                        min="0"
-                        step="0.01"
-                        oninput="calcularCambio()"
-                    >
-
-                </div>
-
-                <p>
-                    Cambio:
-                    <strong id="cambio">
-                        $0.00
-                    </strong>
-                </p>
-
-            </div>
-
-
-            <button
-                class="btn btn-primary"
-                style="width:100%;margin-top:15px;font-size:16px"
-                onclick="registrarVenta()"
-            >
-                Cobrar
-            </button>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     CLIENTES
-===================================================== -->
-
-<section
-    id="clientes"
-    style="display:none"
->
-
-    <h2>Clientes</h2>
-
-    <div class="subtitle">
-        Administra clientes y puntos.
-    </div>
-
-    <div class="panel">
-
-        <div class="panel-header">
-
-            <input
-                id="buscarCliente"
-                class="search"
-                placeholder="Buscar cliente..."
-                oninput="renderClientes()"
-            >
-
-            <button
-                class="btn btn-primary"
-                onclick="abrirCliente()"
-            >
-                + Nuevo cliente
-            </button>
-
-        </div>
-
-        <div id="tablaClientes"></div>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     REPORTES
-===================================================== -->
-
-<section
-    id="reportes"
-    style="display:none"
->
-
-    <h2>Reportes</h2>
-
-    <div class="subtitle">
-        Consulta las ventas registradas.
-    </div>
-
-    <div class="cards">
-
-        <div class="card">
-            <small>Total de ventas</small>
-            <strong id="reporteVentas">0</strong>
-        </div>
-
-        <div class="card">
-            <small>Ingresos</small>
-            <strong id="reporteIngresos">
-                $0.00
-            </strong>
-        </div>
-
-    </div>
-
-    <div class="panel">
-
-        <div id="tablaReportes"></div>
-
-    </div>
-
-</section>
-
-</div>
-</main>
-</div>
-
-
-<!-- =====================================================
-     MODAL PRODUCTO
-===================================================== -->
-
-<div
-    id="modalProducto"
-    class="modal"
->
-
-<div class="modal-box">
-
-    <div class="modal-header">
-
-        <h3 id="tituloProducto">
-            Nuevo producto
-        </h3>
-
-        <button
-            class="close"
-            onclick="cerrarProducto()"
-        >
-            ×
-        </button>
-
-    </div>
-
-
-    <form
-        id="formProducto"
-        onsubmit="guardarProducto(event)"
-    >
-
-        <input
-            type="hidden"
-            id="productoId"
-        >
-
-
-        <div class="form-grid">
-
-            <div class="field">
-
-                <label>Modelo</label>
-
-                <input
-                    id="modelo"
-                    required
-                >
-
-            </div>
-
-
-            <div class="field">
-
-                <label>Talla</label>
-
-                <input
-                    id="talla"
-                    required
-                >
-
-            </div>
-
-
-            <div class="field">
-
-                <label>SKU</label>
-
-                <input id="sku">
-
-            </div>
-
-
-            <div class="field">
-
-                <label>Código de barras</label>
-
-                <input id="codigoBarras">
-
-            </div>
-
-
-            <div class="field">
-
-                <label>Precio de venta</label>
-
-                <input
-                    id="precio"
-                    type="number"
-                    min="0"
-                    step="0.01"
-                    required
-                >
-
-            </div>
-
-
-            <div class="field">
-
-                <label>Costo</label>
-
-                <input
-                    id="costo"
-                    type="number"
-                    min="0"
-                    step="0.01"
-                    value="0"
-                >
-
-            </div>
-
-
-            <div class="field">
-
-                <label>Stock</label>
-
-                <input
-                    id="stock"
-                    type="number"
-                    min="0"
-                    step="1"
-                    value="0"
-                    required
-                >
-
-            </div>
-
-
-            <div class="field">
-
-                <label>Foto del producto</label>
-
-                <input
-                    id="imagen"
-                    type="file"
-                    accept="image/*"
-                    onchange="previsualizarImagen(event)"
-                >
-
-            </div>
-
-
-            <div class="field full">
-
-                <label>Vista previa</label>
-
-                <div
-                    class="preview"
-                    id="preview"
-                >
-                    <span class="no-img">
-                        👟
-                    </span>
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="modal-actions">
-
-            <button
-                type="button"
-                class="btn btn-secondary"
-                onclick="cerrarProducto()"
-            >
-                Cancelar
-            </button>
-
-            <button
-                type="submit"
-                class="btn btn-primary"
-            >
-                Guardar producto
-            </button>
-
-        </div>
-
-    </form>
-
-</div>
-</div>
-
-
-<!-- =====================================================
-     MODAL CLIENTE
-===================================================== -->
-
-<div
-    id="modalCliente"
-    class="modal"
->
-
-<div class="modal-box">
-
-    <div class="modal-header">
-
-        <h3>Nuevo cliente</h3>
-
-        <button
-            class="close"
-            onclick="cerrarCliente()"
-        >
-            ×
-        </button>
-
-    </div>
-
-
-    <form onsubmit="guardarCliente(event)">
-
-        <div class="form-grid">
-
-            <div class="field full">
-
-                <label>Nombre</label>
-
-                <input
-                    id="clienteNombre"
-                    required
-                >
-
-            </div>
-
-
-            <div class="field">
-
-                <label>Teléfono</label>
-
-                <input id="clienteTelefono">
-
-            </div>
-
-
-            <div class="field">
-
-                <label>
-                    Código de tarjeta
-                </label>
-
-                <input id="clienteTarjeta">
-
-            </div>
-
-        </div>
-
-
-        <div class="modal-actions">
-
-            <button
-                type="button"
-                class="btn btn-secondary"
-                onclick="cerrarCliente()"
-            >
-                Cancelar
-            </button>
-
-            <button
-                type="submit"
-                class="btn btn-primary"
-            >
-                Guardar cliente
-            </button>
-
-        </div>
-
-    </form>
-
-</div>
-</div>
-
-
-<!-- =====================================================
-     MODAL CLIP TOTAL 2
-===================================================== -->
-
-<div
-    id="modalClip"
-    class="modal"
->
-
-<div class="modal-box clip-box">
-
-    <div class="modal-header">
-
-        <h3>Pago con Clip</h3>
-
-        <button
-            class="close"
-            onclick="cerrarClip()"
-        >
-            ×
-        </button>
-
-    </div>
-
-
-    <div
-        id="clipEsperando"
-        class="clip-payment"
-    >
-
-        <div class="clip-logo">
-            clip
-        </div>
-
-        <h2>
-            Clip Total 2
-        </h2>
-
-        <div
-            id="clipMonto"
-            class="clip-amount"
-        >
-            $0.00
-        </div>
-
-        <div class="clip-terminal">
-
-            <div class="clip-terminal-icon">
-                💳
-            </div>
-
-            <strong>
-                Esperando pago en la terminal
-            </strong>
-
-            <div class="clip-spinner"></div>
-
-            <p style="color:#737b8c">
-                Acerca o inserta la tarjeta
-                en tu Clip Total 2.
-            </p>
-
-        </div>
-
-        <button
-            class="btn btn-primary"
-            style="width:100%"
-            onclick="aprobarClipPrueba()"
-        >
-            Pago aprobado
-        </button>
-
-        <p
-            style="
-                font-size:12px;
-                color:#888;
-                margin-top:12px;
-            "
-        >
-            Botón de prueba mientras conectamos
-            la integración real con Clip.
-        </p>
-
-    </div>
-
-
-    <div
-        id="clipExito"
-        class="clip-success"
-    >
-
-        <div class="clip-check">
-            ✓
-        </div>
-
-        <h2>
-            ¡Pago aprobado!
-        </h2>
-
-        <div
-            id="clipMontoExito"
-            class="clip-amount"
-        >
-            $0.00
-        </div>
-
-        <p style="color:#737b8c">
-            El pago con tarjeta fue aprobado.
-        </p>
-
-        <button
-            class="btn btn-primary"
-            style="width:100%;margin-top:10px"
-            onclick="finalizarPagoClip()"
-        >
-            Finalizar venta
-        </button>
-
-    </div>
-
-</div>
-</div>
-
-
-<!-- =====================================================
-     TICKET
-===================================================== -->
-
-<div
-    class="ticket"
-    id="ticket"
->
-
-    <div style="text-align:center">
-
-        <div
-            id="ticketLogo"
-            style="margin-bottom:5px"
-        ></div>
-
-        <h2
-            style="
-                margin:0;
-                font-size:20px;
-            "
-        >
-            Nat.Nation Sneakers
-        </h2>
-
-        <p style="margin:4px 0">
-            Donde empieza tu estilo.
-        </p>
-
-        <p style="margin:4px 0">
-            Calle Juan Clímaco Ramírez SNVC<br>
-            San Andrés, 55780 Jaltenco, Méx.<br>
-            Tel. 5624570336
-        </p>
-
-    </div>
-
-
-    <hr>
-
-    <p>
-        Folio:
-        <strong id="ticketFolio"></strong>
-    </p>
-
-    <p>
-        Fecha:
-        <span id="ticketFecha"></span>
-    </p>
-
-    <hr>
-
-    <div id="ticketProductos"></div>
-
-    <hr>
-
-    <div
-        style="
-            display:flex;
-            justify-content:space-between
-        "
-    >
-
-        <strong>TOTAL</strong>
-
-        <strong id="ticketTotal"></strong>
-
-    </div>
-
-    <p>
-        Pago:
-        <span id="ticketPago"></span>
-    </p>
-
-    <p id="ticketCambio"></p>
-
-    <hr>
-
-    <p style="text-align:center">
-        ¡Gracias por tu compra!
-    </p>
-
-</div>
-
-
-<script>
-
-/* =========================================================
-   SUPABASE
-========================================================= */
-
-const SUPABASE_URL =
-    "https://nasvzzdzkljozyhhjize.supabase.co";
-
-const SUPABASE_KEY =
-    "sb_publishable_e98PP2bpEDEfYPFFlQ1wDQ_gSSlHXS7";
-
-const supabaseClient =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-    );
-
-
-const NEGOCIO = {
-
-    nombre:"Nat.Nation Sneakers",
-
-    telefono:"5624570336",
-
-    direccion:
-        "Calle Juan Clímaco Ramírez SNVC, San Andrés, 55780 Jaltenco, Méx."
-
-};
-
-
-const LOGO_RUTA =
-    "negocio/logo";
-
-
-let productos = [];
-let clientes = [];
-let ventas = [];
-let carrito = [];
-
-let productoEditando = null;
-let imagenActual = null;
-
-let ventaPendienteClip = null;
-
-
-/* =========================================================
-   INICIO
-========================================================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    async () => {
-
-        mostrarSeccion("inicio");
-
-        await cargarLogo();
-
-        await cargarTodo();
-
-    }
-);
-
-
-async function cargarTodo(){
-
-    try{
-
-        const [p,c,v] =
-            await Promise.all([
-
-                supabaseClient
-                    .from("productos")
-                    .select("*")
-                    .order(
-                        "created_at",
-                        {ascending:false}
-                    ),
-
-                supabaseClient
-                    .from("clientes")
-                    .select("*")
-                    .order(
-                        "created_at",
-                        {ascending:false}
-                    ),
-
-                supabaseClient
-                    .from("ventas")
-                    .select("*")
-                    .order(
-                        "fecha",
-                        {ascending:false}
-                    )
-
-            ]);
-
-
-        if(p.error) throw p.error;
-        if(c.error) throw c.error;
-        if(v.error) throw v.error;
-
-
-        productos = p.data || [];
-        clientes = c.data || [];
-        ventas = v.data || [];
-
-
-        document.getElementById(
-            "estado"
-        ).textContent =
-            "🟢 Conectado";
-
-
-        document.getElementById(
-            "estado"
-        ).className =
-            "status ok";
-
-
-        ocultarAlerta();
-
-        actualizarInicio();
-
-        renderProductos();
-
-        renderClientes();
-
-        cargarClientesVenta();
-
-        renderProductosVenta();
-
-        renderReportes();
-
-    }catch(error){
-
-        console.error(error);
-
-        document.getElementById(
-            "estado"
-        ).textContent =
-            "🔴 Error de conexión";
-
-
-        document.getElementById(
-            "estado"
-        ).className =
-            "status error";
-
-
-        mostrarAlerta(
-            "Supabase respondió con un error: " +
-            (error.message ||
-            "Error desconocido")
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   LOGO
-========================================================= */
-
-async function cargarLogo(){
-
-    try{
-
-        const {data} =
-            supabaseClient
-                .storage
-                .from("pos")
-                .getPublicUrl(LOGO_RUTA);
-
-
-        if(!data || !data.publicUrl)
-            return;
-
-
-        const url =
-            data.publicUrl +
-            "?t=" +
-            Date.now();
-
-
-        const img =
-            new Image();
-
-
-        img.onload = () => {
-
-            document.getElementById(
-                "logoBox"
-            ).innerHTML =
-                `<img src="${url}" alt="Logo">`;
-
-            document.getElementById(
-                "ticketLogo"
-            ).innerHTML =
-                `<img
-                    src="${url}"
-                    style="
-                        width:45px;
-                        height:45px;
-                        object-fit:contain;
-                    "
-                >`;
-
-        };
-
-
-        img.src = url;
-
-    }catch(error){
-
-        console.log(
-            "No hay logo cargado todavía."
-        );
-
-    }
-
-}
-
-
-async function subirLogo(event){
-
-    const file =
-        event.target.files[0];
-
-    if(!file) return;
-
-
-    try{
-
-        const {error} =
-            await supabaseClient
-                .storage
-                .from("pos")
-                .upload(
-                    LOGO_RUTA,
-                    file,
-                    {
-                        upsert:true,
-                        contentType:file.type
-                    }
-                );
-
-
-        if(error) throw error;
-
-
-        await cargarLogo();
-
-
-        alert(
-            "✅ Logo guardado correctamente."
-        );
-
-
-    }catch(error){
-
-        console.error(error);
-
-        alert(
-            "No se pudo guardar el logo:\n\n" +
-            error.message
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   NAVEGACIÓN
-========================================================= */
-
-function mostrarSeccion(nombre){
-
-    const secciones = [
-        "inicio",
-        "productos",
-        "venta",
-        "clientes",
-        "reportes"
-    ];
-
-
-    secciones.forEach(
-        s => {
-
-            document.getElementById(
-                s
-            ).style.display =
-                s === nombre
-                ? "block"
-                : "none";
-
-        }
-    );
-
-
-    document
-        .querySelectorAll(".menu button")
-        .forEach(
-            b =>
-                b.classList.remove("active")
-        );
-
-
-    const mapa = {
-
-        inicio:"menuInicio",
-
-        productos:"menuProductos",
-
-        venta:"menuVenta",
-
-        clientes:"menuClientes",
-
-        reportes:"menuReportes"
-
-    };
-
-
-    document
-        .getElementById(
-            mapa[nombre]
-        )
-        .classList.add("active");
-
-
-    if(nombre === "productos")
-        renderProductos();
-
-    if(nombre === "venta")
-        renderProductosVenta();
-
-    if(nombre === "clientes")
-        renderClientes();
-
-    if(nombre === "reportes")
-        renderReportes();
-
-}
-
-
-/* =========================================================
-   INICIO
-========================================================= */
-
-function actualizarInicio(){
-
-    document.getElementById(
-        "totalProductos"
-    ).textContent =
-        productos.length;
-
-
-    document.getElementById(
-        "stockTotal"
-    ).textContent =
-        productos.reduce(
-            (sum,p) =>
-                sum +
-                Number(p.stock || 0),
-            0
-        );
-
-
-    document.getElementById(
-        "totalClientes"
-    ).textContent =
-        clientes.length;
-
-
-    const hoy =
-        new Date().toDateString();
-
-
-    const ventasHoyArray =
-        ventas.filter(
-            v =>
-                new Date(v.fecha)
-                    .toDateString() === hoy
-        );
-
-
-    const totalHoy =
-        ventasHoyArray.reduce(
-            (sum,v) =>
-                sum +
-                Number(v.total || 0),
-            0
-        );
-
-
-    document.getElementById(
-        "ventasHoy"
-    ).textContent =
-        moneda(totalHoy);
-
-
-    const ultimas =
-        ventas.slice(0,10);
-
-
-    if(!ultimas.length){
-
-        document.getElementById(
-            "ultimasVentas"
-        ).innerHTML =
-            '<div class="empty">No hay ventas registradas.</div>';
-
-        return;
-
-    }
-
-
-    document.getElementById(
-        "ultimasVentas"
-    ).innerHTML = `
-
-        <table class="table">
-
-            <thead>
-
-                <tr>
-                    <th>Folio</th>
-                    <th>Fecha</th>
-                    <th>Total</th>
-                    <th>Pago</th>
-                </tr>
-
-            </thead>
-
-            <tbody>
-
-                ${ultimas.map(
-                    v => `
-
-                    <tr>
-
-                        <td>
-                            ${escapeHTML(v.folio)}
-                        </td>
-
-                        <td>
-                            ${fecha(v.fecha)}
-                        </td>
-
-                        <td>
-                            ${moneda(v.total)}
-                        </td>
-
-                        <td>
-                            ${escapeHTML(
-                                metodoTexto(
-                                    v.metodo_pago
-                                )
-                            )}
-                        </td>
-
-                    </tr>
-
-                `).join("")}
-
-            </tbody>
-
-        </table>
-
-    `;
-
-}
-
-
-/* =========================================================
-   PRODUCTOS
-========================================================= */
-
-function abrirProducto(id=null){
-
-    productoEditando = null;
-
-    imagenActual = null;
-
-
-    document
-        .getElementById("formProducto")
-        .reset();
-
-
-    document.getElementById(
-        "productoId"
-    ).value = "";
-
-
-    document.getElementById(
-        "tituloProducto"
-    ).textContent =
-        "Nuevo producto";
-
-
-    document.getElementById(
-        "preview"
-    ).innerHTML =
-        '<span class="no-img">👟</span>';
-
-
-    if(id){
-
-        const p =
-            productos.find(
-                x => String(x.id) === String(id)
-            );
-
-
-        if(!p) return;
-
-
-        productoEditando = p;
-
-
-        document.getElementById(
-            "tituloProducto"
-        ).textContent =
-            "Editar producto";
-
-
-        document.getElementById(
-            "productoId"
-        ).value = p.id;
-
-
-        document.getElementById(
-            "modelo"
-        ).value =
-            p.modelo || "";
-
-
-        document.getElementById(
-            "talla"
-        ).value =
-            p.talla || "";
-
-
-        document.getElementById(
-            "sku"
-        ).value =
-            p.sku || "";
-
-
-        document.getElementById(
-            "codigoBarras"
-        ).value =
-            p.codigo_barras || "";
-
-
-        document.getElementById(
-            "precio"
-        ).value =
-            p.precio || 0;
-
-
-        document.getElementById(
-            "costo"
-        ).value =
-            p.costo || 0;
-
-
-        document.getElementById(
-            "stock"
-        ).value =
-            p.stock || 0;
-
-
-        imagenActual =
-            p.imagen_url || null;
-
-
-        if(imagenActual){
-
-            document.getElementById(
-                "preview"
-            ).innerHTML =
-                `
-                <img
-                    src="${escapeAttribute(imagenActual)}"
-                    alt="Producto"
-                >
-                `;
-
-        }
-
-    }
-
-
-    document
-        .getElementById("modalProducto")
-        .classList.add("show");
-
-}
-
-
-function cerrarProducto(){
-
-    document
-        .getElementById("modalProducto")
-        .classList.remove("show");
-
-}
-
-
-function previsualizarImagen(event){
-
-    const file =
-        event.target.files[0];
-
-    if(!file) return;
-
-
-    const reader =
-        new FileReader();
-
-
-    reader.onload =
-        e => {
-
-            document.getElementById(
-                "preview"
-            ).innerHTML =
-                `
-                <img
-                    src="${e.target.result}"
-                    alt="Vista previa"
-                >
-                `;
-
-        };
-
-
-    reader.readAsDataURL(file);
-
-}
-
-
-async function subirImagen(file){
-
-    if(!file)
-        return imagenActual;
-
-
-    const extension =
-        file.name
-            .split(".")
-            .pop()
-            .toLowerCase();
-
-
-    const nombre =
-        `${crypto.randomUUID()}.${extension}`;
-
-
-    const ruta =
-        `productos/${nombre}`;
-
-
-    const {error} =
-        await supabaseClient
-            .storage
-            .from("pos")
-            .upload(
-                ruta,
-                file,
-                {
-                    upsert:false,
-                    contentType:file.type
-                }
-            );
-
-
-    if(error) throw error;
-
-
-    const {data} =
-        supabaseClient
-            .storage
-            .from("pos")
-            .getPublicUrl(ruta);
-
-
-    return data.publicUrl;
-
-}
-
-
-async function guardarProducto(event){
-
-    event.preventDefault();
-
-
-    const btn =
-        event.submitter;
-
-
-    btn.disabled = true;
-
-    btn.textContent =
-        "Guardando...";
-
-
-    try{
-
-        const file =
-            document.getElementById(
-                "imagen"
-            ).files[0];
-
-
-        let imagenUrl =
-            imagenActual;
-
-
-        if(file){
-
-            imagenUrl =
-                await subirImagen(file);
-
-        }
-
-
-        const datos = {
-
-            modelo:
-                document.getElementById(
-                    "modelo"
-                ).value.trim(),
-
-            talla:
-                document.getElementById(
-                    "talla"
-                ).value.trim(),
-
-            sku:
-                document.getElementById(
-                    "sku"
-                ).value.trim() || null,
-
-            codigo_barras:
-                document.getElementById(
-                    "codigoBarras"
-                ).value.trim() || null,
-
-            precio:
-                Number(
-                    document.getElementById(
-                        "precio"
-                    ).value || 0
-                ),
-
-            costo:
-                Number(
-                    document.getElementById(
-                        "costo"
-                    ).value || 0
-                ),
-
-            stock:
-                Number(
-                    document.getElementById(
-                        "stock"
-                    ).value || 0
-                ),
-
-            imagen_url:
-                imagenUrl || null,
-
-            activo:true
-
-        };
-
-
-        if(productoEditando){
-
-            const {error} =
-                await supabaseClient
-                    .from("productos")
-                    .update(datos)
-                    .eq(
-                        "id",
-                        productoEditando.id
-                    );
-
-
-            if(error) throw error;
-
-        }else{
-
-            const {error} =
-                await supabaseClient
-                    .from("productos")
-                    .insert(datos);
-
-
-            if(error) throw error;
-
-        }
-
-
-        cerrarProducto();
-
-        await cargarTodo();
-
-        mostrarSeccion("productos");
-
-
-    }catch(error){
-
-        console.error(error);
-
-        alert(
-            "No se pudo guardar el producto:\n\n" +
-            error.message
-        );
-
-    }finally{
-
-        btn.disabled = false;
-
-        btn.textContent =
-            "Guardar producto";
-
-    }
-
-}
-
-
-async function eliminarProducto(id){
-
-    const p =
-        productos.find(
-            x => String(x.id) === String(id)
-        );
-
-
-    if(!p) return;
-
-
-    if(!confirm(
-        `¿Eliminar "${p.modelo}" de productos?`
-    )) return;
-
-
-    try{
-
-        const {error} =
-            await supabaseClient
-                .from("productos")
-                .delete()
-                .eq("id",id);
-
-
-        if(error) throw error;
-
-
-        await cargarTodo();
-
-
-    }catch(error){
-
-        alert(
-            "No se pudo eliminar:\n\n" +
-            error.message
-        );
-
-    }
-
-}
-
-
-function renderProductos(){
-
-    const contenedor =
-        document.getElementById(
-            "listaProductos"
-        );
-
-
-    if(!contenedor) return;
-
-
-    const buscar =
-        (
-            document.getElementById(
-                "buscarProducto"
-            )?.value || ""
-        )
-        .toLowerCase()
-        .trim();
-
-
-    const filtrados =
-        productos.filter(
-            p => {
-
-                const texto = [
-
-                    p.modelo,
-                    p.talla,
-                    p.sku,
-                    p.codigo_barras
-
-                ]
-                .join(" ")
-                .toLowerCase();
-
-
-                return texto.includes(buscar);
-
-            }
-        );
-
-
-    if(!filtrados.length){
-
-        contenedor.innerHTML =
-            '<div class="empty">No hay productos registrados.</div>';
-
-        return;
-
-    }
-
-
-    contenedor.innerHTML =
-        filtrados.map(
-            p => `
-
-        <div class="product">
-
-            <div class="product-img">
-
-                ${
-                    p.imagen_url
-
-                    ?
-
-                    `
-                    <img
-                        src="${escapeAttribute(p.imagen_url)}"
-                        alt="${escapeHTML(p.modelo)}"
-                    >
-                    `
-
-                    :
-
-                    `
-                    <span class="no-img">
-                        👟
-                    </span>
-                    `
-                }
-
-            </div>
-
-
-            <div class="product-info">
-
-                <h3>
-                    ${escapeHTML(p.modelo)}
-                </h3>
-
-                <p>
-                    Talla:
-                    ${escapeHTML(p.talla || "")}
-                </p>
-
-                <p>
-                    SKU:
-                    ${escapeHTML(p.sku || "—")}
-                </p>
-
-                <p>
-                    Stock:
-                    <strong>
-                        ${Number(p.stock || 0)}
-                    </strong>
-                </p>
-
-                <p class="price">
-                    ${moneda(p.precio)}
-                </p>
-
-
-                <div class="product-actions">
-
-                    <button
-                        class="btn btn-secondary"
-                        onclick="abrirProducto('${p.id}')"
-                    >
-                        Editar
-                    </button>
-
-                    <button
-                        class="btn btn-danger"
-                        onclick="eliminarProducto('${p.id}')"
-                    >
-                        Eliminar
-                    </button>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    `
-        ).join("");
-
-}
-
-
-/* =========================================================
-   VENTA
-========================================================= */
-
-function renderProductosVenta(){
-
-    const contenedor =
-        document.getElementById(
-            "productosVenta"
-        );
-
-
-    if(!contenedor) return;
-
-
-    const buscar =
-        (
-            document.getElementById(
-                "buscarVenta"
-            )?.value || ""
-        )
-        .toLowerCase()
-        .trim();
-
-
-    const filtrados =
-        productos.filter(
-            p => {
-
-                const texto = [
-
-                    p.modelo,
-                    p.talla,
-                    p.sku,
-                    p.codigo_barras
-
-                ]
-                .join(" ")
-                .toLowerCase();
-
-
-                return (
-                    texto.includes(buscar) &&
-                    Number(p.stock || 0) > 0 &&
-                    p.activo !== false
-                );
-
-            }
-        );
-
-
-    if(!filtrados.length){
-
-        contenedor.innerHTML =
-            '<div class="empty">No hay productos disponibles.</div>';
-
-        return;
-
-    }
-
-
-    contenedor.innerHTML =
-        filtrados.map(
-            p => `
-
-        <div class="product">
-
-            <div class="product-img">
-
-                ${
-                    p.imagen_url
-
-                    ?
-
-                    `
-                    <img
-                        src="${escapeAttribute(p.imagen_url)}"
-                        alt="${escapeHTML(p.modelo)}"
-                    >
-                    `
-
-                    :
-
-                    `
-                    <span class="no-img">
-                        👟
-                    </span>
-                    `
-                }
-
-            </div>
-
-
-            <div class="product-info">
-
-                <h3>
-                    ${escapeHTML(p.modelo)}
-                </h3>
-
-                <p>
-                    Talla:
-                    ${escapeHTML(p.talla)}
-                </p>
-
-                <p>
-                    Disponible:
-                    ${Number(p.stock || 0)}
-                </p>
-
-                <p class="price">
-                    ${moneda(p.precio)}
-                </p>
-
-
-                <button
-                    class="btn btn-primary"
-                    style="width:100%;margin-top:10px"
-                    onclick="agregarCarrito('${p.id}')"
-                >
-                    Agregar
-                </button>
-
-            </div>
-
-        </div>
-
-    `
-        ).join("");
-
-}
-
-
-function agregarCarrito(id){
-
-    const p =
-        productos.find(
-            x => String(x.id) === String(id)
-        );
-
-
-    if(!p) return;
-
-
-    const existente =
-        carrito.find(
-            x =>
-                String(x.producto_id) ===
-                String(id)
-        );
-
-
-    if(existente){
-
-        if(
-            existente.cantidad >=
-            Number(p.stock)
-        ){
-
-            alert(
-                "No hay más stock disponible."
-            );
-
-            return;
-
-        }
-
-
-        existente.cantidad++;
-
-    }else{
-
-        carrito.push({
-
-            producto_id:p.id,
-
-            producto_nombre:p.modelo,
-
-            talla:p.talla,
-
-            cantidad:1,
-
-            precio_unitario:
-                Number(p.precio || 0)
-
-        });
-
-    }
-
-
-    renderCarrito();
-
-}
-
-
-function cambiarCantidad(id,cantidad){
-
-    const item =
-        carrito.find(
-            x =>
-                String(x.producto_id) ===
-                String(id)
-        );
-
-
-    const producto =
-        productos.find(
-            x =>
-                String(x.id) ===
-                String(id)
-        );
-
-
-    if(!item || !producto) return;
-
-
-    cantidad =
-        Number(cantidad);
-
-
-    if(cantidad <= 0){
-
-        carrito =
-            carrito.filter(
-                x =>
-                    String(x.producto_id) !==
-                    String(id)
-            );
-
-    }else if(
-        cantidad >
-        Number(producto.stock)
-    ){
-
-        alert(
-            "Cantidad superior al stock."
-        );
-
-        return;
-
-    }else{
-
-        item.cantidad =
-            cantidad;
-
-    }
-
-
-    renderCarrito();
-
-}
-
-
-function quitarCarrito(id){
-
-    carrito =
-        carrito.filter(
-            x =>
-                String(x.producto_id) !==
-                String(id)
-        );
-
-
-    renderCarrito();
-
-}
-
-
-function totalCarrito(){
-
-    return carrito.reduce(
-        (sum,item) =>
-            sum +
-            item.cantidad *
-            item.precio_unitario,
-        0
-    );
-
-}
-
-
-function renderCarrito(){
-
-    const contenedor =
-        document.getElementById(
-            "carrito"
-        );
-
-
-    if(!carrito.length){
-
-        contenedor.innerHTML =
-            '<div class="empty">El carrito está vacío.</div>';
-
-
-        document.getElementById(
-            "totalVenta"
-        ).textContent =
-            "$0.00";
-
-
-        calcularCambio();
-
-        return;
-
-    }
-
-
-    contenedor.innerHTML =
-        carrito.map(
-            item => `
-
-        <div class="cart-item">
-
-            <div>
-
-                <strong>
-                    ${escapeHTML(
-                        item.producto_nombre
-                    )}
-                </strong>
-
-                <div>
-                    Talla
-                    ${escapeHTML(
-                        item.talla || ""
-                    )}
-                </div>
-
-                <div>
-                    ${moneda(
-                        item.precio_unitario
-                    )}
-                </div>
-
-            </div>
-
-
-            <div class="qty">
-
-                <button
-                    onclick="cambiarCantidad(
-                        '${item.producto_id}',
-                        ${item.cantidad - 1}
-                    )"
-                >
-                    −
-                </button>
-
-                <strong>
-                    ${item.cantidad}
-                </strong>
-
-                <button
-                    onclick="cambiarCantidad(
-                        '${item.producto_id}',
-                        ${item.cantidad + 1}
-                    )"
-                >
-                    +
-                </button>
-
-                <button
-                    class="btn btn-danger"
-                    onclick="quitarCarrito(
-                        '${item.producto_id}'
-                    )"
-                >
-                    ×
-                </button>
-
-            </div>
-
-        </div>
-
-    `
-        ).join("");
-
-
-    document.getElementById(
-        "totalVenta"
-    ).textContent =
-        moneda(totalCarrito());
-
-
-    calcularCambio();
-
-}
-
-
-function mostrarEfectivo(){
-
-    const metodo =
-        document.getElementById(
-            "metodoPago"
-        ).value;
-
-
-    document.getElementById(
-        "campoEfectivo"
-    ).style.display =
-        metodo === "efectivo"
-        ? "block"
-        : "none";
-
-}
-
-
-function calcularCambio(){
-
-    const total =
-        totalCarrito();
-
-
-    const efectivo =
-        Number(
-            document.getElementById(
-                "efectivoRecibido"
-            ).value || 0
-        );
-
-
-    const cambio =
-        Math.max(
-            0,
-            efectivo - total
-        );
-
-
-    document.getElementById(
-        "cambio"
-    ).textContent =
-        moneda(cambio);
-
-}
-
-
-function cargarClientesVenta(){
-
-    const select =
-        document.getElementById(
-            "clienteVenta"
-        );
-
-
-    if(!select) return;
-
-
-    select.innerHTML =
-        '<option value="">Venta sin cliente</option>' +
-
-        clientes.map(
-            c => `
-
-            <option value="${c.id}">
-                ${escapeHTML(c.nombre)}
-            </option>
-
-        `
-        ).join("");
-
-}
-
-
-/* =========================================================
-   REGISTRAR VENTA
-========================================================= */
-
-async function registrarVenta(){
-
-    if(!carrito.length){
-
-        alert(
-            "Agrega productos al carrito."
-        );
-
-        return;
-
-    }
-
-
-    const metodo =
-        document.getElementById(
-            "metodoPago"
-        ).value;
-
-
-    const total =
-        totalCarrito();
-
-
-    const clienteId =
-        document.getElementById(
-            "clienteVenta"
-        ).value || null;
-
-
-    const efectivo =
-        metodo === "efectivo"
-
-        ?
-
-        Number(
-            document.getElementById(
-                "efectivoRecibido"
-            ).value || 0
-        )
-
-        :
-
-        0;
-
-
-    if(
-        metodo === "efectivo" &&
-        efectivo < total
-    ){
-
-        alert(
-            "El efectivo recibido es menor al total."
-        );
-
-        return;
-
-    }
-
-
-    /* ==========================================
-       CLIP
-    ========================================== */
-
-    if(metodo === "tarjeta"){
-
-        abrirClip(total);
-
-        return;
-
-    }
-
-
-    await guardarVentaFinal(
-        metodo,
-        efectivo
-    );
-
-}
-
-
-/* =========================================================
-   CLIP TOTAL 2
-========================================================= */
-
-function abrirClip(total){
-
-    ventaPendienteClip = {
-        total:total
-    };
-
-
-    document.getElementById(
-        "clipMonto"
-    ).textContent =
-        moneda(total);
-
-
-    document.getElementById(
-        "clipMontoExito"
-    ).textContent =
-        moneda(total);
-
-
-    document.getElementById(
-        "clipEsperando"
-    ).style.display =
-        "block";
-
-
-    document.getElementById(
-        "clipExito"
-    ).style.display =
-        "none";
-
-
-    document.getElementById(
-        "modalClip"
-    ).classList.add("show");
-
-}
-
-
-function aprobarClipPrueba(){
-
-    if(!ventaPendienteClip)
-        return;
-
-
-    document.getElementById(
-        "clipEsperando"
-    ).style.display =
-        "none";
-
-
-    document.getElementById(
-        "clipExito"
-    ).style.display =
-        "block";
-
-}
-
-
-async function finalizarPagoClip(){
-
-    if(!ventaPendienteClip)
-        return;
-
-
-    cerrarClip();
-
-
-    await guardarVentaFinal(
-        "tarjeta",
-        0
-    );
-
-
-    ventaPendienteClip = null;
-
-}
-
-
-function cerrarClip(){
-
-    document.getElementById(
-        "modalClip"
-    ).classList.remove("show");
-
-}
-
-
-/* =========================================================
-   GUARDAR VENTA
-========================================================= */
-
-async function guardarVentaFinal(
-    metodo,
-    efectivo
-){
-
-    const total =
-        totalCarrito();
-
-
-    const clienteId =
-        document.getElementById(
-            "clienteVenta"
-        ).value || null;
-
-
-    const cambio =
-        metodo === "efectivo"
-        ? efectivo - total
-        : 0;
-
-
-    try{
-
-        for(const item of carrito){
-
-            const producto =
-                productos.find(
-                    p =>
-                        String(p.id) ===
-                        String(item.producto_id)
-                );
-
-
-            if(!producto){
-
-                throw new Error(
-                    "Uno de los productos ya no existe."
-                );
-
-            }
-
-
-            if(
-                Number(producto.stock) <
-                item.cantidad
-            ){
-
-                throw new Error(
-                    `Stock insuficiente para ${producto.modelo}.`
-                );
-
-            }
-
-        }
-
-
-        const folio =
-            await generarFolio();
-
-
-        const puntos =
-            clienteId
-            ? Math.floor(total)
-            : 0;
-
-
-        const {
-            data:venta,
-            error:ventaError
-        } =
-            await supabaseClient
-                .from("ventas")
-                .insert({
-
-                    folio:folio,
-
-                    total:total,
-
-                    metodo_pago:metodo,
-
-                    cliente_id:clienteId,
-
-                    efectivo_recibido:
-                        efectivo,
-
-                    cambio:cambio,
-
-                    puntos_ganados:
-                        puntos
-
-                })
-                .select()
-                .single();
-
-
-        if(ventaError)
-            throw ventaError;
-
-
-        const detalles =
-            carrito.map(
-                item => ({
-
-                    venta_id:
-                        venta.id,
-
-                    producto_id:
-                        item.producto_id,
-
-                    producto_nombre:
-                        item.producto_nombre,
-
-                    talla:
-                        item.talla,
-
-                    cantidad:
-                        item.cantidad,
-
-                    precio_unitario:
-                        item.precio_unitario,
-
-                    subtotal:
-                        item.cantidad *
-                        item.precio_unitario
-
-                })
-            );
-
-
-        const {
-            error:detalleError
-        } =
-            await supabaseClient
-                .from("venta_detalles")
-                .insert(detalles);
-
-
-        if(detalleError)
-            throw detalleError;
-
-
-        for(const item of carrito){
-
-            const producto =
-                productos.find(
-                    p =>
-                        String(p.id) ===
-                        String(item.producto_id)
-                );
-
-
-            const nuevoStock =
-                Number(producto.stock) -
-                Number(item.cantidad);
-
-
-            const {error} =
-                await supabaseClient
-                    .from("productos")
-                    .update({
-                        stock:nuevoStock
-                    })
-                    .eq(
-                        "id",
-                        item.producto_id
-                    );
-
-
-            if(error) throw error;
-
-        }
-
-
-        if(clienteId){
-
-            const cliente =
-                clientes.find(
-                    c =>
-                        String(c.id) ===
-                        String(clienteId)
-                );
-
-
-            if(cliente){
-
-                const nuevosPuntos =
-                    Number(
-                        cliente.puntos || 0
-                    ) +
-                    puntos;
-
-
-                const {error} =
-                    await supabaseClient
-                        .from("clientes")
-                        .update({
-                            puntos:nuevosPuntos
-                        })
-                        .eq(
-                            "id",
-                            clienteId
-                        );
-
-
-                if(error) throw error;
-
-            }
-
-        }
-
-
-        prepararTicket(
-            venta,
-            metodo,
-            efectivo,
-            cambio
-        );
-
-
-        carrito = [];
-
-
-        document.getElementById(
-            "efectivoRecibido"
-        ).value = "";
-
-
-        document.getElementById(
-            "clienteVenta"
-        ).value = "";
-
-
-        document.getElementById(
-            "metodoPago"
-        ).value =
-            "efectivo";
-
-
-        mostrarEfectivo();
-
-
-        renderCarrito();
-
-
-        await cargarTodo();
-
-
-        imprimirTicket();
-
-
-    }catch(error){
-
-        console.error(error);
-
-        alert(
-            "No se pudo registrar la venta:\n\n" +
-            error.message
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   FOLIO
-========================================================= */
-
-async function generarFolio(){
-
-    const {
-        count,
-        error
-    } =
-        await supabaseClient
-            .from("ventas")
-            .select(
-                "id",
-                {
-                    count:"exact",
-                    head:true
-                }
-            );
-
-
-    if(error) throw error;
-
-
-    const numero =
-        Number(count || 0) + 1;
-
-
-    return "NN-" +
-        String(numero)
-            .padStart(6,"0");
-
-}
-
-
-/* =========================================================
-   CLIENTES
-========================================================= */
-
-function abrirCliente(){
-
-    document.getElementById(
-        "modalCliente"
-    ).classList.add("show");
-
-}
-
-
-function cerrarCliente(){
-
-    document.getElementById(
-        "modalCliente"
-    ).classList.remove("show");
-
-}
-
-
-async function guardarCliente(event){
-
-    event.preventDefault();
-
-
-    try{
-
-        const datos = {
-
-            nombre:
-                document.getElementById(
-                    "clienteNombre"
-                ).value.trim(),
-
-            telefono:
-                document.getElementById(
-                    "clienteTelefono"
-                ).value.trim() ||
-                null,
-
-            codigo_tarjeta:
-                document.getElementById(
-                    "clienteTarjeta"
-                ).value.trim() ||
-                null,
-
-            puntos:0
-
-        };
-
-
-        const {error} =
-            await supabaseClient
-                .from("clientes")
-                .insert(datos);
-
-
-        if(error) throw error;
-
-
-        event.target.reset();
-
-        cerrarCliente();
-
-        await cargarTodo();
-
-
-    }catch(error){
-
-        alert(
-            "No se pudo guardar el cliente:\n\n" +
-            error.message
-        );
-
-    }
-
-}
-
-
-function renderClientes(){
-
-    const contenedor =
-        document.getElementById(
-            "tablaClientes"
-        );
-
-
-    if(!contenedor) return;
-
-
-    const buscar =
-        (
-            document.getElementById(
-                "buscarCliente"
-            )?.value || ""
-        )
-        .toLowerCase()
-        .trim();
-
-
-    const filtrados =
-        clientes.filter(
-            c => {
-
-                const texto = [
-
-                    c.nombre,
-                    c.telefono,
-                    c.codigo_tarjeta
-
-                ]
-                .join(" ")
-                .toLowerCase();
-
-
-                return texto.includes(buscar);
-
-            }
-        );
-
-
-    if(!filtrados.length){
-
-        contenedor.innerHTML =
-            '<div class="empty">No hay clientes registrados.</div>';
-
-        return;
-
-    }
-
-
-    contenedor.innerHTML = `
-
-        <table class="table">
-
-            <thead>
-
-                <tr>
-
-                    <th>Nombre</th>
-
-                    <th>Teléfono</th>
-
-                    <th>Tarjeta</th>
-
-                    <th>Puntos</th>
-
-                </tr>
-
-            </thead>
-
-
-            <tbody>
-
-                ${filtrados.map(
-                    c => `
-
-                    <tr>
-
-                        <td>
-                            ${escapeHTML(c.nombre)}
-                        </td>
-
-                        <td>
-                            ${escapeHTML(
-                                c.telefono || "—"
-                            )}
-                        </td>
-
-                        <td>
-                            ${escapeHTML(
-                                c.codigo_tarjeta || "—"
-                            )}
-                        </td>
-
-                        <td>
-                            ⭐
-                            ${Number(
-                                c.puntos || 0
-                            )}
-                        </td>
-
-                    </tr>
-
-                `
-                ).join("")}
-
-            </tbody>
-
-        </table>
-
-    `;
-
-}
-
-
-/* =========================================================
-   REPORTES
-========================================================= */
-
-function renderReportes(){
-
-    const total =
-        ventas.reduce(
-            (sum,v) =>
-                sum +
-                Number(v.total || 0),
-            0
-        );
-
-
-    document.getElementById(
-        "reporteVentas"
-    ).textContent =
-        ventas.length;
-
-
-    document.getElementById(
-        "reporteIngresos"
-    ).textContent =
-        moneda(total);
-
-
-    const tabla =
-        document.getElementById(
-            "tablaReportes"
-        );
-
-
-    if(!ventas.length){
-
-        tabla.innerHTML =
-            '<div class="empty">No hay ventas registradas.</div>';
-
-        return;
-
-    }
-
-
-    tabla.innerHTML = `
-
-        <table class="table">
-
-            <thead>
-
-                <tr>
-
-                    <th>Folio</th>
-
-                    <th>Fecha</th>
-
-                    <th>Pago</th>
-
-                    <th>Total</th>
-
-                </tr>
-
-            </thead>
-
-
-            <tbody>
-
-                ${ventas.map(
-                    v => `
-
-                    <tr>
-
-                        <td>
-                            ${escapeHTML(v.folio)}
-                        </td>
-
-                        <td>
-                            ${fecha(v.fecha)}
-                        </td>
-
-                        <td>
-                            ${escapeHTML(
-                                metodoTexto(
-                                    v.metodo_pago
-                                )
-                            )}
-                        </td>
-
-                        <td>
-                            ${moneda(v.total)}
-                        </td>
-
-                    </tr>
-
-                `
-                ).join("")}
-
-            </tbody>
-
-        </table>
-
-    `;
-
-}
-
-
-/* =========================================================
-   TICKET
-========================================================= */
-
-function prepararTicket(
-    venta,
-    metodo,
-    efectivo,
-    cambio
-){
-
-    document.getElementById(
-        "ticketFolio"
-    ).textContent =
-        venta.folio;
-
-
-    document.getElementById(
-        "ticketFecha"
-    ).textContent =
-        fecha(venta.fecha);
-
-
-    document.getElementById(
-        "ticketTotal"
-    ).textContent =
-        moneda(venta.total);
-
-
-    document.getElementById(
-        "ticketPago"
-    ).textContent =
-        metodoTexto(metodo);
-
-
-    document.getElementById(
-        "ticketCambio"
-    ).textContent =
-        metodo === "efectivo"
-        ? "Cambio: " + moneda(cambio)
-        : "";
-
-
-    document.getElementById(
-        "ticketProductos"
-    ).innerHTML =
-
-        carrito.map(
-            item => `
-
-            <div
-                style="
-                    display:flex;
-                    justify-content:space-between;
-                    margin:7px 0;
-                "
-            >
-
-                <span>
-
-                    ${item.cantidad} x
-                    ${escapeHTML(
-                        item.producto_nombre
-                    )}
-
-                    <br>
-
-                    Talla
-                    ${escapeHTML(
-                        item.talla || ""
-                    )}
-
-                </span>
-
-
-                <span>
-
-                    ${moneda(
-                        item.cantidad *
-                        item.precio_unitario
-                    )}
-
-                </span>
-
-            </div>
-
-        `
-        ).join("");
-
-}
-
-
-function imprimirTicket(){
-
-    window.print();
-
-}
-
-
-/* =========================================================
-   UTILIDADES
-========================================================= */
-
-function moneda(valor){
-
-    return Number(
-        valor || 0
-    ).toLocaleString(
-        "es-MX",
-        {
-            style:"currency",
-            currency:"MXN"
-        }
-    );
-
-}
-
-
-function fecha(valor){
-
-    return new Date(
-        valor
-    ).toLocaleString(
-        "es-MX",
-        {
-            dateStyle:"short",
-            timeStyle:"short"
-        }
-    );
-
-}
-
-
-function metodoTexto(metodo){
-
-    const nombres = {
-
-        efectivo:"Efectivo",
-
-        transferencia:
-            "Transferencia",
-
-        tarjeta:
-            "Tarjeta / Clip Total 2"
-
-    };
-
-
-    return nombres[metodo] ||
-        metodo;
-
-}
-
-
-function escapeHTML(text){
-
-    return String(
-        text ?? ""
-    )
-    .replace(
-        /&/g,
-        "&amp;"
-    )
-    .replace(
-        /</g,
-        "&lt;"
-    )
-    .replace(
-        />/g,
-        "&gt;"
-    )
-    .replace(
-        /"/g,
-        "&quot;"
-    )
-    .replace(
-        /'/g,
-        "&#039;"
-    );
-
-}
-
-
-function escapeAttribute(text){
-
-    return escapeHTML(text);
-
-}
-
-
-function mostrarAlerta(texto){
-
-    const alerta =
-        document.getElementById(
-            "alerta"
-        );
-
-
-    alerta.textContent =
-        texto;
-
-
-    alerta.style.display =
-        "block";
-
-}
-
-
-function ocultarAlerta(){
-
-    document.getElementById(
-        "alerta"
-    ).style.display =
-        "none";
-
-}
-
-</script>
-
-</body>
-</html>
