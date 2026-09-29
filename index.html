@@ -156,5 +156,612 @@
 
 </main>
 
+    <!-- =========================
+     NAT.NATION POS - SISTEMA
+     ========================= -->
+
+<style>
+.nn-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+}
+
+.nn-modal-box {
+  background: white;
+  width: min(700px, 95vw);
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 18px;
+  padding: 25px;
+  box-shadow: 0 15px 50px rgba(0,0,0,.3);
+}
+
+.nn-modal h2 {
+  margin-top: 0;
+  color: #222;
+}
+
+.nn-form {
+  display: grid;
+  gap: 12px;
+}
+
+.nn-form input,
+.nn-form select {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.nn-btn {
+  border: 0;
+  border-radius: 10px;
+  padding: 12px 18px;
+  cursor: pointer;
+  font-weight: bold;
+  margin: 4px;
+}
+
+.nn-primary {
+  background: #e91e63;
+  color: white;
+}
+
+.nn-dark {
+  background: #222;
+  color: white;
+}
+
+.nn-light {
+  background: #eee;
+  color: #222;
+}
+
+.nn-item {
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 12px;
+  margin: 8px 0;
+}
+
+.nn-total {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 15px 0;
+}
+
+.nn-close {
+  float: right;
+  cursor: pointer;
+  font-size: 24px;
+}
+</style>
+
+<!-- MODAL PRINCIPAL -->
+<div id="nnModal" class="nn-modal">
+  <div class="nn-modal-box">
+    <span class="nn-close" onclick="nnCerrar()">×</span>
+    <div id="nnContenido"></div>
+  </div>
+</div>
+
+<script>
+/* =========================
+   DATOS DEL POS
+   ========================= */
+
+let inventario = JSON.parse(localStorage.getItem("nn_inventario") || "[]");
+let clientes = JSON.parse(localStorage.getItem("nn_clientes") || "[]");
+let ventas = JSON.parse(localStorage.getItem("nn_ventas") || "[]");
+let carrito = [];
+
+
+/* =========================
+   FUNCIONES GENERALES
+   ========================= */
+
+function nnGuardar() {
+  localStorage.setItem("nn_inventario", JSON.stringify(inventario));
+  localStorage.setItem("nn_clientes", JSON.stringify(clientes));
+  localStorage.setItem("nn_ventas", JSON.stringify(ventas));
+}
+
+function nnAbrir(html) {
+  document.getElementById("nnContenido").innerHTML = html;
+  document.getElementById("nnModal").style.display = "flex";
+}
+
+function nnCerrar() {
+  document.getElementById("nnModal").style.display = "none";
+}
+
+
+/* =========================
+   NUEVA VENTA
+   ========================= */
+
+function nuevaVenta() {
+
+  carrito = [];
+
+  let opciones = inventario.map((p, i) =>
+    `<option value="${i}">
+      ${p.modelo} | Talla ${p.talla} | $${p.precio} | Stock: ${p.stock}
+    </option>`
+  ).join("");
+
+  if (!opciones) {
+    opciones = `<option value="">Primero agrega productos al inventario</option>`;
+  }
+
+  nnAbrir(`
+    <h2>🛒 Nueva venta</h2>
+
+    <div class="nn-form">
+
+      <label>Producto</label>
+
+      <select id="nnProducto">
+        ${opciones}
+      </select>
+
+      <button class="nn-btn nn-primary"
+        onclick="nnAgregarProducto()">
+        Agregar al carrito
+      </button>
+
+      <div id="nnCarrito"></div>
+
+      <div class="nn-total">
+        Total: $<span id="nnTotal">0.00</span>
+      </div>
+
+      <label>Forma de pago</label>
+
+      <select id="nnPago">
+        <option value="Efectivo">💵 Efectivo</option>
+        <option value="Transferencia">🏦 Transferencia</option>
+        <option value="Tarjeta">💳 Tarjeta</option>
+      </select>
+
+      <label>Cliente (opcional)</label>
+
+      <select id="nnCliente">
+        <option value="">Venta sin cliente</option>
+        ${clientes.map((c,i) =>
+          `<option value="${i}">${c.nombre} - ${c.telefono}</option>`
+        ).join("")}
+      </select>
+
+      <button class="nn-btn nn-primary"
+        onclick="nnFinalizarVenta()">
+        💰 Finalizar venta
+      </button>
+
+    </div>
+  `);
+}
+
+function nnAgregarProducto() {
+
+  const i = document.getElementById("nnProducto").value;
+
+  if (i === "" || !inventario[i]) {
+    alert("Selecciona un producto.");
+    return;
+  }
+
+  const producto = inventario[i];
+
+  if (producto.stock <= 0) {
+    alert("Este producto no tiene existencias.");
+    return;
+  }
+
+  carrito.push({
+    inventarioIndex: Number(i),
+    modelo: producto.modelo,
+    talla: producto.talla,
+    precio: Number(producto.precio)
+  });
+
+  nnMostrarCarrito();
+}
+
+function nnMostrarCarrito() {
+
+  const contenedor = document.getElementById("nnCarrito");
+
+  if (!carrito.length) {
+    contenedor.innerHTML = "<p>Carrito vacío.</p>";
+    document.getElementById("nnTotal").textContent = "0.00";
+    return;
+  }
+
+  let total = carrito.reduce((s,p) => s + p.precio, 0);
+
+  contenedor.innerHTML = carrito.map((p,i) => `
+    <div class="nn-item">
+      <strong>${p.modelo}</strong><br>
+      Talla: ${p.talla}<br>
+      $${p.precio.toFixed(2)}
+
+      <button class="nn-btn nn-light"
+        onclick="nnEliminarCarrito(${i})">
+        Quitar
+      </button>
+    </div>
+  `).join("");
+
+  document.getElementById("nnTotal").textContent =
+    total.toFixed(2);
+}
+
+function nnEliminarCarrito(i) {
+  carrito.splice(i,1);
+  nnMostrarCarrito();
+}
+
+
+/* =========================
+   FINALIZAR VENTA
+   ========================= */
+
+function nnFinalizarVenta() {
+
+  if (!carrito.length) {
+    alert("Agrega al menos un producto.");
+    return;
+  }
+
+  const pago = document.getElementById("nnPago").value;
+  const clienteIndex = document.getElementById("nnCliente").value;
+
+  const total = carrito.reduce((s,p) => s + p.precio, 0);
+
+  /* descontar inventario */
+  carrito.forEach(p => {
+    if (inventario[p.inventarioIndex]) {
+      inventario[p.inventarioIndex].stock--;
+    }
+  });
+
+  /* puntos: 1 punto por cada $10 */
+  let puntosGanados = Math.floor(total / 10);
+
+  if (clienteIndex !== "") {
+    clientes[clienteIndex].puntos =
+      Number(clientes[clienteIndex].puntos || 0) + puntosGanados;
+  }
+
+  const venta = {
+    id: Date.now(),
+    fecha: new Date().toLocaleString("es-MX"),
+    productos: carrito,
+    total: total,
+    pago: pago,
+    cliente: clienteIndex !== ""
+      ? clientes[clienteIndex].nombre
+      : "Público general",
+    puntos: puntosGanados
+  };
+
+  ventas.push(venta);
+
+  nnGuardar();
+
+  alert(
+    "¡Venta registrada!\\n\\n" +
+    "Total: $" + total.toFixed(2) +
+    "\\nPago: " + pago +
+    "\\nPuntos: +" + puntosGanados
+  );
+
+  carrito = [];
+  nnCerrar();
+}
+
+
+/* =========================
+   INVENTARIO
+   ========================= */
+
+function mostrarInventario() {
+
+  nnAbrir(`
+    <h2>📦 Inventario</h2>
+
+    <button class="nn-btn nn-primary"
+      onclick="nnAgregarInventario()">
+      + Agregar producto
+    </button>
+
+    <div id="nnListaInventario"></div>
+  `);
+
+  nnListaInventario();
+}
+
+function nnListaInventario() {
+
+  const lista = document.getElementById("nnListaInventario");
+
+  if (!inventario.length) {
+    lista.innerHTML = "<p>No hay productos registrados.</p>";
+    return;
+  }
+
+  lista.innerHTML = inventario.map((p,i) => `
+    <div class="nn-item">
+      <strong>${p.modelo}</strong><br>
+      Talla: ${p.talla}<br>
+      Precio: $${Number(p.precio).toFixed(2)}<br>
+      Existencias: <strong>${p.stock}</strong>
+
+      <br>
+
+      <button class="nn-btn nn-light"
+        onclick="nnEliminarInventario(${i})">
+        Eliminar
+      </button>
+    </div>
+  `).join("");
+}
+
+function nnAgregarInventario() {
+
+  nnAbrir(`
+    <h2>➕ Agregar producto</h2>
+
+    <div class="nn-form">
+
+      <input id="nnModelo"
+        placeholder="Modelo del tenis">
+
+      <input id="nnTalla"
+        placeholder="Talla">
+
+      <input id="nnPrecio"
+        type="number"
+        placeholder="Precio de venta">
+
+      <input id="nnStock"
+        type="number"
+        placeholder="Existencias">
+
+      <button class="nn-btn nn-primary"
+        onclick="nnGuardarProducto()">
+        Guardar producto
+      </button>
+
+    </div>
+  `);
+}
+
+function nnGuardarProducto() {
+
+  const modelo = document.getElementById("nnModelo").value.trim();
+  const talla = document.getElementById("nnTalla").value.trim();
+  const precio = Number(document.getElementById("nnPrecio").value);
+  const stock = Number(document.getElementById("nnStock").value);
+
+  if (!modelo || !talla || !precio || stock < 0) {
+    alert("Completa correctamente todos los campos.");
+    return;
+  }
+
+  inventario.push({
+    id: Date.now(),
+    modelo,
+    talla,
+    precio,
+    stock
+  });
+
+  nnGuardar();
+
+  alert("Producto agregado correctamente.");
+
+  mostrarInventario();
+}
+
+function nnEliminarInventario(i) {
+
+  if (!confirm("¿Eliminar este producto?")) return;
+
+  inventario.splice(i,1);
+  nnGuardar();
+  nnListaInventario();
+}
+
+
+/* =========================
+   CLIENTES
+   ========================= */
+
+function mostrarClientes() {
+
+  nnAbrir(`
+    <h2>👤 Clientes</h2>
+
+    <button class="nn-btn nn-primary"
+      onclick="nnAgregarCliente()">
+      + Nuevo cliente
+    </button>
+
+    <div id="nnListaClientes"></div>
+  `);
+
+  nnListaClientes();
+}
+
+function nnListaClientes() {
+
+  const lista = document.getElementById("nnListaClientes");
+
+  if (!clientes.length) {
+    lista.innerHTML = "<p>No hay clientes registrados.</p>";
+    return;
+  }
+
+  lista.innerHTML = clientes.map(c => `
+    <div class="nn-item">
+      <strong>${c.nombre}</strong><br>
+      Teléfono: ${c.telefono}<br>
+      Puntos: ⭐ <strong>${c.puntos || 0}</strong>
+    </div>
+  `).join("");
+}
+
+function nnAgregarCliente() {
+
+  nnAbrir(`
+    <h2>👤 Nuevo cliente</h2>
+
+    <div class="nn-form">
+
+      <input id="nnClienteNombre"
+        placeholder="Nombre completo">
+
+      <input id="nnClienteTelefono"
+        placeholder="Teléfono">
+
+      <button class="nn-btn nn-primary"
+        onclick="nnGuardarCliente()">
+        Guardar cliente
+      </button>
+
+    </div>
+  `);
+}
+
+function nnGuardarCliente() {
+
+  const nombre =
+    document.getElementById("nnClienteNombre").value.trim();
+
+  const telefono =
+    document.getElementById("nnClienteTelefono").value.trim();
+
+  if (!nombre || !telefono) {
+    alert("Escribe nombre y teléfono.");
+    return;
+  }
+
+  clientes.push({
+    id: Date.now(),
+    nombre,
+    telefono,
+    puntos: 0
+  });
+
+  nnGuardar();
+
+  alert("Cliente registrado.");
+
+  mostrarClientes();
+}
+
+
+/* =========================
+   REPORTES
+   ========================= */
+
+function mostrarReportes() {
+
+  const totalVentas =
+    ventas.reduce((s,v) => s + Number(v.total), 0);
+
+  const efectivo =
+    ventas.filter(v => v.pago === "Efectivo")
+    .reduce((s,v) => s + Number(v.total), 0);
+
+  const transferencia =
+    ventas.filter(v => v.pago === "Transferencia")
+    .reduce((s,v) => s + Number(v.total), 0);
+
+  const tarjeta =
+    ventas.filter(v => v.pago === "Tarjeta")
+    .reduce((s,v) => s + Number(v.total), 0);
+
+  nnAbrir(`
+    <h2>📊 Reportes</h2>
+
+    <div class="nn-item">
+      Ventas realizadas:
+      <strong>${ventas.length}</strong>
+    </div>
+
+    <div class="nn-item">
+      Ventas totales:
+      <strong>$${totalVentas.toFixed(2)}</strong>
+    </div>
+
+    <div class="nn-item">
+      💵 Efectivo:
+      <strong>$${efectivo.toFixed(2)}</strong>
+    </div>
+
+    <div class="nn-item">
+      🏦 Transferencias:
+      <strong>$${transferencia.toFixed(2)}</strong>
+    </div>
+
+    <div class="nn-item">
+      💳 Tarjeta:
+      <strong>$${tarjeta.toFixed(2)}</strong>
+    </div>
+  `);
+}
+
+
+/* =========================
+   CONECTAR BOTONES ACTUALES
+   ========================= */
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    const botones = document.querySelectorAll("button");
+
+    botones.forEach(btn => {
+
+        const texto = btn.innerText.trim().toLowerCase();
+
+        if (texto.includes("nueva venta")) {
+            btn.onclick = function() {
+                nuevaVenta();
+            };
+        }
+
+        if (texto === "inventario") {
+            btn.onclick = function() {
+                mostrarInventario();
+            };
+        }
+
+        if (texto === "clientes") {
+            btn.onclick = function() {
+                mostrarClientes();
+            };
+        }
+
+        if (texto === "reportes") {
+            btn.onclick = function() {
+                mostrarReportes();
+            };
+        }
+
+    });
+
+});
+
+</script>
 </body>
 </html>
