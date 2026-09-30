@@ -1,0 +1,11 @@
+{
+  "name": "Nat.Nation Sneakers",
+  "short_name": "Nat.Nation",
+  "description": "Sistema de ventas de Nat.Nation Sneakers",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "landscape",
+  "background_color": "#ffffff",
+  "theme_color": "#d81b73"
+}
