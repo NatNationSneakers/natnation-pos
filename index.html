@@ -4553,98 +4553,52 @@ function imprimirTicket(){
 
 async function restaurarDatosPrueba(){
 
-    const confirmar = confirm(
+    const confirmar =
+    confirm(
         "⚠️ ATENCIÓN\n\n" +
+
         "Esta acción eliminará TODAS las ventas y tickets " +
         "registrados actualmente.\n\n" +
+
         "También devolverá al inventario los productos " +
-        "vendidos y revertirá los puntos generados.\n\n" +
+        "vendidos en esas ventas y revertirá los puntos " +
+        "generados.\n\n" +
+
         "Tus productos, clientes y logo NO serán eliminados.\n\n" +
+
         "¿Quieres continuar?"
     );
 
+
     if(!confirmar){
+
         return;
+
     }
 
 
-    const confirmar2 = confirm(
+    const confirmar2 =
+    confirm(
         "ÚLTIMA CONFIRMACIÓN\n\n" +
-        "¿Seguro que quieres borrar todas las ventas de prueba?"
+
+        "¿Seguro que quieres borrar todas las ventas " +
+        "de prueba?"
     );
 
+
     if(!confirmar2){
+
         return;
+
     }
 
 
     try{
 
         mostrarAlerta(
-            "🟡 Restaurando datos de prueba..."
+            "Restaurando datos de prueba..."
         );
 
-
-        const { error } =
-            await supabaseClient.rpc(
-                "restaurar_datos_prueba"
-            );
-
-
-        if(error){
-            throw error;
-        }
-
-
-        /* LIMPIAR CARRITO */
-        carrito = [];
-
-
-        /* RECARGAR PRODUCTOS, CLIENTES Y VENTAS */
-        await cargarTodo();
-
-
-        renderCarrito();
-
-
-        mostrarSeccion("inicio");
-
-
-        ocultarAlerta();
-
-
-        alert(
-            "✅ Sistema restaurado correctamente.\n\n" +
-            "• Ventas eliminadas\n" +
-            "• Tickets eliminados\n" +
-            "• Stock restaurado\n" +
-            "• Puntos revertidos\n\n" +
-            "Productos, clientes y logo permanecen intactos."
-        );
-
-
-    }catch(error){
-
-        console.error(
-            "ERROR AL RESTAURAR:",
-            error
-        );
-
-
-        ocultarAlerta();
-
-
-        alert(
-            "❌ No se pudo restaurar el sistema.\n\n" +
-            "Error:\n" +
-            error.message
-        );
-
-    }
-
-}
-
-   
 
         /* =====================================================
            1. OBTENER TODAS LAS VENTAS
