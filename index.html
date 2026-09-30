@@ -950,6 +950,14 @@ h2{
                 placeholder="Buscar producto..."
                 oninput="renderProductosVenta()">
 
+            <button
+                type="button"
+                class="btn btn-primary"
+                style="width:100%;margin-top:12px"
+                onclick="abrirCobroManual()">
+                💰 Cobro manual
+            </button>
+
             <div
                 id="productosVenta"
                 class="products-grid"
@@ -1069,6 +1077,80 @@ h2{
     </div>
 
 </section>
+
+
+<!-- =====================================================
+     COBRO MANUAL
+===================================================== -->
+
+<div
+    id="cobroManualModal"
+    style="
+        display:none;
+        position:fixed;
+        inset:0;
+        z-index:100000;
+        background:rgba(0,0,0,.65);
+        align-items:center;
+        justify-content:center;
+        padding:20px;
+        box-sizing:border-box;
+    "
+>
+    <div
+        style="
+            width:min(430px,100%);
+            background:#fff;
+            border-radius:22px;
+            padding:24px;
+            box-sizing:border-box;
+            box-shadow:0 20px 60px rgba(0,0,0,.35);
+        "
+    >
+        <h2 style="margin:0 0 6px">💰 Cobro manual</h2>
+        <p style="margin:0 0 20px;color:#666">
+            Cobra una cantidad aunque no tengas un producto registrado.
+        </p>
+
+        <div class="field">
+            <label>Cantidad a cobrar</label>
+            <input
+                id="cobroManualMonto"
+                type="number"
+                min="0.01"
+                step="0.01"
+                inputmode="decimal"
+                placeholder="0.00"
+            >
+        </div>
+
+        <div class="field" style="margin-top:14px">
+            <label>Concepto</label>
+            <input
+                id="cobroManualConcepto"
+                type="text"
+                maxlength="80"
+                placeholder="Ej. Apartado, servicio, accesorio..."
+            >
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px">
+            <button
+                type="button"
+                class="btn"
+                style="background:#eee;color:#222"
+                onclick="cerrarCobroManual()">
+                Cancelar
+            </button>
+            <button
+                type="button"
+                class="btn btn-primary"
+                onclick="agregarCobroManual()">
+                Agregar cobro
+            </button>
+        </div>
+    </div>
+</div>
 
 
 <!-- =====================================================
@@ -3384,64 +3466,63 @@ function renderCarrito(){
         "carrito"
     );
 
-
     if(!contenedor){
-
         return;
-
     }
-
 
     if(!carrito.length){
 
         contenedor.innerHTML =
         '<div class="empty">El carrito está vacío.</div>';
 
-
-        document.getElementById(
-            "totalVenta"
-        ).textContent =
-        "$0.00";
-
+        const total = document.getElementById("totalVenta");
+        if(total) total.textContent = "$0.00";
 
         calcularCambio();
-
         return;
-
     }
 
-
     contenedor.innerHTML =
-
     carrito.map(function(item){
 
+        if(item.es_cobro){
+
+            return `
+            <div class="cart-item">
+                <div>
+                    <strong>💰 ${escapeHTML(item.producto_nombre || "Cobro manual")}</strong>
+                    <div style="color:#777;font-size:13px;margin-top:4px">Cobro manual</div>
+                </div>
+
+                <div style="display:flex;align-items:center;gap:10px">
+                    <strong>${moneda(item.precio_unitario)}</strong>
+                    <button
+                        class="btn btn-danger"
+                        onclick="quitarCobroManual()">
+                        ×
+                    </button>
+                </div>
+            </div>
+            `;
+        }
+
         return `
-
         <div class="cart-item">
-
             <div>
-
                 <strong>
-                    ${escapeHTML(
-                        item.producto_nombre
-                    )}
+                    ${escapeHTML(item.producto_nombre)}
                 </strong>
 
                 <div>
                     Talla
-                    ${escapeHTML(
-                        item.talla || ""
-                    )}
+                    ${escapeHTML(item.talla || "")}
                 </div>
 
                 <div>
-                    ${moneda(
-                        item.precio_unitario
-                    )}
+                    ${moneda(item.precio_unitario)}
                 </div>
 
             </div>
-
 
             <div class="qty">
 
@@ -3450,55 +3531,123 @@ function renderCarrito(){
                         '${item.producto_id}',
                         ${item.cantidad - 1}
                     )">
-
                     −
-
                 </button>
-
 
                 <strong>
                     ${item.cantidad}
                 </strong>
-
 
                 <button
                     onclick="cambiarCantidad(
                         '${item.producto_id}',
                         ${item.cantidad + 1}
                     )">
-
                     +
-
                 </button>
-
 
                 <button
                     class="btn btn-danger"
                     onclick="quitarCarrito(
                         '${item.producto_id}'
                     )">
-
                     ×
-
                 </button>
 
             </div>
-
         </div>
-
         `;
 
     }).join("");
 
-
-    document.getElementById(
-        "totalVenta"
-    ).textContent =
-    moneda(totalCarrito());
-
+    const totalElemento = document.getElementById("totalVenta");
+    if(totalElemento){
+        totalElemento.textContent = moneda(totalCarrito());
+    }
 
     calcularCambio();
+}
 
+
+/* =====================================================
+   COBRO MANUAL
+===================================================== */
+
+function abrirCobroManual(){
+
+    const modal = document.getElementById("cobroManualModal");
+    const monto = document.getElementById("cobroManualMonto");
+    const concepto = document.getElementById("cobroManualConcepto");
+
+    if(!modal) return;
+
+    if(monto) monto.value = "";
+    if(concepto) concepto.value = "";
+
+    modal.style.display = "flex";
+
+    setTimeout(function(){
+        if(monto) monto.focus();
+    },100);
+}
+
+
+function cerrarCobroManual(){
+
+    const modal = document.getElementById("cobroManualModal");
+
+    if(modal){
+        modal.style.display = "none";
+    }
+}
+
+
+function agregarCobroManual(){
+
+    const monto = Number(
+        document.getElementById("cobroManualMonto")?.value || 0
+    );
+
+    const concepto = (
+        document.getElementById("cobroManualConcepto")?.value ||
+        "Cobro manual"
+    ).trim();
+
+    if(!Number.isFinite(monto) || monto <= 0){
+        alert("Escribe una cantidad válida para cobrar.");
+        return;
+    }
+
+    const existente = carrito.find(function(item){
+        return item.es_cobro === true;
+    });
+
+    if(existente){
+        existente.precio_unitario = monto;
+        existente.producto_nombre = concepto || "Cobro manual";
+    }else{
+        carrito.push({
+            producto_id:null,
+            producto_nombre:concepto || "Cobro manual",
+            talla:"",
+            cantidad:1,
+            precio_unitario:monto,
+            es_cobro:true
+        });
+    }
+
+    cerrarCobroManual();
+    renderCarrito();
+}
+
+
+function quitarCobroManual(){
+
+    carrito = carrito.filter(function(item){
+        return item.es_cobro !== true;
+    });
+
+    renderCarrito();
 }
 
 
@@ -3613,343 +3762,300 @@ function cargarClientesVenta(){
 async function registrarVenta(){
 
     if(!carrito.length){
-
-        alert(
-            "Agrega productos al carrito."
-        );
-
+        alert("Agrega productos o un cobro manual al carrito.");
         return;
-
     }
-
 
     const metodo =
-    document.getElementById(
-        "metodoPago"
-    ).value;
+    document.getElementById("metodoPago").value;
 
-
-    const total =
-    totalCarrito();
-
+    const total = totalCarrito();
 
     const clienteId =
-    document.getElementById(
-        "clienteVenta"
-    ).value ||
-    null;
-
+    document.getElementById("clienteVenta").value || null;
 
     const efectivo =
-
     metodo === "efectivo"
+    ? Number(document.getElementById("efectivoRecibido").value || 0)
+    : 0;
 
-    ?
-
-    Number(
-        document.getElementById(
-            "efectivoRecibido"
-        ).value ||
-        0
-    )
-
-    :
-
-    0;
-
-
-    if(
-        metodo === "efectivo" &&
-        efectivo < total
-    ){
-
-        alert(
-            "El efectivo recibido es menor al total."
-        );
-
+    if(metodo === "efectivo" && efectivo < total){
+        alert("El efectivo recibido es menor al total.");
         return;
-
     }
 
-
     const cambio =
-
-    metodo === "efectivo"
-
-    ?
-
-    efectivo - total
-
-    :
-
-    0;
-
+    metodo === "efectivo" ? efectivo - total : 0;
 
     try{
 
+        /* =====================================================
+           VALIDAR PRODUCTOS
+        ===================================================== */
 
-        for(
-            const item of carrito
-        ){
+        for(const item of carrito){
+
+            if(item.es_cobro){
+                continue;
+            }
 
             const producto =
             productos.find(function(p){
-
-                return p.id ===
-                item.producto_id;
-
+                return p.id === item.producto_id;
             });
 
-
             if(!producto){
-
-                throw new Error(
-                    "Uno de los productos ya no existe."
-                );
-
+                throw new Error("Uno de los productos ya no existe.");
             }
 
-
-            if(
-                Number(producto.stock) <
-                item.cantidad
-            ){
-
+            if(Number(producto.stock) < item.cantidad){
                 throw new Error(
-                    "Stock insuficiente para " +
-                    producto.modelo
+                    "Stock insuficiente para " + producto.modelo
                 );
-
             }
-
         }
 
+        /* =====================================================
+           TARJETA / CLIP
 
-        const folio =
-        await generarFolio();
+           IMPORTANTE: Safari/iPad no tiene acceso directo al
+           SDK Terminal de Clip. Si existe un puente nativo
+           llamado ClipPOSBridge, esperamos su resultado.
+           Sin aprobación NO se registra la venta.
+        ===================================================== */
 
+        const folio = await generarFolio();
+
+        if(metodo === "tarjeta"){
+
+            const aprobado = await iniciarPagoClip(total, folio);
+
+            if(!aprobado){
+                return;
+            }
+        }
 
         const puntos =
-    clienteId
-    ?
-    Math.floor(total / 10)
-    :
-    0;
-
-        /*
-         * ESTA PARTE CONSERVA EL MISMO
-         * FUNCIONAMIENTO DE TU CÓDIGO.
-         */
+        clienteId
+        ? Math.floor(total / 10)
+        : 0;
 
         const ventaDatos = {
-
             folio:folio,
-
             total:total,
-
             metodo_pago:metodo,
-
             cliente_id:clienteId,
-
             efectivo_recibido:efectivo,
-
             cambio:cambio,
-
             puntos_ganados:puntos
-
         };
-
 
         const resultadoVenta =
         await supabaseClient
             .from("ventas")
-            .insert(
-                ventaDatos
-            )
+            .insert(ventaDatos)
             .select()
             .single();
 
-
         if(resultadoVenta.error){
-
             throw resultadoVenta.error;
-
         }
 
+        const venta = resultadoVenta.data;
 
-        const venta =
-        resultadoVenta.data;
+        /* =====================================================
+           DETALLES DE PRODUCTOS
 
+           Los cobros manuales no se meten como producto porque
+           no existen en la tabla productos y no deben afectar
+           inventario. El total de la venta sí los incluye.
+        ===================================================== */
 
-        const detalles =
-        carrito.map(function(item){
+        const detalles = carrito
+            .filter(function(item){
+                return !item.es_cobro;
+            })
+            .map(function(item){
+                return {
+                    venta_id:venta.id,
+                    producto_id:item.producto_id,
+                    producto_nombre:item.producto_nombre,
+                    talla:item.talla,
+                    cantidad:item.cantidad,
+                    precio_unitario:item.precio_unitario,
+                    subtotal:item.cantidad * item.precio_unitario
+                };
+            });
 
-            return {
+        if(detalles.length){
 
-                venta_id:
-                venta.id,
+            const resultadoDetalles =
+            await supabaseClient
+                .from("venta_detalles")
+                .insert(detalles);
 
-                producto_id:
-                item.producto_id,
-
-                producto_nombre:
-                item.producto_nombre,
-
-                talla:
-                item.talla,
-
-                cantidad:
-                item.cantidad,
-
-                precio_unitario:
-                item.precio_unitario,
-
-                subtotal:
-                item.cantidad *
-                item.precio_unitario
-
-            };
-
-        });
-
-
-        const resultadoDetalles =
-        await supabaseClient
-            .from("venta_detalles")
-            .insert(detalles);
-
-
-        if(resultadoDetalles.error){
-
-            throw resultadoDetalles.error;
-
+            if(resultadoDetalles.error){
+                throw resultadoDetalles.error;
+            }
         }
 
+        /* =====================================================
+           ACTUALIZAR STOCK
+        ===================================================== */
 
-        /*
-         * ACTUALIZAR STOCK
-         */
+        for(const item of carrito){
 
-        for(
-            const item of carrito
-        ){
+            if(item.es_cobro){
+                continue;
+            }
 
             const producto =
             productos.find(function(p){
-
-                return p.id ===
-                item.producto_id;
-
+                return p.id === item.producto_id;
             });
 
-
             const nuevoStock =
-            Number(producto.stock) -
-            Number(item.cantidad);
-
+            Number(producto.stock) - Number(item.cantidad);
 
             const resultadoStock =
             await supabaseClient
                 .from("productos")
-                .update({
-                    stock:nuevoStock
-                })
-                .eq(
-                    "id",
-                    item.producto_id
-                );
-
+                .update({stock:nuevoStock})
+                .eq("id",item.producto_id);
 
             if(resultadoStock.error){
-
                 throw resultadoStock.error;
-
             }
-
         }
 
-
-        /*
-         * PUNTOS
-         */
+        /* =====================================================
+           PUNTOS
+        ===================================================== */
 
         if(clienteId){
 
             const cliente =
             clientes.find(function(c){
-
-                return c.id ===
-                clienteId;
-
+                return c.id === clienteId;
             });
-
 
             if(cliente){
 
                 const nuevosPuntos =
-                Number(cliente.puntos || 0) +
-                puntos;
-
+                Number(cliente.puntos || 0) + puntos;
 
                 const resultadoPuntos =
                 await supabaseClient
                     .from("clientes")
-                    .update({
-                        puntos:nuevosPuntos
-                    })
-                    .eq(
-                        "id",
-                        clienteId
-                    );
-
+                    .update({puntos:nuevosPuntos})
+                    .eq("id",clienteId);
 
                 if(resultadoPuntos.error){
-
                     throw resultadoPuntos.error;
-
                 }
-
             }
-
         }
 
-
-        prepararTicket(
-            venta,
-            metodo,
-            efectivo,
-            cambio
-        );
-
+        prepararTicket(venta,metodo,efectivo,cambio);
 
         carrito = [];
 
-
-        document.getElementById(
-            "efectivoRecibido"
-        ).value = "";
-
+        document.getElementById("efectivoRecibido").value = "";
 
         renderCarrito();
-
 
         await cargarTodo();
 
         await mostrarTicketPNG(venta);
 
-
     }catch(error){
 
         console.error(error);
-
 
         alert(
             "No se pudo registrar la venta:\n\n" +
             error.message
         );
+    }
+}
 
+
+/* =====================================================
+   INTEGRACIÓN CLIP TOTAL 2
+===================================================== */
+
+async function iniciarPagoClip(total,folio){
+
+    const monto = Number(total || 0);
+
+    if(!monto || monto <= 0){
+        alert("El monto a cobrar no es válido.");
+        return false;
     }
 
+    /*
+     * Tu POS actual corre como página web en Safari/iPad.
+     * El SDK oficial de Clip para Clip Total 2 requiere
+     * una integración nativa Android.
+     *
+     * Esta función queda preparada para que un puente nativo
+     * exponga window.ClipPOSBridge.startPayment().
+     * No registramos la venta hasta recibir APROBADO.
+     */
+
+    if(
+        window.ClipPOSBridge &&
+        typeof window.ClipPOSBridge.startPayment === "function"
+    ){
+
+        try{
+
+            const resultado =
+            await window.ClipPOSBridge.startPayment({
+                amount:monto,
+                reference:String(folio),
+                description:"Nat.Nation Sneakers"
+            });
+
+            const estado =
+            String(resultado?.status || resultado?.result || "")
+                .toLowerCase();
+
+            if(
+                resultado === true ||
+                estado === "approved" ||
+                estado === "aprobado" ||
+                estado === "success"
+            ){
+                return true;
+            }
+
+            alert(
+                "El pago en Clip no fue aprobado. La venta NO se registró."
+            );
+            return false;
+
+        }catch(error){
+
+            console.error("Error en Clip:",error);
+
+            alert(
+                "No se pudo iniciar el cobro en Clip.\n\n" +
+                error.message
+            );
+
+            return false;
+        }
+    }
+
+    alert(
+        "Tu POS todavía no tiene instalado el puente oficial de Clip.\n\n" +
+        "La Clip Total 2 sí admite integración mediante el SDK Terminal, " +
+        "pero una página de GitHub abierta en Safari no puede llamar directamente ese SDK.\n\n" +
+        "La venta NO se registró."
+    );
+
+    return false;
 }
 
 
@@ -4730,6 +4836,27 @@ function prepararTicket(
         Number(item.cantidad || 0) *
         Number(item.precio_unitario || 0);
 
+        if(item.es_cobro){
+            return `
+                <div
+                    style="margin:9px 0;padding-bottom:8px;border-bottom:1px solid #ddd"
+                >
+                    <div
+                        style="display:flex;justify-content:space-between;gap:10px"
+                    >
+                        <span>
+                            💰 ${escapeHTML(item.producto_nombre || "Cobro manual")}
+                        </span>
+                        <strong>${moneda(subtotal)}</strong>
+                    </div>
+
+                    <div style="font-size:13px;margin-top:3px">
+                        Cobro manual
+                    </div>
+                </div>
+            `;
+        }
+
         return `
             <div
                 style="margin:9px 0;padding-bottom:8px;border-bottom:1px solid #ddd"
@@ -5480,11 +5607,3 @@ document.addEventListener(
 
     }
 );
-
-</script>
-
-<!-- Librería para convertir el ticket en imagen -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>    
-    
-</body>
-</html>
