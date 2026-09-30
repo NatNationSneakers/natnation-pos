@@ -1961,15 +1961,317 @@ h2{
     <div class="ticket-contenedor">
 
 
+    <!-- =====================================================
+     TICKET DE VENTA NAT.NATION SNEAKERS
+     BLOQUE CORREGIDO
+===================================================== -->
+
+<style>
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+.ticket-modal{
+    position:fixed;
+    inset:0;
+    z-index:99999;
+    background:rgba(0,0,0,.70);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    overflow:auto;
+}
+
+.ticket-contenedor{
+    width:100%;
+    max-width:430px;
+    background:#f3f3f3;
+    border-radius:18px;
+    padding:18px;
+    box-shadow:0 20px 60px rgba(0,0,0,.35);
+}
+
+/* =====================================================
+   TICKET
+===================================================== */
+
+.ticket{
+    width:80mm;
+    max-width:100%;
+    margin:0 auto;
+    background:#fff;
+    color:#222;
+    padding:18px 14px;
+    font-family:Arial,Helvetica,sans-serif;
+    font-size:12px;
+    box-sizing:border-box;
+}
+
+.ticket-logo{
+    text-align:center;
+    margin-bottom:6px;
+}
+
+.ticket-logo img{
+    width:65px;
+    height:65px;
+    object-fit:contain;
+}
+
+.ticket-negocio{
+    text-align:center;
+    line-height:1.4;
+}
+
+.ticket-negocio strong{
+    display:block;
+    font-size:17px;
+}
+
+.ticket-negocio div{
+    font-size:10px;
+    color:#777;
+}
+
+.ticket-contacto{
+    text-align:center;
+    font-size:9.5px;
+    line-height:1.4;
+    margin-top:7px;
+    color:#444;
+}
+
+.ticket-linea{
+    border-top:1px dashed #777;
+    margin:11px 0;
+}
+
+/* =====================================================
+   DATOS
+===================================================== */
+
+.ticket-datos > div,
+.ticket-pago > div,
+.ticket-puntos > div{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:8px;
+    margin:5px 0;
+}
+
+.ticket-datos strong,
+.ticket-pago strong,
+.ticket-puntos strong{
+    flex-shrink:0;
+}
+
+.ticket-datos span,
+.ticket-pago span,
+.ticket-puntos span{
+    text-align:right;
+    max-width:65%;
+    word-break:break-word;
+}
+
+/* =====================================================
+   PRODUCTOS
+===================================================== */
+
+.ticket-producto{
+    margin:9px 0;
+}
+
+.ticket-producto-nombre{
+    font-weight:bold;
+    font-size:13px;
+    margin-bottom:4px;
+    word-break:break-word;
+}
+
+.ticket-producto-info{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:8px;
+    color:#444;
+    font-size:11px;
+}
+
+.ticket-producto-info strong{
+    white-space:nowrap;
+}
+
+.ticket-producto-talla{
+    font-size:10px;
+    color:#777;
+    margin-top:3px;
+}
+
+/* =====================================================
+   TOTALES
+===================================================== */
+
+.ticket-totales > div{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin:5px 0;
+}
+
+.ticket-total{
+    font-size:17px;
+    margin-top:9px !important;
+}
+
+.ticket-total strong{
+    font-size:20px;
+}
+
+/* =====================================================
+   MENSAJE
+===================================================== */
+
+.ticket-mensaje{
+    text-align:center;
+    margin-top:15px;
+    font-size:10px;
+    line-height:1.5;
+    color:#555;
+}
+
+/* =====================================================
+   BOTONES
+===================================================== */
+
+.ticket-botones{
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+    margin-top:15px;
+}
+
+.ticket-botones button{
+    width:100%;
+    border:0;
+    border-radius:10px;
+    padding:13px;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.btn-ticket-descargar{
+    background:#e91e83;
+    color:#fff;
+}
+
+.btn-ticket-imprimir{
+    background:#222;
+    color:#fff;
+}
+
+.btn-ticket-cerrar{
+    background:#e5e5e5;
+    color:#333;
+}
+
+/* =====================================================
+   IMPRESIÓN
+===================================================== */
+
+@media print{
+
+    @page{
+        size:80mm auto;
+        margin:0;
+    }
+
+    html,
+    body{
+        width:80mm !important;
+        margin:0 !important;
+        padding:0 !important;
+        background:#fff !important;
+    }
+
+    body *{
+        visibility:hidden !important;
+    }
+
+    #ticketModal,
+    #ticketModal *{
+        visibility:visible !important;
+    }
+
+    #ticketModal{
+        position:absolute !important;
+        left:0 !important;
+        top:0 !important;
+        width:80mm !important;
+        min-height:0 !important;
+        padding:0 !important;
+        margin:0 !important;
+        background:#fff !important;
+        display:block !important;
+    }
+
+    .ticket-contenedor{
+        width:80mm !important;
+        max-width:80mm !important;
+        padding:0 !important;
+        margin:0 !important;
+        background:#fff !important;
+        box-shadow:none !important;
+        border-radius:0 !important;
+    }
+
+    .ticket{
+        width:80mm !important;
+        max-width:80mm !important;
+        margin:0 !important;
+        padding:12px 10px !important;
+        box-shadow:none !important;
+    }
+
+    .ticket-botones{
+        display:none !important;
+    }
+}
+
+@media screen and (max-width:500px){
+
+    .ticket{
+        width:100%;
+    }
+
+}
+
+</style>
+
+
+<!-- =====================================================
+     MODAL DEL TICKET
+===================================================== -->
+
+<div
+    id="ticketModal"
+    class="ticket-modal"
+    style="display:none;"
+>
+
+    <div class="ticket-contenedor">
+
         <!-- =================================================
-             TICKET QUE SE IMPRIME / DESCARGA
+             TICKET
         ================================================== -->
 
         <div
             id="ticketImagen"
             class="ticket"
         >
-
 
             <!-- LOGO -->
 
@@ -1978,7 +2280,6 @@ h2{
                 <img
                     src="https://nasvzzdzkljozyhhjize.supabase.co/storage/v1/object/public/pos/branding/logo"
                     alt="Nat.Nation Sneakers"
-                    crossorigin="anonymous"
                 >
 
             </div>
@@ -1999,14 +2300,12 @@ h2{
             </div>
 
 
-            <!-- DIRECCIÓN Y TELÉFONO -->
+            <!-- DATOS DEL NEGOCIO -->
 
             <div class="ticket-contacto">
 
                 Calle Juan Clímaco Ramírez SNVC<br>
-
                 San Andrés, 55780 Jaltenco, Méx.<br>
-
                 Tel. 5624570336
 
             </div>
@@ -2015,46 +2314,25 @@ h2{
             <div class="ticket-linea"></div>
 
 
-            <!-- DATOS DE VENTA -->
+            <!-- DATOS DE LA VENTA -->
 
             <div class="ticket-datos">
 
                 <div>
-
-                    <strong>
-                        Folio:
-                    </strong>
-
-                    <span id="ticketFolio">
-                        —
-                    </span>
-
+                    <strong>Folio:</strong>
+                    <span id="ticketFolio">—</span>
                 </div>
 
-
                 <div>
-
-                    <strong>
-                        Fecha:
-                    </strong>
-
-                    <span id="ticketFecha">
-                        —
-                    </span>
-
+                    <strong>Fecha:</strong>
+                    <span id="ticketFecha">—</span>
                 </div>
 
-
                 <div>
-
-                    <strong>
-                        Cliente:
-                    </strong>
-
+                    <strong>Cliente:</strong>
                     <span id="ticketCliente">
                         Venta sin cliente
                     </span>
-
                 </div>
 
             </div>
@@ -2065,9 +2343,7 @@ h2{
 
             <!-- PRODUCTOS -->
 
-            <div id="ticketProductos">
-
-            </div>
+            <div id="ticketProductos"></div>
 
 
             <div class="ticket-linea"></div>
@@ -2077,32 +2353,23 @@ h2{
 
             <div class="ticket-totales">
 
-
                 <div>
-
-                    <span>
-                        Subtotal
-                    </span>
+                    <span>Subtotal</span>
 
                     <strong id="ticketSubtotal">
                         $0.00
                     </strong>
-
                 </div>
-
 
                 <div class="ticket-total">
 
-                    <span>
-                        TOTAL
-                    </span>
+                    <span>TOTAL</span>
 
                     <strong id="ticketTotal">
                         $0.00
                     </strong>
 
                 </div>
-
 
             </div>
 
@@ -2114,7 +2381,6 @@ h2{
 
             <div class="ticket-pago">
 
-
                 <div>
 
                     <strong>
@@ -2122,15 +2388,13 @@ h2{
                     </strong>
 
                     <span id="ticketMetodo">
-                        Efectivo
+                        —
                     </span>
 
                 </div>
 
 
-                <div
-                    id="ticketEfectivoFila"
-                >
+                <div id="ticketEfectivoFila">
 
                     <strong>
                         Efectivo recibido:
@@ -2143,9 +2407,7 @@ h2{
                 </div>
 
 
-                <div
-                    id="ticketCambioFila"
-                >
+                <div id="ticketCambioFila">
 
                     <strong>
                         Cambio:
@@ -2156,7 +2418,6 @@ h2{
                     </span>
 
                 </div>
-
 
             </div>
 
@@ -2186,7 +2447,7 @@ h2{
             <div class="ticket-linea"></div>
 
 
-            <!-- MENSAJE -->
+            <!-- MENSAJE FINAL -->
 
             <div class="ticket-mensaje">
 
@@ -2208,7 +2469,6 @@ h2{
 
             </div>
 
-
         </div>
 
 
@@ -2218,42 +2478,31 @@ h2{
 
         <div class="ticket-botones">
 
-
             <button
                 type="button"
                 class="btn-ticket-descargar"
                 onclick="descargarTicket()"
             >
-
                 ⬇️ Descargar ticket
-
             </button>
-
 
             <button
                 type="button"
                 class="btn-ticket-imprimir"
                 onclick="imprimirTicket()"
             >
-
                 🖨️ Imprimir ticket
-
             </button>
-
 
             <button
                 type="button"
                 class="btn-ticket-cerrar"
                 onclick="cerrarTicket()"
             >
-
                 ✕ Cerrar
-
             </button>
 
-
         </div>
-
 
     </div>
 
@@ -2263,27 +2512,18 @@ h2{
 <script>
 
 /* =====================================================
-   TICKET
+   PREPARAR TICKET
 ===================================================== */
 
-function prepararTicket(
-    venta,
-    metodo,
-    efectivo,
-    cambio
-){
+function prepararTicket(venta, metodo, efectivo, cambio){
 
     try{
 
-
         if(!venta){
 
-            console.error(
-                "No se recibió la venta."
-            );
+            console.error("No se recibió la venta.");
 
             return;
-
         }
 
 
@@ -2291,68 +2531,52 @@ function prepararTicket(
            FOLIO
         ================================================= */
 
-        const folio =
-            venta.folio ||
-            "—";
-
-
-        document.getElementById(
-            "ticketFolio"
-        ).textContent =
-            folio;
+        document.getElementById("ticketFolio").textContent =
+            venta.folio || "—";
 
 
         /* =================================================
            FECHA
         ================================================= */
 
-        document.getElementById(
-            "ticketFecha"
-        ).textContent =
-            fecha(
-                venta.fecha ||
-                venta.created_at
-            );
+        let fechaVenta =
+            venta.fecha ||
+            venta.created_at ||
+            new Date();
+
+        document.getElementById("ticketFecha").textContent =
+            typeof fecha === "function"
+                ? fecha(fechaVenta)
+                : new Date(fechaVenta).toLocaleString("es-MX");
 
 
         /* =================================================
            CLIENTE
         ================================================= */
 
-        let nombreCliente =
-            "Venta sin cliente";
-
+        let nombreCliente = "Venta sin cliente";
 
         if(
             venta.cliente_id &&
-            typeof clientes !== "undefined"
+            typeof clientes !== "undefined" &&
+            Array.isArray(clientes)
         ){
 
-            const cliente =
-                clientes.find(
-                    function(c){
-
-                        return c.id ===
-                        venta.cliente_id;
-
-                    }
-                );
-
+            const cliente = clientes.find(
+                c => String(c.id) === String(venta.cliente_id)
+            );
 
             if(cliente){
 
                 nombreCliente =
                     cliente.nombre ||
+                    cliente.nombre_completo ||
                     "Venta sin cliente";
-
             }
-
         }
 
 
-        document.getElementById(
-            "ticketCliente"
-        ).textContent =
+        document.getElementById("ticketCliente").textContent =
             nombreCliente;
 
 
@@ -2360,10 +2584,37 @@ function prepararTicket(
            MÉTODO DE PAGO
         ================================================= */
 
-        document.getElementById(
-            "ticketMetodo"
-        ).textContent =
-            metodoTexto(metodo);
+        const metodoNormalizado =
+            String(
+                metodo ||
+                venta.metodo_pago ||
+                ""
+            ).toLowerCase()
+            .trim();
+
+
+        let textoMetodo = "—";
+
+        if(metodoNormalizado === "efectivo"){
+            textoMetodo = "Efectivo";
+        }
+        else if(metodoNormalizado === "transferencia"){
+            textoMetodo = "Transferencia";
+        }
+        else if(
+            metodoNormalizado === "tarjeta" ||
+            metodoNormalizado === "tarjeta / clip" ||
+            metodoNormalizado === "clip"
+        ){
+            textoMetodo = "Tarjeta / Clip";
+        }
+        else if(metodo){
+            textoMetodo = metodo;
+        }
+
+
+        document.getElementById("ticketMetodo").textContent =
+            textoMetodo;
 
 
         /* =================================================
@@ -2371,61 +2622,46 @@ function prepararTicket(
         ================================================= */
 
         const total =
-            Number(
-                venta.total || 0
+            Number(venta.total || 0);
+
+
+        const monedaTicketLocal = valor => {
+
+            return Number(valor || 0).toLocaleString(
+                "es-MX",
+                {
+                    style:"currency",
+                    currency:"MXN"
+                }
             );
 
-
-        document.getElementById(
-            "ticketSubtotal"
-        ).textContent =
-            moneda(total);
+        };
 
 
-        document.getElementById(
-            "ticketTotal"
-        ).textContent =
-            moneda(total);
+        document.getElementById("ticketSubtotal").textContent =
+            monedaTicketLocal(total);
+
+        document.getElementById("ticketTotal").textContent =
+            monedaTicketLocal(total);
 
 
         /* =================================================
-           EFECTIVO
+           EFECTIVO Y CAMBIO
         ================================================= */
 
-        document.getElementById(
-            "ticketEfectivo"
-        ).textContent =
-            moneda(
-                efectivo || 0
-            );
+        document.getElementById("ticketEfectivo").textContent =
+            monedaTicketLocal(efectivo || venta.efectivo_recibido || 0);
 
-
-        /* =================================================
-           CAMBIO
-        ================================================= */
-
-        document.getElementById(
-            "ticketCambio"
-        ).textContent =
-            moneda(
-                cambio || 0
-            );
+        document.getElementById("ticketCambio").textContent =
+            monedaTicketLocal(cambio || venta.cambio || 0);
 
 
         /* =================================================
            PUNTOS
         ================================================= */
 
-        const puntos =
-            Number(
-                venta.puntos_ganados || 0
-            );
-
-
-        document.getElementById(
-            "ticketPuntos"
-        ).textContent =
-            puntos;
+        document.getElementById("ticketPuntos").textContent =
+            Number(venta.puntos_ganados || 0);
 
 
         /* =================================================
@@ -2433,124 +2669,129 @@ function prepararTicket(
         ================================================= */
 
         const contenedor =
-            document.getElementById(
-                "ticketProductos"
-            );
+            document.getElementById("ticketProductos");
+
+        contenedor.innerHTML = "";
 
 
-        contenedor.innerHTML =
-            "";
+        /*
+         * IMPORTANTE:
+         * Primero intenta obtener los productos guardados
+         * dentro de la venta.
+         *
+         * Si no existen, utiliza el carrito actual.
+         */
 
+        let productosVenta = [];
 
-        if(
-            typeof carrito === "undefined" ||
-            !Array.isArray(carrito) ||
-            carrito.length === 0
+        if(Array.isArray(venta.detalles)){
+            productosVenta = venta.detalles;
+        }
+        else if(Array.isArray(venta.venta_detalles)){
+            productosVenta = venta.venta_detalles;
+        }
+        else if(Array.isArray(venta.items)){
+            productosVenta = venta.items;
+        }
+        else if(
+            typeof carrito !== "undefined" &&
+            Array.isArray(carrito)
         ){
+            productosVenta = carrito;
+        }
+
+
+        if(productosVenta.length === 0){
 
             contenedor.innerHTML = `
-
                 <div style="
                     text-align:center;
                     color:#999;
                     padding:10px 0;
                 ">
-
                     Sin productos
-
                 </div>
-
             `;
 
-        }else{
+        }
+        else{
 
+            productosVenta.forEach(item => {
 
-            carrito.forEach(
-                function(item){
-
-                    const cantidad =
-                        Number(
-                            item.cantidad || 1
-                        );
-
-
-                    const precio =
-                        Number(
-                            item.precio_unitario || 0
-                        );
-
-
-                    const subtotal =
-                        cantidad *
-                        precio;
-
-
-                    const producto =
-                        document.createElement(
-                            "div"
-                        );
-
-
-                    producto.className =
-                        "ticket-producto";
-
-
-                    producto.innerHTML = `
-
-                        <div
-                            class="ticket-producto-nombre"
-                        >
-
-                            ${escapeHTML(
-                                item.producto_nombre ||
-                                "Producto"
-                            )}
-
-                        </div>
-
-
-                        <div
-                            class="ticket-producto-info"
-                        >
-
-                            <span>
-
-                                ${cantidad}
-                                x
-                                ${moneda(precio)}
-
-                            </span>
-
-
-                            <strong>
-
-                                ${moneda(subtotal)}
-
-                            </strong>
-
-                        </div>
-
-
-                        <div
-                            class="ticket-producto-talla"
-                        >
-
-                            Talla:
-                            ${escapeHTML(
-                                item.talla || "—"
-                            )}
-
-                        </div>
-
-                    `;
-
-
-                    contenedor.appendChild(
-                        producto
+                const cantidad =
+                    Number(
+                        item.cantidad ||
+                        item.qty ||
+                        1
                     );
 
-                }
-            );
+
+                const precio =
+                    Number(
+                        item.precio_unitario ??
+                        item.precio ??
+                        item.price ??
+                        0
+                    );
+
+
+                const subtotal =
+                    cantidad * precio;
+
+
+                const nombre =
+                    item.producto_nombre ||
+                    item.nombre ||
+                    item.modelo ||
+                    item.producto?.nombre ||
+                    item.producto?.modelo ||
+                    "Producto";
+
+
+                const talla =
+                    item.talla ||
+                    item.size ||
+                    item.producto?.talla ||
+                    "—";
+
+
+                const producto =
+                    document.createElement("div");
+
+                producto.className =
+                    "ticket-producto";
+
+
+                producto.innerHTML = `
+
+                    <div class="ticket-producto-nombre">
+                        ${escapeHTMLTicket(nombre)}
+                    </div>
+
+                    <div class="ticket-producto-info">
+
+                        <span>
+                            ${cantidad} x
+                            ${monedaTicketLocal(precio)}
+                        </span>
+
+                        <strong>
+                            ${monedaTicketLocal(subtotal)}
+                        </strong>
+
+                    </div>
+
+                    <div class="ticket-producto-talla">
+                        Talla:
+                        ${escapeHTMLTicket(talla)}
+                    </div>
+
+                `;
+
+
+                contenedor.appendChild(producto);
+
+            });
 
         }
 
@@ -2560,7 +2801,7 @@ function prepararTicket(
         ================================================= */
 
         const esEfectivo =
-            metodo === "efectivo";
+            metodoNormalizado === "efectivo";
 
 
         document.getElementById(
@@ -2580,34 +2821,29 @@ function prepararTicket(
 
 
         /* =================================================
-           MOSTRAR TICKET
+           MOSTRAR
         ================================================= */
 
         const modal =
-            document.getElementById(
-                "ticketModal"
-            );
+            document.getElementById("ticketModal");
 
 
         if(!modal){
 
             console.error(
-                "No existe #ticketModal"
+                "No existe el elemento #ticketModal"
             );
 
             return;
-
         }
 
 
-        modal.style.display =
-            "flex";
+        modal.style.display = "flex";
 
 
         console.log(
             "✅ Ticket preparado correctamente."
         );
-
 
     }
     catch(error){
@@ -2628,47 +2864,36 @@ function prepararTicket(
 
 
 /* =====================================================
-   CERRAR TICKET
+   CERRAR
 ===================================================== */
 
 function cerrarTicket(){
 
     const modal =
-        document.getElementById(
-            "ticketModal"
-        );
-
+        document.getElementById("ticketModal");
 
     if(modal){
-
-        modal.style.display =
-            "none";
-
+        modal.style.display = "none";
     }
 
 }
 
 
 /* =====================================================
-   IMPRIMIR TICKET
+   IMPRIMIR
 ===================================================== */
 
 function imprimirTicket(){
 
     const ticket =
-        document.getElementById(
-            "ticketImagen"
-        );
+        document.getElementById("ticketImagen");
 
 
     if(!ticket){
 
-        alert(
-            "No se encontró el ticket."
-        );
+        alert("No se encontró el ticket.");
 
         return;
-
     }
 
 
@@ -2688,7 +2913,6 @@ function imprimirTicket(){
         );
 
         return;
-
     }
 
 
@@ -2709,247 +2933,139 @@ function imprimirTicket(){
 Ticket Nat.Nation Sneakers
 </title>
 
-
 <style>
 
 @page{
-
     size:80mm auto;
-
     margin:0;
-
 }
-
 
 *{
-
     box-sizing:border-box;
-
 }
-
 
 html,
 body{
-
     width:80mm;
-
     margin:0;
-
     padding:0;
-
-    background:white;
-
+    background:#fff;
 }
-
 
 body{
-
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
+    font-family:Arial,Helvetica,sans-serif;
     color:#222;
-
 }
-
 
 .ticket{
-
     width:80mm;
-
     padding:12px 10px;
-
-    background:white;
-
+    background:#fff;
 }
-
 
 .ticket-logo{
-
     text-align:center;
-
     margin-bottom:6px;
-
 }
-
 
 .ticket-logo img{
-
     width:65px;
-
     height:65px;
-
     object-fit:contain;
-
 }
-
 
 .ticket-negocio{
-
     text-align:center;
-
     line-height:1.4;
-
 }
-
 
 .ticket-negocio strong{
-
     display:block;
-
     font-size:17px;
-
 }
-
 
 .ticket-negocio div{
-
     font-size:10px;
-
     color:#777;
-
 }
-
 
 .ticket-contacto{
-
     text-align:center;
-
     font-size:9.5px;
-
     line-height:1.4;
-
     margin-top:7px;
-
     color:#444;
-
 }
-
 
 .ticket-linea{
-
-    border-top:
-        1px dashed #777;
-
+    border-top:1px dashed #777;
     margin:11px 0;
-
 }
-
 
 .ticket-datos > div,
 .ticket-pago > div,
 .ticket-puntos > div{
-
     display:flex;
-
     justify-content:space-between;
-
     align-items:flex-start;
-
     gap:8px;
-
     margin:5px 0;
-
     font-size:11px;
-
 }
-
 
 .ticket-producto{
-
     margin:9px 0;
-
 }
-
 
 .ticket-producto-nombre{
-
     font-weight:bold;
-
     font-size:13px;
-
     margin-bottom:4px;
-
 }
-
 
 .ticket-producto-info{
-
     display:flex;
-
     justify-content:space-between;
-
     gap:8px;
-
     font-size:11px;
-
 }
-
 
 .ticket-producto-talla{
-
     font-size:10px;
-
     color:#777;
-
     margin-top:3px;
-
 }
-
 
 .ticket-totales > div{
-
     display:flex;
-
     justify-content:space-between;
-
     margin:5px 0;
-
 }
-
 
 .ticket-total{
-
     font-size:17px;
-
     margin-top:9px !important;
-
 }
-
 
 .ticket-total strong{
-
     font-size:20px;
-
 }
-
 
 .ticket-mensaje{
-
     text-align:center;
-
     margin-top:15px;
-
     font-size:10px;
-
     line-height:1.5;
-
     color:#555;
-
 }
 
-
 .ticket-botones{
-
     display:none !important;
-
 }
 
 </style>
 
 </head>
-
 
 <body>
 
@@ -2965,16 +3081,13 @@ ${ticket.outerHTML}
     ventana.document.close();
 
 
-    setTimeout(
-        function(){
+    setTimeout(() => {
 
-            ventana.focus();
+        ventana.focus();
 
-            ventana.print();
+        ventana.print();
 
-        },
-        500
-    );
+    },500);
 
 }
 
@@ -2986,62 +3099,67 @@ ${ticket.outerHTML}
 async function descargarTicket(){
 
     const ticket =
-        document.getElementById(
-            "ticketImagen"
-        );
+        document.getElementById("ticketImagen");
 
 
     if(!ticket){
 
-        alert(
-            "No se encontró el ticket."
-        );
+        alert("No se encontró el ticket.");
 
         return;
-
     }
 
 
     try{
 
-
-        /*
-         * Creamos una copia del ticket
-         * para convertirla en imagen.
-         */
-
-        const ancho =
-            800;
+        const ancho = 800;
 
 
         const anchoOriginal =
-            ticket.offsetWidth ||
-            302;
+            ticket.offsetWidth || 302;
 
 
         const altoOriginal =
-            ticket.offsetHeight ||
-            600;
+            ticket.offsetHeight || 600;
 
 
         const escala =
-            ancho /
-            anchoOriginal;
+            ancho / anchoOriginal;
 
 
         const alto =
             Math.ceil(
-                altoOriginal *
-                escala
+                altoOriginal * escala
             );
 
+
+        /*
+         * Clonamos el ticket para no modificar
+         * el que está visible.
+         */
+
+        const clon =
+            ticket.cloneNode(true);
+
+
+        /*
+         * Quitamos cualquier elemento que no deba
+         * aparecer en la imagen.
+         */
+
+        clon.querySelectorAll(
+            "button"
+        ).forEach(
+            elemento => elemento.remove()
+        );
+
+
+        /*
+         * Convertimos el HTML en SVG.
+         */
 
         const contenido =
-            ticket.innerHTML
-            .replace(
-                /<img([^>]+)>/gi,
-                "<img$1>"
-            );
+            clon.innerHTML;
 
 
         const svg = `
@@ -3065,8 +3183,8 @@ async function descargarTicket(){
             style="
                 width:${anchoOriginal}px;
                 min-height:${altoOriginal}px;
-                background:#ffffff;
-                color:#222222;
+                background:#fff;
+                color:#222;
                 font-family:Arial,Helvetica,sans-serif;
                 font-size:12px;
                 padding:12px 10px;
@@ -3096,9 +3214,7 @@ async function descargarTicket(){
 
 
         const url =
-            URL.createObjectURL(
-                blob
-            );
+            URL.createObjectURL(blob);
 
 
         const imagen =
@@ -3123,9 +3239,7 @@ async function descargarTicket(){
 
 
                 const ctx =
-                    canvas.getContext(
-                        "2d"
-                    );
+                    canvas.getContext("2d");
 
 
                 ctx.fillStyle =
@@ -3149,9 +3263,7 @@ async function descargarTicket(){
                 );
 
 
-                URL.revokeObjectURL(
-                    url
-                );
+                URL.revokeObjectURL(url);
 
 
                 canvas.toBlob(
@@ -3164,7 +3276,6 @@ async function descargarTicket(){
                             );
 
                             return;
-
                         }
 
 
@@ -3175,9 +3286,7 @@ async function descargarTicket(){
 
 
                         const enlace =
-                            document.createElement(
-                                "a"
-                            );
+                            document.createElement("a");
 
 
                         enlace.href =
@@ -3219,7 +3328,6 @@ async function descargarTicket(){
                             1000
                         );
 
-
                     },
                     "image/png"
                 );
@@ -3230,10 +3338,7 @@ async function descargarTicket(){
         imagen.onerror =
             function(){
 
-                URL.revokeObjectURL(
-                    url
-                );
-
+                URL.revokeObjectURL(url);
 
                 alert(
                     "No se pudo convertir el ticket a PNG."
@@ -3242,9 +3347,7 @@ async function descargarTicket(){
             };
 
 
-        imagen.src =
-            url;
-
+        imagen.src = url;
 
     }
     catch(error){
@@ -3253,7 +3356,6 @@ async function descargarTicket(){
             "ERROR PNG:",
             error
         );
-
 
         alert(
             "No se pudo descargar el ticket.\n\n" +
@@ -3266,49 +3368,17 @@ async function descargarTicket(){
 
 
 /* =====================================================
-   UTILIDADES DEL TICKET
+   ESCAPAR TEXTO
 ===================================================== */
-
-function monedaTicket(valor){
-
-    return Number(
-        valor || 0
-    ).toLocaleString(
-        "es-MX",
-        {
-            style:"currency",
-            currency:"MXN"
-        }
-    );
-
-}
-
 
 function escapeHTMLTicket(texto){
 
-    return String(
-        texto ?? ""
-    )
-    .replace(
-        /&/g,
-        "&amp;"
-    )
-    .replace(
-        /</g,
-        "&lt;"
-    )
-    .replace(
-        />/g,
-        "&gt;"
-    )
-    .replace(
-        /"/g,
-        "&quot;"
-    )
-    .replace(
-        /'/g,
-        "&#039;"
-    );
+    return String(texto ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
 
 }
 
@@ -3322,9 +3392,7 @@ document.addEventListener(
     function(event){
 
         const modal =
-            document.getElementById(
-                "ticketModal"
-            );
+            document.getElementById("ticketModal");
 
 
         if(
@@ -3340,6 +3408,6 @@ document.addEventListener(
 );
 
 </script>
-
+        
 </body>
 </html>
