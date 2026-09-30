@@ -3981,21 +3981,25 @@ async function registrarVenta(){
 
 
 /* =====================================================
-   INTEGRACIÓN CLIP
+   INTEGRACIÓN CLIP TOTAL 2
 ===================================================== */
 
 async function iniciarPagoClip(total,folio){
 
     const monto = Number(total || 0);
 
-    if(!monto || monto <= 0){
+    if(!Number.isFinite(monto) || monto <= 0){
+
         alert("El monto a cobrar no es válido.");
+
         return false;
     }
 
     try{
 
-        console.log("💳 Enviando cobro a Clip:", monto);
+        /* =====================================================
+           1. ENVIAR COBRO A CLIP ULTRA
+        ===================================================== */
 
         const resultadoCrear =
         await supabaseClient.functions.invoke(
@@ -4010,25 +4014,12 @@ async function iniciarPagoClip(total,folio){
         );
 
         if(resultadoCrear.error){
-
-            console.error(
-                "Error de Supabase:",
-                resultadoCrear.error
-            );
-
             throw resultadoCrear.error;
         }
 
-        const dataCrear =
-        resultadoCrear.data;
-
-        console.log(
-            "Respuesta de Clip:",
-            dataCrear
-        );
+        const dataCrear = resultadoCrear.data;
 
         if(!dataCrear || !dataCrear.ok){
-
             throw new Error(
                 dataCrear?.error ||
                 "Clip no aceptó el cobro."
@@ -4036,10 +4027,9 @@ async function iniciarPagoClip(total,folio){
         }
 
         const pinpadRequestId =
-        dataCrear.pinpad_request_id;
+            dataCrear.pinpad_request_id;
 
         if(!pinpadRequestId){
-
             throw new Error(
                 "Clip no devolvió el identificador del pago."
             );
@@ -4052,9 +4042,10 @@ async function iniciarPagoClip(total,folio){
             "El cliente puede pagar en la terminal."
         );
 
-        /*
-         * ESPERAR RESPUESTA DE CLIP
-         */
+        /* =====================================================
+           2. ESPERAR APROBACIÓN
+           La venta NO se registra mientras Clip no confirme.
+        ===================================================== */
 
         const inicio = Date.now();
         const tiempoMaximo = 120000;
@@ -4071,8 +4062,7 @@ async function iniciarPagoClip(total,folio){
                 {
                     body:{
                         action:"status",
-                        pinpad_request_id:
-                        pinpadRequestId
+                        pinpad_request_id:pinpadRequestId
                     }
                 }
             );
@@ -4087,37 +4077,23 @@ async function iniciarPagoClip(total,folio){
                 continue;
             }
 
-            const estado =
-            resultadoEstado.data;
+            const estado = resultadoEstado.data;
 
-            console.log(
-                "Estado Clip:",
-                estado
-            );
+            console.log("Estado Clip:",estado);
 
             if(!estado || !estado.ok){
                 continue;
             }
-
-            /*
-             * APROBADO
-             */
 
             if(
                 estado.approved === true ||
                 estado.status === "approved"
             ){
 
-                console.log(
-                    "✅ PAGO CLIP APROBADO"
-                );
+                console.log("✅ PAGO CLIP APROBADO");
 
                 return true;
             }
-
-            /*
-             * RECHAZADO
-             */
 
             if(
                 estado.rejected === true ||
@@ -4125,16 +4101,12 @@ async function iniciarPagoClip(total,folio){
             ){
 
                 alert(
-                    "❌ El pago fue rechazado por Clip.\n\n" +
+                    "❌ El pago en Clip fue rechazado.\n\n" +
                     "La venta NO se registró."
                 );
 
                 return false;
             }
-
-            /*
-             * CANCELADO
-             */
 
             if(
                 estado.cancelled === true ||
@@ -4142,7 +4114,7 @@ async function iniciarPagoClip(total,folio){
             ){
 
                 alert(
-                    "❌ El pago fue cancelado.\n\n" +
+                    "❌ El pago en Clip fue cancelado.\n\n" +
                     "La venta NO se registró."
                 );
 
@@ -4150,12 +4122,8 @@ async function iniciarPagoClip(total,folio){
             }
         }
 
-        /*
-         * TIEMPO AGOTADO
-         */
-
         alert(
-            "⏱️ Clip no confirmó el pago.\n\n" +
+            "⏱️ No se recibió confirmación de Clip.\n\n" +
             "La venta NO se registró."
         );
 
@@ -4163,10 +4131,7 @@ async function iniciarPagoClip(total,folio){
 
     }catch(error){
 
-        console.error(
-            "❌ Error en Clip:",
-            error
-        );
+        console.error("Error en Clip:",error);
 
         alert(
             "❌ No se pudo iniciar el cobro en Clip.\n\n" +
@@ -4176,7 +4141,8 @@ async function iniciarPagoClip(total,folio){
         return false;
     }
 }
-    
+
+
 /* =====================================================
    FOLIO
 ===================================================== */
