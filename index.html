@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -574,6 +573,20 @@ h2{
 
 @media print{
 
+    @page{
+        size:auto;
+        margin:0;
+    }
+
+    html,
+    body{
+        margin:0 !important;
+        padding:0 !important;
+        width:100% !important;
+        min-height:100% !important;
+        background:#fff !important;
+    }
+
     body *{
         visibility:hidden;
     }
@@ -584,17 +597,57 @@ h2{
     }
 
     .ticket{
-        display:block;
-        position:absolute;
-        left:0;
-        top:0;
-        width:80mm;
-        padding:5mm;
-        font-family:Arial,sans-serif;
-        color:#000;
-        background:#fff;
+        display:block !important;
+        position:absolute !important;
+        left:0 !important;
+        top:0 !important;
+        width:100% !important;
+        min-height:100vh !important;
+        margin:0 !important;
+        padding:22mm 24mm !important;
+        box-sizing:border-box !important;
+        font-family:Arial,sans-serif !important;
+        font-size:18px !important;
+        line-height:1.6 !important;
+        color:#000 !important;
+        background:#fff !important;
+    }
+
+    .ticket img{
+        width:120px !important;
+        height:120px !important;
+    }
+
+    .ticket > div:first-child div:nth-of-type(1){
+        font-size:30px !important;
+    }
+
+    .ticket > div:first-child div:nth-of-type(2){
+        font-size:20px !important;
+    }
+
+    #ticketProductos{
+        font-size:18px !important;
+    }
+
+    #ticketTotal{
+        font-size:28px !important;
+    }
+
+    #ticketSubtotal,
+    #ticketPago,
+    #ticketEfectivo,
+    #ticketCambio,
+    #ticketPuntos{
+        font-size:18px !important;
+    }
+
+    .ticket hr,
+    .ticket [style*="border-top"]{
+        border-top-width:2px !important;
     }
 }
+
 
 /* =========================
    RESPONSIVE
@@ -659,7 +712,6 @@ h2{
     }
 }
 </style>
-
 </head>
 
 <body>
@@ -672,65 +724,66 @@ h2{
 
 <aside class="sidebar">
 
-<div class="logo">
+    <div class="logo">
 
-    <div class="logo-box" id="logoSidebar">
-        N
+        <div class="logo-box" id="logoSidebar">
+            N
+        </div>
+
+        <h2>Nat.Nation</h2>
+
+        <span>DONDE EMPIEZA TU ESTILO</span>
+
     </div>
 
-    <h2>Nat.Nation</h2>
+    <div class="menu">
 
-    <span>DONDE EMPIEZA TU ESTILO</span>
+        <button
+            id="menuInicio"
+            onclick="mostrarSeccion('inicio')">
+            🏠 &nbsp; Inicio
+        </button>
 
-</div>
+        <button
+            id="menuVenta"
+            onclick="mostrarSeccion('venta')">
+            🛒 &nbsp; Nueva venta
+        </button>
 
-<div class="menu">
+        <button
+            id="menuProductos"
+            onclick="mostrarSeccion('productos')">
+            👟 &nbsp; Productos
+        </button>
 
-    <button
-        id="menuInicio"
-        onclick="mostrarSeccion('inicio')">
-        🏠 &nbsp; Inicio
-    </button>
+        <button
+            id="menuClientes"
+            onclick="mostrarSeccion('clientes')">
+            👤 &nbsp; Clientes
+        </button>
 
-    <button
-        id="menuVenta"
-        onclick="mostrarSeccion('venta')">
-        🛒 &nbsp; Nueva venta
-    </button>
+        <button
+            id="menuPuntos"
+            onclick="mostrarSeccion('puntos')">
+            ⭐ &nbsp; Puntos
+        </button>
 
-    <button
-        id="menuProductos"
-        onclick="mostrarSeccion('productos')">
-        👟 &nbsp; Productos
-    </button>
+        <button
+            id="menuReportes"
+            onclick="mostrarSeccion('reportes')">
+            📊 &nbsp; Reportes
+        </button>
 
-    <button
-        id="menuClientes"
-        onclick="mostrarSeccion('clientes')">
-        👤 &nbsp; Clientes
-    </button>
+        <button
+            id="menuConfiguracion"
+            onclick="mostrarSeccion('configuracion')">
+            ⚙️ &nbsp; Configuración
+        </button>
 
-    <button
-        id="menuPuntos"
-        onclick="mostrarSeccion('puntos')">
-        ⭐ &nbsp; Puntos
-    </button>
-
-    <button
-        id="menuReportes"
-        onclick="mostrarSeccion('reportes')">
-        📊 &nbsp; Reportes
-    </button>
-
-    <button
-        id="menuConfiguracion"
-        onclick="mostrarSeccion('configuracion')">
-        ⚙️ &nbsp; Configuración
-    </button>
-
-</div>
+    </div>
 
 </aside>
+
 
 <!-- =====================================================
      MAIN
@@ -740,78 +793,15 @@ h2{
 
 <header class="topbar">
 
-<h1 id="tituloSeccion">
-    Inicio
-</h1>
+    <h1 id="tituloSeccion">
+        Inicio
+    </h1>
 
-<div style="display:flex;align-items:center;gap:12px">
+    <div style="display:flex;align-items:center;gap:12px">
 
-    <div id="estado" class="status">
-        🟡 Conectando...
-    </div>
-
-    <button
-        class="btn btn-primary"
-        onclick="mostrarSeccion('venta')">
-        + Nueva venta
-    </button>
-
-</div>
-
-</header>
-
-<div class="content">
-
-<div
-    id="alerta"
-    class="alert"
-    style="display:none">
-</div>
-
-<!-- =====================================================
-     INICIO
-===================================================== -->
-
-<section id="inicio">
-
-<h2>Inicio</h2>
-
-<div class="subtitle">
-    Bienvenida a tu punto de venta.
-</div>
-
-<div class="cards">
-
-    <div class="card">
-        <small>Productos</small>
-        <strong id="totalProductos">0</strong>
-    </div>
-
-    <div class="card">
-        <small>Stock total</small>
-        <strong id="stockTotal">0</strong>
-    </div>
-
-    <div class="card">
-        <small>Clientes</small>
-        <strong id="totalClientes">0</strong>
-    </div>
-
-    <div class="card">
-        <small>Ventas de hoy</small>
-        <strong id="ventasHoy">$0.00</strong>
-    </div>
-
-</div>
-
-
-<div class="panel">
-
-    <div class="panel-header">
-
-        <h3>
-            Últimas ventas
-        </h3>
+        <div id="estado" class="status">
+            🟡 Conectando...
+        </div>
 
         <button
             class="btn btn-primary"
@@ -821,11 +811,77 @@ h2{
 
     </div>
 
-    <div id="ultimasVentas"></div>
+</header>
 
+
+<div class="content">
+
+<div
+    id="alerta"
+    class="alert"
+    style="display:none">
 </div>
 
+
+<!-- =====================================================
+     INICIO
+===================================================== -->
+
+<section id="inicio">
+
+    <h2>Inicio</h2>
+
+    <div class="subtitle">
+        Bienvenida a tu punto de venta.
+    </div>
+
+    <div class="cards">
+
+        <div class="card">
+            <small>Productos</small>
+            <strong id="totalProductos">0</strong>
+        </div>
+
+        <div class="card">
+            <small>Stock total</small>
+            <strong id="stockTotal">0</strong>
+        </div>
+
+        <div class="card">
+            <small>Clientes</small>
+            <strong id="totalClientes">0</strong>
+        </div>
+
+        <div class="card">
+            <small>Ventas de hoy</small>
+            <strong id="ventasHoy">$0.00</strong>
+        </div>
+
+    </div>
+
+
+    <div class="panel">
+
+        <div class="panel-header">
+
+            <h3>
+                Últimas ventas
+            </h3>
+
+            <button
+                class="btn btn-primary"
+                onclick="mostrarSeccion('venta')">
+                + Nueva venta
+            </button>
+
+        </div>
+
+        <div id="ultimasVentas"></div>
+
+    </div>
+
 </section>
+
 
 <!-- =====================================================
      PRODUCTOS
@@ -835,38 +891,39 @@ h2{
     id="productos"
     style="display:none">
 
-<h2>Productos</h2>
+    <h2>Productos</h2>
 
-<div class="subtitle">
-    Administra tu inventario.
-</div>
-
-<div class="panel">
-
-    <div class="panel-header">
-
-        <input
-            id="buscarProducto"
-            class="search"
-            placeholder="Buscar producto, SKU o código..."
-            oninput="renderProductos()">
-
-        <button
-            class="btn btn-primary"
-            onclick="abrirProducto()">
-            + Nuevo producto
-        </button>
-
+    <div class="subtitle">
+        Administra tu inventario.
     </div>
 
-    <div
-        id="listaProductos"
-        class="products-grid">
-    </div>
+    <div class="panel">
 
-</div>
+        <div class="panel-header">
+
+            <input
+                id="buscarProducto"
+                class="search"
+                placeholder="Buscar producto, SKU o código..."
+                oninput="renderProductos()">
+
+            <button
+                class="btn btn-primary"
+                onclick="abrirProducto()">
+                + Nuevo producto
+            </button>
+
+        </div>
+
+        <div
+            id="listaProductos"
+            class="products-grid">
+        </div>
+
+    </div>
 
 </section>
+
 
 <!-- =====================================================
      VENTA
@@ -876,142 +933,143 @@ h2{
     id="venta"
     style="display:none">
 
-<h2>Nueva venta</h2>
+    <h2>Nueva venta</h2>
 
-<div class="subtitle">
-    Selecciona los productos y registra el pago.
-</div>
-
-<div class="cart-layout">
-
-
-    <div class="panel">
-
-        <input
-            id="buscarVenta"
-            class="search"
-            placeholder="Buscar producto..."
-            oninput="renderProductosVenta()">
-
-        <div
-            id="productosVenta"
-            class="products-grid"
-            style="margin-top:20px">
-        </div>
-
+    <div class="subtitle">
+        Selecciona los productos y registra el pago.
     </div>
 
+    <div class="cart-layout">
 
-    <div class="panel">
 
-        <h3>
-            Carrito
-        </h3>
+        <div class="panel">
 
-        <div id="carrito"></div>
+            <input
+                id="buscarVenta"
+                class="search"
+                placeholder="Buscar producto..."
+                oninput="renderProductosVenta()">
 
-        <div class="total">
-
-            <span>
-                Total
-            </span>
-
-            <span id="totalVenta">
-                $0.00
-            </span>
+            <div
+                id="productosVenta"
+                class="products-grid"
+                style="margin-top:20px">
+            </div>
 
         </div>
 
 
-        <div class="field">
+        <div class="panel">
 
-            <label>
-                Cliente
-            </label>
+            <h3>
+                Carrito
+            </h3>
 
-            <select id="clienteVenta">
+            <div id="carrito"></div>
 
-                <option value="">
-                    Venta sin cliente
-                </option>
+            <div class="total">
 
-            </select>
+                <span>
+                    Total
+                </span>
 
-        </div>
+                <span id="totalVenta">
+                    $0.00
+                </span>
 
-        <br>
+            </div>
 
-
-        <div class="field">
-
-            <label>
-                Forma de pago
-            </label>
-
-            <select
-                id="metodoPago"
-                onchange="mostrarEfectivo()">
-
-                <option value="efectivo">
-                    Efectivo
-                </option>
-
-                <option value="transferencia">
-                    Transferencia
-                </option>
-
-                <option value="tarjeta">
-                    Tarjeta / Clip
-                </option>
-
-            </select>
-
-        </div>
-
-
-        <div
-            id="campoEfectivo"
-            style="margin-top:15px">
 
             <div class="field">
 
                 <label>
-                    Efectivo recibido
+                    Cliente
                 </label>
 
-                <input
-                    id="efectivoRecibido"
-                    type="number"
-                    min="0"
-                    step="0.01"
-                    oninput="calcularCambio()">
+                <select id="clienteVenta">
+
+                    <option value="">
+                        Venta sin cliente
+                    </option>
+
+                </select>
 
             </div>
 
-            <p>
-                Cambio:
-                <strong id="cambio">
-                    $0.00
-                </strong>
-            </p>
+            <br>
+
+
+            <div class="field">
+
+                <label>
+                    Forma de pago
+                </label>
+
+                <select
+                    id="metodoPago"
+                    onchange="mostrarEfectivo()">
+
+                    <option value="efectivo">
+                        Efectivo
+                    </option>
+
+                    <option value="transferencia">
+                        Transferencia
+                    </option>
+
+                    <option value="tarjeta">
+                        Tarjeta / Clip
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div
+                id="campoEfectivo"
+                style="margin-top:15px">
+
+                <div class="field">
+
+                    <label>
+                        Efectivo recibido
+                    </label>
+
+                    <input
+                        id="efectivoRecibido"
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        oninput="calcularCambio()">
+
+                </div>
+
+                <p>
+                    Cambio:
+                    <strong id="cambio">
+                        $0.00
+                    </strong>
+                </p>
+
+            </div>
+
+
+            <button
+                class="btn btn-primary"
+                style="width:100%;margin-top:15px"
+                onclick="registrarVenta()">
+
+                Cobrar
+
+            </button>
 
         </div>
 
-
-        <button
-            class="btn btn-primary"
-            style="width:100%;margin-top:15px"
-            onclick="registrarVenta()">
-
-            Cobrar
-
-        </button>
-
     </div>
 
-</div>
-
 </section>
+
 
 <!-- =====================================================
      CLIENTES
@@ -1021,37 +1079,38 @@ h2{
     id="clientes"
     style="display:none">
 
-<h2>Clientes</h2>
+    <h2>Clientes</h2>
 
-<div class="subtitle">
-    Administra clientes y puntos.
-</div>
+    <div class="subtitle">
+        Administra clientes y puntos.
+    </div>
 
-<div class="panel">
+    <div class="panel">
 
-    <div class="panel-header">
+        <div class="panel-header">
 
-        <input
-            id="buscarCliente"
-            class="search"
-            placeholder="Buscar cliente..."
-            oninput="renderClientes()">
+            <input
+                id="buscarCliente"
+                class="search"
+                placeholder="Buscar cliente..."
+                oninput="renderClientes()">
 
-        <button
-            class="btn btn-primary"
-            onclick="abrirCliente()">
+            <button
+                class="btn btn-primary"
+                onclick="abrirCliente()">
 
-            + Nuevo cliente
+                + Nuevo cliente
 
-        </button>
+            </button>
+
+        </div>
+
+        <div id="tablaClientes"></div>
 
     </div>
 
-    <div id="tablaClientes"></div>
-
-</div>
-
 </section>
+
 
 <!-- =====================================================
      PUNTOS
@@ -1061,21 +1120,22 @@ h2{
     id="puntos"
     style="display:none">
 
-<h2>
-    Puntos
-</h2>
+    <h2>
+        Puntos
+    </h2>
 
-<div class="subtitle">
-    Consulta los puntos acumulados de tus clientes.
-</div>
+    <div class="subtitle">
+        Consulta los puntos acumulados de tus clientes.
+    </div>
 
-<div class="panel">
+    <div class="panel">
 
-    <div id="tablaPuntos"></div>
+        <div id="tablaPuntos"></div>
 
-</div>
+    </div>
 
 </section>
+
 
 <!-- =====================================================
      REPORTES
@@ -1085,49 +1145,50 @@ h2{
     id="reportes"
     style="display:none">
 
-<h2>
-    Reportes
-</h2>
+    <h2>
+        Reportes
+    </h2>
 
-<div class="subtitle">
-    Consulta las ventas registradas.
-</div>
+    <div class="subtitle">
+        Consulta las ventas registradas.
+    </div>
 
-<div class="cards">
+    <div class="cards">
 
-    <div class="card">
+        <div class="card">
 
-        <small>
-            Total de ventas
-        </small>
+            <small>
+                Total de ventas
+            </small>
 
-        <strong id="reporteVentas">
-            0
-        </strong>
+            <strong id="reporteVentas">
+                0
+            </strong>
+
+        </div>
+
+        <div class="card">
+
+            <small>
+                Ingresos
+            </small>
+
+            <strong id="reporteIngresos">
+                $0.00
+            </strong>
+
+        </div>
 
     </div>
 
-    <div class="card">
+    <div class="panel">
 
-        <small>
-            Ingresos
-        </small>
-
-        <strong id="reporteIngresos">
-            $0.00
-        </strong>
+        <div id="tablaReportes"></div>
 
     </div>
-
-</div>
-
-<div class="panel">
-
-    <div id="tablaReportes"></div>
-
-</div>
 
 </section>
+
 
 <!-- =====================================================
      CONFIGURACION
@@ -1137,198 +1198,201 @@ h2{
     id="configuracion"
     style="display:none">
 
-<h2>
-    Configuración
-</h2>
+    <h2>
+        Configuración
+    </h2>
 
-<div class="subtitle">
-    Configura la información de Nat.Nation.
-</div>
-
-
-<div class="config-grid">
-
-
-    <div class="panel">
-
-        <h3>
-            Información del negocio
-        </h3>
-
-        <br>
-
-        <div class="field">
-
-            <label>
-                Nombre
-            </label>
-
-            <input
-                value="Nat.Nation Sneakers"
-                readonly>
-
-        </div>
-
-        <br>
-
-        <div class="field">
-
-            <label>
-                Teléfono
-            </label>
-
-            <input
-                value="5624570336"
-                readonly>
-
-        </div>
-
-        <br>
-
-        <div class="field">
-
-            <label>
-                Dirección
-            </label>
-
-            <input
-                value="Calle Juan Clímaco Ramírez SNVC, San Andrés, 55780 Jaltenco, Méx."
-                readonly>
-
-        </div>
-
+    <div class="subtitle">
+        Configura la información de Nat.Nation.
     </div>
 
 
-    <div class="panel">
+    <div class="config-grid">
 
-        <h3>
-            Logo
-        </h3>
 
-        <br>
+        <div class="panel">
 
-        <div class="logo-upload">
+            <h3>
+                Información del negocio
+            </h3>
 
-            <div
-                id="logoPreview"
-                class="logo-preview">
+            <br>
 
-                <span style="font-size:55px">
-                    N
-                </span>
+            <div class="field">
+
+                <label>
+                    Nombre
+                </label>
+
+                <input
+                    value="Nat.Nation Sneakers"
+                    readonly>
 
             </div>
 
-            <input
-                id="archivoLogo"
-                type="file"
-                accept="image/*"
-                onchange="previsualizarLogo(event)"
-                style="margin-bottom:15px">
+            <br>
 
-            <button
-                class="btn btn-primary"
-                onclick="subirLogo()">
+            <div class="field">
 
-                Guardar logo
+                <label>
+                    Teléfono
+                </label>
 
-            </button>
+                <input
+                    value="5624570336"
+                    readonly>
 
-            <p
-                style="color:#777;text-align:center">
+            </div>
 
-                El logo se guarda en Supabase
-                para que aparezca en todos tus dispositivos.
+            <br>
 
-            </p>
+            <div class="field">
+
+                <label>
+                    Dirección
+                </label>
+
+                <input
+                    value="Calle Juan Clímaco Ramírez SNVC, San Andrés, 55780 Jaltenco, Méx."
+                    readonly>
+
+            </div>
+
+        </div>
+
+
+        <div class="panel">
+
+            <h3>
+                Logo
+            </h3>
+
+            <br>
+
+            <div class="logo-upload">
+
+                <div
+                    id="logoPreview"
+                    class="logo-preview">
+
+                    <span style="font-size:55px">
+                        N
+                    </span>
+
+                </div>
+
+                <input
+                    id="archivoLogo"
+                    type="file"
+                    accept="image/*"
+                    onchange="previsualizarLogo(event)"
+                    style="margin-bottom:15px">
+
+                <button
+                    class="btn btn-primary"
+                    onclick="subirLogo()">
+
+                    Guardar logo
+
+                </button>
+
+                <p
+                    style="color:#777;text-align:center">
+
+                    El logo se guarda en Supabase
+                    para que aparezca en todos tus dispositivos.
+
+                </p>
+
+            </div>
 
         </div>
 
     </div>
 
-</div>
 
 <!-- =====================================================
      RESTAURAR DATOS DE PRUEBA
 ===================================================== -->
 
-<div
-    class="panel"
-    style="
-        border:2px solid #f23886;
-        margin-top:0;
-    "
->
-
-    <h3 style="margin-top:0">
-
-        🧹 Restaurar datos de prueba
-
-    </h3>
-
-
-    <p
-        style="
-            color:#666;
-            line-height:1.6;
-        "
-    >
-
-        Si estás haciendo compras de prueba, puedes utilizar
-        este botón para limpiar todos los tickets simulados.
-
-        Se eliminarán las ventas y sus detalles, se devolverá
-        el stock utilizado y se revertirán los puntos generados
-        por esas ventas.
-
-    </p>
-
-
     <div
+        class="panel"
         style="
-            background:#fff3f8;
-            border-radius:10px;
-            padding:15px;
-            margin:15px 0;
-            color:#8b174b;
+            border:2px solid #f23886;
+            margin-top:0;
         "
     >
 
-        <strong>
-            ⚠️ Importante:
-        </strong>
+        <h3 style="margin-top:0">
 
-        <br><br>
+            🧹 Restaurar datos de prueba
 
-        Esta acción eliminará todas las ventas que actualmente
-        estén registradas en el sistema.
+        </h3>
 
-        <br><br>
 
-        Úsala únicamente cuando estés haciendo pruebas.
+        <p
+            style="
+                color:#666;
+                line-height:1.6;
+            "
+        >
+
+            Si estás haciendo compras de prueba, puedes utilizar
+            este botón para limpiar todos los tickets simulados.
+
+            Se eliminarán las ventas y sus detalles, se devolverá
+            el stock utilizado y se revertirán los puntos generados
+            por esas ventas.
+
+        </p>
+
+
+        <div
+            style="
+                background:#fff3f8;
+                border-radius:10px;
+                padding:15px;
+                margin:15px 0;
+                color:#8b174b;
+            "
+        >
+
+            <strong>
+                ⚠️ Importante:
+            </strong>
+
+            <br><br>
+
+            Esta acción eliminará todas las ventas que actualmente
+            estén registradas en el sistema.
+
+            <br><br>
+
+            Úsala únicamente cuando estés haciendo pruebas.
+
+        </div>
+
+
+        <button
+            type="button"
+            class="btn btn-danger"
+            onclick="restaurarDatosPrueba()"
+        >
+
+            🧹 Restaurar ventas de prueba
+
+        </button>
 
     </div>
 
-
-    <button
-        type="button"
-        class="btn btn-danger"
-        onclick="restaurarDatosPrueba()"
-    >
-
-        🧹 Restaurar ventas de prueba
-
-    </button>
-
-</div>
-
 </section>
+
 
 </div>
 </main>
 
 </div>
+
 
 <!-- =====================================================
      MODAL PRODUCTO
@@ -1340,191 +1404,192 @@ h2{
 
 <div class="modal-box">
 
-<div class="modal-header">
+    <div class="modal-header">
 
-    <h3 id="tituloProducto">
-        Nuevo producto
-    </h3>
+        <h3 id="tituloProducto">
+            Nuevo producto
+        </h3>
 
-    <button
-        class="close"
-        onclick="cerrarProducto()">
-        ×
-    </button>
+        <button
+            class="close"
+            onclick="cerrarProducto()">
+            ×
+        </button>
 
-</div>
-
-
-<form
-    id="formProducto"
-    onsubmit="guardarProducto(event)">
-
-    <input
-        type="hidden"
-        id="productoId">
+    </div>
 
 
-    <div class="form-grid">
+    <form
+        id="formProducto"
+        onsubmit="guardarProducto(event)">
+
+        <input
+            type="hidden"
+            id="productoId">
 
 
-        <div class="field">
-
-            <label>
-                Modelo
-            </label>
-
-            <input
-                id="modelo"
-                required>
-
-        </div>
+        <div class="form-grid">
 
 
-        <div class="field">
+            <div class="field">
 
-            <label>
-                Talla
-            </label>
+                <label>
+                    Modelo
+                </label>
 
-            <input
-                id="talla"
-                required>
+                <input
+                    id="modelo"
+                    required>
 
-        </div>
-
-
-        <div class="field">
-
-            <label>
-                SKU
-            </label>
-
-            <input id="sku">
-
-        </div>
+            </div>
 
 
-        <div class="field">
+            <div class="field">
 
-            <label>
-                Código de barras
-            </label>
+                <label>
+                    Talla
+                </label>
 
-            <input id="codigoBarras">
+                <input
+                    id="talla"
+                    required>
 
-        </div>
-
-
-        <div class="field">
-
-            <label>
-                Precio de venta
-            </label>
-
-            <input
-                id="precio"
-                type="number"
-                min="0"
-                step="0.01"
-                required>
-
-        </div>
+            </div>
 
 
-        <div class="field">
+            <div class="field">
 
-            <label>
-                Costo
-            </label>
+                <label>
+                    SKU
+                </label>
 
-            <input
-                id="costo"
-                type="number"
-                min="0"
-                step="0.01"
-                value="0">
+                <input id="sku">
 
-        </div>
+            </div>
 
 
-        <div class="field">
+            <div class="field">
 
-            <label>
-                Stock
-            </label>
+                <label>
+                    Código de barras
+                </label>
 
-            <input
-                id="stock"
-                type="number"
-                min="0"
-                step="1"
-                value="0"
-                required>
+                <input id="codigoBarras">
 
-        </div>
+            </div>
 
 
-        <div class="field">
+            <div class="field">
 
-            <label>
-                Foto del producto
-            </label>
+                <label>
+                    Precio de venta
+                </label>
 
-            <input
-                id="imagen"
-                type="file"
-                accept="image/*"
-                onchange="previsualizarImagen(event)">
+                <input
+                    id="precio"
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    required>
 
-        </div>
+            </div>
 
 
-        <div class="field full">
+            <div class="field">
 
-            <label>
-                Vista previa
-            </label>
+                <label>
+                    Costo
+                </label>
 
-            <div
-                class="preview"
-                id="preview">
+                <input
+                    id="costo"
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    value="0">
 
-                <span class="no-img">
-                    👟
-                </span>
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Stock
+                </label>
+
+                <input
+                    id="stock"
+                    type="number"
+                    min="0"
+                    step="1"
+                    value="0"
+                    required>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Foto del producto
+                </label>
+
+                <input
+                    id="imagen"
+                    type="file"
+                    accept="image/*"
+                    onchange="previsualizarImagen(event)">
+
+            </div>
+
+
+            <div class="field full">
+
+                <label>
+                    Vista previa
+                </label>
+
+                <div
+                    class="preview"
+                    id="preview">
+
+                    <span class="no-img">
+                        👟
+                    </span>
+
+                </div>
 
             </div>
 
         </div>
 
-    </div>
 
+        <div class="modal-actions">
 
-    <div class="modal-actions">
+            <button
+                type="button"
+                class="btn btn-secondary"
+                onclick="cerrarProducto()">
 
-        <button
-            type="button"
-            class="btn btn-secondary"
-            onclick="cerrarProducto()">
+                Cancelar
 
-            Cancelar
+            </button>
 
-        </button>
+            <button
+                type="submit"
+                class="btn btn-primary">
 
-        <button
-            type="submit"
-            class="btn btn-primary">
+                Guardar producto
 
-            Guardar producto
+            </button>
 
-        </button>
+        </div>
 
-    </div>
-
-</form>
+    </form>
 
 </div>
 </div>
+
 
 <!-- =====================================================
      MODAL CLIENTE
@@ -1536,92 +1601,93 @@ h2{
 
 <div class="modal-box">
 
-<div class="modal-header">
+    <div class="modal-header">
 
-    <h3>
-        Nuevo cliente
-    </h3>
-
-    <button
-        class="close"
-        onclick="cerrarCliente()">
-        ×
-    </button>
-
-</div>
-
-
-<form onsubmit="guardarCliente(event)">
-
-    <div class="form-grid">
-
-
-        <div class="field full">
-
-            <label>
-                Nombre
-            </label>
-
-            <input
-                id="clienteNombre"
-                required>
-
-        </div>
-
-
-        <div class="field">
-
-            <label>
-                Teléfono
-            </label>
-
-            <input
-                id="clienteTelefono">
-
-        </div>
-
-
-        <div class="field">
-
-            <label>
-                Código de tarjeta
-            </label>
-
-            <input
-                id="clienteTarjeta">
-
-        </div>
-
-
-    </div>
-
-
-    <div class="modal-actions">
+        <h3>
+            Nuevo cliente
+        </h3>
 
         <button
-            type="button"
-            class="btn btn-secondary"
+            class="close"
             onclick="cerrarCliente()">
-
-            Cancelar
-
-        </button>
-
-
-        <button
-            type="submit"
-            class="btn btn-primary">
-
-            Guardar cliente
-
+            ×
         </button>
 
     </div>
 
-</form>
+
+    <form onsubmit="guardarCliente(event)">
+
+        <div class="form-grid">
+
+
+            <div class="field full">
+
+                <label>
+                    Nombre
+                </label>
+
+                <input
+                    id="clienteNombre"
+                    required>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Teléfono
+                </label>
+
+                <input
+                    id="clienteTelefono">
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Código de tarjeta
+                </label>
+
+                <input
+                    id="clienteTarjeta">
+
+            </div>
+
+
+        </div>
+
+
+        <div class="modal-actions">
+
+            <button
+                type="button"
+                class="btn btn-secondary"
+                onclick="cerrarCliente()">
+
+                Cancelar
+
+            </button>
+
+
+            <button
+                type="submit"
+                class="btn btn-primary">
+
+                Guardar cliente
+
+            </button>
+
+        </div>
+
+    </form>
 
 </div>
 </div>
+
 
 <!-- =====================================================
      TICKET
@@ -1631,71 +1697,247 @@ h2{
     class="ticket"
     id="ticket">
 
-<div style="text-align:center">
+    <div style="text-align:center;font-family:Arial,sans-serif">
 
-    <h2 style="margin:0;font-size:20px">
+        <img
+            src="https://nasvzzdzkljozyhhjize.supabase.co/storage/v1/object/public/pos/branding/logo"
+            alt="Nat.Nation Sneakers"
+            style="width:75px;height:75px;object-fit:contain;display:block;margin:0 auto 8px;"
+        >
+
+        <div style="font-size:20px;font-weight:bold;margin-bottom:4px">
+            Nat.Nation Sneakers
+        </div>
+
+        <div style="font-size:14px;margin-bottom:8px">
+            Donde empieza tu estilo
+        </div>
+
+        <div style="font-size:12px;line-height:1.5;margin-bottom:8px">
+            Calle Juan Clímaco Ramírez SNVC<br>
+            San Andrés, 55780 Jaltenco, Méx.<br>
+            Tel. 5624570336
+        </div>
+
+    </div>
+
+    <div style="border-top:2px dashed #999;margin:10px 0 14px"></div>
+
+    <div style="font-size:14px;line-height:1.7">
+
+        <div style="display:flex;justify-content:space-between">
+            <strong>Folio:</strong>
+            <span id="ticketFolio">—</span>
+        </div>
+
+        <div style="display:flex;justify-content:space-between">
+            <strong>Fecha:</strong>
+            <span id="ticketFecha">—</span>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;gap:10px">
+            <strong>Cliente:</strong>
+            <span id="ticketCliente" style="text-align:right">Venta sin cliente</span>
+        </div>
+
+    </div>
+
+    <div style="border-top:2px dashed #999;margin:14px 0"></div>
+
+    <div id="ticketProductos" style="font-size:14px"></div>
+
+    <div style="border-top:2px dashed #999;margin:14px 0"></div>
+
+    <div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:8px">
+        <span>Subtotal</span>
+        <span id="ticketSubtotal">$0.00</span>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;font-size:19px;font-weight:bold;margin-bottom:16px">
+        <span>TOTAL</span>
+        <span id="ticketTotal">$0.00</span>
+    </div>
+
+    <div style="border-top:2px dashed #999;margin:10px 0 14px"></div>
+
+    <div style="font-size:14px;line-height:1.8">
+
+        <div style="display:flex;justify-content:space-between">
+            <strong>Forma de pago:</strong>
+            <span id="ticketPago">Efectivo</span>
+        </div>
+
+        <div id="ticketEfectivoFila" style="display:flex;justify-content:space-between">
+            <strong>Efectivo recibido:</strong>
+            <span id="ticketEfectivo">$0.00</span>
+        </div>
+
+        <div id="ticketCambioFila" style="display:flex;justify-content:space-between">
+            <strong>Cambio:</strong>
+            <span id="ticketCambio">$0.00</span>
+        </div>
+
+    </div>
+
+    <div style="border-top:2px dashed #999;margin:14px 0"></div>
+
+    <div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:20px">
+        <strong>Puntos generados:</strong>
+        <span id="ticketPuntos">0</span>
+    </div>
+
+    <div style="text-align:center;font-size:14px;line-height:1.7">
+        <strong>¡Gracias por tu compra!</strong>
+        <br>
         Nat.Nation Sneakers
-    </h2>
-
-    <p style="margin:4px 0">
-        Donde empieza tu estilo.
-    </p>
-
-    <p style="margin:4px 0">
-
-        Calle Juan Clímaco Ramírez SNVC<br>
-
-        San Andrés, 55780 Jaltenco, Méx.<br>
-
-        Tel. 5624570336
-
-    </p>
+        <br>
+        Donde empieza tu estilo
+    </div>
 
 </div>
 
-<hr>
 
-<p>
-    Folio:
-    <strong id="ticketFolio"></strong>
-</p>
-
-<p>
-    Fecha:
-    <span id="ticketFecha"></span>
-</p>
-
-<hr>
-
-<div id="ticketProductos"></div>
-
-<hr>
+<!-- =====================================================
+     VENTANA DE TICKET GENERADO
+===================================================== -->
 
 <div
-    style="display:flex;justify-content:space-between">
+    id="ticketResultado"
+    style="
+        display:none;
+        position:fixed;
+        inset:0;
+        z-index:99999;
+        background:rgba(0,0,0,.65);
+        align-items:center;
+        justify-content:center;
+        padding:20px;
+        box-sizing:border-box;
+    "
+>
 
-    <strong>
-        TOTAL
-    </strong>
+    <div
+        style="
+            width:min(520px,100%);
+            max-height:95vh;
+            overflow:auto;
+            background:#fff;
+            border-radius:24px;
+            padding:22px;
+            box-sizing:border-box;
+            text-align:center;
+            box-shadow:0 20px 60px rgba(0,0,0,.35);
+        "
+    >
 
-    <strong id="ticketTotal"></strong>
+        <div
+            style="
+                width:72px;
+                height:72px;
+                margin:0 auto 10px;
+                border-radius:50%;
+                background:#e85b91;
+                color:#fff;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                font-size:42px;
+                font-weight:bold;
+            "
+        >
+            ✓
+        </div>
+
+        <div
+            style="font-size:24px;font-weight:bold;margin-bottom:4px"
+        >
+            ¡Pago aprobado!
+        </div>
+
+        <div
+            id="ticketResultadoTotal"
+            style="font-size:30px;font-weight:bold;margin-bottom:18px"
+        >
+            $0.00
+        </div>
+
+        <img
+            id="ticketPNG"
+            alt="Ticket de compra Nat.Nation Sneakers"
+            style="
+                display:block;
+                width:100%;
+                max-width:390px;
+                margin:0 auto 18px;
+                border:1px solid #eee;
+                border-radius:8px;
+                box-shadow:0 2px 12px rgba(0,0,0,.08);
+                background:#fff;
+            "
+        >
+
+        <div
+            style="display:grid;grid-template-columns:1fr 1fr;gap:10px;"
+        >
+
+            <button
+                type="button"
+                onclick="imprimirTicketPNG()"
+                style="
+                    border:0;
+                    border-radius:12px;
+                    padding:14px;
+                    background:#111;
+                    color:#fff;
+                    font-size:16px;
+                    font-weight:bold;
+                    cursor:pointer;
+                "
+            >
+                🖨️ Imprimir
+            </button>
+
+            <button
+                type="button"
+                onclick="descargarTicketPNG()"
+                style="
+                    border:0;
+                    border-radius:12px;
+                    padding:14px;
+                    background:#e85b91;
+                    color:#fff;
+                    font-size:16px;
+                    font-weight:bold;
+                    cursor:pointer;
+                "
+            >
+                📥 Descargar PNG
+            </button>
+
+        </div>
+
+        <button
+            type="button"
+            onclick="cerrarTicketResultado()"
+            style="
+                width:100%;
+                margin-top:10px;
+                border:1px solid #ddd;
+                border-radius:12px;
+                padding:12px;
+                background:#fff;
+                color:#333;
+                font-size:15px;
+                cursor:pointer;
+            "
+        >
+            Cerrar
+        </button>
+
+    </div>
 
 </div>
 
-<p>
-    Pago:
-    <span id="ticketPago"></span>
-</p>
-
-<p id="ticketCambio"></p>
-
-<hr>
-
-<p style="text-align:center">
-    ¡Gracias por tu compra!
-</p>
-
-</div>
 
 <!-- =====================================================
      JAVASCRIPT
@@ -3694,8 +3936,7 @@ async function registrarVenta(){
 
         await cargarTodo();
 
-
-        imprimirTicket();
+        await mostrarTicketPNG(venta);
 
 
     }catch(error){
@@ -4434,257 +4675,235 @@ function prepararTicket(
     cambio
 ){
 
-    const folio = document.getElementById("ticketFolio");
-    const fechaTicket = document.getElementById("ticketFecha");
-    const clienteTicket = document.getElementById("ticketCliente");
-    const totalTicket = document.getElementById("ticketTotal");
-    const subtotalTicket = document.getElementById("ticketSubtotal");
-    const pagoTicket = document.getElementById("ticketPago");
-    const productosTicket = document.getElementById("ticketProductos");
-    const puntosTicket = document.getElementById("ticketPuntos");
+    document.getElementById("ticketFolio").textContent =
+    venta.folio || "—";
 
-    if(folio){
-        folio.textContent = venta?.folio || "—";
-    }
+    document.getElementById("ticketFecha").textContent =
+    fecha(venta.fecha);
 
-    if(fechaTicket){
-        fechaTicket.textContent = fecha(venta?.fecha);
-    }
+    const cliente =
+    clientes.find(function(c){
+        return c.id === venta.cliente_id;
+    });
 
-    if(clienteTicket){
-        const cliente = Array.isArray(clientes)
-            ? clientes.find(function(c){
-                return c.id === venta?.cliente_id;
-            })
-            : null;
+    document.getElementById("ticketCliente").textContent =
+    cliente ? cliente.nombre : "Venta sin cliente";
 
-        clienteTicket.textContent =
-            cliente?.nombre || "Venta sin cliente";
-    }
+    document.getElementById("ticketSubtotal").textContent =
+    moneda(venta.total);
 
-    const total = Number(venta?.total || 0);
+    document.getElementById("ticketTotal").textContent =
+    moneda(venta.total);
 
-    if(totalTicket){
-        totalTicket.textContent = moneda(total);
-    }
-
-    if(pagoTicket){
-        pagoTicket.textContent = metodoTexto(metodo);
-    }
-
-    /* =================================================
-       PRODUCTOS Y SUBTOTAL
-    ================================================= */
-
-    let subtotal = 0;
-
-    if(Array.isArray(carrito)){
-
-        carrito.forEach(function(item){
-
-            const cantidad = Number(item?.cantidad || 0);
-            const precio = Number(item?.precio_unitario || 0);
-
-            subtotal += cantidad * precio;
-
-        });
-
-    }
-
-    if(subtotalTicket){
-        subtotalTicket.textContent = moneda(subtotal);
-    }
-
-    if(productosTicket){
-
-        if(!Array.isArray(carrito) || carrito.length === 0){
-
-            productosTicket.innerHTML = `
-                <div style="text-align:center;padding:10px 0;">
-                    Sin productos
-                </div>
-            `;
-
-        }else{
-
-            productosTicket.innerHTML = carrito.map(function(item){
-
-                const cantidad = Number(item?.cantidad || 0);
-                const precio = Number(item?.precio_unitario || 0);
-                const subtotalProducto = cantidad * precio;
-
-                return `
-                    <div style="margin:8px 0;padding-bottom:8px;border-bottom:1px solid #ddd;">
-                        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;">
-                            <span style="flex:1;line-height:1.4;">
-                                <strong>
-                                    ${cantidad} x ${escapeHTML(item?.producto_nombre || "Producto")}
-                                </strong>
-                                <br>
-                                <span style="font-size:13px;">
-                                    Talla #${escapeHTML(item?.talla || "")}
-                                </span>
-                            </span>
-
-                            <strong style="white-space:nowrap;">
-                                ${moneda(subtotalProducto)}
-                            </strong>
-                        </div>
-                    </div>
-                `;
-
-            }).join("");
-
-        }
-
-    }
-
-    /* =================================================
-       EFECTIVO Y CAMBIO
-    ================================================= */
+    document.getElementById("ticketPago").textContent =
+    metodoTexto(metodo);
 
     const esEfectivo =
-        String(metodo || "").toLowerCase() === "efectivo";
+    String(metodo || "").toLowerCase() === "efectivo";
 
     const filaEfectivo =
-        document.getElementById("ticketEfectivoFila");
+    document.getElementById("ticketEfectivoFila");
 
     const filaCambio =
-        document.getElementById("ticketCambioFila");
-
-    const efectivoTicket =
-        document.getElementById("ticketEfectivo");
-
-    const cambioTicket =
-        document.getElementById("ticketCambio");
+    document.getElementById("ticketCambioFila");
 
     if(esEfectivo){
+        filaEfectivo.style.display = "flex";
+        filaCambio.style.display = "flex";
 
-        if(filaEfectivo){
-            filaEfectivo.style.display = "flex";
-        }
+        document.getElementById("ticketEfectivo").textContent =
+        moneda(efectivo);
 
-        if(filaCambio){
-            filaCambio.style.display = "flex";
-        }
-
-        if(efectivoTicket){
-            efectivoTicket.textContent = moneda(efectivo);
-        }
-
-        if(cambioTicket){
-            cambioTicket.textContent = moneda(cambio);
-        }
-
+        document.getElementById("ticketCambio").textContent =
+        moneda(cambio);
     }else{
-
-        if(filaEfectivo){
-            filaEfectivo.style.display = "none";
-        }
-
-        if(filaCambio){
-            filaCambio.style.display = "none";
-        }
-
+        filaEfectivo.style.display = "none";
+        filaCambio.style.display = "none";
     }
 
-    /* =================================================
-       PUNTOS
-    ================================================= */
+    document.getElementById("ticketPuntos").textContent =
+    Number(venta.puntos_ganados || 0);
 
-    if(puntosTicket){
-        puntosTicket.textContent =
-            Number(venta?.puntos_ganados || 0);
-    }
+    document.getElementById("ticketProductos").innerHTML =
+    carrito.map(function(item){
+
+        const subtotal =
+        Number(item.cantidad || 0) *
+        Number(item.precio_unitario || 0);
+
+        return `
+            <div
+                style="margin:9px 0;padding-bottom:8px;border-bottom:1px solid #ddd"
+            >
+                <div
+                    style="display:flex;justify-content:space-between;gap:10px"
+                >
+                    <span>
+                        ${item.cantidad} x
+                        ${escapeHTML(item.producto_nombre)}
+                    </span>
+                    <strong>${moneda(subtotal)}</strong>
+                </div>
+
+                <div style="font-size:13px;margin-top:3px">
+                    Talla #${escapeHTML(item.talla || "")}
+                </div>
+            </div>
+        `;
+
+    }).join("");
 
 }
 
 
-/* =====================================================
-   IMPRIMIR TICKET
-===================================================== */
+async function mostrarTicketPNG(venta){
 
-function imprimirTicket(){
+    const ticket = document.getElementById("ticket");
+    const resultado = document.getElementById("ticketResultado");
+    const imagen = document.getElementById("ticketPNG");
+    const total = document.getElementById("ticketResultadoTotal");
 
-    window.print();
-
-}
-
-
-/* =====================================================
-   DESCARGAR TICKET COMO IMAGEN
-===================================================== */
-
-async function descargarTicket(){
-
-    const ticket =
-        document.getElementById("ticket");
-
-    if(!ticket){
-
-        alert("No se encontró el ticket.");
+    if(!ticket || !resultado || !imagen){
+        alert("No se pudo preparar el ticket.");
         return;
-
     }
 
     if(typeof html2canvas === "undefined"){
-
-        alert(
-            "No se pudo cargar la función para descargar el ticket."
-        );
-
+        alert("No se pudo cargar el generador de tickets PNG.");
         return;
-
     }
 
     try{
 
-        const canvas = await html2canvas(
-            ticket,
-            {
-                backgroundColor: "#ffffff",
-                scale: 2,
-                useCORS: true,
-                logging: false
-            }
-        );
+        const copia = ticket.cloneNode(true);
 
-        const enlace =
-            document.createElement("a");
+        copia.id = "ticketPNGTemporal";
+        copia.style.display = "block";
+        copia.style.position = "fixed";
+        copia.style.left = "-10000px";
+        copia.style.top = "0";
+        copia.style.width = "390px";
+        copia.style.minHeight = "0";
+        copia.style.height = "auto";
+        copia.style.margin = "0";
+        copia.style.padding = "22px";
+        copia.style.boxSizing = "border-box";
+        copia.style.background = "#fff";
+        copia.style.color = "#111";
+        copia.style.fontFamily = "Arial, Helvetica, sans-serif";
+        copia.style.fontSize = "14px";
+        copia.style.lineHeight = "1.5";
+        copia.style.overflow = "visible";
 
-        const folio =
-            document.getElementById("ticketFolio")?.textContent ||
-            "venta";
+        document.body.appendChild(copia);
 
-        enlace.download =
-            "Ticket-NatNation-" +
-            folio +
-            ".png";
+        const canvas = await html2canvas(copia,{
+            backgroundColor:"#ffffff",
+            scale:3,
+            useCORS:true,
+            allowTaint:false,
+            logging:false
+        });
 
-        enlace.href =
-            canvas.toDataURL("image/png");
+        copia.remove();
 
-        document.body.appendChild(enlace);
-        enlace.click();
-        enlace.remove();
+        const png = canvas.toDataURL("image/png");
+
+        imagen.src = png;
+        imagen.dataset.png = png;
+        imagen.dataset.folio = venta?.folio || "venta";
+
+        if(total){
+            total.textContent = moneda(venta?.total || 0);
+        }
+
+        resultado.style.display = "flex";
 
     }catch(error){
 
-        console.error(
-            "ERROR AL DESCARGAR TICKET:",
-            error
-        );
+        const temporal = document.getElementById("ticketPNGTemporal");
+        if(temporal) temporal.remove();
 
-        alert(
-            "No se pudo descargar el ticket.\n\n" +
-            (error?.message || "Error desconocido")
-        );
+        console.error("Error generando ticket PNG:",error);
+        alert("No se pudo generar el ticket en PNG.\n\n" + error.message);
 
     }
 
 }
 
 
+function descargarTicketPNG(){
+
+    const imagen = document.getElementById("ticketPNG");
+
+    if(!imagen || !imagen.dataset.png){
+        alert("No hay un ticket disponible para descargar.");
+        return;
+    }
+
+    const enlace = document.createElement("a");
+
+    enlace.download =
+        "Ticket-NatNation-" +
+        (imagen.dataset.folio || "venta") +
+        ".png";
+
+    enlace.href = imagen.dataset.png;
+    enlace.click();
+
+}
+
+
+function imprimirTicketPNG(){
+
+    const imagen = document.getElementById("ticketPNG");
+
+    if(!imagen || !imagen.src){
+        alert("No hay un ticket disponible para imprimir.");
+        return;
+    }
+
+    const ventana = window.open("","_blank");
+
+    if(!ventana){
+        alert("El navegador bloqueó la ventana de impresión. Permite ventanas emergentes para este sitio.");
+        return;
+    }
+
+    ventana.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Ticket Nat.Nation</title>
+            <style>
+                @page{margin:0;}
+                html,body{margin:0;padding:0;background:#fff;}
+                body{display:flex;justify-content:center;align-items:flex-start;}
+                img{display:block;width:100%;max-width:390px;height:auto;}
+            </style>
+        </head>
+        <body>
+            <img src="${imagen.src}" onload="setTimeout(function(){window.print();},200);">
+        </body>
+        </html>
+    `);
+
+    ventana.document.close();
+
+}
+
+
+function cerrarTicketResultado(){
+
+    const resultado = document.getElementById("ticketResultado");
+
+    if(resultado){
+        resultado.style.display = "none";
+    }
+
+}
+
+    
 /* =====================================================
    RESTAURAR DATOS DE PRUEBA
 ===================================================== */
@@ -5266,8 +5485,7 @@ document.addEventListener(
 </script>
 
 <!-- Librería para convertir el ticket en imagen -->
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>    
-
+    
 </body>
 </html>
