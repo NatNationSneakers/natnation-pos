@@ -3984,7 +3984,7 @@ async function registrarVenta(){
    INTEGRACIÓN CLIP
 ===================================================== */
 
-async function iniciarPagoClip(total, folio){
+async function iniciarPagoClip(total,folio){
 
     const monto = Number(total || 0);
 
@@ -3993,55 +3993,67 @@ async function iniciarPagoClip(total, folio){
         return false;
     }
 
-    try {
+    try{
 
-        console.log("💳 Iniciando pago Clip:", monto, folio);
+        console.log("💳 Enviando cobro a Clip:", monto);
 
-        const { data, error } =
-            await supabaseClient.functions.invoke(
-                "clip-payment",
-                {
-                    body: {
-                        action: "create",
-                        amount: monto,
-                        reference: String(folio)
-                    }
+        const resultadoCrear =
+        await supabaseClient.functions.invoke(
+            "clip-payment",
+            {
+                body:{
+                    action:"create",
+                    amount:monto,
+                    reference:String(folio)
                 }
+            }
+        );
+
+        if(resultadoCrear.error){
+
+            console.error(
+                "Error de Supabase:",
+                resultadoCrear.error
             );
 
-        if(error){
-            console.error("Error Supabase Clip:", error);
-            throw new Error(
-                error.message || "No se pudo conectar con Clip."
-            );
+            throw resultadoCrear.error;
         }
 
-        console.log("Respuesta Clip:", data);
+        const dataCrear =
+        resultadoCrear.data;
 
-        if(!data || !data.ok){
+        console.log(
+            "Respuesta de Clip:",
+            dataCrear
+        );
+
+        if(!dataCrear || !dataCrear.ok){
+
             throw new Error(
-                data?.error || "Clip no aceptó el cobro."
+                dataCrear?.error ||
+                "Clip no aceptó el cobro."
             );
         }
 
         const pinpadRequestId =
-            data.pinpad_request_id;
+        dataCrear.pinpad_request_id;
 
         if(!pinpadRequestId){
+
             throw new Error(
-                "Clip no devolvió el ID del pago."
+                "Clip no devolvió el identificador del pago."
             );
         }
 
         alert(
-            "💳 PAGO CON TARJETA\n\n" +
+            "💳 COBRO EN CLIP\n\n" +
             "Total: " + moneda(monto) +
             "\n\n" +
-            "El cliente puede pagar en la Clip."
+            "El cliente puede pagar en la terminal."
         );
 
         /*
-         * Esperar respuesta de Clip
+         * ESPERAR RESPUESTA DE CLIP
          */
 
         const inicio = Date.now();
@@ -4049,37 +4061,37 @@ async function iniciarPagoClip(total, folio){
 
         while(Date.now() - inicio < tiempoMaximo){
 
-            await new Promise(resolve =>
-                setTimeout(resolve, 2000)
+            await new Promise(function(resolve){
+                setTimeout(resolve,2000);
+            });
+
+            const resultadoEstado =
+            await supabaseClient.functions.invoke(
+                "clip-payment",
+                {
+                    body:{
+                        action:"status",
+                        pinpad_request_id:
+                        pinpadRequestId
+                    }
+                }
             );
 
-            const respuesta =
-                await supabaseClient.functions.invoke(
-                    "clip-payment",
-                    {
-                        body: {
-                            action: "status",
-                            pinpad_request_id:
-                                pinpadRequestId
-                        }
-                    }
-                );
-
-            if(respuesta.error){
+            if(resultadoEstado.error){
 
                 console.error(
                     "Error consultando Clip:",
-                    respuesta.error
+                    resultadoEstado.error
                 );
 
                 continue;
             }
 
             const estado =
-                respuesta.data;
+            resultadoEstado.data;
 
             console.log(
-                "Estado del pago Clip:",
+                "Estado Clip:",
                 estado
             );
 
@@ -4088,7 +4100,7 @@ async function iniciarPagoClip(total, folio){
             }
 
             /*
-             * PAGO APROBADO
+             * APROBADO
              */
 
             if(
@@ -4104,7 +4116,7 @@ async function iniciarPagoClip(total, folio){
             }
 
             /*
-             * PAGO RECHAZADO
+             * RECHAZADO
              */
 
             if(
@@ -4121,7 +4133,7 @@ async function iniciarPagoClip(total, folio){
             }
 
             /*
-             * PAGO CANCELADO
+             * CANCELADO
              */
 
             if(
@@ -4149,24 +4161,22 @@ async function iniciarPagoClip(total, folio){
 
         return false;
 
-    } catch(error){
+    }catch(error){
 
         console.error(
-            "❌ Error en iniciarPagoClip:",
+            "❌ Error en Clip:",
             error
         );
 
         alert(
-            "❌ No se pudo iniciar el pago con Clip.\n\n" +
+            "❌ No se pudo iniciar el cobro en Clip.\n\n" +
             (error?.message || error)
         );
 
         return false;
     }
 }
-
-
-
+    
 /* =====================================================
    FOLIO
 ===================================================== */
