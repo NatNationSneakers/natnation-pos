@@ -1644,21 +1644,325 @@ h2{
 </div>
 
 
-<!-- =====================================================
-     TICKET DE VENTA NAT.NATION SNEAKERS
-===================================================== -->
+/* =====================================================
+   UTILIDADES
+===================================================== */
+
+function moneda(valor){
+
+    return Number(
+        valor || 0
+    ).toLocaleString(
+        "es-MX",
+        {
+            style:"currency",
+            currency:"MXN"
+        }
+    );
+
+}
+
+
+function fecha(valor){
+
+    if(!valor){
+
+        return "—";
+
+    }
+
+
+    return new Date(valor)
+    .toLocaleString(
+        "es-MX",
+        {
+            dateStyle:"short",
+            timeStyle:"short"
+        }
+    );
+
+}
+
+
+function metodoTexto(metodo){
+
+    const nombres = {
+
+        efectivo:"Efectivo",
+
+        transferencia:
+        "Transferencia",
+
+        tarjeta:
+        "Tarjeta / Clip"
+
+    };
+
+
+    return nombres[metodo] ||
+    metodo ||
+    "—";
+
+}
+
+
+function escapeHTML(text){
+
+    return String(
+        text ?? ""
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+function mostrarAlerta(texto){
+
+    const alerta =
+    document.getElementById(
+        "alerta"
+    );
+
+
+    alerta.textContent =
+    texto;
+
+
+    alerta.style.display =
+    "block";
+
+}
+
+
+function ocultarAlerta(){
+
+    document.getElementById(
+        "alerta"
+    ).style.display =
+    "none";
+
+}
+
+
+/* =====================================================
+   CERRAR MODALES AL TOCAR AFUERA
+===================================================== */
+
+document.addEventListener(
+    "click",
+    function(event){
+
+        const modalProducto =
+        document.getElementById(
+            "modalProducto"
+        );
+
+
+        const modalCliente =
+        document.getElementById(
+            "modalCliente"
+        );
+
+
+        if(
+            event.target ===
+            modalProducto
+        ){
+
+            cerrarProducto();
+
+        }
+
+
+        if(
+            event.target ===
+            modalCliente
+        ){
+
+            cerrarCliente();
+
+        }
+
+    }
+);
+
+</script>
+
+<!-- ============================= -->
+<!-- TICKET DE VENTA -->
+<!-- ============================= -->
+
+<div id="ticketModal" class="ticket-modal" style="display:none;">
+
+    <div class="ticket-contenedor">
+
+        <div id="ticketImagen" class="ticket">
+
+            <div class="ticket-logo">
+                <img
+                    src="https://nasvzzdzkljozyhhjize.supabase.co/storage/v1/object/public/pos/branding/logo"
+                    alt="Nat.Nation Sneakers"
+                >
+            </div>
+
+            <div class="ticket-negocio">
+                <strong>Nat.Nation Sneakers</strong>
+                <div>Donde empieza tu estilo</div>
+            </div>
+
+            <div class="ticket-linea"></div>
+
+            <div class="ticket-datos">
+
+                <div>
+                    <strong>Folio:</strong>
+                    <span id="ticketFolio">—</span>
+                </div>
+
+                <div>
+                    <strong>Fecha:</strong>
+                    <span id="ticketFecha">—</span>
+                </div>
+
+                <div>
+                    <strong>Cliente:</strong>
+                    <span id="ticketCliente">Venta sin cliente</span>
+                </div>
+
+            </div>
+
+            <div class="ticket-linea"></div>
+
+            <div id="ticketProductos"></div>
+
+            <div class="ticket-linea"></div>
+
+            <div class="ticket-totales">
+
+                <div>
+                    <span>Subtotal</span>
+                    <strong id="ticketSubtotal">$0.00</strong>
+                </div>
+
+                <div class="ticket-total">
+                    <span>TOTAL</span>
+                    <strong id="ticketTotal">$0.00</strong>
+                </div>
+
+            </div>
+
+            <div class="ticket-linea"></div>
+
+            <div class="ticket-pago">
+
+                <div>
+                    <strong>Forma de pago:</strong>
+                    <span id="ticketMetodo">Efectivo</span>
+                </div>
+
+                <div id="ticketEfectivoFila">
+                    <strong>Efectivo recibido:</strong>
+                    <span id="ticketEfectivo">$0.00</span>
+                </div>
+
+                <div id="ticketCambioFila">
+                    <strong>Cambio:</strong>
+                    <span id="ticketCambio">$0.00</span>
+                </div>
+
+            </div>
+
+            <div class="ticket-linea"></div>
+
+            <div class="ticket-puntos">
+
+                <div>
+                    <strong>Puntos generados:</strong>
+                    <span id="ticketPuntos">0</span>
+                </div>
+
+            </div>
+
+            <div class="ticket-mensaje">
+
+                <strong>¡Gracias por tu compra!</strong>
+
+                <br>
+
+                Nat.Nation Sneakers
+
+                <br>
+
+                Donde empieza tu estilo
+
+            </div>
+
+        </div>
+
+
+        <div class="ticket-botones">
+
+            <button
+                type="button"
+                class="btn-ticket-descargar"
+                onclick="descargarTicket()"
+            >
+                ⬇️ Descargar ticket
+            </button>
+
+            <button
+                type="button"
+                class="btn-ticket-imprimir"
+                onclick="imprimirTicket()"
+            >
+                🖨️ Imprimir ticket
+            </button>
+
+            <button
+                type="button"
+                class="btn-ticket-cerrar"
+                onclick="cerrarTicket()"
+            >
+                ✕ Cerrar
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
 
 <style>
 
-/* =====================================================
-   MODAL DEL TICKET
-===================================================== */
+/* ============================= */
+/* VENTANA DEL TICKET */
+/* ============================= */
 
 .ticket-modal{
     position:fixed;
     inset:0;
     z-index:99999;
-    background:rgba(0,0,0,.70);
+    background:rgba(0,0,0,.65);
     display:flex;
     justify-content:center;
     align-items:center;
@@ -1669,23 +1973,23 @@ h2{
 .ticket-contenedor{
     width:100%;
     max-width:430px;
-    background:#f3f3f3;
+    background:#f5f5f5;
     border-radius:18px;
     padding:18px;
-    box-shadow:0 20px 60px rgba(0,0,0,.35);
+    box-shadow:0 20px 60px rgba(0,0,0,.3);
 }
 
 
-/* =====================================================
-   TICKET
-===================================================== */
+/* ============================= */
+/* TICKET */
+/* ============================= */
 
 .ticket{
     width:80mm;
     max-width:100%;
-    margin:0 auto;
-    background:#ffffff;
-    color:#222222;
+    margin:auto;
+    background:white;
+    color:#222;
     padding:18px 14px;
     font-family:Arial,Helvetica,sans-serif;
     font-size:12px;
@@ -1711,7 +2015,6 @@ h2{
 .ticket-negocio strong{
     display:block;
     font-size:17px;
-    font-weight:bold;
 }
 
 .ticket-negocio div{
@@ -1719,92 +2022,46 @@ h2{
     color:#777;
 }
 
-.ticket-contacto{
-    text-align:center;
-    font-size:9.5px;
-    line-height:1.4;
-    margin-top:7px;
-    color:#444;
-}
-
 .ticket-linea{
     border-top:1px dashed #777;
     margin:11px 0;
 }
-
-
-/* =====================================================
-   DATOS
-===================================================== */
 
 .ticket-datos > div,
 .ticket-pago > div,
 .ticket-puntos > div{
     display:flex;
     justify-content:space-between;
-    align-items:flex-start;
     gap:8px;
     margin:5px 0;
 }
 
-.ticket-datos strong,
-.ticket-pago strong,
-.ticket-puntos strong{
-    flex-shrink:0;
-}
-
 .ticket-datos span,
-.ticket-pago span,
-.ticket-puntos span{
+.ticket-pago span{
     text-align:right;
-    max-width:65%;
-    word-break:break-word;
+    max-width:60%;
 }
-
-
-/* =====================================================
-   PRODUCTOS
-===================================================== */
 
 .ticket-producto{
-    margin:9px 0;
+    margin:8px 0;
 }
 
 .ticket-producto-nombre{
     font-weight:bold;
     font-size:13px;
-    margin-bottom:4px;
-    word-break:break-word;
+    margin-bottom:3px;
 }
 
 .ticket-producto-info{
     display:flex;
     justify-content:space-between;
-    align-items:center;
-    gap:8px;
     color:#444;
     font-size:11px;
 }
 
-.ticket-producto-info strong{
-    white-space:nowrap;
-}
-
-.ticket-producto-talla{
-    font-size:10px;
-    color:#777;
-    margin-top:3px;
-}
-
-
-/* =====================================================
-   TOTALES
-===================================================== */
-
 .ticket-totales > div{
     display:flex;
     justify-content:space-between;
-    align-items:center;
     margin:5px 0;
 }
 
@@ -1817,11 +2074,6 @@ h2{
     font-size:20px;
 }
 
-
-/* =====================================================
-   MENSAJE FINAL
-===================================================== */
-
 .ticket-mensaje{
     text-align:center;
     margin-top:15px;
@@ -1829,11 +2081,6 @@ h2{
     line-height:1.5;
     color:#555;
 }
-
-
-/* =====================================================
-   BOTONES
-===================================================== */
 
 .ticket-botones{
     display:flex;
@@ -1843,7 +2090,6 @@ h2{
 }
 
 .ticket-botones button{
-    width:100%;
     border:0;
     border-radius:10px;
     padding:13px;
@@ -1854,23 +2100,23 @@ h2{
 
 .btn-ticket-descargar{
     background:#e91e83;
-    color:#ffffff;
+    color:white;
 }
 
 .btn-ticket-imprimir{
-    background:#222222;
-    color:#ffffff;
+    background:#222;
+    color:white;
 }
 
 .btn-ticket-cerrar{
     background:#e5e5e5;
-    color:#333333;
+    color:#333;
 }
 
 
-/* =====================================================
-   IMPRESIÓN
-===================================================== */
+/* ============================= */
+/* IMPRESIÓN */
+/* ============================= */
 
 @media print{
 
@@ -1881,10 +2127,10 @@ h2{
 
     html,
     body{
-        width:80mm !important;
+        width:80mm;
         margin:0 !important;
         padding:0 !important;
-        background:#ffffff !important;
+        background:white !important;
     }
 
     body *{
@@ -1904,7 +2150,7 @@ h2{
         min-height:0 !important;
         padding:0 !important;
         margin:0 !important;
-        background:#ffffff !important;
+        background:white !important;
         display:block !important;
     }
 
@@ -1913,7 +2159,7 @@ h2{
         max-width:80mm !important;
         padding:0 !important;
         margin:0 !important;
-        background:#ffffff !important;
+        background:white !important;
         box-shadow:none !important;
         border-radius:0 !important;
     }
@@ -1933,9 +2179,9 @@ h2{
 }
 
 
-/* =====================================================
-   CELULAR / IPAD
-===================================================== */
+/* ============================= */
+/* CELULAR / IPAD */
+/* ============================= */
 
 @media screen and (max-width:500px){
 
@@ -1947,726 +2193,254 @@ h2{
 
 </style>
 
-<!-- =====================================================
-     MODAL
-===================================================== -->
-
-<div
-    id="ticketModal"
-    class="ticket-modal"
-    style="display:none;"
->
-
-<div class="ticket-contenedor">
-
-
-    <!-- =================================================
-         TICKET QUE SE IMPRIME / DESCARGA
-    ================================================== -->
-
-    <div
-        id="ticketImagen"
-        class="ticket"
-    >
-
-
-        <!-- LOGO -->
-
-        <div class="ticket-logo">
-
-            <img
-                src="https://nasvzzdzkljozyhhjize.supabase.co/storage/v1/object/public/pos/branding/logo"
-                alt="Nat.Nation Sneakers"
-                crossorigin="anonymous"
-            >
-
-        </div>
-
-
-        <!-- NEGOCIO -->
-
-        <div class="ticket-negocio">
-
-            <strong>
-                Nat.Nation Sneakers
-            </strong>
-
-            <div>
-                Donde empieza tu estilo.
-            </div>
-
-        </div>
-
-
-        <!-- DIRECCIÓN Y TELÉFONO -->
-
-        <div class="ticket-contacto">
-
-            Calle Juan Clímaco Ramírez SNVC<br>
-
-            San Andrés, 55780 Jaltenco, Méx.<br>
-
-            Tel. 5624570336
-
-        </div>
-
-
-        <div class="ticket-linea"></div>
-
-
-        <!-- DATOS DE VENTA -->
-
-        <div class="ticket-datos">
-
-            <div>
-
-                <strong>
-                    Folio:
-                </strong>
-
-                <span id="ticketFolio">
-                    —
-                </span>
-
-            </div>
-
-
-            <div>
-
-                <strong>
-                    Fecha:
-                </strong>
-
-                <span id="ticketFecha">
-                    —
-                </span>
-
-            </div>
-
-
-            <div>
-
-                <strong>
-                    Cliente:
-                </strong>
-
-                <span id="ticketCliente">
-                    Venta sin cliente
-                </span>
-
-            </div>
-
-        </div>
-
-
-        <div class="ticket-linea"></div>
-
-
-        <!-- PRODUCTOS -->
-
-        <div id="ticketProductos">
-
-        </div>
-
-
-        <div class="ticket-linea"></div>
-
-
-        <!-- TOTALES -->
-
-        <div class="ticket-totales">
-
-
-            <div>
-
-                <span>
-                    Subtotal
-                </span>
-
-                <strong id="ticketSubtotal">
-                    $0.00
-                </strong>
-
-            </div>
-
-
-            <div class="ticket-total">
-
-                <span>
-                    TOTAL
-                </span>
-
-                <strong id="ticketTotal">
-                    $0.00
-                </strong>
-
-            </div>
-
-
-        </div>
-
-
-        <div class="ticket-linea"></div>
-
-
-        <!-- PAGO -->
-
-        <div class="ticket-pago">
-
-
-            <div>
-
-                <strong>
-                    Forma de pago:
-                </strong>
-
-                <span id="ticketMetodo">
-                    Efectivo
-                </span>
-
-            </div>
-
-
-            <div
-                id="ticketEfectivoFila"
-            >
-
-                <strong>
-                    Efectivo recibido:
-                </strong>
-
-                <span id="ticketEfectivo">
-                    $0.00
-                </span>
-
-            </div>
-
-
-            <div
-                id="ticketCambioFila"
-            >
-
-                <strong>
-                    Cambio:
-                </strong>
-
-                <span id="ticketCambio">
-                    $0.00
-                </span>
-
-            </div>
-
-
-        </div>
-
-
-        <div class="ticket-linea"></div>
-
-
-        <!-- PUNTOS -->
-
-        <div class="ticket-puntos">
-
-            <div>
-
-                <strong>
-                    Puntos generados:
-                </strong>
-
-                <span id="ticketPuntos">
-                    0
-                </span>
-
-            </div>
-
-        </div>
-
-
-        <div class="ticket-linea"></div>
-
-
-        <!-- MENSAJE -->
-
-        <div class="ticket-mensaje">
-
-            <strong>
-                ¡Gracias por tu compra!
-            </strong>
-
-            <br>
-
-            Nat.Nation Sneakers
-
-            <br>
-
-            Donde empieza tu estilo.
-
-            <br><br>
-
-            ¡Te esperamos pronto!
-
-        </div>
-
-
-    </div>
-
-
-    <!-- =================================================
-         BOTONES
-    ================================================== -->
-
-    <div class="ticket-botones">
-
-
-        <button
-            type="button"
-            class="btn-ticket-descargar"
-            onclick="descargarTicket()"
-        >
-
-            ⬇️ Descargar ticket
-
-        </button>
-
-
-        <button
-            type="button"
-            class="btn-ticket-imprimir"
-            onclick="imprimirTicket()"
-        >
-
-            🖨️ Imprimir ticket
-
-        </button>
-
-
-        <button
-            type="button"
-            class="btn-ticket-cerrar"
-            onclick="cerrarTicket()"
-        >
-
-            ✕ Cerrar
-
-        </button>
-
-
-    </div>
-
-
-</div>
-
-</div>
 
 <script>
 
-/* =====================================================
-   TICKET
-===================================================== */
+/* ============================= */
+/* MOSTRAR TICKET */
+/* ============================= */
 
-function prepararTicket(
-    venta,
-    metodo,
-    efectivo,
-    cambio
-){
+function mostrarTicket(datos){
 
-    try{
+    console.log("DATOS DEL TICKET:", datos);
 
+    /* ============================= */
+    /* DATOS PRINCIPALES */
+    /* ============================= */
 
-        if(!venta){
+    document.getElementById("ticketFolio").textContent =
+        datos.folio || "—";
 
-            console.error(
-                "No se recibió la venta."
-            );
+    document.getElementById("ticketFecha").textContent =
+        datos.fecha ||
+        new Date().toLocaleString("es-MX");
 
-            return;
+    document.getElementById("ticketCliente").textContent =
+        datos.cliente ||
+        "Venta sin cliente";
 
-        }
-
-
-        /* =================================================
-           FOLIO
-        ================================================= */
-
-        const folio =
-            venta.folio ||
-            "—";
+    document.getElementById("ticketMetodo").textContent =
+        datos.metodoPago ||
+        datos.metodo_pago ||
+        "Efectivo";
 
 
-        document.getElementById(
-            "ticketFolio"
-        ).textContent =
-            folio;
+    /* ============================= */
+    /* TOTAL */
+    /* ============================= */
+
+    const total =
+        Number(
+            datos.total ||
+            datos.totalVenta ||
+            0
+        );
+
+    document.getElementById("ticketSubtotal").textContent =
+        "$" + total.toFixed(2);
+
+    document.getElementById("ticketTotal").textContent =
+        "$" + total.toFixed(2);
 
 
-        /* =================================================
-           FECHA
-        ================================================= */
+    /* ============================= */
+    /* EFECTIVO Y CAMBIO */
+    /* ============================= */
 
-        document.getElementById(
-            "ticketFecha"
-        ).textContent =
-            fecha(
-                venta.fecha ||
-                venta.created_at
-            );
+    const efectivo =
+        Number(
+            datos.efectivo ||
+            datos.efectivo_recibido ||
+            0
+        );
+
+    const cambio =
+        Number(
+            datos.cambio ||
+            0
+        );
+
+    document.getElementById("ticketEfectivo").textContent =
+        "$" + efectivo.toFixed(2);
+
+    document.getElementById("ticketCambio").textContent =
+        "$" + cambio.toFixed(2);
 
 
-        /* =================================================
-           CLIENTE
-        ================================================= */
+    /* ============================= */
+    /* PUNTOS */
+    /* ============================= */
 
-        let nombreCliente =
-            "Venta sin cliente";
+    document.getElementById("ticketPuntos").textContent =
+        Number(
+            datos.puntos ||
+            datos.puntos_ganados ||
+            0
+        );
 
 
-        if(
-            venta.cliente_id &&
-            typeof clientes !== "undefined"
-        ){
+    /* ============================= */
+    /* PRODUCTOS */
+    /* ============================= */
 
-            const cliente =
-                clientes.find(
-                    function(c){
+    const contenedorProductos =
+        document.getElementById("ticketProductos");
 
-                        return c.id ===
-                        venta.cliente_id;
+    contenedorProductos.innerHTML = "";
 
-                    }
+    const productos =
+        datos.productos ||
+        datos.detalles ||
+        [];
+
+    if(productos.length > 0){
+
+        productos.forEach(producto => {
+
+            const div =
+                document.createElement("div");
+
+            div.className =
+                "ticket-producto";
+
+            const nombre =
+                producto.nombre ||
+                producto.producto_nombre ||
+                "Producto";
+
+            const cantidad =
+                Number(producto.cantidad || 1);
+
+            const precio =
+                Number(
+                    producto.precio ||
+                    producto.precio_unitario ||
+                    0
                 );
 
+            const subtotal =
+                Number(
+                    producto.subtotal ||
+                    cantidad * precio
+                );
 
-            if(cliente){
+            const talla =
+                producto.talla ||
+                "";
 
-                nombreCliente =
-                    cliente.nombre ||
-                    "Venta sin cliente";
-
-            }
-
-        }
-
-
-        document.getElementById(
-            "ticketCliente"
-        ).textContent =
-            nombreCliente;
-
-
-        /* =================================================
-           MÉTODO DE PAGO
-        ================================================= */
-
-        document.getElementById(
-            "ticketMetodo"
-        ).textContent =
-            metodoTexto(metodo);
-
-
-        /* =================================================
-           TOTAL
-        ================================================= */
-
-        const total =
-            Number(
-                venta.total || 0
-            );
-
-
-        document.getElementById(
-            "ticketSubtotal"
-        ).textContent =
-            moneda(total);
-
-
-        document.getElementById(
-            "ticketTotal"
-        ).textContent =
-            moneda(total);
-
-
-        /* =================================================
-           EFECTIVO
-        ================================================= */
-
-        document.getElementById(
-            "ticketEfectivo"
-        ).textContent =
-            moneda(
-                efectivo || 0
-            );
-
-
-        /* =================================================
-           CAMBIO
-        ================================================= */
-
-        document.getElementById(
-            "ticketCambio"
-        ).textContent =
-            moneda(
-                cambio || 0
-            );
-
-
-        /* =================================================
-           PUNTOS
-        ================================================= */
-
-        const puntos =
-            Number(
-                venta.puntos_ganados || 0
-            );
-
-
-        document.getElementById(
-            "ticketPuntos"
-        ).textContent =
-            puntos;
-
-
-        /* =================================================
-           PRODUCTOS
-        ================================================= */
-
-        const contenedor =
-            document.getElementById(
-                "ticketProductos"
-            );
-
-
-        contenedor.innerHTML =
-            "";
-
-
-        if(
-            typeof carrito === "undefined" ||
-            !Array.isArray(carrito) ||
-            carrito.length === 0
-        ){
-
-            contenedor.innerHTML = `
-
-                <div style="
-                    text-align:center;
-                    color:#999;
-                    padding:10px 0;
-                ">
-
-                    Sin productos
-
+            div.innerHTML = `
+                <div class="ticket-producto-nombre">
+                    ${nombre}
                 </div>
 
+                <div class="ticket-producto-info">
+                    <span>
+                        ${cantidad} x $${precio.toFixed(2)}
+                    </span>
+
+                    <strong>
+                        $${subtotal.toFixed(2)}
+                    </strong>
+                </div>
+
+                ${
+                    talla
+                    ? `
+                        <div style="
+                            font-size:11px;
+                            color:#777;
+                            margin-top:3px;
+                        ">
+                            Talla: ${talla}
+                        </div>
+                    `
+                    : ""
+                }
             `;
 
-        }else{
+            contenedorProductos.appendChild(div);
 
+        });
 
-            carrito.forEach(
-                function(item){
+    }else{
 
-                    const cantidad =
-                        Number(
-                            item.cantidad || 1
-                        );
-
-
-                    const precio =
-                        Number(
-                            item.precio_unitario || 0
-                        );
-
-
-                    const subtotal =
-                        cantidad *
-                        precio;
-
-
-                    const producto =
-                        document.createElement(
-                            "div"
-                        );
-
-
-                    producto.className =
-                        "ticket-producto";
-
-
-                    producto.innerHTML = `
-
-                        <div
-                            class="ticket-producto-nombre"
-                        >
-
-                            ${escapeHTML(
-                                item.producto_nombre ||
-                                "Producto"
-                            )}
-
-                        </div>
-
-
-                        <div
-                            class="ticket-producto-info"
-                        >
-
-                            <span>
-
-                                ${cantidad}
-                                x
-                                ${moneda(precio)}
-
-                            </span>
-
-
-                            <strong>
-
-                                ${moneda(subtotal)}
-
-                            </strong>
-
-                        </div>
-
-
-                        <div
-                            class="ticket-producto-talla"
-                        >
-
-                            Talla:
-                            ${escapeHTML(
-                                item.talla || "—"
-                            )}
-
-                        </div>
-
-                    `;
-
-
-                    contenedor.appendChild(
-                        producto
-                    );
-
-                }
-            );
-
-        }
-
-
-        /* =================================================
-           EFECTIVO / NO EFECTIVO
-        ================================================= */
-
-        const esEfectivo =
-            metodo === "efectivo";
-
-
-        document.getElementById(
-            "ticketEfectivoFila"
-        ).style.display =
-            esEfectivo
-                ? "flex"
-                : "none";
-
-
-        document.getElementById(
-            "ticketCambioFila"
-        ).style.display =
-            esEfectivo
-                ? "flex"
-                : "none";
-
-
-        /* =================================================
-           MOSTRAR TICKET
-        ================================================= */
-
-        const modal =
-            document.getElementById(
-                "ticketModal"
-            );
-
-
-        if(!modal){
-
-            console.error(
-                "No existe #ticketModal"
-            );
-
-            return;
-
-        }
-
-
-        modal.style.display =
-            "flex";
-
-
-        console.log(
-            "✅ Ticket preparado correctamente."
-        );
-
+        contenedorProductos.innerHTML = `
+            <div style="
+                text-align:center;
+                color:#999;
+                padding:10px;
+            ">
+                Sin productos
+            </div>
+        `;
 
     }
-    catch(error){
 
-        console.error(
-            "ERROR PREPARANDO TICKET:",
-            error
-        );
 
-        alert(
-            "No se pudo preparar el ticket:\n\n" +
-            error.message
-        );
+    /* ============================= */
+    /* EFECTIVO / CAMBIO */
+    /* ============================= */
 
-    }
+    const metodo =
+        String(
+            datos.metodoPago ||
+            datos.metodo_pago ||
+            "Efectivo"
+        ).toLowerCase();
+
+    const esEfectivo =
+        metodo.includes("efectivo");
+
+
+    document.getElementById(
+        "ticketEfectivoFila"
+    ).style.display =
+        esEfectivo ? "flex" : "none";
+
+
+    document.getElementById(
+        "ticketCambioFila"
+    ).style.display =
+        esEfectivo ? "flex" : "none";
+
+
+    /* ============================= */
+    /* MOSTRAR TICKET */
+    /* ============================= */
+
+    document.getElementById(
+        "ticketModal"
+    ).style.display = "flex";
 
 }
 
 
-/* =====================================================
-   CERRAR TICKET
-===================================================== */
+/* ============================= */
+/* CERRAR TICKET */
+/* ============================= */
 
 function cerrarTicket(){
 
-    const modal =
-        document.getElementById(
-            "ticketModal"
-        );
-
-
-    if(modal){
-
-        modal.style.display =
-            "none";
-
-    }
+    document.getElementById("ticketModal")
+        .style.display = "none";
 
 }
 
 
-/* =====================================================
-   IMPRIMIR TICKET
-===================================================== */
+/* ============================= */
+/* IMPRIMIR TICKET */
+/* ============================= */
 
 function imprimirTicket(){
 
     const ticket =
-        document.getElementById(
-            "ticketImagen"
-        );
-
+        document.getElementById("ticketImagen");
 
     if(!ticket){
 
-        alert(
-            "No se encontró el ticket."
-        );
+        alert("No se encontró el ticket.");
 
         return;
-
     }
 
 
@@ -2681,461 +2455,273 @@ function imprimirTicket(){
     if(!ventana){
 
         alert(
-            "El navegador bloqueó la ventana.\n\n" +
-            "Permite ventanas emergentes para este sitio."
+            "El navegador bloqueó la ventana de impresión."
         );
 
         return;
-
     }
-
-
-    ventana.document.open();
 
 
     ventana.document.write(`
 
-<!DOCTYPE html>
+        <!DOCTYPE html>
+
+        <html>
+
+        <head>
+
+            <meta charset="UTF-8">
+
+            <title>
+                Ticket Nat.Nation Sneakers
+            </title>
+
+            <style>
+
+                @page{
+                    size:80mm auto;
+                    margin:0;
+                }
+
+                *{
+                    box-sizing:border-box;
+                }
+
+                html,
+                body{
+                    width:80mm;
+                    margin:0;
+                    padding:0;
+                    background:white;
+                }
+
+                body{
+                    font-family:Arial,Helvetica,sans-serif;
+                    color:#222;
+                }
+
+                .ticket{
+                    width:80mm;
+                    padding:12px 10px;
+                    background:white;
+                }
+
+                .ticket-logo{
+                    text-align:center;
+                    margin-bottom:6px;
+                }
+
+                .ticket-logo img{
+                    width:65px;
+                    height:65px;
+                    object-fit:contain;
+                }
+
+                .ticket-negocio{
+                    text-align:center;
+                    line-height:1.4;
+                }
+
+                .ticket-negocio strong{
+                    display:block;
+                    font-size:17px;
+                }
+
+                .ticket-negocio div{
+                    font-size:10px;
+                    color:#777;
+                }
+
+                .ticket-linea{
+                    border-top:1px dashed #777;
+                    margin:11px 0;
+                }
+
+                .ticket-datos > div,
+                .ticket-pago > div,
+                .ticket-puntos > div{
+                    display:flex;
+                    justify-content:space-between;
+                    gap:8px;
+                    margin:5px 0;
+                    font-size:11px;
+                }
+
+                .ticket-datos span,
+                .ticket-pago span{
+                    text-align:right;
+                }
+
+                .ticket-producto{
+                    margin:8px 0;
+                }
+
+                .ticket-producto-nombre{
+                    font-weight:bold;
+                    font-size:13px;
+                }
+
+                .ticket-producto-info{
+                    display:flex;
+                    justify-content:space-between;
+                    font-size:11px;
+                }
 
-<html lang="es">
+                .ticket-totales > div{
+                    display:flex;
+                    justify-content:space-between;
+                    margin:5px 0;
+                    font-size:12px;
+                }
 
-<head>
+                .ticket-total{
+                    font-size:17px;
+                    margin-top:9px !important;
+                }
 
-<meta charset="UTF-8">
+                .ticket-total strong{
+                    font-size:20px;
+                }
 
-<title>
-Ticket Nat.Nation Sneakers
-</title>
+                .ticket-mensaje{
+                    text-align:center;
+                    margin-top:15px;
+                    font-size:10px;
+                    line-height:1.5;
+                    color:#555;
+                }
 
+            </style>
 
-<style>
+        </head>
 
-@page{
+        <body>
 
-    size:80mm auto;
+            ${ticket.outerHTML}
 
-    margin:0;
+        </body>
 
-}
+        </html>
 
+    `);
 
-*{
 
-    box-sizing:border-box;
+    ventana.document.close();
 
-}
 
-
-html,
-body{
-
-    width:80mm;
-
-    margin:0;
-
-    padding:0;
-
-    background:white;
-
-}
-
-
-body{
-
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
-    color:#222;
-
-}
-
-
-.ticket{
-
-    width:80mm;
-
-    padding:12px 10px;
-
-    background:white;
-
-}
-
-
-.ticket-logo{
-
-    text-align:center;
-
-    margin-bottom:6px;
-
-}
-
-
-.ticket-logo img{
-
-    width:65px;
-
-    height:65px;
-
-    object-fit:contain;
-
-}
-
-
-.ticket-negocio{
-
-    text-align:center;
-
-    line-height:1.4;
-
-}
-
-
-.ticket-negocio strong{
-
-    display:block;
-
-    font-size:17px;
-
-}
-
-
-.ticket-negocio div{
-
-    font-size:10px;
-
-    color:#777;
-
-}
-
-
-.ticket-contacto{
-
-    text-align:center;
-
-    font-size:9.5px;
-
-    line-height:1.4;
-
-    margin-top:7px;
-
-    color:#444;
-
-}
-
-
-.ticket-linea{
-
-    border-top:
-        1px dashed #777;
-
-    margin:11px 0;
-
-}
-
-
-.ticket-datos > div,
-.ticket-pago > div,
-.ticket-puntos > div{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:flex-start;
-
-    gap:8px;
-
-    margin:5px 0;
-
-    font-size:11px;
-
-}
-
-
-.ticket-producto{
-
-    margin:9px 0;
-
-}
-
-
-.ticket-producto-nombre{
-
-    font-weight:bold;
-
-    font-size:13px;
-
-    margin-bottom:4px;
-
-}
-
-
-.ticket-producto-info{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    gap:8px;
-
-    font-size:11px;
-
-}
-
-
-.ticket-producto-talla{
-
-    font-size:10px;
-
-    color:#777;
-
-    margin-top:3px;
-
-}
-
-
-.ticket-totales > div{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    margin:5px 0;
-
-}
-
-
-.ticket-total{
-
-    font-size:17px;
-
-    margin-top:9px !important;
-
-}
-
-
-.ticket-total strong{
-
-    font-size:20px;
-
-}
-
-
-.ticket-mensaje{
-
-    text-align:center;
-
-    margin-top:15px;
-
-    font-size:10px;
-
-    line-height:1.5;
-
-    color:#555;
-
-}
-
-
-.ticket-botones{
-
-    display:none !important;
-
-}
-
-</style>
-
-</head>
-
-<body>
-
-${ticket.outerHTML}
-
-</body>
-
-</html>
-
-`);
-
-
-ventana.document.close();
-
-
-setTimeout(
-    function(){
+    setTimeout(function(){
 
         ventana.focus();
 
         ventana.print();
 
-    },
-    500
-);
+    },500);
 
 }
 
-/* =====================================================
-DESCARGAR TICKET COMO PNG
-===================================================== */
+
+/* ============================= */
+/* DESCARGAR TICKET */
+/* ============================= */
 
 async function descargarTicket(){
 
-const ticket =
-    document.getElementById(
-        "ticketImagen"
-    );
+    const ticket =
+        document.getElementById("ticketImagen");
 
 
-if(!ticket){
+    if(!ticket){
 
-    alert(
-        "No se encontró el ticket."
-    );
+        alert("No se encontró el ticket.");
 
-    return;
-
-}
+        return;
+    }
 
 
-try{
+    try{
+
+        const canvas =
+            document.createElement("canvas");
+
+        const ancho = 800;
+
+        const escala =
+            ancho / ticket.offsetWidth;
+
+        const alto =
+            ticket.offsetHeight * escala;
 
 
-    /*
-     * Creamos una copia del ticket
-     * para convertirla en imagen.
-     */
-
-    const ancho =
-        800;
+        canvas.width = ancho;
+        canvas.height = alto;
 
 
-    const anchoOriginal =
-        ticket.offsetWidth ||
-        302;
+        const ctx =
+            canvas.getContext("2d");
 
 
-    const altoOriginal =
-        ticket.offsetHeight ||
-        600;
+        ctx.fillStyle = "#ffffff";
 
-
-    const escala =
-        ancho /
-        anchoOriginal;
-
-
-    const alto =
-        Math.ceil(
-            altoOriginal *
-            escala
+        ctx.fillRect(
+            0,
+            0,
+            canvas.width,
+            canvas.height
         );
 
 
-    const contenido =
-        ticket.innerHTML
-        .replace(
-            /<img([^>]+)>/gi,
-            "<img$1>"
-        );
+        const imagen =
+            new Image();
+
+        imagen.crossOrigin =
+            "anonymous";
 
 
-    const svg = `
+        const svg =
+            `
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="${ticket.offsetWidth}"
+                height="${ticket.offsetHeight}"
+            >
 
-<svg
-xmlns="http://www.w3.org/2000/svg"
-width="${ancho}"
-height="${alto}"
-viewBox="0 0 ${anchoOriginal} ${altoOriginal}"
+                <foreignObject
+                    width="100%"
+                    height="100%"
+                >
 
+                    <div
+                        xmlns="http://www.w3.org/1999/xhtml"
+                        style="
+                            width:${ticket.offsetWidth}px;
+                            background:white;
+                        "
+                    >
 
+                        ${ticket.innerHTML}
 
-<foreignObject
-    x="0"
-    y="0"
-    width="${anchoOriginal}"
-    height="${altoOriginal}"
->
+                    </div>
 
-    <div
-        xmlns="http://www.w3.org/1999/xhtml"
-        style="
-            width:${anchoOriginal}px;
-            min-height:${altoOriginal}px;
-            background:#ffffff;
-            color:#222222;
-            font-family:Arial,Helvetica,sans-serif;
-            font-size:12px;
-            padding:12px 10px;
-            box-sizing:border-box;
-        "
-    >
+                </foreignObject>
 
-        ${contenido}
-
-    </div>
-
-</foreignObject>
-
-</svg>
-
-    `;
+            </svg>
+            `;
 
 
-    const blob =
-        new Blob(
-            [svg],
-            {
-                type:
-                    "image/svg+xml;charset=utf-8"
-            }
-        );
-
-
-    const url =
-        URL.createObjectURL(
-            blob
-        );
-
-
-    const imagen =
-        new Image();
-
-
-    imagen.onload =
-        function(){
-
-            const canvas =
-                document.createElement(
-                    "canvas"
-                );
-
-
-            canvas.width =
-                ancho;
-
-
-            canvas.height =
-                alto;
-
-
-            const ctx =
-                canvas.getContext(
-                    "2d"
-                );
-
-
-            ctx.fillStyle =
-                "#ffffff";
-
-
-            ctx.fillRect(
-                0,
-                0,
-                canvas.width,
-                canvas.height
+        const blob =
+            new Blob(
+                [svg],
+                {
+                    type:"image/svg+xml"
+                }
             );
 
+
+        const url =
+            URL.createObjectURL(blob);
+
+
+        imagen.onload = function(){
 
             ctx.drawImage(
                 imagen,
@@ -3146,193 +2732,2310 @@ viewBox="0 0 ${anchoOriginal} ${altoOriginal}"
             );
 
 
-            URL.revokeObjectURL(
-                url
-            );
+            URL.revokeObjectURL(url);
 
 
-            canvas.toBlob(
-                function(blobPNG){
+            canvas.toBlob(function(blob){
 
-                    if(!blobPNG){
+                const enlace =
+                    document.createElement("a");
 
-                        alert(
-                            "No se pudo crear el PNG."
-                        );
+                enlace.href =
+                    URL.createObjectURL(blob);
 
-                        return;
+                enlace.download =
+                    "Ticket-NatNation-" +
+                    Date.now() +
+                    ".png";
 
-                    }
+                enlace.click();
 
-
-                    const urlPNG =
-                        URL.createObjectURL(
-                            blobPNG
-                        );
-
-
-                    const enlace =
-                        document.createElement(
-                            "a"
-                        );
-
-
-                    enlace.href =
-                        urlPNG;
-
-
-                    const folio =
-                        document.getElementById(
-                            "ticketFolio"
-                        )?.textContent ||
-                        "venta";
-
-
-                    enlace.download =
-                        "Ticket-NatNation-" +
-                        folio +
-                        ".png";
-
-
-                    document.body.appendChild(
-                        enlace
-                    );
-
-
-                    enlace.click();
-
-
-                    enlace.remove();
-
-
-                    setTimeout(
-                        function(){
-
-                            URL.revokeObjectURL(
-                                urlPNG
-                            );
-
-                        },
-                        1000
-                    );
-
-
-                },
-                "image/png"
-            );
+            },"image/png");
 
         };
 
 
-    imagen.onerror =
-        function(){
-
-            URL.revokeObjectURL(
-                url
-            );
+        imagen.src = url;
 
 
-            alert(
-                "No se pudo convertir el ticket a PNG."
-            );
+    }catch(error){
 
-        };
+        console.error(
+            "ERROR AL DESCARGAR TICKET:",
+            error
+        );
 
+        alert(
+            "No se pudo descargar el ticket.\n\n" +
+            error.message
+        );
 
-    imagen.src =
-        url;
-
-
-}
-catch(error){
-
-    console.error(
-        "ERROR PNG:",
-        error
-    );
-
-
-    alert(
-        "No se pudo descargar el ticket.\n\n" +
-        error.message
-    );
+    }
 
 }
 
-}
+</script>
 
-/* =====================================================
-UTILIDADES DEL TICKET
+</body>
+    /* =====================================================
+   UTILIDADES
 ===================================================== */
 
-function monedaTicket(valor){
+function moneda(valor){
 
-return Number(
-    valor || 0
-).toLocaleString(
-    "es-MX",
-    {
-        style:"currency",
-        currency:"MXN"
+    return Number(
+        valor || 0
+    ).toLocaleString(
+        "es-MX",
+        {
+            style:"currency",
+            currency:"MXN"
+        }
+    );
+
+}
+
+
+function fecha(valor){
+
+    if(!valor){
+
+        return "—";
+
     }
-);
+
+
+    return new Date(valor)
+    .toLocaleString(
+        "es-MX",
+        {
+            dateStyle:"short",
+            timeStyle:"short"
+        }
+    );
 
 }
 
-function escapeHTMLTicket(texto){
 
-return String(
-    texto ?? ""
-)
-.replace(
-    /&/g,
-    "&amp;"
-)
-.replace(
-    /</g,
-    "&lt;"
-)
-.replace(
-    />/g,
-    "&gt;"
-)
-.replace(
-    /"/g,
-    "&quot;"
-)
-.replace(
-    /'/g,
-    "&#039;"
-);
+function metodoTexto(metodo){
+
+    const nombres = {
+
+        efectivo:"Efectivo",
+
+        transferencia:
+        "Transferencia",
+
+        tarjeta:
+        "Tarjeta / Clip"
+
+    };
+
+
+    return nombres[metodo] ||
+    metodo ||
+    "—";
 
 }
+
+
+function escapeHTML(text){
+
+    return String(
+        text ?? ""
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+function mostrarAlerta(texto){
+
+    const alerta =
+    document.getElementById(
+        "alerta"
+    );
+
+
+    alerta.textContent =
+    texto;
+
+
+    alerta.style.display =
+    "block";
+
+}
+
+
+function ocultarAlerta(){
+
+    document.getElementById(
+        "alerta"
+    ).style.display =
+    "none";
+
+}
+
 
 /* =====================================================
-CERRAR AL TOCAR AFUERA
+   CERRAR MODALES AL TOCAR AFUERA
 ===================================================== */
 
 document.addEventListener(
-"click",
-function(event){
+    "click",
+    function(event){
 
-    const modal =
+        const modalProducto =
         document.getElementById(
-            "ticketModal"
+            "modalProducto"
         );
 
 
-    if(
-        modal &&
-        event.target === modal
-    ){
+        const modalCliente =
+        document.getElementById(
+            "modalCliente"
+        );
 
-        cerrarTicket();
+
+        if(
+            event.target ===
+            modalProducto
+        ){
+
+            cerrarProducto();
+
+        }
+
+
+        if(
+            event.target ===
+            modalCliente
+        ){
+
+            cerrarCliente();
+
+        }
+
+    }
+);
+
+</script>
+
+<!-- ============================= -->
+<!-- TICKET DE VENTA -->
+<!-- ============================= -->
+
+<div id="ticketModal" class="ticket-modal" style="display:none;">
+
+    <div class="ticket-contenedor">
+
+        <div id="ticketImagen" class="ticket">
+
+            <div class="ticket-logo">
+                <img
+                    src="https://nasvzzdzkljozyhhjize.supabase.co/storage/v1/object/public/pos/branding/logo"
+                    alt="Nat.Nation Sneakers"
+                >
+            </div>
+
+            <div class="ticket-negocio">
+                <strong>Nat.Nation Sneakers</strong>
+                <div>Donde empieza tu estilo</div>
+            </div>
+
+            <div class="ticket-linea"></div>
+
+            <div class="ticket-datos">
+
+                <div>
+                    <strong>Folio:</strong>
+                    <span id="ticketFolio">—</span>
+                </div>
+
+                <div>
+                    <strong>Fecha:</strong>
+                    <span id="ticketFecha">—</span>
+                </div>
+
+                <div>
+                    <strong>Cliente:</strong>
+                    <span id="ticketCliente">Venta sin cliente</span>
+                </div>
+
+            </div>
+
+            <div class="ticket-linea"></div>
+
+            <div id="ticketProductos"></div>
+
+            <div class="ticket-linea"></div>
+
+            <div class="ticket-totales">
+
+                <div>
+                    <span>Subtotal</span>
+                    <strong id="ticketSubtotal">$0.00</strong>
+                </div>
+
+                <div class="ticket-total">
+                    <span>TOTAL</span>
+                    <strong id="ticketTotal">$0.00</strong>
+                </div>
+
+            </div>
+
+            <div class="ticket-linea"></div>
+
+            <div class="ticket-pago">
+
+                <div>
+                    <strong>Forma de pago:</strong>
+                    <span id="ticketMetodo">Efectivo</span>
+                </div>
+
+                <div id="ticketEfectivoFila">
+                    <strong>Efectivo recibido:</strong>
+                    <span id="ticketEfectivo">$0.00</span>
+                </div>
+
+                <div id="ticketCambioFila">
+                    <strong>Cambio:</strong>
+                    <span id="ticketCambio">$0.00</span>
+                </div>
+
+            </div>
+
+            <div class="ticket-linea"></div>
+
+            <div class="ticket-puntos">
+
+                <div>
+                    <strong>Puntos generados:</strong>
+                    <span id="ticketPuntos">0</span>
+                </div>
+
+            </div>
+
+            <div class="ticket-mensaje">
+
+                <strong>¡Gracias por tu compra!</strong>
+
+                <br>
+
+                Nat.Nation Sneakers
+
+                <br>
+
+                Donde empieza tu estilo
+
+            </div>
+
+        </div>
+
+
+        <div class="ticket-botones">
+
+            <button
+                type="button"
+                class="btn-ticket-descargar"
+                onclick="descargarTicket()"
+            >
+                ⬇️ Descargar ticket
+            </button>
+
+            <button
+                type="button"
+                class="btn-ticket-imprimir"
+                onclick="imprimirTicket()"
+            >
+                🖨️ Imprimir ticket
+            </button>
+
+            <button
+                type="button"
+                class="btn-ticket-cerrar"
+                onclick="cerrarTicket()"
+            >
+                ✕ Cerrar
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<style>
+
+/* ============================= */
+/* VENTANA DEL TICKET */
+/* ============================= */
+
+.ticket-modal{
+    position:fixed;
+    inset:0;
+    z-index:99999;
+    background:rgba(0,0,0,.65);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    overflow:auto;
+}
+
+.ticket-contenedor{
+    width:100%;
+    max-width:430px;
+    background:#f5f5f5;
+    border-radius:18px;
+    padding:18px;
+    box-shadow:0 20px 60px rgba(0,0,0,.3);
+}
+
+
+/* ============================= */
+/* TICKET */
+/* ============================= */
+
+.ticket{
+    width:80mm;
+    max-width:100%;
+    margin:auto;
+    background:white;
+    color:#222;
+    padding:18px 14px;
+    font-family:Arial,Helvetica,sans-serif;
+    font-size:12px;
+    box-sizing:border-box;
+}
+
+.ticket-logo{
+    text-align:center;
+    margin-bottom:6px;
+}
+
+.ticket-logo img{
+    width:65px;
+    height:65px;
+    object-fit:contain;
+}
+
+.ticket-negocio{
+    text-align:center;
+    line-height:1.4;
+}
+
+.ticket-negocio strong{
+    display:block;
+    font-size:17px;
+}
+
+.ticket-negocio div{
+    font-size:10px;
+    color:#777;
+}
+
+.ticket-linea{
+    border-top:1px dashed #777;
+    margin:11px 0;
+}
+
+.ticket-datos > div,
+.ticket-pago > div,
+.ticket-puntos > div{
+    display:flex;
+    justify-content:space-between;
+    gap:8px;
+    margin:5px 0;
+}
+
+.ticket-datos span,
+.ticket-pago span{
+    text-align:right;
+    max-width:60%;
+}
+
+.ticket-producto{
+    margin:8px 0;
+}
+
+.ticket-producto-nombre{
+    font-weight:bold;
+    font-size:13px;
+    margin-bottom:3px;
+}
+
+.ticket-producto-info{
+    display:flex;
+    justify-content:space-between;
+    color:#444;
+    font-size:11px;
+}
+
+.ticket-totales > div{
+    display:flex;
+    justify-content:space-between;
+    margin:5px 0;
+}
+
+.ticket-total{
+    font-size:17px;
+    margin-top:9px !important;
+}
+
+.ticket-total strong{
+    font-size:20px;
+}
+
+.ticket-mensaje{
+    text-align:center;
+    margin-top:15px;
+    font-size:10px;
+    line-height:1.5;
+    color:#555;
+}
+
+.ticket-botones{
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+    margin-top:15px;
+}
+
+.ticket-botones button{
+    border:0;
+    border-radius:10px;
+    padding:13px;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.btn-ticket-descargar{
+    background:#e91e83;
+    color:white;
+}
+
+.btn-ticket-imprimir{
+    background:#222;
+    color:white;
+}
+
+.btn-ticket-cerrar{
+    background:#e5e5e5;
+    color:#333;
+}
+
+
+/* ============================= */
+/* IMPRESIÓN */
+/* ============================= */
+
+@media print{
+
+    @page{
+        size:80mm auto;
+        margin:0;
+    }
+
+    html,
+    body{
+        width:80mm;
+        margin:0 !important;
+        padding:0 !important;
+        background:white !important;
+    }
+
+    body *{
+        visibility:hidden !important;
+    }
+
+    #ticketModal,
+    #ticketModal *{
+        visibility:visible !important;
+    }
+
+    #ticketModal{
+        position:absolute !important;
+        left:0 !important;
+        top:0 !important;
+        width:80mm !important;
+        min-height:0 !important;
+        padding:0 !important;
+        margin:0 !important;
+        background:white !important;
+        display:block !important;
+    }
+
+    .ticket-contenedor{
+        width:80mm !important;
+        max-width:80mm !important;
+        padding:0 !important;
+        margin:0 !important;
+        background:white !important;
+        box-shadow:none !important;
+        border-radius:0 !important;
+    }
+
+    .ticket{
+        width:80mm !important;
+        max-width:80mm !important;
+        margin:0 !important;
+        padding:12px 10px !important;
+        box-shadow:none !important;
+    }
+
+    .ticket-botones{
+        display:none !important;
+    }
+
+}
+
+
+/* ============================= */
+/* CELULAR / IPAD */
+/* ============================= */
+
+@media screen and (max-width:500px){
+
+    .ticket{
+        width:100%;
+    }
+
+}
+
+</style>
+
+
+<script>
+
+/* ============================= */
+/* MOSTRAR TICKET */
+/* ============================= */
+
+function mostrarTicket(datos){
+
+    console.log("DATOS DEL TICKET:", datos);
+
+    /* ============================= */
+    /* DATOS PRINCIPALES */
+    /* ============================= */
+
+    document.getElementById("ticketFolio").textContent =
+        datos.folio || "—";
+
+    document.getElementById("ticketFecha").textContent =
+        datos.fecha ||
+        new Date().toLocaleString("es-MX");
+
+    document.getElementById("ticketCliente").textContent =
+        datos.cliente ||
+        "Venta sin cliente";
+
+    document.getElementById("ticketMetodo").textContent =
+        datos.metodoPago ||
+        datos.metodo_pago ||
+        "Efectivo";
+
+
+    /* ============================= */
+    /* TOTAL */
+    /* ============================= */
+
+    const total =
+        Number(
+            datos.total ||
+            datos.totalVenta ||
+            0
+        );
+
+    document.getElementById("ticketSubtotal").textContent =
+        "$" + total.toFixed(2);
+
+    document.getElementById("ticketTotal").textContent =
+        "$" + total.toFixed(2);
+
+
+    /* ============================= */
+    /* EFECTIVO Y CAMBIO */
+    /* ============================= */
+
+    const efectivo =
+        Number(
+            datos.efectivo ||
+            datos.efectivo_recibido ||
+            0
+        );
+
+    const cambio =
+        Number(
+            datos.cambio ||
+            0
+        );
+
+    document.getElementById("ticketEfectivo").textContent =
+        "$" + efectivo.toFixed(2);
+
+    document.getElementById("ticketCambio").textContent =
+        "$" + cambio.toFixed(2);
+
+
+    /* ============================= */
+    /* PUNTOS */
+    /* ============================= */
+
+    document.getElementById("ticketPuntos").textContent =
+        Number(
+            datos.puntos ||
+            datos.puntos_ganados ||
+            0
+        );
+
+
+    /* ============================= */
+    /* PRODUCTOS */
+    /* ============================= */
+
+    const contenedorProductos =
+        document.getElementById("ticketProductos");
+
+    contenedorProductos.innerHTML = "";
+
+    const productos =
+        datos.productos ||
+        datos.detalles ||
+        [];
+
+    if(productos.length > 0){
+
+        productos.forEach(producto => {
+
+            const div =
+                document.createElement("div");
+
+            div.className =
+                "ticket-producto";
+
+            const nombre =
+                producto.nombre ||
+                producto.producto_nombre ||
+                "Producto";
+
+            const cantidad =
+                Number(producto.cantidad || 1);
+
+            const precio =
+                Number(
+                    producto.precio ||
+                    producto.precio_unitario ||
+                    0
+                );
+
+            const subtotal =
+                Number(
+                    producto.subtotal ||
+                    cantidad * precio
+                );
+
+            const talla =
+                producto.talla ||
+                "";
+
+            div.innerHTML = `
+                <div class="ticket-producto-nombre">
+                    ${nombre}
+                </div>
+
+                <div class="ticket-producto-info">
+                    <span>
+                        ${cantidad} x $${precio.toFixed(2)}
+                    </span>
+
+                    <strong>
+                        $${subtotal.toFixed(2)}
+                    </strong>
+                </div>
+
+                ${
+                    talla
+                    ? `
+                        <div style="
+                            font-size:11px;
+                            color:#777;
+                            margin-top:3px;
+                        ">
+                            Talla: ${talla}
+                        </div>
+                    `
+                    : ""
+                }
+            `;
+
+            contenedorProductos.appendChild(div);
+
+        });
+
+    }else{
+
+        contenedorProductos.innerHTML = `
+            <div style="
+                text-align:center;
+                color:#999;
+                padding:10px;
+            ">
+                Sin productos
+            </div>
+        `;
+
+    }
+
+
+    /* ============================= */
+    /* EFECTIVO / CAMBIO */
+    /* ============================= */
+
+    const metodo =
+        String(
+            datos.metodoPago ||
+            datos.metodo_pago ||
+            "Efectivo"
+        ).toLowerCase();
+
+    const esEfectivo =
+        metodo.includes("efectivo");
+
+
+    document.getElementById(
+        "ticketEfectivoFila"
+    ).style.display =
+        esEfectivo ? "flex" : "none";
+
+
+    document.getElementById(
+        "ticketCambioFila"
+    ).style.display =
+        esEfectivo ? "flex" : "none";
+
+
+    /* ============================= */
+    /* MOSTRAR TICKET */
+    /* ============================= */
+
+    document.getElementById(
+        "ticketModal"
+    ).style.display = "flex";
+
+}
+
+
+/* ============================= */
+/* CERRAR TICKET */
+/* ============================= */
+
+function cerrarTicket(){
+
+    document.getElementById("ticketModal")
+        .style.display = "none";
+
+}
+
+
+/* ============================= */
+/* IMPRIMIR TICKET */
+/* ============================= */
+
+function imprimirTicket(){
+
+    const ticket =
+        document.getElementById("ticketImagen");
+
+    if(!ticket){
+
+        alert("No se encontró el ticket.");
+
+        return;
+    }
+
+
+    const ventana =
+        window.open(
+            "",
+            "_blank",
+            "width=400,height=700"
+        );
+
+
+    if(!ventana){
+
+        alert(
+            "El navegador bloqueó la ventana de impresión."
+        );
+
+        return;
+    }
+
+
+    ventana.document.write(`
+
+        <!DOCTYPE html>
+
+        <html>
+
+        <head>
+
+            <meta charset="UTF-8">
+
+            <title>
+                Ticket Nat.Nation Sneakers
+            </title>
+
+            <style>
+
+                @page{
+                    size:80mm auto;
+                    margin:0;
+                }
+
+                *{
+                    box-sizing:border-box;
+                }
+
+                html,
+                body{
+                    width:80mm;
+                    margin:0;
+                    padding:0;
+                    background:white;
+                }
+
+                body{
+                    font-family:Arial,Helvetica,sans-serif;
+                    color:#222;
+                }
+
+                .ticket{
+                    width:80mm;
+                    padding:12px 10px;
+                    background:white;
+                }
+
+                .ticket-logo{
+                    text-align:center;
+                    margin-bottom:6px;
+                }
+
+                .ticket-logo img{
+                    width:65px;
+                    height:65px;
+                    object-fit:contain;
+                }
+
+                .ticket-negocio{
+                    text-align:center;
+                    line-height:1.4;
+                }
+
+                .ticket-negocio strong{
+                    display:block;
+                    font-size:17px;
+                }
+
+                .ticket-negocio div{
+                    font-size:10px;
+                    color:#777;
+                }
+
+                .ticket-linea{
+                    border-top:1px dashed #777;
+                    margin:11px 0;
+                }
+
+                .ticket-datos > div,
+                .ticket-pago > div,
+                .ticket-puntos > div{
+                    display:flex;
+                    justify-content:space-between;
+                    gap:8px;
+                    margin:5px 0;
+                    font-size:11px;
+                }
+
+                .ticket-datos span,
+                .ticket-pago span{
+                    text-align:right;
+                }
+
+                .ticket-producto{
+                    margin:8px 0;
+                }
+
+                .ticket-producto-nombre{
+                    font-weight:bold;
+                    font-size:13px;
+                }
+
+                .ticket-producto-info{
+                    display:flex;
+                    justify-content:space-between;
+                    font-size:11px;
+                }
+
+                .ticket-totales > div{
+                    display:flex;
+                    justify-content:space-between;
+                    margin:5px 0;
+                    font-size:12px;
+                }
+
+                .ticket-total{
+                    font-size:17px;
+                    margin-top:9px !important;
+                }
+
+                .ticket-total strong{
+                    font-size:20px;
+                }
+
+                .ticket-mensaje{
+                    text-align:center;
+                    margin-top:15px;
+                    font-size:10px;
+                    line-height:1.5;
+                    color:#555;
+                }
+
+            </style>
+
+        </head>
+
+        <body>
+
+            ${ticket.outerHTML}
+
+        </body>
+
+        </html>
+
+    `);
+
+
+    ventana.document.close();
+
+
+    setTimeout(function(){
+
+        ventana.focus();
+
+        ventana.print();
+
+    },500);
+
+}
+
+
+/* ============================= */
+/* DESCARGAR TICKET */
+/* ============================= */
+
+async function descargarTicket(){
+
+    const ticket =
+        document.getElementById("ticketImagen");
+
+
+    if(!ticket){
+
+        alert("No se encontró el ticket.");
+
+        return;
+    }
+
+
+    try{
+
+        const canvas =
+            document.createElement("canvas");
+
+        const ancho = 800;
+
+        const escala =
+            ancho / ticket.offsetWidth;
+
+        const alto =
+            ticket.offsetHeight * escala;
+
+
+        canvas.width = ancho;
+        canvas.height = alto;
+
+
+        const ctx =
+            canvas.getContext("2d");
+
+
+        ctx.fillStyle = "#ffffff";
+
+        ctx.fillRect(
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
+
+
+        const imagen =
+            new Image();
+
+        imagen.crossOrigin =
+            "anonymous";
+
+
+        const svg =
+            `
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="${ticket.offsetWidth}"
+                height="${ticket.offsetHeight}"
+            >
+
+                <foreignObject
+                    width="100%"
+                    height="100%"
+                >
+
+                    <div
+                        xmlns="http://www.w3.org/1999/xhtml"
+                        style="
+                            width:${ticket.offsetWidth}px;
+                            background:white;
+                        "
+                    >
+
+                        ${ticket.innerHTML}
+
+                    </div>
+
+                </foreignObject>
+
+            </svg>
+            `;
+
+
+        const blob =
+            new Blob(
+                [svg],
+                {
+                    type:"image/svg+xml"
+                }
+            );
+
+
+        const url =
+            URL.createObjectURL(blob);
+
+
+        imagen.onload = function(){
+
+            ctx.drawImage(
+                imagen,
+                0,
+                0,
+                ancho,
+                alto
+            );
+
+
+            URL.revokeObjectURL(url);
+
+
+            canvas.toBlob(function(blob){
+
+                const enlace =
+                    document.createElement("a");
+
+                enlace.href =
+                    URL.createObjectURL(blob);
+
+                enlace.download =
+                    "Ticket-NatNation-" +
+                    Date.now() +
+                    ".png";
+
+                enlace.click();
+
+            },"image/png");
+
+        };
+
+
+        imagen.src = url;
+
+
+    }catch(error){
+
+        console.error(
+            "ERROR AL DESCARGAR TICKET:",
+            error
+        );
+
+        alert(
+            "No se pudo descargar el ticket.\n\n" +
+            error.message
+        );
 
     }
 
 }
 
+/* =====================================================
+   UTILIDADES
+===================================================== */
+
+function moneda(valor){
+
+    return Number(
+        valor || 0
+    ).toLocaleString(
+        "es-MX",
+        {
+            style:"currency",
+            currency:"MXN"
+        }
+    );
+
+}
+
+
+function fecha(valor){
+
+    if(!valor){
+
+        return "—";
+
+    }
+
+
+    return new Date(valor)
+    .toLocaleString(
+        "es-MX",
+        {
+            dateStyle:"short",
+            timeStyle:"short"
+        }
+    );
+
+}
+
+
+function metodoTexto(metodo){
+
+    const nombres = {
+
+        efectivo:"Efectivo",
+
+        transferencia:
+        "Transferencia",
+
+        tarjeta:
+        "Tarjeta / Clip"
+
+    };
+
+
+    return nombres[metodo] ||
+    metodo ||
+    "—";
+
+}
+
+
+function escapeHTML(text){
+
+    return String(
+        text ?? ""
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+function mostrarAlerta(texto){
+
+    const alerta =
+    document.getElementById(
+        "alerta"
+    );
+
+
+    alerta.textContent =
+    texto;
+
+
+    alerta.style.display =
+    "block";
+
+}
+
+
+function ocultarAlerta(){
+
+    document.getElementById(
+        "alerta"
+    ).style.display =
+    "none";
+
+}
+
+
+/* =====================================================
+   CERRAR MODALES AL TOCAR AFUERA
+===================================================== */
+
+document.addEventListener(
+    "click",
+    function(event){
+
+        const modalProducto =
+        document.getElementById(
+            "modalProducto"
+        );
+
+
+        const modalCliente =
+        document.getElementById(
+            "modalCliente"
+        );
+
+
+        if(
+            event.target ===
+            modalProducto
+        ){
+
+            cerrarProducto();
+
+        }
+
+
+        if(
+            event.target ===
+            modalCliente
+        ){
+
+            cerrarCliente();
+
+        }
+
+    }
 );
+
+</script>
+
+<!-- ============================= -->
+<!-- TICKET DE VENTA -->
+<!-- ============================= -->
+
+<div id="ticketModal" class="ticket-modal" style="display:none;">
+
+    <div class="ticket-contenedor">
+
+        <div id="ticketImagen" class="ticket">
+
+            <div class="ticket-logo">
+                <img
+                    src="https://nasvzzdzkljozyhhjize.supabase.co/storage/v1/object/public/pos/branding/logo"
+                    alt="Nat.Nation Sneakers"
+                >
+            </div>
+
+            <div class="ticket-negocio">
+                <strong>Nat.Nation Sneakers</strong>
+                <div>Donde empieza tu estilo</div>
+            </div>
+
+            <div class="ticket-linea"></div>
+
+            <div class="ticket-datos">
+
+                <div>
+                    <strong>Folio:</strong>
+                    <span id="ticketFolio">—</span>
+                </div>
+
+                <div>
+                    <strong>Fecha:</strong>
+                    <span id="ticketFecha">—</span>
+                </div>
+
+                <div>
+                    <strong>Cliente:</strong>
+                    <span id="ticketCliente">Venta sin cliente</span>
+                </div>
+
+            </div>
+
+            <div class="ticket-linea"></div>
+
+            <div id="ticketProductos"></div>
+
+            <div class="ticket-linea"></div>
+
+            <div class="ticket-totales">
+
+                <div>
+                    <span>Subtotal</span>
+                    <strong id="ticketSubtotal">$0.00</strong>
+                </div>
+
+                <div class="ticket-total">
+                    <span>TOTAL</span>
+                    <strong id="ticketTotal">$0.00</strong>
+                </div>
+
+            </div>
+
+            <div class="ticket-linea"></div>
+
+            <div class="ticket-pago">
+
+                <div>
+                    <strong>Forma de pago:</strong>
+                    <span id="ticketMetodo">Efectivo</span>
+                </div>
+
+                <div id="ticketEfectivoFila">
+                    <strong>Efectivo recibido:</strong>
+                    <span id="ticketEfectivo">$0.00</span>
+                </div>
+
+                <div id="ticketCambioFila">
+                    <strong>Cambio:</strong>
+                    <span id="ticketCambio">$0.00</span>
+                </div>
+
+            </div>
+
+            <div class="ticket-linea"></div>
+
+            <div class="ticket-puntos">
+
+                <div>
+                    <strong>Puntos generados:</strong>
+                    <span id="ticketPuntos">0</span>
+                </div>
+
+            </div>
+
+            <div class="ticket-mensaje">
+
+                <strong>¡Gracias por tu compra!</strong>
+
+                <br>
+
+                Nat.Nation Sneakers
+
+                <br>
+
+                Donde empieza tu estilo
+
+            </div>
+
+        </div>
+
+
+        <div class="ticket-botones">
+
+            <button
+                type="button"
+                class="btn-ticket-descargar"
+                onclick="descargarTicket()"
+            >
+                ⬇️ Descargar ticket
+            </button>
+
+            <button
+                type="button"
+                class="btn-ticket-imprimir"
+                onclick="imprimirTicket()"
+            >
+                🖨️ Imprimir ticket
+            </button>
+
+            <button
+                type="button"
+                class="btn-ticket-cerrar"
+                onclick="cerrarTicket()"
+            >
+                ✕ Cerrar
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<style>
+
+/* ============================= */
+/* VENTANA DEL TICKET */
+/* ============================= */
+
+.ticket-modal{
+    position:fixed;
+    inset:0;
+    z-index:99999;
+    background:rgba(0,0,0,.65);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    overflow:auto;
+}
+
+.ticket-contenedor{
+    width:100%;
+    max-width:430px;
+    background:#f5f5f5;
+    border-radius:18px;
+    padding:18px;
+    box-shadow:0 20px 60px rgba(0,0,0,.3);
+}
+
+
+/* ============================= */
+/* TICKET */
+/* ============================= */
+
+.ticket{
+    width:80mm;
+    max-width:100%;
+    margin:auto;
+    background:white;
+    color:#222;
+    padding:18px 14px;
+    font-family:Arial,Helvetica,sans-serif;
+    font-size:12px;
+    box-sizing:border-box;
+}
+
+.ticket-logo{
+    text-align:center;
+    margin-bottom:6px;
+}
+
+.ticket-logo img{
+    width:65px;
+    height:65px;
+    object-fit:contain;
+}
+
+.ticket-negocio{
+    text-align:center;
+    line-height:1.4;
+}
+
+.ticket-negocio strong{
+    display:block;
+    font-size:17px;
+}
+
+.ticket-negocio div{
+    font-size:10px;
+    color:#777;
+}
+
+.ticket-linea{
+    border-top:1px dashed #777;
+    margin:11px 0;
+}
+
+.ticket-datos > div,
+.ticket-pago > div,
+.ticket-puntos > div{
+    display:flex;
+    justify-content:space-between;
+    gap:8px;
+    margin:5px 0;
+}
+
+.ticket-datos span,
+.ticket-pago span{
+    text-align:right;
+    max-width:60%;
+}
+
+.ticket-producto{
+    margin:8px 0;
+}
+
+.ticket-producto-nombre{
+    font-weight:bold;
+    font-size:13px;
+    margin-bottom:3px;
+}
+
+.ticket-producto-info{
+    display:flex;
+    justify-content:space-between;
+    color:#444;
+    font-size:11px;
+}
+
+.ticket-totales > div{
+    display:flex;
+    justify-content:space-between;
+    margin:5px 0;
+}
+
+.ticket-total{
+    font-size:17px;
+    margin-top:9px !important;
+}
+
+.ticket-total strong{
+    font-size:20px;
+}
+
+.ticket-mensaje{
+    text-align:center;
+    margin-top:15px;
+    font-size:10px;
+    line-height:1.5;
+    color:#555;
+}
+
+.ticket-botones{
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+    margin-top:15px;
+}
+
+.ticket-botones button{
+    border:0;
+    border-radius:10px;
+    padding:13px;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.btn-ticket-descargar{
+    background:#e91e83;
+    color:white;
+}
+
+.btn-ticket-imprimir{
+    background:#222;
+    color:white;
+}
+
+.btn-ticket-cerrar{
+    background:#e5e5e5;
+    color:#333;
+}
+
+
+/* ============================= */
+/* IMPRESIÓN */
+/* ============================= */
+
+@media print{
+
+    @page{
+        size:80mm auto;
+        margin:0;
+    }
+
+    html,
+    body{
+        width:80mm;
+        margin:0 !important;
+        padding:0 !important;
+        background:white !important;
+    }
+
+    body *{
+        visibility:hidden !important;
+    }
+
+    #ticketModal,
+    #ticketModal *{
+        visibility:visible !important;
+    }
+
+    #ticketModal{
+        position:absolute !important;
+        left:0 !important;
+        top:0 !important;
+        width:80mm !important;
+        min-height:0 !important;
+        padding:0 !important;
+        margin:0 !important;
+        background:white !important;
+        display:block !important;
+    }
+
+    .ticket-contenedor{
+        width:80mm !important;
+        max-width:80mm !important;
+        padding:0 !important;
+        margin:0 !important;
+        background:white !important;
+        box-shadow:none !important;
+        border-radius:0 !important;
+    }
+
+    .ticket{
+        width:80mm !important;
+        max-width:80mm !important;
+        margin:0 !important;
+        padding:12px 10px !important;
+        box-shadow:none !important;
+    }
+
+    .ticket-botones{
+        display:none !important;
+    }
+
+}
+
+
+/* ============================= */
+/* CELULAR / IPAD */
+/* ============================= */
+
+@media screen and (max-width:500px){
+
+    .ticket{
+        width:100%;
+    }
+
+}
+
+</style>
+
+
+<script>
+
+/* ============================= */
+/* MOSTRAR TICKET */
+/* ============================= */
+
+function mostrarTicket(datos){
+
+    console.log("DATOS DEL TICKET:", datos);
+
+    /* ============================= */
+    /* DATOS PRINCIPALES */
+    /* ============================= */
+
+    document.getElementById("ticketFolio").textContent =
+        datos.folio || "—";
+
+    document.getElementById("ticketFecha").textContent =
+        datos.fecha ||
+        new Date().toLocaleString("es-MX");
+
+    document.getElementById("ticketCliente").textContent =
+        datos.cliente ||
+        "Venta sin cliente";
+
+    document.getElementById("ticketMetodo").textContent =
+        datos.metodoPago ||
+        datos.metodo_pago ||
+        "Efectivo";
+
+
+    /* ============================= */
+    /* TOTAL */
+    /* ============================= */
+
+    const total =
+        Number(
+            datos.total ||
+            datos.totalVenta ||
+            0
+        );
+
+    document.getElementById("ticketSubtotal").textContent =
+        "$" + total.toFixed(2);
+
+    document.getElementById("ticketTotal").textContent =
+        "$" + total.toFixed(2);
+
+
+    /* ============================= */
+    /* EFECTIVO Y CAMBIO */
+    /* ============================= */
+
+    const efectivo =
+        Number(
+            datos.efectivo ||
+            datos.efectivo_recibido ||
+            0
+        );
+
+    const cambio =
+        Number(
+            datos.cambio ||
+            0
+        );
+
+    document.getElementById("ticketEfectivo").textContent =
+        "$" + efectivo.toFixed(2);
+
+    document.getElementById("ticketCambio").textContent =
+        "$" + cambio.toFixed(2);
+
+
+    /* ============================= */
+    /* PUNTOS */
+    /* ============================= */
+
+    document.getElementById("ticketPuntos").textContent =
+        Number(
+            datos.puntos ||
+            datos.puntos_ganados ||
+            0
+        );
+
+
+    /* ============================= */
+    /* PRODUCTOS */
+    /* ============================= */
+
+    const contenedorProductos =
+        document.getElementById("ticketProductos");
+
+    contenedorProductos.innerHTML = "";
+
+    const productos =
+        datos.productos ||
+        datos.detalles ||
+        [];
+
+    if(productos.length > 0){
+
+        productos.forEach(producto => {
+
+            const div =
+                document.createElement("div");
+
+            div.className =
+                "ticket-producto";
+
+            const nombre =
+                producto.nombre ||
+                producto.producto_nombre ||
+                "Producto";
+
+            const cantidad =
+                Number(producto.cantidad || 1);
+
+            const precio =
+                Number(
+                    producto.precio ||
+                    producto.precio_unitario ||
+                    0
+                );
+
+            const subtotal =
+                Number(
+                    producto.subtotal ||
+                    cantidad * precio
+                );
+
+            const talla =
+                producto.talla ||
+                "";
+
+            div.innerHTML = `
+                <div class="ticket-producto-nombre">
+                    ${nombre}
+                </div>
+
+                <div class="ticket-producto-info">
+                    <span>
+                        ${cantidad} x $${precio.toFixed(2)}
+                    </span>
+
+                    <strong>
+                        $${subtotal.toFixed(2)}
+                    </strong>
+                </div>
+
+                ${
+                    talla
+                    ? `
+                        <div style="
+                            font-size:11px;
+                            color:#777;
+                            margin-top:3px;
+                        ">
+                            Talla: ${talla}
+                        </div>
+                    `
+                    : ""
+                }
+            `;
+
+            contenedorProductos.appendChild(div);
+
+        });
+
+    }else{
+
+        contenedorProductos.innerHTML = `
+            <div style="
+                text-align:center;
+                color:#999;
+                padding:10px;
+            ">
+                Sin productos
+            </div>
+        `;
+
+    }
+
+
+    /* ============================= */
+    /* EFECTIVO / CAMBIO */
+    /* ============================= */
+
+    const metodo =
+        String(
+            datos.metodoPago ||
+            datos.metodo_pago ||
+            "Efectivo"
+        ).toLowerCase();
+
+    const esEfectivo =
+        metodo.includes("efectivo");
+
+
+    document.getElementById(
+        "ticketEfectivoFila"
+    ).style.display =
+        esEfectivo ? "flex" : "none";
+
+
+    document.getElementById(
+        "ticketCambioFila"
+    ).style.display =
+        esEfectivo ? "flex" : "none";
+
+
+    /* ============================= */
+    /* MOSTRAR TICKET */
+    /* ============================= */
+
+    document.getElementById(
+        "ticketModal"
+    ).style.display = "flex";
+
+}
+
+
+/* ============================= */
+/* CERRAR TICKET */
+/* ============================= */
+
+function cerrarTicket(){
+
+    document.getElementById("ticketModal")
+        .style.display = "none";
+
+}
+
+
+/* ============================= */
+/* IMPRIMIR TICKET */
+/* ============================= */
+
+function imprimirTicket(){
+
+    const ticket =
+        document.getElementById("ticketImagen");
+
+    if(!ticket){
+
+        alert("No se encontró el ticket.");
+
+        return;
+    }
+
+
+    const ventana =
+        window.open(
+            "",
+            "_blank",
+            "width=400,height=700"
+        );
+
+
+    if(!ventana){
+
+        alert(
+            "El navegador bloqueó la ventana de impresión."
+        );
+
+        return;
+    }
+
+
+    ventana.document.write(`
+
+        <!DOCTYPE html>
+
+        <html>
+
+        <head>
+
+            <meta charset="UTF-8">
+
+            <title>
+                Ticket Nat.Nation Sneakers
+            </title>
+
+            <style>
+
+                @page{
+                    size:80mm auto;
+                    margin:0;
+                }
+
+                *{
+                    box-sizing:border-box;
+                }
+
+                html,
+                body{
+                    width:80mm;
+                    margin:0;
+                    padding:0;
+                    background:white;
+                }
+
+                body{
+                    font-family:Arial,Helvetica,sans-serif;
+                    color:#222;
+                }
+
+                .ticket{
+                    width:80mm;
+                    padding:12px 10px;
+                    background:white;
+                }
+
+                .ticket-logo{
+                    text-align:center;
+                    margin-bottom:6px;
+                }
+
+                .ticket-logo img{
+                    width:65px;
+                    height:65px;
+                    object-fit:contain;
+                }
+
+                .ticket-negocio{
+                    text-align:center;
+                    line-height:1.4;
+                }
+
+                .ticket-negocio strong{
+                    display:block;
+                    font-size:17px;
+                }
+
+                .ticket-negocio div{
+                    font-size:10px;
+                    color:#777;
+                }
+
+                .ticket-linea{
+                    border-top:1px dashed #777;
+                    margin:11px 0;
+                }
+
+                .ticket-datos > div,
+                .ticket-pago > div,
+                .ticket-puntos > div{
+                    display:flex;
+                    justify-content:space-between;
+                    gap:8px;
+                    margin:5px 0;
+                    font-size:11px;
+                }
+
+                .ticket-datos span,
+                .ticket-pago span{
+                    text-align:right;
+                }
+
+                .ticket-producto{
+                    margin:8px 0;
+                }
+
+                .ticket-producto-nombre{
+                    font-weight:bold;
+                    font-size:13px;
+                }
+
+                .ticket-producto-info{
+                    display:flex;
+                    justify-content:space-between;
+                    font-size:11px;
+                }
+
+                .ticket-totales > div{
+                    display:flex;
+                    justify-content:space-between;
+                    margin:5px 0;
+                    font-size:12px;
+                }
+
+                .ticket-total{
+                    font-size:17px;
+                    margin-top:9px !important;
+                }
+
+                .ticket-total strong{
+                    font-size:20px;
+                }
+
+                .ticket-mensaje{
+                    text-align:center;
+                    margin-top:15px;
+                    font-size:10px;
+                    line-height:1.5;
+                    color:#555;
+                }
+
+            </style>
+
+        </head>
+
+        <body>
+
+            ${ticket.outerHTML}
+
+        </body>
+
+        </html>
+
+    `);
+
+
+    ventana.document.close();
+
+
+    setTimeout(function(){
+
+        ventana.focus();
+
+        ventana.print();
+
+    },500);
+
+}
+
+
+/* ============================= */
+/* DESCARGAR TICKET */
+/* ============================= */
+
+async function descargarTicket(){
+
+    const ticket =
+        document.getElementById("ticketImagen");
+
+
+    if(!ticket){
+
+        alert("No se encontró el ticket.");
+
+        return;
+    }
+
+
+    try{
+
+        const canvas =
+            document.createElement("canvas");
+
+        const ancho = 800;
+
+        const escala =
+            ancho / ticket.offsetWidth;
+
+        const alto =
+            ticket.offsetHeight * escala;
+
+
+        canvas.width = ancho;
+        canvas.height = alto;
+
+
+        const ctx =
+            canvas.getContext("2d");
+
+
+        ctx.fillStyle = "#ffffff";
+
+        ctx.fillRect(
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
+
+
+        const imagen =
+            new Image();
+
+        imagen.crossOrigin =
+            "anonymous";
+
+
+        const svg =
+            `
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="${ticket.offsetWidth}"
+                height="${ticket.offsetHeight}"
+            >
+
+                <foreignObject
+                    width="100%"
+                    height="100%"
+                >
+
+                    <div
+                        xmlns="http://www.w3.org/1999/xhtml"
+                        style="
+                            width:${ticket.offsetWidth}px;
+                            background:white;
+                        "
+                    >
+
+                        ${ticket.innerHTML}
+
+                    </div>
+
+                </foreignObject>
+
+            </svg>
+            `;
+
+
+        const blob =
+            new Blob(
+                [svg],
+                {
+                    type:"image/svg+xml"
+                }
+            );
+
+
+        const url =
+            URL.createObjectURL(blob);
+
+
+        imagen.onload = function(){
+
+            ctx.drawImage(
+                imagen,
+                0,
+                0,
+                ancho,
+                alto
+            );
+
+
+            URL.revokeObjectURL(url);
+
+
+            canvas.toBlob(function(blob){
+
+                const enlace =
+                    document.createElement("a");
+
+                enlace.href =
+                    URL.createObjectURL(blob);
+
+                enlace.download =
+                    "Ticket-NatNation-" +
+                    Date.now() +
+                    ".png";
+
+                enlace.click();
+
+            },"image/png");
+
+        };
+
+
+        imagen.src = url;
+
+
+    }catch(error){
+
+        console.error(
+            "ERROR AL DESCARGAR TICKET:",
+            error
+        );
+
+        alert(
+            "No se pudo descargar el ticket.\n\n" +
+            error.message
+        );
+
+    }
+
+}
 
 </script>
 
