@@ -5529,43 +5529,100 @@ document.addEventListener(
 
 function mostrarTicket(datos){
 
+    console.log("DATOS DEL TICKET:", datos);
+
+    /* ============================= */
+    /* DATOS PRINCIPALES */
+    /* ============================= */
+
     document.getElementById("ticketFolio").textContent =
         datos.folio || "—";
 
     document.getElementById("ticketFecha").textContent =
-        datos.fecha || new Date().toLocaleString("es-MX");
+        datos.fecha ||
+        new Date().toLocaleString("es-MX");
 
     document.getElementById("ticketCliente").textContent =
-        datos.cliente || "Venta sin cliente";
+        datos.cliente ||
+        "Venta sin cliente";
 
     document.getElementById("ticketMetodo").textContent =
-        datos.metodoPago || "Efectivo";
+        datos.metodoPago ||
+        datos.metodo_pago ||
+        "Efectivo";
+
+
+    /* ============================= */
+    /* TOTAL */
+    /* ============================= */
+
+    const total =
+        Number(
+            datos.total ||
+            datos.totalVenta ||
+            0
+        );
 
     document.getElementById("ticketSubtotal").textContent =
-        "$" + Number(datos.total || 0).toFixed(2);
+        "$" + total.toFixed(2);
 
     document.getElementById("ticketTotal").textContent =
-        "$" + Number(datos.total || 0).toFixed(2);
+        "$" + total.toFixed(2);
+
+
+    /* ============================= */
+    /* EFECTIVO Y CAMBIO */
+    /* ============================= */
+
+    const efectivo =
+        Number(
+            datos.efectivo ||
+            datos.efectivo_recibido ||
+            0
+        );
+
+    const cambio =
+        Number(
+            datos.cambio ||
+            0
+        );
 
     document.getElementById("ticketEfectivo").textContent =
-        "$" + Number(datos.efectivo || 0).toFixed(2);
+        "$" + efectivo.toFixed(2);
 
     document.getElementById("ticketCambio").textContent =
-        "$" + Number(datos.cambio || 0).toFixed(2);
+        "$" + cambio.toFixed(2);
+
+
+    /* ============================= */
+    /* PUNTOS */
+    /* ============================= */
 
     document.getElementById("ticketPuntos").textContent =
-        Number(datos.puntos || 0);
+        Number(
+            datos.puntos ||
+            datos.puntos_ganados ||
+            0
+        );
 
 
-    const productos =
+    /* ============================= */
+    /* PRODUCTOS */
+    /* ============================= */
+
+    const contenedorProductos =
         document.getElementById("ticketProductos");
 
-    productos.innerHTML = "";
+    contenedorProductos.innerHTML = "";
 
+    const productos =
+        datos.productos ||
+        datos.detalles ||
+        [];
 
-    if(datos.productos && datos.productos.length){
+    if(productos.length > 0){
 
-        datos.productos.forEach(producto => {
+        productos.forEach(producto => {
 
             const div =
                 document.createElement("div");
@@ -5573,67 +5630,114 @@ function mostrarTicket(datos){
             div.className =
                 "ticket-producto";
 
-            div.innerHTML = `
+            const nombre =
+                producto.nombre ||
+                producto.producto_nombre ||
+                "Producto";
 
+            const cantidad =
+                Number(producto.cantidad || 1);
+
+            const precio =
+                Number(
+                    producto.precio ||
+                    producto.precio_unitario ||
+                    0
+                );
+
+            const subtotal =
+                Number(
+                    producto.subtotal ||
+                    cantidad * precio
+                );
+
+            const talla =
+                producto.talla ||
+                "";
+
+            div.innerHTML = `
                 <div class="ticket-producto-nombre">
-                    ${producto.nombre}
+                    ${nombre}
                 </div>
 
                 <div class="ticket-producto-info">
-
                     <span>
-                        ${producto.cantidad}
-                        x
-                        $${Number(producto.precio).toFixed(2)}
+                        ${cantidad} x $${precio.toFixed(2)}
                     </span>
 
                     <strong>
-                        $${Number(producto.subtotal).toFixed(2)}
+                        $${subtotal.toFixed(2)}
                     </strong>
-
                 </div>
 
                 ${
-                    producto.talla
-                    ?
+                    talla
+                    ? `
+                        <div style="
+                            font-size:11px;
+                            color:#777;
+                            margin-top:3px;
+                        ">
+                            Talla: ${talla}
+                        </div>
                     `
-                    <div style="
-                        font-size:10px;
-                        color:#777;
-                    ">
-                        Talla: ${producto.talla}
-                    </div>
-                    `
-                    :
-                    ""
+                    : ""
                 }
-
             `;
 
-            productos.appendChild(div);
+            contenedorProductos.appendChild(div);
 
         });
+
+    }else{
+
+        contenedorProductos.innerHTML = `
+            <div style="
+                text-align:center;
+                color:#999;
+                padding:10px;
+            ">
+                Sin productos
+            </div>
+        `;
 
     }
 
 
+    /* ============================= */
+    /* EFECTIVO / CAMBIO */
+    /* ============================= */
+
+    const metodo =
+        String(
+            datos.metodoPago ||
+            datos.metodo_pago ||
+            "Efectivo"
+        ).toLowerCase();
+
     const esEfectivo =
-        String(datos.metodoPago || "")
-        .toLowerCase()
-        .includes("efectivo");
+        metodo.includes("efectivo");
 
 
-    document.getElementById("ticketEfectivoFila")
-        .style.display =
-        esEfectivo ? "flex" : "none";
-
-    document.getElementById("ticketCambioFila")
-        .style.display =
+    document.getElementById(
+        "ticketEfectivoFila"
+    ).style.display =
         esEfectivo ? "flex" : "none";
 
 
-    document.getElementById("ticketModal")
-        .style.display = "flex";
+    document.getElementById(
+        "ticketCambioFila"
+    ).style.display =
+        esEfectivo ? "flex" : "none";
+
+
+    /* ============================= */
+    /* MOSTRAR TICKET */
+    /* ============================= */
+
+    document.getElementById(
+        "ticketModal"
+    ).style.display = "flex";
 
 }
 
