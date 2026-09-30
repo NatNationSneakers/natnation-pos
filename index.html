@@ -5134,5 +5134,546 @@ document.addEventListener(
 
 </script>
 
+<!-- ============================= -->
+<!-- TICKET DE VENTA -->
+<!-- ============================= -->
+
+<div id="ticketModal" class="ticket-modal" style="display:none;">
+
+    <div class="ticket-contenedor">
+
+        <div id="ticketImagen" class="ticket">
+
+            <div class="ticket-logo">
+                <img
+                    src="https://nasvzzdzkljozyhhjize.supabase.co/storage/v1/object/public/pos/branding/logo"
+                    alt="Nat.Nation Sneakers"
+                >
+            </div>
+
+            <div class="ticket-negocio">
+                <strong>Nat.Nation Sneakers</strong>
+                <div>Donde empieza tu estilo</div>
+            </div>
+
+            <div class="ticket-linea"></div>
+
+            <div class="ticket-datos">
+                <div>
+                    <strong>Folio:</strong>
+                    <span id="ticketFolio">—</span>
+                </div>
+
+                <div>
+                    <strong>Fecha:</strong>
+                    <span id="ticketFecha">—</span>
+                </div>
+
+                <div>
+                    <strong>Cliente:</strong>
+                    <span id="ticketCliente">Venta sin cliente</span>
+                </div>
+            </div>
+
+            <div class="ticket-linea"></div>
+
+            <div id="ticketProductos"></div>
+
+            <div class="ticket-linea"></div>
+
+            <div class="ticket-totales">
+
+                <div>
+                    <span>Subtotal</span>
+                    <strong id="ticketSubtotal">$0.00</strong>
+                </div>
+
+                <div class="ticket-total">
+                    <span>TOTAL</span>
+                    <strong id="ticketTotal">$0.00</strong>
+                </div>
+
+            </div>
+
+            <div class="ticket-linea"></div>
+
+            <div class="ticket-pago">
+
+                <div>
+                    <strong>Forma de pago:</strong>
+                    <span id="ticketMetodo">Efectivo</span>
+                </div>
+
+                <div id="ticketEfectivoFila">
+                    <strong>Efectivo recibido:</strong>
+                    <span id="ticketEfectivo">$0.00</span>
+                </div>
+
+                <div id="ticketCambioFila">
+                    <strong>Cambio:</strong>
+                    <span id="ticketCambio">$0.00</span>
+                </div>
+
+            </div>
+
+            <div class="ticket-linea"></div>
+
+            <div class="ticket-puntos">
+
+                <div>
+                    <strong>Puntos generados:</strong>
+                    <span id="ticketPuntos">0</span>
+                </div>
+
+            </div>
+
+            <div class="ticket-mensaje">
+                <strong>¡Gracias por tu compra!</strong>
+                <br>
+                Nat.Nation Sneakers
+                <br>
+                Donde empieza tu estilo
+            </div>
+
+        </div>
+
+        <div class="ticket-botones">
+
+            <button
+                type="button"
+                class="btn-ticket-descargar"
+                onclick="descargarTicket()"
+            >
+                🧾 Descargar ticket
+            </button>
+
+            <button
+                type="button"
+                class="btn-ticket-imprimir"
+                onclick="imprimirTicket()"
+            >
+                🖨️ Imprimir ticket
+            </button>
+
+            <button
+                type="button"
+                class="btn-ticket-cerrar"
+                onclick="cerrarTicket()"
+            >
+                ✕ Cerrar
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<style>
+
+/* ============================= */
+/* VENTANA DEL TICKET */
+/* ============================= */
+
+.ticket-modal{
+    position:fixed;
+    inset:0;
+    z-index:99999;
+    background:rgba(0,0,0,.65);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    overflow:auto;
+}
+
+.ticket-contenedor{
+    width:100%;
+    max-width:430px;
+    background:#f5f5f5;
+    border-radius:18px;
+    padding:18px;
+    box-shadow:0 20px 60px rgba(0,0,0,.3);
+}
+
+/* ============================= */
+/* TICKET */
+/* ============================= */
+
+.ticket{
+    width:100%;
+    max-width:360px;
+    margin:auto;
+    background:white;
+    color:#222;
+    padding:22px 20px;
+    font-family:Arial,Helvetica,sans-serif;
+    font-size:13px;
+    box-shadow:0 3px 12px rgba(0,0,0,.12);
+}
+
+.ticket-logo{
+    text-align:center;
+    margin-bottom:8px;
+}
+
+.ticket-logo img{
+    width:85px;
+    height:85px;
+    object-fit:contain;
+}
+
+.ticket-negocio{
+    text-align:center;
+    line-height:1.5;
+}
+
+.ticket-negocio strong{
+    display:block;
+    font-size:18px;
+}
+
+.ticket-negocio div{
+    font-size:11px;
+    color:#777;
+}
+
+.ticket-linea{
+    border-top:1px dashed #999;
+    margin:14px 0;
+}
+
+.ticket-datos > div,
+.ticket-pago > div,
+.ticket-puntos > div{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    margin:6px 0;
+}
+
+.ticket-datos span,
+.ticket-pago span{
+    text-align:right;
+}
+
+.ticket-producto{
+    margin:10px 0;
+}
+
+.ticket-producto-nombre{
+    font-weight:bold;
+    font-size:14px;
+    margin-bottom:3px;
+}
+
+.ticket-producto-info{
+    display:flex;
+    justify-content:space-between;
+    color:#555;
+    font-size:12px;
+}
+
+.ticket-totales > div{
+    display:flex;
+    justify-content:space-between;
+    margin:6px 0;
+}
+
+.ticket-total{
+    font-size:18px;
+    margin-top:12px !important;
+}
+
+.ticket-total strong{
+    font-size:20px;
+}
+
+.ticket-mensaje{
+    text-align:center;
+    margin-top:18px;
+    font-size:11px;
+    line-height:1.6;
+    color:#555;
+}
+
+.ticket-botones{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-top:15px;
+}
+
+.ticket-botones button{
+    border:0;
+    border-radius:10px;
+    padding:14px;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.btn-ticket-descargar{
+    background:#e91e83;
+    color:white;
+}
+
+.btn-ticket-imprimir{
+    background:#222;
+    color:white;
+}
+
+.btn-ticket-cerrar{
+    background:#e5e5e5;
+    color:#333;
+}
+
+@media print{
+
+    body *{
+        visibility:hidden !important;
+    }
+
+    #ticketModal,
+    #ticketModal *{
+        visibility:visible !important;
+    }
+
+    #ticketModal{
+        position:absolute;
+        inset:0;
+        background:white;
+        padding:0;
+    }
+
+    .ticket-contenedor{
+        box-shadow:none;
+        padding:0;
+        max-width:none;
+    }
+
+    .ticket-botones{
+        display:none !important;
+    }
+
+    .ticket{
+        box-shadow:none;
+        margin:0 auto;
+    }
+
+}
+
+</style>
+
+
+<script>
+
+/* ============================= */
+/* MOSTRAR TICKET */
+/* ============================= */
+
+function mostrarTicket(datos){
+
+    document.getElementById("ticketFolio").textContent =
+        datos.folio || "—";
+
+    document.getElementById("ticketFecha").textContent =
+        datos.fecha || new Date().toLocaleString("es-MX");
+
+    document.getElementById("ticketCliente").textContent =
+        datos.cliente || "Venta sin cliente";
+
+    document.getElementById("ticketMetodo").textContent =
+        datos.metodoPago || "Efectivo";
+
+    document.getElementById("ticketSubtotal").textContent =
+        "$" + Number(datos.total || 0).toFixed(2);
+
+    document.getElementById("ticketTotal").textContent =
+        "$" + Number(datos.total || 0).toFixed(2);
+
+    document.getElementById("ticketEfectivo").textContent =
+        "$" + Number(datos.efectivo || 0).toFixed(2);
+
+    document.getElementById("ticketCambio").textContent =
+        "$" + Number(datos.cambio || 0).toFixed(2);
+
+    document.getElementById("ticketPuntos").textContent =
+        Number(datos.puntos || 0);
+
+    const productos =
+        document.getElementById("ticketProductos");
+
+    productos.innerHTML = "";
+
+    if(datos.productos && datos.productos.length){
+
+        datos.productos.forEach(producto => {
+
+            const div =
+                document.createElement("div");
+
+            div.className = "ticket-producto";
+
+            div.innerHTML = `
+                <div class="ticket-producto-nombre">
+                    ${producto.nombre}
+                </div>
+
+                <div class="ticket-producto-info">
+                    <span>
+                        ${producto.cantidad} x $${Number(producto.precio).toFixed(2)}
+                    </span>
+
+                    <strong>
+                        $${Number(producto.subtotal).toFixed(2)}
+                    </strong>
+                </div>
+
+                ${
+                    producto.talla
+                    ? `<div style="font-size:11px;color:#777;">
+                        Talla: ${producto.talla}
+                       </div>`
+                    : ""
+                }
+            `;
+
+            productos.appendChild(div);
+
+        });
+
+    }
+
+    /* Mostrar / ocultar efectivo y cambio */
+
+    const esEfectivo =
+        String(datos.metodoPago || "")
+        .toLowerCase()
+        .includes("efectivo");
+
+    document.getElementById("ticketEfectivoFila")
+        .style.display = esEfectivo ? "flex" : "none";
+
+    document.getElementById("ticketCambioFila")
+        .style.display = esEfectivo ? "flex" : "none";
+
+
+    document.getElementById("ticketModal")
+        .style.display = "flex";
+
+}
+
+
+/* ============================= */
+/* CERRAR TICKET */
+/* ============================= */
+
+function cerrarTicket(){
+
+    document.getElementById("ticketModal")
+        .style.display = "none";
+
+}
+
+
+/* ============================= */
+/* IMPRIMIR TICKET */
+/* ============================= */
+
+function imprimirTicket(){
+
+    window.print();
+
+}
+
+
+/* ============================= */
+/* DESCARGAR TICKET COMO IMAGEN */
+/* ============================= */
+
+async function descargarTicket(){
+
+    const ticket =
+        document.getElementById("ticketImagen");
+
+    try{
+
+        if(typeof html2canvas === "undefined"){
+
+            alert(
+                "No se pudo preparar el ticket.\n\n" +
+                "Actualiza la página e inténtalo nuevamente."
+            );
+
+            return;
+        }
+
+        const canvas =
+            await html2canvas(ticket,{
+                scale:3,
+                backgroundColor:"#ffffff",
+                useCORS:true
+            });
+
+        canvas.toBlob(function(blob){
+
+            if(!blob){
+
+                alert("No se pudo generar la imagen del ticket.");
+
+                return;
+            }
+
+            const url =
+                URL.createObjectURL(blob);
+
+            const enlace =
+                document.createElement("a");
+
+            enlace.href = url;
+
+            enlace.download =
+                "Ticket-NatNation-" +
+                (
+                    document.getElementById("ticketFolio")
+                    .textContent || "venta"
+                ) +
+                ".png";
+
+            document.body.appendChild(enlace);
+
+            enlace.click();
+
+            enlace.remove();
+
+            setTimeout(() => {
+                URL.revokeObjectURL(url);
+            },1000);
+
+        },"image/png");
+
+    }catch(error){
+
+        console.error(
+            "ERROR AL DESCARGAR TICKET:",
+            error
+        );
+
+        alert(
+            "No se pudo descargar el ticket.\n\n" +
+            error.message
+        );
+
+    }
+
+}
+
+</script>
+
+<!-- Librería para convertir el ticket en imagen -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
 </body>
 </html>
