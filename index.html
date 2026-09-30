@@ -5282,6 +5282,7 @@ document.addEventListener(
 <style>
 
 <style>
+<style>
 
 /* =====================================================
    VENTANA DEL TICKET
@@ -5428,6 +5429,11 @@ document.addEventListener(
     color:#555;
 }
 
+
+/* =====================================================
+   BOTONES
+===================================================== */
+
 .ticket-botones{
     display:flex;
     flex-direction:column;
@@ -5553,39 +5559,19 @@ function mostrarTicket(datos){
     console.log(datos);
     console.log("=================================");
 
-
-    /* =================================================
-       VALIDAR DATOS
-    ================================================= */
-
     if(!datos){
         console.error("mostrarTicket recibió datos vacíos.");
         alert("No se recibieron los datos de la venta.");
         return;
     }
 
-
-    /*
-       Si accidentalmente se manda:
-       { data: {...}, error: null }
-       tomamos automáticamente data.
-    */
-
     if(
         datos.data &&
         typeof datos.data === "object" &&
         !Array.isArray(datos.data)
     ){
-
         datos = datos.data;
-
     }
-
-
-    /*
-       Si la información viene dentro de "venta",
-       también la usamos.
-    */
 
     const venta =
         datos.venta &&
@@ -5607,15 +5593,12 @@ function mostrarTicket(datos){
                 valor !== null &&
                 valor !== ""
             ){
-
                 return valor;
-
             }
 
         }
 
         return "";
-
     }
 
 
@@ -5630,7 +5613,6 @@ function mostrarTicket(datos){
         return Number.isFinite(resultado)
             ? resultado
             : 0;
-
     }
 
 
@@ -5645,7 +5627,6 @@ function mostrarTicket(datos){
             venta.numero_folio,
             datos.numero_folio
         );
-
 
     document.getElementById(
         "ticketFolio"
@@ -5666,9 +5647,7 @@ function mostrarTicket(datos){
             venta.fecha_venta
         );
 
-
     let fechaTexto = "—";
-
 
     if(fechaVenta){
 
@@ -5693,7 +5672,6 @@ function mostrarTicket(datos){
 
     }
 
-
     document.getElementById(
         "ticketFecha"
     ).textContent =
@@ -5714,12 +5692,6 @@ function mostrarTicket(datos){
             datos.nombre_cliente
         );
 
-
-    /*
-       Si cliente viene como objeto:
-       { nombre: "Juan" }
-    */
-
     if(
         typeof nombreCliente === "object" &&
         nombreCliente !== null
@@ -5733,7 +5705,6 @@ function mostrarTicket(datos){
             );
 
     }
-
 
     document.getElementById(
         "ticketCliente"
@@ -5756,31 +5727,17 @@ function mostrarTicket(datos){
             datos.forma_pago
         );
 
-
     let metodoTextoTicket =
         metodoPago || "Efectivo";
-
-
-    /*
-       Convertir nombres internos a texto bonito.
-    */
 
     const metodoMinusculas =
         String(
             metodoTextoTicket
-        ).toLowerCase();
-
+        ).toLowerCase()
+        .trim();
 
     if(
-        metodoMinusculas === "efectivo"
-    ){
-
-        metodoTextoTicket =
-            "Efectivo";
-
-    }
-    else if(
-        metodoMinusculas === "transferencia"
+        metodoMinusculas.includes("transfer")
     ){
 
         metodoTextoTicket =
@@ -5788,15 +5745,20 @@ function mostrarTicket(datos){
 
     }
     else if(
-        metodoMinusculas === "tarjeta" ||
-        metodoMinusculas === "clip"
+        metodoMinusculas.includes("tarjeta") ||
+        metodoMinusculas.includes("clip")
     ){
 
         metodoTextoTicket =
             "Tarjeta / Clip";
 
     }
+    else{
 
+        metodoTextoTicket =
+            "Efectivo";
+
+    }
 
     document.getElementById(
         "ticketMetodo"
@@ -5816,12 +5778,10 @@ function mostrarTicket(datos){
             datos.totalVenta
         );
 
-
     document.getElementById(
         "ticketSubtotal"
     ).textContent =
         monedaTicket(total);
-
 
     document.getElementById(
         "ticketTotal"
@@ -5841,7 +5801,6 @@ function mostrarTicket(datos){
             datos.efectivo
         );
 
-
     document.getElementById(
         "ticketEfectivo"
     ).textContent =
@@ -5857,7 +5816,6 @@ function mostrarTicket(datos){
             venta.cambio,
             datos.cambio
         );
-
 
     document.getElementById(
         "ticketCambio"
@@ -5877,7 +5835,6 @@ function mostrarTicket(datos){
             datos.puntos
         );
 
-
     document.getElementById(
         "ticketPuntos"
     ).textContent =
@@ -5896,12 +5853,6 @@ function mostrarTicket(datos){
             venta.detalles,
             datos.venta_detalles
         );
-
-
-    /*
-       Si no encontramos productos,
-       intentamos usar el carrito actual.
-    */
 
     if(
         !Array.isArray(productos) ||
@@ -5932,13 +5883,8 @@ function mostrarTicket(datos){
             "ticketProductos"
         );
 
-
     contenedorProductos.innerHTML = "";
 
-
-    /* =================================================
-       PINTAR PRODUCTOS
-    ================================================= */
 
     if(productos.length > 0){
 
@@ -5948,14 +5894,11 @@ function mostrarTicket(datos){
                 return;
             }
 
-
             const div =
                 document.createElement("div");
 
-
             div.className =
                 "ticket-producto";
-
 
             const nombre =
                 primerValor(
@@ -5967,13 +5910,11 @@ function mostrarTicket(datos){
                 ) ||
                 "Producto";
 
-
             const cantidad =
                 numero(
                     producto.cantidad,
                     producto.qty
                 ) || 1;
-
 
             const precio =
                 numero(
@@ -5982,7 +5923,6 @@ function mostrarTicket(datos){
                     producto.price
                 );
 
-
             const subtotal =
                 numero(
                     producto.subtotal,
@@ -5990,32 +5930,23 @@ function mostrarTicket(datos){
                 ) ||
                 cantidad * precio;
 
-
             const talla =
                 primerValor(
                     producto.talla,
                     producto.talla_producto
                 );
 
-
-            const nombreSeguro =
-                escapeHTMLTicket(nombre);
-
-
-            const tallaSegura =
-                escapeHTMLTicket(talla);
-
-
             div.innerHTML = `
 
                 <div class="ticket-producto-nombre">
-                    ${nombreSeguro}
+                    ${escapeHTMLTicket(nombre)}
                 </div>
 
                 <div class="ticket-producto-info">
 
                     <span>
-                        ${cantidad} x ${monedaTicket(precio)}
+                        ${cantidad} x
+                        ${monedaTicket(precio)}
                     </span>
 
                     <strong>
@@ -6033,7 +5964,8 @@ function mostrarTicket(datos){
                         color:#777;
                         margin-top:3px;
                     ">
-                        Talla: ${tallaSegura}
+                        Talla:
+                        ${escapeHTMLTicket(talla)}
                     </div>
                     `
                     :
@@ -6041,7 +5973,6 @@ function mostrarTicket(datos){
                 }
 
             `;
-
 
             contenedorProductos.appendChild(
                 div
@@ -6077,11 +6008,9 @@ function mostrarTicket(datos){
         ).toLowerCase()
         .trim();
 
-
     const esEfectivo =
         metodoNormalizado === "efectivo" ||
         metodoNormalizado.includes("efectivo");
-
 
     document.getElementById(
         "ticketEfectivoFila"
@@ -6089,7 +6018,6 @@ function mostrarTicket(datos){
         esEfectivo
             ? "flex"
             : "none";
-
 
     document.getElementById(
         "ticketCambioFila"
@@ -6108,7 +6036,6 @@ function mostrarTicket(datos){
             "ticketModal"
         );
 
-
     if(!modal){
 
         console.error(
@@ -6122,10 +6049,8 @@ function mostrarTicket(datos){
         return;
     }
 
-
     modal.style.display =
         "flex";
-
 
     console.log(
         "✅ TICKET MOSTRADO CORRECTAMENTE"
@@ -6135,7 +6060,7 @@ function mostrarTicket(datos){
 
 
 /* =====================================================
-   MONEDA DEL TICKET
+   MONEDA
 ===================================================== */
 
 function monedaTicket(valor){
@@ -6154,7 +6079,7 @@ function monedaTicket(valor){
 
 
 /* =====================================================
-   ESCAPAR TEXTO
+   ESCAPAR HTML
 ===================================================== */
 
 function escapeHTMLTicket(texto){
@@ -6162,26 +6087,11 @@ function escapeHTMLTicket(texto){
     return String(
         texto ?? ""
     )
-    .replace(
-        /&/g,
-        "&amp;"
-    )
-    .replace(
-        /</g,
-        "&lt;"
-    )
-    .replace(
-        />/g,
-        "&gt;"
-    )
-    .replace(
-        /"/g,
-        "&quot;"
-    )
-    .replace(
-        /'/g,
-        "&#039;"
-    );
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 
 }
 
@@ -6196,7 +6106,6 @@ function cerrarTicket(){
         document.getElementById(
             "ticketModal"
         );
-
 
     if(modal){
 
@@ -6219,7 +6128,6 @@ function imprimirTicket(){
             "ticketImagen"
         );
 
-
     if(!ticket){
 
         alert(
@@ -6230,34 +6138,25 @@ function imprimirTicket(){
 
     }
 
-
-    /*
-       Intentamos abrir la ventana.
-       En iPad/Safari puede aparecer
-       el aviso de ventana emergente.
-    */
-
     const ventana =
         window.open(
             "",
-            "_blank"
+            "_blank",
+            "width=400,height=700"
         );
-
 
     if(!ventana){
 
         alert(
-            "El navegador bloqueó la ventana de impresión.\n\n" +
-            "Permite las ventanas emergentes para este sitio."
+            "El navegador bloqueó la ventana.\n\n" +
+            "Permite ventanas emergentes para este sitio."
         );
 
         return;
 
     }
 
-
     ventana.document.open();
-
 
     ventana.document.write(`
 
@@ -6269,9 +6168,7 @@ function imprimirTicket(){
 
 <meta charset="UTF-8">
 
-<title>
-Ticket Nat.Nation Sneakers
-</title>
+<title>Ticket Nat.Nation Sneakers</title>
 
 <style>
 
@@ -6293,10 +6190,7 @@ body{
 }
 
 body{
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
+    font-family:Arial,Helvetica,sans-serif;
     color:#222;
 }
 
@@ -6342,7 +6236,6 @@ body{
 .ticket-puntos > div{
     display:flex;
     justify-content:space-between;
-    align-items:flex-start;
     gap:8px;
     margin:5px 0;
     font-size:11px;
@@ -6369,7 +6262,6 @@ body{
     display:flex;
     justify-content:space-between;
     margin:5px 0;
-    font-size:12px;
 }
 
 .ticket-total{
@@ -6407,14 +6299,11 @@ ${ticket.outerHTML}
 
     `);
 
-
     ventana.document.close();
-
 
     setTimeout(function(){
 
         ventana.focus();
-
         ventana.print();
 
     },700);
@@ -6423,7 +6312,7 @@ ${ticket.outerHTML}
 
 
 /* =====================================================
-   DESCARGAR TICKET
+   DESCARGAR TICKET PNG
 ===================================================== */
 
 async function descargarTicket(){
@@ -6432,7 +6321,6 @@ async function descargarTicket(){
         document.getElementById(
             "ticketImagen"
         );
-
 
     if(!ticket){
 
@@ -6444,81 +6332,51 @@ async function descargarTicket(){
 
     }
 
-
     try{
 
-        const canvas =
-            document.createElement(
-                "canvas"
-            );
+        const ancho = 800;
 
+        const anchoOriginal =
+            ticket.offsetWidth || 302;
 
-        const ancho =
-            800;
-
+        const altoOriginal =
+            ticket.offsetHeight || 500;
 
         const escala =
-            ancho /
-            ticket.offsetWidth;
-
+            ancho / anchoOriginal;
 
         const alto =
-            ticket.offsetHeight *
-            escala;
-
-
-        canvas.width =
-            ancho;
-
-        canvas.height =
-            alto;
-
-
-        const ctx =
-            canvas.getContext(
-                "2d"
+            Math.ceil(
+                altoOriginal * escala
             );
-
-
-        ctx.fillStyle =
-            "#ffffff";
-
-
-        ctx.fillRect(
-            0,
-            0,
-            canvas.width,
-            canvas.height
-        );
-
-
-        const imagen =
-            new Image();
-
-
-        imagen.crossOrigin =
-            "anonymous";
-
 
         const svg = `
 
 <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="${ticket.offsetWidth}"
-    height="${ticket.offsetHeight}"
+    width="${ancho}"
+    height="${alto}"
+    viewBox="0 0 ${anchoOriginal} ${altoOriginal}"
 >
 
 <foreignObject
-    width="100%"
-    height="100%"
+    x="0"
+    y="0"
+    width="${anchoOriginal}"
+    height="${altoOriginal}"
 >
 
 <div
     xmlns="http://www.w3.org/1999/xhtml"
     style="
-        width:${ticket.offsetWidth}px;
-        background:white;
+        width:${anchoOriginal}px;
+        min-height:${altoOriginal}px;
+        background:#ffffff;
+        color:#222;
         font-family:Arial,Helvetica,sans-serif;
+        font-size:12px;
+        padding:12px 10px;
+        box-sizing:border-box;
     "
 >
 
@@ -6532,25 +6390,51 @@ ${ticket.innerHTML}
 
         `;
 
-
         const blob =
             new Blob(
                 [svg],
                 {
                     type:
-                        "image/svg+xml"
+                        "image/svg+xml;charset=utf-8"
                 }
             );
-
 
         const url =
             URL.createObjectURL(
                 blob
             );
 
+        const imagen =
+            new Image();
 
         imagen.onload =
             function(){
+
+                const canvas =
+                    document.createElement(
+                        "canvas"
+                    );
+
+                canvas.width =
+                    ancho;
+
+                canvas.height =
+                    alto;
+
+                const ctx =
+                    canvas.getContext(
+                        "2d"
+                    );
+
+                ctx.fillStyle =
+                    "#ffffff";
+
+                ctx.fillRect(
+                    0,
+                    0,
+                    canvas.width,
+                    canvas.height
+                );
 
                 ctx.drawImage(
                     imagen,
@@ -6560,64 +6444,54 @@ ${ticket.innerHTML}
                     alto
                 );
 
-
                 URL.revokeObjectURL(
                     url
                 );
 
-
                 canvas.toBlob(
-                    function(blob){
+                    function(blobPNG){
 
-                        if(!blob){
+                        if(!blobPNG){
 
                             alert(
-                                "No se pudo generar la imagen."
+                                "No se pudo crear el PNG."
                             );
 
                             return;
 
                         }
 
-
                         const enlace =
                             document.createElement(
                                 "a"
                             );
 
-
-                        const urlImagen =
+                        const urlPNG =
                             URL.createObjectURL(
-                                blob
+                                blobPNG
                             );
 
-
                         enlace.href =
-                            urlImagen;
-
+                            urlPNG;
 
                         enlace.download =
                             "Ticket-NatNation-" +
                             Date.now() +
                             ".png";
 
-
                         document.body.appendChild(
                             enlace
                         );
 
-
                         enlace.click();
 
-
                         enlace.remove();
-
 
                         setTimeout(
                             function(){
 
                                 URL.revokeObjectURL(
-                                    urlImagen
+                                    urlPNG
                                 );
 
                             },
@@ -6630,7 +6504,6 @@ ${ticket.innerHTML}
 
             };
 
-
         imagen.onerror =
             function(){
 
@@ -6638,26 +6511,22 @@ ${ticket.innerHTML}
                     url
                 );
 
-
                 alert(
-                    "No se pudo generar la imagen del ticket."
+                    "No se pudo convertir el ticket a PNG."
                 );
 
             };
 
-
         imagen.src =
             url;
-
 
     }
     catch(error){
 
         console.error(
-            "ERROR AL DESCARGAR TICKET:",
+            "ERROR PNG:",
             error
         );
-
 
         alert(
             "No se pudo descargar el ticket.\n\n" +
