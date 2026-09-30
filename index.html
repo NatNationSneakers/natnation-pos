@@ -3981,10 +3981,10 @@ async function registrarVenta(){
 
 
 /* =====================================================
-   INTEGRACIÓN CLIP TOTAL 2
+   INTEGRACIÓN CLIP
 ===================================================== */
 
-async function iniciarPagoClip(total,folio){
+async function iniciarPagoClip(total, folio){
 
     const monto = Number(total || 0);
 
@@ -3993,70 +3993,178 @@ async function iniciarPagoClip(total,folio){
         return false;
     }
 
-    /*
-     * Tu POS actual corre como página web en Safari/iPad.
-     * El SDK oficial de Clip para Clip Total 2 requiere
-     * una integración nativa Android.
-     *
-     * Esta función queda preparada para que un puente nativo
-     * exponga window.ClipPOSBridge.startPayment().
-     * No registramos la venta hasta recibir APROBADO.
-     */
+    try {
 
-    if(
-        window.ClipPOSBridge &&
-        typeof window.ClipPOSBridge.startPayment === "function"
-    ){
+        console.log("💳 Iniciando pago Clip:", monto, folio);
 
-        try{
+        const { data, error } =
+            await supabaseClient.functions.invoke(
+                "clip-payment",
+                {
+                    body: {
+                        action: "create",
+                        amount: monto,
+                        reference: String(folio)
+                    }
+                }
+            );
 
-            const resultado =
-            await window.ClipPOSBridge.startPayment({
-                amount:monto,
-                reference:String(folio),
-                description:"Nat.Nation Sneakers"
-            });
+        if(error){
+            console.error("Error Supabase Clip:", error);
+            throw new Error(
+                error.message || "No se pudo conectar con Clip."
+            );
+        }
+
+        console.log("Respuesta Clip:", data);
+
+        if(!data || !data.ok){
+            throw new Error(
+                data?.error || "Clip no aceptó el cobro."
+            );
+        }
+
+        const pinpadRequestId =
+            data.pinpad_request_id;
+
+        if(!pinpadRequestId){
+            throw new Error(
+                "Clip no devolvió el ID del pago."
+            );
+        }
+
+        alert(
+            "💳 PAGO CON TARJETA\n\n" +
+            "Total: " + moneda(monto) +
+            "\n\n" +
+            "El cliente puede pagar en la Clip."
+        );
+
+        /*
+         * Esperar respuesta de Clip
+         */
+
+        const inicio = Date.now();
+        const tiempoMaximo = 120000;
+
+        while(Date.now() - inicio < tiempoMaximo){
+
+            await new Promise(resolve =>
+                setTimeout(resolve, 2000)
+            );
+
+            const respuesta =
+                await supabaseClient.functions.invoke(
+                    "clip-payment",
+                    {
+                        body: {
+                            action: "status",
+                            pinpad_request_id:
+                                pinpadRequestId
+                        }
+                    }
+                );
+
+            if(respuesta.error){
+
+                console.error(
+                    "Error consultando Clip:",
+                    respuesta.error
+                );
+
+                continue;
+            }
 
             const estado =
-            String(resultado?.status || resultado?.result || "")
-                .toLowerCase();
+                respuesta.data;
+
+            console.log(
+                "Estado del pago Clip:",
+                estado
+            );
+
+            if(!estado || !estado.ok){
+                continue;
+            }
+
+            /*
+             * PAGO APROBADO
+             */
 
             if(
-                resultado === true ||
-                estado === "approved" ||
-                estado === "aprobado" ||
-                estado === "success"
+                estado.approved === true ||
+                estado.status === "approved"
             ){
+
+                console.log(
+                    "✅ PAGO CLIP APROBADO"
+                );
+
                 return true;
             }
 
-            alert(
-                "El pago en Clip no fue aprobado. La venta NO se registró."
-            );
-            return false;
+            /*
+             * PAGO RECHAZADO
+             */
 
-        }catch(error){
+            if(
+                estado.rejected === true ||
+                estado.status === "rejected"
+            ){
 
-            console.error("Error en Clip:",error);
+                alert(
+                    "❌ El pago fue rechazado por Clip.\n\n" +
+                    "La venta NO se registró."
+                );
 
-            alert(
-                "No se pudo iniciar el cobro en Clip.\n\n" +
-                error.message
-            );
+                return false;
+            }
 
-            return false;
+            /*
+             * PAGO CANCELADO
+             */
+
+            if(
+                estado.cancelled === true ||
+                estado.status === "cancelled"
+            ){
+
+                alert(
+                    "❌ El pago fue cancelado.\n\n" +
+                    "La venta NO se registró."
+                );
+
+                return false;
+            }
         }
+
+        /*
+         * TIEMPO AGOTADO
+         */
+
+        alert(
+            "⏱️ Clip no confirmó el pago.\n\n" +
+            "La venta NO se registró."
+        );
+
+        return false;
+
+    } catch(error){
+
+        console.error(
+            "❌ Error en iniciarPagoClip:",
+            error
+        );
+
+        alert(
+            "❌ No se pudo iniciar el pago con Clip.\n\n" +
+            (error?.message || error)
+        );
+
+        return false;
     }
-
-    alert(
-        "Tu POS todavía no tiene instalado el puente oficial de Clip.\n\n" +
-        "La Clip Total 2 sí admite integración mediante el SDK Terminal, " +
-        "pero una página de GitHub abierta en Safari no puede llamar directamente ese SDK.\n\n" +
-        "La venta NO se registró."
-    );
-
-    return false;
 }
+
 
 
 /* =====================================================
