@@ -4436,776 +4436,691 @@ async function subirLogo(){
 
 }
 
-<!-- =====================================================
-     TICKET
-===================================================== -->
+/* =====================================================
+TICKET
+===================================================== */
 
-<div
-    class="ticket"
-    id="ticket"
-    style="width:380px;max-width:100%;margin:0 auto;padding:20px;background:#fff;color:#111;font-family:Arial,Helvetica,sans-serif;font-size:14px;box-sizing:border-box;"
->
+function prepararTicket(
+venta,
+metodo,
+efectivo,
+cambio
+){
 
-    <div style="text-align:center;margin-bottom:10px;">
-        <img
-            src="https://nasvzzdzkljozyhhjize.supabase.co/storage/v1/object/public/pos/branding/logo"
-            alt="Nat.Nation Sneakers"
-            style="width:70px;height:70px;object-fit:contain;display:block;margin:0 auto 8px;"
-        >
+document.getElementById(
+    "ticketFolio"
+).textContent =
+venta.folio;
 
-        <div style="font-size:22px;font-weight:bold;line-height:1.2;">
-            Nat.Nation Sneakers
+
+document.getElementById(
+    "ticketFecha"
+).textContent =
+fecha(venta.fecha);
+
+
+document.getElementById(
+    "ticketTotal"
+).textContent =
+moneda(venta.total);
+
+
+document.getElementById(
+    "ticketPago"
+).textContent =
+metodoTexto(metodo);
+
+
+document.getElementById(
+    "ticketCambio"
+).textContent =
+
+metodo === "efectivo"
+
+?
+
+"Cambio: " +
+moneda(cambio)
+
+:
+
+"";
+
+
+document.getElementById(
+    "ticketProductos"
+).innerHTML =
+
+carrito.map(function(item){
+
+    return `
+
+        <div
+            style="
+                display:flex;
+                justify-content:space-between;
+                margin:7px 0;
+            ">
+
+            <span>
+
+                ${item.cantidad} x
+                ${escapeHTML(
+                    item.producto_nombre
+                )}
+
+                <br>
+
+                Talla
+                ${escapeHTML(
+                    item.talla || ""
+                )}
+
+            </span>
+
+
+            <span>
+
+                ${moneda(
+                    item.cantidad *
+                    item.precio_unitario
+                )}
+
+            </span>
+
         </div>
 
-        <div style="font-size:15px;margin-top:4px;">
-            Donde empieza tu estilo
-        </div>
+    `;
 
-        <div style="font-size:12px;line-height:1.5;margin-top:8px;">
-            Calle Juan Clímaco Ramírez SNVC<br>
-            San Andrés, 55780 Jaltenco, Méx.<br>
-            Tel. 5624570336
-        </div>
-    </div>
+}).join("");
 
-    <div style="border-top:2px dashed #888;margin:12px 0;"></div>
-
-    <div style="font-size:14px;line-height:1.8;">
-        <div style="display:flex;justify-content:space-between;gap:15px;">
-            <strong>Folio:</strong>
-            <span id="ticketFolio">—</span>
-        </div>
-        <div style="display:flex;justify-content:space-between;gap:15px;">
-            <strong>Fecha:</strong>
-            <span id="ticketFecha">—</span>
-        </div>
-        <div style="display:flex;justify-content:space-between;gap:15px;">
-            <strong>Cliente:</strong>
-            <span id="ticketCliente" style="text-align:right;max-width:65%;">Venta sin cliente</span>
-        </div>
-    </div>
-
-    <div style="border-top:2px dashed #888;margin:12px 0;"></div>
-
-    <div id="ticketProductos" style="width:100%;"></div>
-
-    <div style="border-top:2px dashed #888;margin:12px 0;"></div>
-
-    <div style="display:flex;justify-content:space-between;font-size:15px;margin-bottom:8px;">
-        <span>Subtotal</span>
-        <span id="ticketSubtotal">$0.00</span>
-    </div>
-
-    <div style="display:flex;justify-content:space-between;font-size:21px;font-weight:bold;margin-bottom:14px;">
-        <span>TOTAL</span>
-        <span id="ticketTotal">$0.00</span>
-    </div>
-
-    <div style="border-top:2px dashed #888;margin:12px 0;"></div>
-
-    <div style="font-size:14px;line-height:1.8;">
-        <div style="display:flex;justify-content:space-between;gap:15px;">
-            <strong>Forma de pago:</strong>
-            <span id="ticketPago">—</span>
-        </div>
-        <div id="ticketEfectivoFila" style="display:none;justify-content:space-between;gap:15px;">
-            <strong>Efectivo recibido:</strong>
-            <span id="ticketEfectivo">$0.00</span>
-        </div>
-        <div id="ticketCambioFila" style="display:none;justify-content:space-between;gap:15px;">
-            <strong>Cambio:</strong>
-            <span id="ticketCambio">$0.00</span>
-        </div>
-    </div>
-
-    <div style="border-top:2px dashed #888;margin:12px 0;"></div>
-
-    <div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:18px;">
-        <strong>Puntos generados:</strong>
-        <span id="ticketPuntos">0</span>
-    </div>
-
-    <div style="text-align:center;font-size:14px;line-height:1.7;padding-bottom:8px;">
-        <strong>¡Gracias por tu compra!</strong><br>
-        Nat.Nation Sneakers<br>
-        Donde empieza tu estilo
-    </div>
-
-</div>
-
-<!-- =====================================================
-     JAVASCRIPT DEL TICKET
-===================================================== -->
-
-<script>
-
-function prepararTicket(venta, metodo, efectivo, cambio){
-
-    const folio = document.getElementById("ticketFolio");
-    const fechaTicket = document.getElementById("ticketFecha");
-    const clienteTicket = document.getElementById("ticketCliente");
-    const subtotalTicket = document.getElementById("ticketSubtotal");
-    const totalTicket = document.getElementById("ticketTotal");
-    const pagoTicket = document.getElementById("ticketPago");
-    const productosTicket = document.getElementById("ticketProductos");
-    const puntosTicket = document.getElementById("ticketPuntos");
-
-    if(folio) folio.textContent = venta?.folio || "—";
-    if(fechaTicket) fechaTicket.textContent = fecha(venta?.fecha);
-
-    const cliente = Array.isArray(clientes)
-        ? clientes.find(c => c.id === venta?.cliente_id)
-        : null;
-
-    if(clienteTicket){
-        clienteTicket.textContent = cliente?.nombre || "Venta sin cliente";
-    }
-
-    const total = Number(venta?.total || 0);
-
-    if(subtotalTicket) subtotalTicket.textContent = moneda(total);
-    if(totalTicket) totalTicket.textContent = moneda(total);
-    if(pagoTicket) pagoTicket.textContent = metodoTexto(metodo);
-
-    const esEfectivo = String(metodo || "").toLowerCase() === "efectivo";
-
-    const filaEfectivo = document.getElementById("ticketEfectivoFila");
-    const filaCambio = document.getElementById("ticketCambioFila");
-
-    if(esEfectivo){
-        if(filaEfectivo) filaEfectivo.style.display = "flex";
-        if(filaCambio) filaCambio.style.display = "flex";
-
-        const efectivoTicket = document.getElementById("ticketEfectivo");
-        const cambioTicket = document.getElementById("ticketCambio");
-
-        if(efectivoTicket) efectivoTicket.textContent = moneda(efectivo);
-        if(cambioTicket) cambioTicket.textContent = moneda(cambio);
-    }else{
-        if(filaEfectivo) filaEfectivo.style.display = "none";
-        if(filaCambio) filaCambio.style.display = "none";
-    }
-
-    if(puntosTicket){
-        puntosTicket.textContent = Number(venta?.puntos_ganados || 0);
-    }
-
-    if(!productosTicket) return;
-
-    if(!Array.isArray(carrito) || carrito.length === 0){
-        productosTicket.innerHTML = '<div style="text-align:center;padding:10px 0;">Sin productos</div>';
-        return;
-    }
-
-    productosTicket.innerHTML = carrito.map(function(item){
-
-        const cantidad = Number(item?.cantidad || 0);
-        const precio = Number(item?.precio_unitario || 0);
-        const subtotal = cantidad * precio;
-
-        return `
-            <div style="margin:8px 0;padding-bottom:8px;border-bottom:1px solid #ddd;">
-                <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;">
-                    <span style="flex:1;line-height:1.4;">
-                        ${cantidad} x ${escapeHTML(item?.producto_nombre || "Producto")}
-                        <br>
-                        <span style="font-size:13px;">Talla #${escapeHTML(item?.talla || "")}</span>
-                    </span>
-                    <strong style="white-space:nowrap;">${moneda(subtotal)}</strong>
-                </div>
-            </div>
-        `;
-
-    }).join("");
 }
 
 function imprimirTicket(){
-    window.print();
+
+window.print();
+
 }
 
-</script>
-
-<script>
 /* =====================================================
-   RESTAURAR DATOS DE PRUEBA
+RESTAURAR DATOS DE PRUEBA
 ===================================================== */
 
 async function restaurarDatosPrueba(){
 
-    const confirmar =
-    confirm(
-        "⚠️ ATENCIÓN\n\n" +
+const confirmar =
+confirm(
+    "⚠️ ATENCIÓN\n\n" +
 
-        "Esta acción eliminará TODAS las ventas y tickets " +
-        "registrados actualmente.\n\n" +
+    "Esta acción eliminará TODAS las ventas y tickets " +
+    "registrados actualmente.\n\n" +
 
-        "También devolverá al inventario los productos " +
-        "vendidos en esas ventas y revertirá los puntos " +
-        "generados.\n\n" +
+    "También devolverá al inventario los productos " +
+    "vendidos en esas ventas y revertirá los puntos " +
+    "generados.\n\n" +
 
-        "Tus productos, clientes y logo NO serán eliminados.\n\n" +
+    "Tus productos, clientes y logo NO serán eliminados.\n\n" +
 
-        "¿Quieres continuar?"
+    "¿Quieres continuar?"
+);
+
+
+if(!confirmar){
+
+    return;
+
+}
+
+
+const confirmar2 =
+confirm(
+    "ÚLTIMA CONFIRMACIÓN\n\n" +
+
+    "¿Seguro que quieres borrar todas las ventas " +
+    "de prueba?"
+);
+
+
+if(!confirmar2){
+
+    return;
+
+}
+
+
+try{
+
+    mostrarAlerta(
+        "Restaurando datos de prueba..."
     );
 
 
-    if(!confirmar){
+    /* =====================================================
+       1. OBTENER TODAS LAS VENTAS
+    ===================================================== */
 
-        return;
+    const resultadoVentas =
+    await supabaseClient
+        .from("ventas")
+        .select("*");
+
+
+    if(resultadoVentas.error){
+
+        throw resultadoVentas.error;
 
     }
 
 
-    const confirmar2 =
-    confirm(
-        "ÚLTIMA CONFIRMACIÓN\n\n" +
-
-        "¿Seguro que quieres borrar todas las ventas " +
-        "de prueba?"
-    );
+    const ventasExistentes =
+    resultadoVentas.data || [];
 
 
-    if(!confirmar2){
+    if(!ventasExistentes.length){
 
-        return;
+        ocultarAlerta();
 
-    }
-
-
-    try{
-
-        mostrarAlerta(
-            "Restaurando datos de prueba..."
+        alert(
+            "No hay ventas registradas para restaurar."
         );
 
+        return;
 
-        /* =====================================================
-           1. OBTENER TODAS LAS VENTAS
-        ===================================================== */
-
-        const resultadoVentas =
-        await supabaseClient
-            .from("ventas")
-            .select("*");
+    }
 
 
-        if(resultadoVentas.error){
+    /* =====================================================
+       2. OBTENER TODOS LOS DETALLES
+    ===================================================== */
 
-            throw resultadoVentas.error;
-
-        }
-
-
-        const ventasExistentes =
-        resultadoVentas.data || [];
+    const resultadoDetalles =
+    await supabaseClient
+        .from("venta_detalles")
+        .select("*");
 
 
-        if(!ventasExistentes.length){
+    if(resultadoDetalles.error){
 
-            ocultarAlerta();
+        throw resultadoDetalles.error;
 
-            alert(
-                "No hay ventas registradas para restaurar."
-            );
+    }
+
+
+    const detalles =
+    resultadoDetalles.data || [];
+
+
+    /* =====================================================
+       3. DEVOLVER STOCK
+    ===================================================== */
+
+    const cantidadesPorProducto = {};
+
+
+    detalles.forEach(function(detalle){
+
+        const productoId =
+        detalle.producto_id;
+
+
+        if(!productoId){
 
             return;
 
         }
 
 
-        /* =====================================================
-           2. OBTENER TODOS LOS DETALLES
-        ===================================================== */
-
-        const resultadoDetalles =
-        await supabaseClient
-            .from("venta_detalles")
-            .select("*");
+        const cantidad =
+        Number(
+            detalle.cantidad || 0
+        );
 
 
-        if(resultadoDetalles.error){
+        if(!cantidadesPorProducto[productoId]){
 
-            throw resultadoDetalles.error;
+            cantidadesPorProducto[productoId] = 0;
 
         }
 
 
-        const detalles =
-        resultadoDetalles.data || [];
+        cantidadesPorProducto[productoId] +=
+        cantidad;
+
+    });
 
 
-        /* =====================================================
-           3. DEVOLVER STOCK
-        ===================================================== */
+    for(
+        const productoId
+        of Object.keys(cantidadesPorProducto)
+    ){
 
-        const cantidadesPorProducto = {};
-
-
-        detalles.forEach(function(detalle){
-
-            const productoId =
-            detalle.producto_id;
+        const cantidadDevuelta =
+        cantidadesPorProducto[productoId];
 
 
-            if(!productoId){
+        const producto =
+        productos.find(function(p){
 
-                return;
-
-            }
-
-
-            const cantidad =
-            Number(
-                detalle.cantidad || 0
-            );
-
-
-            if(!cantidadesPorProducto[productoId]){
-
-                cantidadesPorProducto[productoId] = 0;
-
-            }
-
-
-            cantidadesPorProducto[productoId] +=
-            cantidad;
+            return p.id === productoId;
 
         });
 
 
-        for(
-            const productoId
-            of Object.keys(cantidadesPorProducto)
-        ){
+        if(!producto){
 
-            const cantidadDevuelta =
-            cantidadesPorProducto[productoId];
-
-
-            const producto =
-            productos.find(function(p){
-
-                return p.id === productoId;
-
-            });
-
-
-            if(!producto){
-
-                console.warn(
-                    "Producto no encontrado:",
-                    productoId
-                );
-
-                continue;
-
-            }
-
-
-            const stockActual =
-            Number(
-                producto.stock || 0
+            console.warn(
+                "Producto no encontrado:",
+                productoId
             );
 
-
-            const nuevoStock =
-            stockActual +
-            cantidadDevuelta;
-
-
-            const resultadoStock =
-            await supabaseClient
-                .from("productos")
-                .update({
-                    stock:nuevoStock
-                })
-                .eq(
-                    "id",
-                    productoId
-                );
-
-
-            if(resultadoStock.error){
-
-                throw resultadoStock.error;
-
-            }
+            continue;
 
         }
 
 
-        /* =====================================================
-           4. REVERTIR PUNTOS
-        ===================================================== */
-
-        const puntosPorCliente = {};
-
-
-        ventasExistentes.forEach(function(venta){
-
-            const clienteId =
-            venta.cliente_id;
+        const stockActual =
+        Number(
+            producto.stock || 0
+        );
 
 
-            if(!clienteId){
-
-                return;
-
-            }
+        const nuevoStock =
+        stockActual +
+        cantidadDevuelta;
 
 
-            const puntos =
-            Number(
-                venta.puntos_ganados ??
-                venta.puntos ??
-                0
-            );
-
-
-            if(!puntos){
-
-                return;
-
-            }
-
-
-            if(!puntosPorCliente[clienteId]){
-
-                puntosPorCliente[clienteId] = 0;
-
-            }
-
-
-            puntosPorCliente[clienteId] +=
-            puntos;
-
-        });
-
-
-        for(
-            const clienteId
-            of Object.keys(puntosPorCliente)
-        ){
-
-            const cliente =
-            clientes.find(function(c){
-
-                return c.id === clienteId;
-
-            });
-
-
-            if(!cliente){
-
-                continue;
-
-            }
-
-
-            const puntosActuales =
-            Number(
-                cliente.puntos || 0
-            );
-
-
-            const puntosRestar =
-            puntosPorCliente[clienteId];
-
-
-            const nuevosPuntos =
-            Math.max(
-                0,
-                puntosActuales -
-                puntosRestar
-            );
-
-
-            const resultadoPuntos =
-            await supabaseClient
-                .from("clientes")
-                .update({
-                    puntos:nuevosPuntos
-                })
-                .eq(
-                    "id",
-                    clienteId
-                );
-
-
-            if(resultadoPuntos.error){
-
-                throw resultadoPuntos.error;
-
-            }
-
-        }
-
-
-        /* =====================================================
-           5. ELIMINAR DETALLES
-        ===================================================== */
-
-        const resultadoEliminarDetalles =
+        const resultadoStock =
         await supabaseClient
-            .from("venta_detalles")
-            .delete()
-            .not(
+            .from("productos")
+            .update({
+                stock:nuevoStock
+            })
+            .eq(
                 "id",
-                "is",
-                null
+                productoId
             );
 
 
-        if(resultadoEliminarDetalles.error){
+        if(resultadoStock.error){
 
-            throw resultadoEliminarDetalles.error;
-
-        }
-
-
-        /* =====================================================
-           6. ELIMINAR VENTAS
-        ===================================================== */
-
-        const resultadoEliminarVentas =
-        await supabaseClient
-            .from("ventas")
-            .delete()
-            .not(
-                "id",
-                "is",
-                null
-            );
-
-
-        if(resultadoEliminarVentas.error){
-
-            throw resultadoEliminarVentas.error;
+            throw resultadoStock.error;
 
         }
-
-
-        /* =====================================================
-           7. LIMPIAR CARRITO
-        ===================================================== */
-
-        carrito = [];
-
-
-        /* =====================================================
-           8. RECARGAR TODO
-        ===================================================== */
-
-        await cargarTodo();
-
-
-        renderCarrito();
-
-
-        mostrarSeccion(
-            "inicio"
-        );
-
-
-        ocultarAlerta();
-
-
-        alert(
-            "✅ Sistema restaurado correctamente.\n\n" +
-
-            "• Ventas eliminadas\n" +
-            "• Tickets eliminados\n" +
-            "• Stock restaurado\n" +
-            "• Puntos revertidos\n\n" +
-
-            "Ya puedes comenzar nuevamente tus pruebas."
-        );
-
-
-    }catch(error){
-
-        console.error(
-            "ERROR AL RESTAURAR:",
-            error
-        );
-
-
-        ocultarAlerta();
-
-
-        alert(
-            "❌ No se pudo restaurar el sistema.\n\n" +
-            error.message
-        );
 
     }
 
+
+    /* =====================================================
+       4. REVERTIR PUNTOS
+    ===================================================== */
+
+    const puntosPorCliente = {};
+
+
+    ventasExistentes.forEach(function(venta){
+
+        const clienteId =
+        venta.cliente_id;
+
+
+        if(!clienteId){
+
+            return;
+
+        }
+
+
+        const puntos =
+        Number(
+            venta.puntos_ganados ??
+            venta.puntos ??
+            0
+        );
+
+
+        if(!puntos){
+
+            return;
+
+        }
+
+
+        if(!puntosPorCliente[clienteId]){
+
+            puntosPorCliente[clienteId] = 0;
+
+        }
+
+
+        puntosPorCliente[clienteId] +=
+        puntos;
+
+    });
+
+
+    for(
+        const clienteId
+        of Object.keys(puntosPorCliente)
+    ){
+
+        const cliente =
+        clientes.find(function(c){
+
+            return c.id === clienteId;
+
+        });
+
+
+        if(!cliente){
+
+            continue;
+
+        }
+
+
+        const puntosActuales =
+        Number(
+            cliente.puntos || 0
+        );
+
+
+        const puntosRestar =
+        puntosPorCliente[clienteId];
+
+
+        const nuevosPuntos =
+        Math.max(
+            0,
+            puntosActuales -
+            puntosRestar
+        );
+
+
+        const resultadoPuntos =
+        await supabaseClient
+            .from("clientes")
+            .update({
+                puntos:nuevosPuntos
+            })
+            .eq(
+                "id",
+                clienteId
+            );
+
+
+        if(resultadoPuntos.error){
+
+            throw resultadoPuntos.error;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       5. ELIMINAR DETALLES
+    ===================================================== */
+
+    const resultadoEliminarDetalles =
+    await supabaseClient
+        .from("venta_detalles")
+        .delete()
+        .not(
+            "id",
+            "is",
+            null
+        );
+
+
+    if(resultadoEliminarDetalles.error){
+
+        throw resultadoEliminarDetalles.error;
+
+    }
+
+
+    /* =====================================================
+       6. ELIMINAR VENTAS
+    ===================================================== */
+
+    const resultadoEliminarVentas =
+    await supabaseClient
+        .from("ventas")
+        .delete()
+        .not(
+            "id",
+            "is",
+            null
+        );
+
+
+    if(resultadoEliminarVentas.error){
+
+        throw resultadoEliminarVentas.error;
+
+    }
+
+
+    /* =====================================================
+       7. LIMPIAR CARRITO
+    ===================================================== */
+
+    carrito = [];
+
+
+    /* =====================================================
+       8. RECARGAR TODO
+    ===================================================== */
+
+    await cargarTodo();
+
+
+    renderCarrito();
+
+
+    mostrarSeccion(
+        "inicio"
+    );
+
+
+    ocultarAlerta();
+
+
+    alert(
+        "✅ Sistema restaurado correctamente.\n\n" +
+
+        "• Ventas eliminadas\n" +
+        "• Tickets eliminados\n" +
+        "• Stock restaurado\n" +
+        "• Puntos revertidos\n\n" +
+
+        "Ya puedes comenzar nuevamente tus pruebas."
+    );
+
+
+}catch(error){
+
+    console.error(
+        "ERROR AL RESTAURAR:",
+        error
+    );
+
+
+    ocultarAlerta();
+
+
+    alert(
+        "❌ No se pudo restaurar el sistema.\n\n" +
+        error.message
+    );
+
 }
 
+}
 
 /* =====================================================
-   UTILIDADES
+UTILIDADES
 ===================================================== */
 
 function moneda(valor){
 
-    return Number(
-        valor || 0
-    ).toLocaleString(
-        "es-MX",
-        {
-            style:"currency",
-            currency:"MXN"
-        }
-    );
+return Number(
+    valor || 0
+).toLocaleString(
+    "es-MX",
+    {
+        style:"currency",
+        currency:"MXN"
+    }
+);
 
 }
-
 
 function fecha(valor){
 
-    if(!valor){
+if(!valor){
 
-        return "—";
-
-    }
-
-
-    return new Date(valor)
-    .toLocaleString(
-        "es-MX",
-        {
-            dateStyle:"short",
-            timeStyle:"short"
-        }
-    );
+    return "—";
 
 }
 
+
+return new Date(valor)
+.toLocaleString(
+    "es-MX",
+    {
+        dateStyle:"short",
+        timeStyle:"short"
+    }
+);
+
+}
 
 function metodoTexto(metodo){
 
-    const nombres = {
+const nombres = {
 
-        efectivo:"Efectivo",
+    efectivo:"Efectivo",
 
-        transferencia:
-        "Transferencia",
+    transferencia:
+    "Transferencia",
 
-        tarjeta:
-        "Tarjeta / Clip"
+    tarjeta:
+    "Tarjeta / Clip"
 
-    };
+};
 
 
-    return nombres[metodo] ||
-    metodo ||
-    "—";
+return nombres[metodo] ||
+metodo ||
+"—";
 
 }
-
 
 function escapeHTML(text){
 
-    return String(
-        text ?? ""
-    )
-    .replace(
-        /&/g,
-        "&amp;"
-    )
-    .replace(
-        /</g,
-        "&lt;"
-    )
-    .replace(
-        />/g,
-        "&gt;"
-    )
-    .replace(
-        /"/g,
-        "&quot;"
-    )
-    .replace(
-        /'/g,
-        "&#039;"
-    );
+return String(
+    text ?? ""
+)
+.replace(
+    /&/g,
+    "&amp;"
+)
+.replace(
+    /</g,
+    "&lt;"
+)
+.replace(
+    />/g,
+    "&gt;"
+)
+.replace(
+    /"/g,
+    "&quot;"
+)
+.replace(
+    /'/g,
+    "&#039;"
+);
 
 }
-
 
 function mostrarAlerta(texto){
 
-    const alerta =
-    document.getElementById(
-        "alerta"
-    );
+const alerta =
+document.getElementById(
+    "alerta"
+);
 
 
-    alerta.textContent =
-    texto;
+alerta.textContent =
+texto;
 
 
-    alerta.style.display =
-    "block";
+alerta.style.display =
+"block";
 
 }
-
 
 function ocultarAlerta(){
 
-    document.getElementById(
-        "alerta"
-    ).style.display =
-    "none";
+document.getElementById(
+    "alerta"
+).style.display =
+"none";
 
 }
 
-
 /* =====================================================
-   CERRAR MODALES AL TOCAR AFUERA
+CERRAR MODALES AL TOCAR AFUERA
 ===================================================== */
 
 document.addEventListener(
-    "click",
-    function(event){
+"click",
+function(event){
 
-        const modalProducto =
-        document.getElementById(
-            "modalProducto"
-        );
-
-
-        const modalCliente =
-        document.getElementById(
-            "modalCliente"
-        );
+    const modalProducto =
+    document.getElementById(
+        "modalProducto"
+    );
 
 
-        if(
-            event.target ===
-            modalProducto
-        ){
-
-            cerrarProducto();
-
-        }
+    const modalCliente =
+    document.getElementById(
+        "modalCliente"
+    );
 
 
-        if(
-            event.target ===
-            modalCliente
-        ){
+    if(
+        event.target ===
+        modalProducto
+    ){
 
-            cerrarCliente();
-
-        }
+        cerrarProducto();
 
     }
+
+
+    if(
+        event.target ===
+        modalCliente
+    ){
+
+        cerrarCliente();
+
+    }
+
+}
+
 );
+
 </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</script>
+
+<!-- Librería para convertir el ticket en imagen -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>    
 
 </body>
 </html>
