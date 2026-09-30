@@ -4436,114 +4436,196 @@ async function subirLogo(){
 
 }
 
-/* =====================================================
-   TICKET
-===================================================== */
+<!-- =====================================================
+     TICKET
+===================================================== -->
 
-function prepararTicket(
-    venta,
-    metodo,
-    efectivo,
-    cambio
-){
+<div
+    class="ticket"
+    id="ticket"
+    style="width:380px;max-width:100%;margin:0 auto;padding:20px;background:#fff;color:#111;font-family:Arial,Helvetica,sans-serif;font-size:14px;box-sizing:border-box;"
+>
 
-    document.getElementById(
-        "ticketFolio"
-    ).textContent =
-    venta.folio;
+    <div style="text-align:center;margin-bottom:10px;">
+        <img
+            src="https://nasvzzdzkljozyhhjize.supabase.co/storage/v1/object/public/pos/branding/logo"
+            alt="Nat.Nation Sneakers"
+            style="width:70px;height:70px;object-fit:contain;display:block;margin:0 auto 8px;"
+        >
 
+        <div style="font-size:22px;font-weight:bold;line-height:1.2;">
+            Nat.Nation Sneakers
+        </div>
 
-    document.getElementById(
-        "ticketFecha"
-    ).textContent =
-    fecha(venta.fecha);
+        <div style="font-size:15px;margin-top:4px;">
+            Donde empieza tu estilo
+        </div>
 
+        <div style="font-size:12px;line-height:1.5;margin-top:8px;">
+            Calle Juan Clímaco Ramírez SNVC<br>
+            San Andrés, 55780 Jaltenco, Méx.<br>
+            Tel. 5624570336
+        </div>
+    </div>
 
-    document.getElementById(
-        "ticketTotal"
-    ).textContent =
-    moneda(venta.total);
+    <div style="border-top:2px dashed #888;margin:12px 0;"></div>
 
+    <div style="font-size:14px;line-height:1.8;">
+        <div style="display:flex;justify-content:space-between;gap:15px;">
+            <strong>Folio:</strong>
+            <span id="ticketFolio">—</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;gap:15px;">
+            <strong>Fecha:</strong>
+            <span id="ticketFecha">—</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;gap:15px;">
+            <strong>Cliente:</strong>
+            <span id="ticketCliente" style="text-align:right;max-width:65%;">Venta sin cliente</span>
+        </div>
+    </div>
 
-    document.getElementById(
-        "ticketPago"
-    ).textContent =
-    metodoTexto(metodo);
+    <div style="border-top:2px dashed #888;margin:12px 0;"></div>
 
+    <div id="ticketProductos" style="width:100%;"></div>
 
-    document.getElementById(
-        "ticketCambio"
-    ).textContent =
+    <div style="border-top:2px dashed #888;margin:12px 0;"></div>
 
-    metodo === "efectivo"
+    <div style="display:flex;justify-content:space-between;font-size:15px;margin-bottom:8px;">
+        <span>Subtotal</span>
+        <span id="ticketSubtotal">$0.00</span>
+    </div>
 
-    ?
+    <div style="display:flex;justify-content:space-between;font-size:21px;font-weight:bold;margin-bottom:14px;">
+        <span>TOTAL</span>
+        <span id="ticketTotal">$0.00</span>
+    </div>
 
-    "Cambio: " +
-    moneda(cambio)
+    <div style="border-top:2px dashed #888;margin:12px 0;"></div>
 
-    :
+    <div style="font-size:14px;line-height:1.8;">
+        <div style="display:flex;justify-content:space-between;gap:15px;">
+            <strong>Forma de pago:</strong>
+            <span id="ticketPago">—</span>
+        </div>
+        <div id="ticketEfectivoFila" style="display:none;justify-content:space-between;gap:15px;">
+            <strong>Efectivo recibido:</strong>
+            <span id="ticketEfectivo">$0.00</span>
+        </div>
+        <div id="ticketCambioFila" style="display:none;justify-content:space-between;gap:15px;">
+            <strong>Cambio:</strong>
+            <span id="ticketCambio">$0.00</span>
+        </div>
+    </div>
 
-    "";
+    <div style="border-top:2px dashed #888;margin:12px 0;"></div>
 
+    <div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:18px;">
+        <strong>Puntos generados:</strong>
+        <span id="ticketPuntos">0</span>
+    </div>
 
-    document.getElementById(
-        "ticketProductos"
-    ).innerHTML =
+    <div style="text-align:center;font-size:14px;line-height:1.7;padding-bottom:8px;">
+        <strong>¡Gracias por tu compra!</strong><br>
+        Nat.Nation Sneakers<br>
+        Donde empieza tu estilo
+    </div>
 
-    carrito.map(function(item){
+</div>
+
+<!-- =====================================================
+     JAVASCRIPT DEL TICKET
+===================================================== -->
+
+<script>
+
+function prepararTicket(venta, metodo, efectivo, cambio){
+
+    const folio = document.getElementById("ticketFolio");
+    const fechaTicket = document.getElementById("ticketFecha");
+    const clienteTicket = document.getElementById("ticketCliente");
+    const subtotalTicket = document.getElementById("ticketSubtotal");
+    const totalTicket = document.getElementById("ticketTotal");
+    const pagoTicket = document.getElementById("ticketPago");
+    const productosTicket = document.getElementById("ticketProductos");
+    const puntosTicket = document.getElementById("ticketPuntos");
+
+    if(folio) folio.textContent = venta?.folio || "—";
+    if(fechaTicket) fechaTicket.textContent = fecha(venta?.fecha);
+
+    const cliente = Array.isArray(clientes)
+        ? clientes.find(c => c.id === venta?.cliente_id)
+        : null;
+
+    if(clienteTicket){
+        clienteTicket.textContent = cliente?.nombre || "Venta sin cliente";
+    }
+
+    const total = Number(venta?.total || 0);
+
+    if(subtotalTicket) subtotalTicket.textContent = moneda(total);
+    if(totalTicket) totalTicket.textContent = moneda(total);
+    if(pagoTicket) pagoTicket.textContent = metodoTexto(metodo);
+
+    const esEfectivo = String(metodo || "").toLowerCase() === "efectivo";
+
+    const filaEfectivo = document.getElementById("ticketEfectivoFila");
+    const filaCambio = document.getElementById("ticketCambioFila");
+
+    if(esEfectivo){
+        if(filaEfectivo) filaEfectivo.style.display = "flex";
+        if(filaCambio) filaCambio.style.display = "flex";
+
+        const efectivoTicket = document.getElementById("ticketEfectivo");
+        const cambioTicket = document.getElementById("ticketCambio");
+
+        if(efectivoTicket) efectivoTicket.textContent = moneda(efectivo);
+        if(cambioTicket) cambioTicket.textContent = moneda(cambio);
+    }else{
+        if(filaEfectivo) filaEfectivo.style.display = "none";
+        if(filaCambio) filaCambio.style.display = "none";
+    }
+
+    if(puntosTicket){
+        puntosTicket.textContent = Number(venta?.puntos_ganados || 0);
+    }
+
+    if(!productosTicket) return;
+
+    if(!Array.isArray(carrito) || carrito.length === 0){
+        productosTicket.innerHTML = '<div style="text-align:center;padding:10px 0;">Sin productos</div>';
+        return;
+    }
+
+    productosTicket.innerHTML = carrito.map(function(item){
+
+        const cantidad = Number(item?.cantidad || 0);
+        const precio = Number(item?.precio_unitario || 0);
+        const subtotal = cantidad * precio;
 
         return `
-
-            <div
-                style="
-                    display:flex;
-                    justify-content:space-between;
-                    margin:7px 0;
-                ">
-
-                <span>
-
-                    ${item.cantidad} x
-                    ${escapeHTML(
-                        item.producto_nombre
-                    )}
-
-                    <br>
-
-                    Talla
-                    ${escapeHTML(
-                        item.talla || ""
-                    )}
-
-                </span>
-
-
-                <span>
-
-                    ${moneda(
-                        item.cantidad *
-                        item.precio_unitario
-                    )}
-
-                </span>
-
+            <div style="margin:8px 0;padding-bottom:8px;border-bottom:1px solid #ddd;">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;">
+                    <span style="flex:1;line-height:1.4;">
+                        ${cantidad} x ${escapeHTML(item?.producto_nombre || "Producto")}
+                        <br>
+                        <span style="font-size:13px;">Talla #${escapeHTML(item?.talla || "")}</span>
+                    </span>
+                    <strong style="white-space:nowrap;">${moneda(subtotal)}</strong>
+                </div>
             </div>
-
         `;
 
     }).join("");
-
 }
-
 
 function imprimirTicket(){
-
     window.print();
-
 }
 
-    
+</script>
+
+<script>
 /* =====================================================
    RESTAURAR DATOS DE PRUEBA
 ===================================================== */
@@ -5121,14 +5203,9 @@ document.addEventListener(
 
     }
 );
-
 </script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-</script>
-
-<!-- Librería para convertir el ticket en imagen -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>    
-    
 </body>
 </html>
