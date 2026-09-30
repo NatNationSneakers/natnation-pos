@@ -3730,12 +3730,11 @@ async function registrarVenta(){
 
 
         const puntos =
-        clienteId
-        ?
-        Math.floor(total)
-        :
-        0;
-
+    clienteId
+    ?
+    Math.floor(total / 10)
+    :
+    0;
 
         /*
          * ESTA PARTE CONSERVA EL MISMO
