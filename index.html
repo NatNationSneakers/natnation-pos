@@ -4434,95 +4434,175 @@ function prepararTicket(
     cambio
 ){
 
-    document.getElementById(
-        "ticketFolio"
-    ).textContent =
-    venta.folio;
+    const folio = document.getElementById("ticketFolio");
+    const fechaTicket = document.getElementById("ticketFecha");
+    const clienteTicket = document.getElementById("ticketCliente");
+    const totalTicket = document.getElementById("ticketTotal");
+    const subtotalTicket = document.getElementById("ticketSubtotal");
+    const pagoTicket = document.getElementById("ticketPago");
+    const productosTicket = document.getElementById("ticketProductos");
+    const puntosTicket = document.getElementById("ticketPuntos");
 
+    if(folio){
+        folio.textContent = venta?.folio || "—";
+    }
 
-    document.getElementById(
-        "ticketFecha"
-    ).textContent =
-    fecha(venta.fecha);
+    if(fechaTicket){
+        fechaTicket.textContent = fecha(venta?.fecha);
+    }
 
+    if(clienteTicket){
+        const cliente = Array.isArray(clientes)
+            ? clientes.find(function(c){
+                return c.id === venta?.cliente_id;
+            })
+            : null;
 
-    document.getElementById(
-        "ticketTotal"
-    ).textContent =
-    moneda(venta.total);
+        clienteTicket.textContent =
+            cliente?.nombre || "Venta sin cliente";
+    }
 
+    const total = Number(venta?.total || 0);
 
-    document.getElementById(
-        "ticketPago"
-    ).textContent =
-    metodoTexto(metodo);
+    if(totalTicket){
+        totalTicket.textContent = moneda(total);
+    }
 
+    if(pagoTicket){
+        pagoTicket.textContent = metodoTexto(metodo);
+    }
 
-    document.getElementById(
-        "ticketCambio"
-    ).textContent =
+    /* =================================================
+       PRODUCTOS Y SUBTOTAL
+    ================================================= */
 
-    metodo === "efectivo"
+    let subtotal = 0;
 
-    ?
+    if(Array.isArray(carrito)){
 
-    "Cambio: " +
-    moneda(cambio)
+        carrito.forEach(function(item){
 
-    :
+            const cantidad = Number(item?.cantidad || 0);
+            const precio = Number(item?.precio_unitario || 0);
 
-    "";
+            subtotal += cantidad * precio;
 
+        });
 
-    document.getElementById(
-        "ticketProductos"
-    ).innerHTML =
+    }
 
-    carrito.map(function(item){
+    if(subtotalTicket){
+        subtotalTicket.textContent = moneda(subtotal);
+    }
 
-        return `
+    if(productosTicket){
 
-            <div
-                style="
-                    display:flex;
-                    justify-content:space-between;
-                    margin:7px 0;
-                ">
+        if(!Array.isArray(carrito) || carrito.length === 0){
 
-                <span>
+            productosTicket.innerHTML = `
+                <div style="text-align:center;padding:10px 0;">
+                    Sin productos
+                </div>
+            `;
 
-                    ${item.cantidad} x
-                    ${escapeHTML(
-                        item.producto_nombre
-                    )}
+        }else{
 
-                    <br>
+            productosTicket.innerHTML = carrito.map(function(item){
 
-                    Talla
-                    ${escapeHTML(
-                        item.talla || ""
-                    )}
+                const cantidad = Number(item?.cantidad || 0);
+                const precio = Number(item?.precio_unitario || 0);
+                const subtotalProducto = cantidad * precio;
 
-                </span>
+                return `
+                    <div style="margin:8px 0;padding-bottom:8px;border-bottom:1px solid #ddd;">
+                        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;">
+                            <span style="flex:1;line-height:1.4;">
+                                <strong>
+                                    ${cantidad} x ${escapeHTML(item?.producto_nombre || "Producto")}
+                                </strong>
+                                <br>
+                                <span style="font-size:13px;">
+                                    Talla #${escapeHTML(item?.talla || "")}
+                                </span>
+                            </span>
 
+                            <strong style="white-space:nowrap;">
+                                ${moneda(subtotalProducto)}
+                            </strong>
+                        </div>
+                    </div>
+                `;
 
-                <span>
+            }).join("");
 
-                    ${moneda(
-                        item.cantidad *
-                        item.precio_unitario
-                    )}
+        }
 
-                </span>
+    }
 
-            </div>
+    /* =================================================
+       EFECTIVO Y CAMBIO
+    ================================================= */
 
-        `;
+    const esEfectivo =
+        String(metodo || "").toLowerCase() === "efectivo";
 
-    }).join("");
+    const filaEfectivo =
+        document.getElementById("ticketEfectivoFila");
+
+    const filaCambio =
+        document.getElementById("ticketCambioFila");
+
+    const efectivoTicket =
+        document.getElementById("ticketEfectivo");
+
+    const cambioTicket =
+        document.getElementById("ticketCambio");
+
+    if(esEfectivo){
+
+        if(filaEfectivo){
+            filaEfectivo.style.display = "flex";
+        }
+
+        if(filaCambio){
+            filaCambio.style.display = "flex";
+        }
+
+        if(efectivoTicket){
+            efectivoTicket.textContent = moneda(efectivo);
+        }
+
+        if(cambioTicket){
+            cambioTicket.textContent = moneda(cambio);
+        }
+
+    }else{
+
+        if(filaEfectivo){
+            filaEfectivo.style.display = "none";
+        }
+
+        if(filaCambio){
+            filaCambio.style.display = "none";
+        }
+
+    }
+
+    /* =================================================
+       PUNTOS
+    ================================================= */
+
+    if(puntosTicket){
+        puntosTicket.textContent =
+            Number(venta?.puntos_ganados || 0);
+    }
 
 }
 
+
+/* =====================================================
+   IMPRIMIR TICKET
+===================================================== */
 
 function imprimirTicket(){
 
@@ -4530,7 +4610,81 @@ function imprimirTicket(){
 
 }
 
-    
+
+/* =====================================================
+   DESCARGAR TICKET COMO IMAGEN
+===================================================== */
+
+async function descargarTicket(){
+
+    const ticket =
+        document.getElementById("ticket");
+
+    if(!ticket){
+
+        alert("No se encontró el ticket.");
+        return;
+
+    }
+
+    if(typeof html2canvas === "undefined"){
+
+        alert(
+            "No se pudo cargar la función para descargar el ticket."
+        );
+
+        return;
+
+    }
+
+    try{
+
+        const canvas = await html2canvas(
+            ticket,
+            {
+                backgroundColor: "#ffffff",
+                scale: 2,
+                useCORS: true,
+                logging: false
+            }
+        );
+
+        const enlace =
+            document.createElement("a");
+
+        const folio =
+            document.getElementById("ticketFolio")?.textContent ||
+            "venta";
+
+        enlace.download =
+            "Ticket-NatNation-" +
+            folio +
+            ".png";
+
+        enlace.href =
+            canvas.toDataURL("image/png");
+
+        document.body.appendChild(enlace);
+        enlace.click();
+        enlace.remove();
+
+    }catch(error){
+
+        console.error(
+            "ERROR AL DESCARGAR TICKET:",
+            error
+        );
+
+        alert(
+            "No se pudo descargar el ticket.\n\n" +
+            (error?.message || "Error desconocido")
+        );
+
+    }
+
+}
+
+
 /* =====================================================
    RESTAURAR DATOS DE PRUEBA
 ===================================================== */
@@ -5108,8 +5262,6 @@ document.addEventListener(
 
     }
 );
-
-</script>
 
 </script>
 
