@@ -1930,10 +1930,8 @@ h2{
             ✓
         </div>
 
-        <div
-            style="font-size:24px;font-weight:bold;margin-bottom:4px"
-        >
-            ¡Pago aprobado!
+        <div style="font-size:24px;font-weight:bold;margin-bottom:4px">
+            ¡Venta registrada!
         </div>
 
         <div
@@ -1943,28 +1941,35 @@ h2{
             $0.00
         </div>
 
-        <img
-            id="ticketPNG"
-            alt="Ticket de compra Nat.Nation Sneakers"
+        <textarea
+            id="ticketTexto"
+            readonly
             style="
                 display:block;
                 width:100%;
-                max-width:390px;
-                margin:0 auto 18px;
-                border:1px solid #eee;
-                border-radius:8px;
-                box-shadow:0 2px 12px rgba(0,0,0,.08);
+                min-height:430px;
+                box-sizing:border-box;
+                padding:16px;
+                border:1px solid #ddd;
+                border-radius:12px;
                 background:#fff;
+                color:#111;
+                font-family:monospace;
+                font-size:14px;
+                line-height:1.45;
+                resize:none;
+                text-align:left;
+                white-space:pre;
+                overflow:auto;
+                margin-bottom:14px;
             "
-        >
+        ></textarea>
 
-        <div
-            style="display:grid;grid-template-columns:1fr 1fr;gap:10px;"
-        >
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
 
             <button
                 type="button"
-                onclick="imprimirTicketPNG()"
+                onclick="copiarTicketTexto()"
                 style="
                     border:0;
                     border-radius:12px;
@@ -1976,12 +1981,12 @@ h2{
                     cursor:pointer;
                 "
             >
-                🖨️ Imprimir
+                📋 Copiar texto
             </button>
 
             <button
                 type="button"
-                onclick="descargarTicketPNG()"
+                onclick="compartirTicketTexto()"
                 style="
                     border:0;
                     border-radius:12px;
@@ -1993,7 +1998,7 @@ h2{
                     cursor:pointer;
                 "
             >
-                📥 Descargar PNG
+                📤 Compartir
             </button>
 
         </div>
@@ -2019,7 +2024,6 @@ h2{
     </div>
 
 </div>
-
 
 <!-- =====================================================
      JAVASCRIPT
@@ -3966,7 +3970,7 @@ async function registrarVenta(){
 
         await cargarTodo();
 
-        await mostrarTicketPNG(venta);
+        mostrarTicketTexto(venta);
 
     }catch(error){
 
@@ -4966,140 +4970,161 @@ function prepararTicket(
 }
 
 
-async function mostrarTicketPNG(venta){
+function obtenerTextoTicket(){
+
+    const limpiar = function(valor){
+        return String(valor || "")
+            .replace(/\u00a0/g," ")
+            .replace(/\s+/g," ")
+            .trim();
+    };
+
+    const valor = function(id,defecto=""){
+        const el = document.getElementById(id);
+        return limpiar(el ? el.textContent : defecto);
+    };
+
+    const lineas = [];
+
+    lineas.push("NAT.NATION SNEAKERS");
+    lineas.push("Donde empieza tu estilo");
+    lineas.push("Calle Juan Clímaco Ramírez SNVC");
+    lineas.push("San Andrés, 55780 Jaltenco, Méx.");
+    lineas.push("Tel. 5624570336");
+    lineas.push("--------------------------------");
+    lineas.push("Folio: " + valor("ticketFolio","—"));
+    lineas.push("Fecha: " + valor("ticketFecha","—"));
+    lineas.push("Cliente: " + valor("ticketCliente","Venta sin cliente"));
+    lineas.push("--------------------------------");
+
+    const productos = document.getElementById("ticketProductos");
+
+    if(productos){
+
+        Array.from(productos.children).forEach(function(item){
+
+            const textoProducto = limpiar(item.textContent);
+
+            if(textoProducto){
+                lineas.push(textoProducto);
+            }
+        });
+    }
+
+    lineas.push("--------------------------------");
+    lineas.push("Subtotal: " + valor("ticketSubtotal","$0.00"));
+    lineas.push("TOTAL: " + valor("ticketTotal","$0.00"));
+    lineas.push("--------------------------------");
+    lineas.push("Forma de pago: " + valor("ticketPago","Efectivo"));
+
+    const filaEfectivo = document.getElementById("ticketEfectivoFila");
+    const filaCambio = document.getElementById("ticketCambioFila");
+
+    if(filaEfectivo && getComputedStyle(filaEfectivo).display !== "none"){
+        lineas.push("Efectivo recibido: " + valor("ticketEfectivo","$0.00"));
+    }
+
+    if(filaCambio && getComputedStyle(filaCambio).display !== "none"){
+        lineas.push("Cambio: " + valor("ticketCambio","$0.00"));
+    }
+
+    lineas.push("--------------------------------");
+    lineas.push("Puntos generados: " + valor("ticketPuntos","0"));
+    lineas.push("");
+    lineas.push("¡Gracias por tu compra!");
+    lineas.push("Nat.Nation Sneakers");
+    lineas.push("Donde empieza tu estilo");
+
+    return lineas.join("\n").trim();
+}
+
+
+function mostrarTicketTexto(venta){
 
     const ticket = document.getElementById("ticket");
     const resultado = document.getElementById("ticketResultado");
-    const imagen = document.getElementById("ticketPNG");
+    const texto = document.getElementById("ticketTexto");
     const total = document.getElementById("ticketResultadoTotal");
 
-    if(!ticket || !resultado || !imagen){
+    if(!ticket || !resultado || !texto){
         alert("No se pudo preparar el ticket.");
         return;
     }
 
-    if(typeof html2canvas === "undefined"){
-        alert("No se pudo cargar el generador de tickets PNG.");
+    const contenido = obtenerTextoTicket();
+
+    if(!contenido){
+        alert("No se pudo generar el texto del ticket.");
+        return;
+    }
+
+    texto.value = contenido;
+
+    if(total){
+        total.textContent = moneda(venta?.total || 0);
+    }
+
+    resultado.style.display = "flex";
+
+    // Deja el texto listo para pegar en RTPrinter > Plain.
+    setTimeout(function(){
+        texto.focus();
+        texto.select();
+    },100);
+}
+
+
+async function copiarTicketTexto(){
+
+    const texto = document.getElementById("ticketTexto");
+
+    if(!texto || !texto.value){
+        alert("No hay un ticket disponible.");
         return;
     }
 
     try{
-
-        const copia = ticket.cloneNode(true);
-
-        copia.id = "ticketPNGTemporal";
-        copia.style.display = "block";
-        copia.style.position = "fixed";
-        copia.style.left = "-10000px";
-        copia.style.top = "0";
-        copia.style.width = "390px";
-        copia.style.minHeight = "0";
-        copia.style.height = "auto";
-        copia.style.margin = "0";
-        copia.style.padding = "22px";
-        copia.style.boxSizing = "border-box";
-        copia.style.background = "#fff";
-        copia.style.color = "#111";
-        copia.style.fontFamily = "Arial, Helvetica, sans-serif";
-        copia.style.fontSize = "14px";
-        copia.style.lineHeight = "1.5";
-        copia.style.overflow = "visible";
-
-        document.body.appendChild(copia);
-
-        const canvas = await html2canvas(copia,{
-            backgroundColor:"#ffffff",
-            scale:3,
-            useCORS:true,
-            allowTaint:false,
-            logging:false
-        });
-
-        copia.remove();
-
-        const png = canvas.toDataURL("image/png");
-
-        imagen.src = png;
-        imagen.dataset.png = png;
-        imagen.dataset.folio = venta?.folio || "venta";
-
-        if(total){
-            total.textContent = moneda(venta?.total || 0);
-        }
-
-        resultado.style.display = "flex";
-
+        await navigator.clipboard.writeText(texto.value);
+        alert("Ticket copiado. Ahora abre RTPrinter > Plain y pégalo.");
     }catch(error){
+        texto.focus();
+        texto.select();
 
-        const temporal = document.getElementById("ticketPNGTemporal");
-        if(temporal) temporal.remove();
-
-        console.error("Error generando ticket PNG:",error);
-        alert("No se pudo generar el ticket en PNG.\n\n" + error.message);
-
+        try{
+            document.execCommand("copy");
+            alert("Ticket copiado. Ahora abre RTPrinter > Plain y pégalo.");
+        }catch(e){
+            alert("No se pudo copiar automáticamente. Selecciona el texto y copia manualmente.");
+        }
     }
-
 }
 
 
-function descargarTicketPNG(){
+async function compartirTicketTexto(){
 
-    const imagen = document.getElementById("ticketPNG");
+    const texto = document.getElementById("ticketTexto");
 
-    if(!imagen || !imagen.dataset.png){
-        alert("No hay un ticket disponible para descargar.");
+    if(!texto || !texto.value){
+        alert("No hay un ticket disponible.");
         return;
     }
 
-    const enlace = document.createElement("a");
+    if(navigator.share){
 
-    enlace.download =
-        "Ticket-NatNation-" +
-        (imagen.dataset.folio || "venta") +
-        ".png";
-
-    enlace.href = imagen.dataset.png;
-    enlace.click();
-
-}
-
-
-function imprimirTicketPNG(){
-
-    const imagen = document.getElementById("ticketPNG");
-
-    if(!imagen || !imagen.src){
-        alert("No hay un ticket disponible para imprimir.");
-        return;
+        try{
+            await navigator.share({
+                title:"Ticket Nat.Nation Sneakers",
+                text:texto.value
+            });
+            return;
+        }catch(error){
+            if(error && error.name === "AbortError"){
+                return;
+            }
+        }
     }
 
-    const ventana = window.open("","_blank");
-
-    if(!ventana){
-        alert("El navegador bloqueó la ventana de impresión. Permite ventanas emergentes para este sitio.");
-        return;
-    }
-
-    ventana.document.write(`
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <title>Ticket Nat.Nation</title>
-            <style>
-                @page{margin:0;}
-                html,body{margin:0;padding:0;background:#fff;}
-                body{display:flex;justify-content:center;align-items:flex-start;}
-                img{display:block;width:100%;max-width:390px;height:auto;}
-            </style>
-        </head>
-        <body>
-            <img src="${imagen.src}" onload="setTimeout(function(){window.print();},200);">
-        </body>
-        </html>
-    `);
-
-    ventana.document.close();
-
+    await copiarTicketTexto();
 }
 
 
@@ -5694,8 +5719,5 @@ document.addEventListener(
 
 </script>
 
-<!-- Librería para convertir el ticket en imagen -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>    
-    
 </body>
 </html>
