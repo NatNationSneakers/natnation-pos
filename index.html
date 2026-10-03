@@ -7924,6 +7924,1034 @@ document.addEventListener(
 <!-- =====================================================
      FIN EDITAR / ELIMINAR CLIENTES
 ===================================================== -->
+
+<!-- =====================================================
+     FILTRO DE REPORTES - SOLO AGREGADO
+===================================================== -->
+
+<style>
+
+.nn-filtro-contenedor{
+    display:flex;
+    justify-content:flex-end;
+    margin:15px 0;
+}
+
+#nnBotonFiltroReportes{
+    background:#111;
+    color:white;
+    border:none;
+    border-radius:10px;
+    padding:12px 18px;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    box-shadow:0 3px 10px rgba(0,0,0,.15);
+}
+
+#nnBotonFiltroReportes:active{
+    transform:scale(.97);
+}
+
+
+/* Fondo del filtro */
+
+#nnFiltroReportesOverlay{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    z-index:99999;
+}
+
+
+/* Panel */
+
+#nnFiltroReportesPanel{
+    position:absolute;
+    right:0;
+    top:0;
+    height:100%;
+    width:min(420px,92vw);
+    background:white;
+    box-shadow:-8px 0 30px rgba(0,0,0,.25);
+    padding:28px;
+    box-sizing:border-box;
+    overflow-y:auto;
+}
+
+
+/* Encabezado */
+
+.nn-filtro-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.nn-filtro-header h2{
+    margin:0;
+    font-size:28px;
+}
+
+.nn-filtro-cerrar{
+    border:none;
+    background:none;
+    font-size:30px;
+    cursor:pointer;
+}
+
+
+/* Opciones */
+
+.nn-filtro-opcion{
+    padding:18px 5px;
+    border-bottom:1px solid #ddd;
+}
+
+.nn-filtro-opcion label{
+    display:block;
+    font-size:16px;
+    font-weight:600;
+    margin-bottom:10px;
+}
+
+.nn-filtro-opcion input,
+.nn-filtro-opcion select{
+    width:100%;
+    box-sizing:border-box;
+    padding:13px;
+    border:1px solid #ccc;
+    border-radius:9px;
+    font-size:16px;
+    background:white;
+}
+
+
+/* Botones */
+
+.nn-filtro-botones{
+    display:flex;
+    gap:10px;
+    margin-top:25px;
+}
+
+.nn-filtro-aplicar{
+    flex:1;
+    background:#d41470;
+    color:white;
+    border:none;
+    border-radius:10px;
+    padding:14px;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.nn-filtro-limpiar{
+    flex:1;
+    background:#eee;
+    color:#222;
+    border:none;
+    border-radius:10px;
+    padding:14px;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+</style>
+
+
+<!-- PANEL DEL FILTRO -->
+
+<div id="nnFiltroReportesOverlay">
+
+    <div id="nnFiltroReportesPanel">
+
+        <div class="nn-filtro-header">
+
+            <h2>
+                Filtrar por
+            </h2>
+
+            <button
+                type="button"
+                class="nn-filtro-cerrar"
+                onclick="cerrarFiltroReportesNN()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <!-- FECHA -->
+
+        <div class="nn-filtro-opcion">
+
+            <label>
+                📅 Fecha
+            </label>
+
+            <select
+                id="nnFiltroFechaTipo"
+                onchange="cambiarFechaFiltroNN()"
+            >
+
+                <option value="todas">
+                    Todas las fechas
+                </option>
+
+                <option value="hoy">
+                    Hoy
+                </option>
+
+                <option value="ayer">
+                    Ayer
+                </option>
+
+                <option value="semana">
+                    Esta semana
+                </option>
+
+                <option value="mes">
+                    Este mes
+                </option>
+
+                <option value="fecha">
+                    Fecha específica
+                </option>
+
+                <option value="rango">
+                    Rango de fechas
+                </option>
+
+            </select>
+
+
+            <div
+                id="nnFechaEspecifica"
+                style="display:none;margin-top:10px"
+            >
+
+                <input
+                    id="nnFiltroFecha"
+                    type="date"
+                >
+
+            </div>
+
+
+            <div
+                id="nnRangoFechas"
+                style="display:none;margin-top:10px"
+            >
+
+                <input
+                    id="nnFiltroFechaInicio"
+                    type="date"
+                    style="margin-bottom:8px"
+                >
+
+                <input
+                    id="nnFiltroFechaFin"
+                    type="date"
+                >
+
+            </div>
+
+        </div>
+
+
+        <!-- MÉTODO DE PAGO -->
+
+        <div class="nn-filtro-opcion">
+
+            <label>
+                💳 Método de pago
+            </label>
+
+            <select id="nnFiltroPago">
+
+                <option value="todos">
+                    Todos
+                </option>
+
+                <option value="efectivo">
+                    Efectivo
+                </option>
+
+                <option value="tarjeta">
+                    Tarjeta
+                </option>
+
+                <option value="clip">
+                    Clip
+                </option>
+
+                <option value="transferencia">
+                    Transferencia
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- TIPO DE VENTA -->
+
+        <div class="nn-filtro-opcion">
+
+            <label>
+                🧾 Tipo de venta
+            </label>
+
+            <select id="nnFiltroTipoVenta">
+
+                <option value="todos">
+                    Todos
+                </option>
+
+                <option value="producto">
+                    Producto
+                </option>
+
+                <option value="manual">
+                    Cobro manual
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- BOTONES -->
+
+        <div class="nn-filtro-botones">
+
+            <button
+                type="button"
+                class="nn-filtro-limpiar"
+                onclick="limpiarFiltroReportesNN()"
+            >
+                Limpiar
+            </button>
+
+            <button
+                type="button"
+                class="nn-filtro-aplicar"
+                onclick="aplicarFiltroReportesNN()"
+            >
+                Aplicar filtro
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   FILTRO DE REPORTES
+===================================================== */
+
+
+/* Crear botón exactamente debajo de las tarjetas */
+
+function crearBotonFiltroReportesNN(){
+
+    const reportes =
+    document.getElementById("reportes");
+
+    if(!reportes){
+        return;
+    }
+
+
+    if(
+        document.getElementById(
+            "nnBotonFiltroReportes"
+        )
+    ){
+        return;
+    }
+
+
+    const cards =
+    reportes.querySelector(".cards");
+
+    if(!cards){
+        return;
+    }
+
+
+    const contenedor =
+    document.createElement("div");
+
+    contenedor.className =
+    "nn-filtro-contenedor";
+
+
+    contenedor.innerHTML = `
+
+        <button
+            type="button"
+            id="nnBotonFiltroReportes"
+            onclick="abrirFiltroReportesNN()"
+        >
+            🔎 Filtrar
+        </button>
+
+    `;
+
+
+    cards.insertAdjacentElement(
+        "afterend",
+        contenedor
+    );
+
+}
+
+
+/* Abrir */
+
+function abrirFiltroReportesNN(){
+
+    crearBotonFiltroReportesNN();
+
+    document.getElementById(
+        "nnFiltroReportesOverlay"
+    ).style.display =
+    "block";
+
+}
+
+
+/* Cerrar */
+
+function cerrarFiltroReportesNN(){
+
+    document.getElementById(
+        "nnFiltroReportesOverlay"
+    ).style.display =
+    "none";
+
+}
+
+
+/* Cambiar opciones de fecha */
+
+function cambiarFechaFiltroNN(){
+
+    const tipo =
+    document.getElementById(
+        "nnFiltroFechaTipo"
+    ).value;
+
+
+    document.getElementById(
+        "nnFechaEspecifica"
+    ).style.display =
+    tipo === "fecha"
+        ? "block"
+        : "none";
+
+
+    document.getElementById(
+        "nnRangoFechas"
+    ).style.display =
+    tipo === "rango"
+        ? "block"
+        : "none";
+
+}
+
+
+/* Obtener fecha local YYYY-MM-DD */
+
+function nnFechaLocal(date){
+
+    const y =
+    date.getFullYear();
+
+
+    const m =
+    String(
+        date.getMonth()+1
+    ).padStart(2,"0");
+
+
+    const d =
+    String(
+        date.getDate()
+    ).padStart(2,"0");
+
+
+    return `${y}-${m}-${d}`;
+
+}
+
+
+/* Obtener fecha de una venta */
+
+function nnFechaVenta(v){
+
+    if(!v || !v.fecha){
+        return null;
+    }
+
+
+    const d =
+    new Date(v.fecha);
+
+
+    if(isNaN(d.getTime())){
+        return null;
+    }
+
+
+    return nnFechaLocal(d);
+
+}
+
+
+/* =====================================================
+   APLICAR FILTRO
+===================================================== */
+
+function aplicarFiltroReportesNN(){
+
+    const tipoFecha =
+    document.getElementById(
+        "nnFiltroFechaTipo"
+    ).value;
+
+
+    const pago =
+    document.getElementById(
+        "nnFiltroPago"
+    ).value;
+
+
+    const tipoVenta =
+    document.getElementById(
+        "nnFiltroTipoVenta"
+    ).value;
+
+
+    const hoy =
+    new Date();
+
+
+    const hoyTexto =
+    nnFechaLocal(hoy);
+
+
+    let fechaInicio = null;
+
+    let fechaFin = null;
+
+
+    /* -------------------------
+       FECHA
+    ------------------------- */
+
+    if(tipoFecha === "hoy"){
+
+        fechaInicio =
+        hoyTexto;
+
+        fechaFin =
+        hoyTexto;
+
+    }
+
+
+    else if(tipoFecha === "ayer"){
+
+        const ayer =
+        new Date(hoy);
+
+        ayer.setDate(
+            ayer.getDate()-1
+        );
+
+
+        fechaInicio =
+        nnFechaLocal(ayer);
+
+        fechaFin =
+        nnFechaLocal(ayer);
+
+    }
+
+
+    else if(tipoFecha === "semana"){
+
+        const inicio =
+        new Date(hoy);
+
+
+        const dia =
+        inicio.getDay();
+
+
+        const diferencia =
+        dia === 0
+            ? 6
+            : dia - 1;
+
+
+        inicio.setDate(
+            inicio.getDate() -
+            diferencia
+        );
+
+
+        fechaInicio =
+        nnFechaLocal(inicio);
+
+        fechaFin =
+        hoyTexto;
+
+    }
+
+
+    else if(tipoFecha === "mes"){
+
+        const inicio =
+        new Date(
+            hoy.getFullYear(),
+            hoy.getMonth(),
+            1
+        );
+
+
+        fechaInicio =
+        nnFechaLocal(inicio);
+
+        fechaFin =
+        hoyTexto;
+
+    }
+
+
+    else if(tipoFecha === "fecha"){
+
+        fechaInicio =
+        document.getElementById(
+            "nnFiltroFecha"
+        ).value;
+
+        fechaFin =
+        fechaInicio;
+
+    }
+
+
+    else if(tipoFecha === "rango"){
+
+        fechaInicio =
+        document.getElementById(
+            "nnFiltroFechaInicio"
+        ).value;
+
+
+        fechaFin =
+        document.getElementById(
+            "nnFiltroFechaFin"
+        ).value;
+
+    }
+
+
+    /* -------------------------
+       FILTRAR
+    ------------------------- */
+
+    let ventasFiltradas =
+    ventas.filter(function(v){
+
+        /* FECHA */
+
+        if(
+            fechaInicio ||
+            fechaFin
+        ){
+
+            const fechaVenta =
+            nnFechaVenta(v);
+
+
+            if(!fechaVenta){
+                return false;
+            }
+
+
+            if(
+                fechaInicio &&
+                fechaVenta <
+                fechaInicio
+            ){
+                return false;
+            }
+
+
+            if(
+                fechaFin &&
+                fechaVenta >
+                fechaFin
+            ){
+                return false;
+            }
+
+        }
+
+
+        /* PAGO */
+
+        if(pago !== "todos"){
+
+            const metodo =
+            String(
+                v.metodo_pago ||
+                v.pago ||
+                ""
+            )
+            .toLowerCase();
+
+
+            if(
+                !metodo.includes(
+                    pago
+                )
+            ){
+
+                return false;
+
+            }
+
+        }
+
+
+        /* TIPO DE VENTA */
+
+        if(tipoVenta !== "todos"){
+
+            const tipo =
+            String(
+                v.tipo_venta ||
+                v.tipo ||
+                ""
+            )
+            .toLowerCase();
+
+
+            if(tipoVenta === "manual"){
+
+                if(
+                    !tipo.includes("manual")
+                ){
+                    return false;
+                }
+
+            }
+
+
+            if(tipoVenta === "producto"){
+
+                if(
+                    tipo.includes("manual")
+                ){
+                    return false;
+                }
+
+            }
+
+        }
+
+
+        return true;
+
+    });
+
+
+    renderReportesFiltradosNN(
+        ventasFiltradas
+    );
+
+
+    cerrarFiltroReportesNN();
+
+}
+
+
+/* =====================================================
+   RENDERIZAR RESULTADOS FILTRADOS
+===================================================== */
+
+function renderReportesFiltradosNN(
+    ventasFiltradas
+){
+
+    const total =
+    ventasFiltradas.reduce(
+        function(sum,v){
+
+            return sum +
+            Number(
+                v.total || 0
+            );
+
+        },
+        0
+    );
+
+
+    const elementoVentas =
+    document.getElementById(
+        "reporteVentas"
+    );
+
+
+    const elementoIngresos =
+    document.getElementById(
+        "reporteIngresos"
+    );
+
+
+    if(elementoVentas){
+
+        elementoVentas.textContent =
+        ventasFiltradas.length;
+
+    }
+
+
+    if(elementoIngresos){
+
+        elementoIngresos.textContent =
+        moneda(total);
+
+    }
+
+
+    const tabla =
+    document.getElementById(
+        "tablaReportes"
+    );
+
+
+    if(!tabla){
+        return;
+    }
+
+
+    if(!ventasFiltradas.length){
+
+        tabla.innerHTML = `
+
+            <div class="empty">
+
+                No hay ventas que coincidan
+                con los filtros.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    tabla.innerHTML = `
+
+        <table class="table">
+
+            <thead>
+
+                <tr>
+
+                    <th>Folio</th>
+
+                    <th>Fecha</th>
+
+                    <th>Pago</th>
+
+                    <th>Total</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                ${ventasFiltradas.map(
+                    function(v){
+
+                    return `
+
+                    <tr>
+
+                        <td>
+                            ${escapeHTML(
+                                v.folio || ""
+                            )}
+                        </td>
+
+                        <td>
+                            ${fecha(
+                                v.fecha
+                            )}
+                        </td>
+
+                        <td>
+                            ${escapeHTML(
+                                v.metodo_pago ||
+                                v.pago ||
+                                "—"
+                            )}
+                        </td>
+
+                        <td>
+                            ${moneda(
+                                v.total
+                            )}
+                        </td>
+
+                    </tr>
+
+                    `;
+
+                }).join("")}
+
+            </tbody>
+
+        </table>
+
+    `;
+
+}
+
+
+/* =====================================================
+   LIMPIAR FILTROS
+===================================================== */
+
+function limpiarFiltroReportesNN(){
+
+    document.getElementById(
+        "nnFiltroFechaTipo"
+    ).value =
+    "todas";
+
+
+    document.getElementById(
+        "nnFiltroFecha"
+    ).value =
+    "";
+
+
+    document.getElementById(
+        "nnFiltroFechaInicio"
+    ).value =
+    "";
+
+
+    document.getElementById(
+        "nnFiltroFechaFin"
+    ).value =
+    "";
+
+
+    document.getElementById(
+        "nnFiltroPago"
+    ).value =
+    "todos";
+
+
+    document.getElementById(
+        "nnFiltroTipoVenta"
+    ).value =
+    "todos";
+
+
+    cambiarFechaFiltroNN();
+
+
+    cerrarFiltroReportesNN();
+
+
+    /*
+       Volver a mostrar todas las ventas
+       usando tu función original.
+    */
+
+    renderReportes();
+
+}
+
+
+/* =====================================================
+   CREAR EL BOTÓN CUANDO CARGUE EL POS
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        crearBotonFiltroReportesNN();
+
+    }
+);
+
+
+/* También lo intentamos después de cargar
+   por si Reportes se construye dinámicamente. */
+
+setTimeout(
+    crearBotonFiltroReportesNN,
+    500
+);
+
+setTimeout(
+    crearBotonFiltroReportesNN,
+    1500
+);
+
+
+/* Cerrar tocando fuera */
+
+document.getElementById(
+    "nnFiltroReportesOverlay"
+)?.addEventListener(
+    "click",
+    function(e){
+
+        if(
+            e.target ===
+            this
+        ){
+
+            cerrarFiltroReportesNN();
+
+        }
+
+    }
+);
+
+</script>
+
+<!-- =====================================================
+     FIN FILTRO DE REPORTES
+===================================================== -->
     
 </body>
 </html>
