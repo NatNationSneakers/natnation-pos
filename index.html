@@ -8952,6 +8952,748 @@ document.getElementById(
 <!-- =====================================================
      FIN FILTRO DE REPORTES
 ===================================================== -->
+
+<!-- =====================================================
+     REPORTE DE PRODUCTOS MÁS VENDIDOS
+     SOLO AGREGAR - NO MODIFICA LAS VENTAS EXISTENTES
+===================================================== -->
+
+<style>
+
+.nn-productos-panel{
+    margin-top:25px;
+}
+
+.nn-productos-titulo{
+    font-size:24px;
+    font-weight:800;
+    margin-bottom:6px;
+}
+
+.nn-productos-subtitulo{
+    color:#777;
+    margin-bottom:18px;
+}
+
+.nn-productos-resumen{
+    display:grid;
+    grid-template-columns:
+        repeat(auto-fit,minmax(180px,1fr));
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.nn-producto-card{
+    background:#fff;
+    border-radius:18px;
+    padding:18px;
+    border:1px solid #eee;
+    box-shadow:0 4px 15px rgba(0,0,0,.06);
+}
+
+.nn-producto-card small{
+    color:#777;
+    display:block;
+    margin-bottom:7px;
+}
+
+.nn-producto-card strong{
+    font-size:24px;
+}
+
+.nn-productos-tabla{
+    overflow-x:auto;
+}
+
+.nn-productos-tabla table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.nn-productos-tabla th{
+    text-align:left;
+    padding:13px;
+    background:#f7f7f7;
+    font-weight:800;
+}
+
+.nn-productos-tabla td{
+    padding:13px;
+    border-bottom:1px solid #eee;
+}
+
+.nn-ranking{
+    font-weight:800;
+}
+
+.nn-medalla{
+    font-size:20px;
+}
+
+.nn-producto-vacio{
+    padding:25px;
+    text-align:center;
+    color:#777;
+}
+
+</style>
+
+
+<script>
+
+/* =====================================================
+   CREAR SECCIÓN DE PRODUCTOS MÁS VENDIDOS
+===================================================== */
+
+function crearReporteProductosNN(){
+
+    const tablaReportes =
+    document.getElementById(
+        "tablaReportes"
+    );
+
+    if(!tablaReportes){
+        return;
+    }
+
+    if(
+        document.getElementById(
+            "nnProductosMasVendidos"
+        )
+    ){
+        return;
+    }
+
+
+    const panel =
+    document.createElement("div");
+
+    panel.id =
+    "nnProductosMasVendidos";
+
+    panel.className =
+    "panel nn-productos-panel";
+
+
+    panel.innerHTML = `
+
+        <div class="nn-productos-titulo">
+            🏆 Productos más vendidos
+        </div>
+
+        <div class="nn-productos-subtitulo">
+            Conoce qué tenis se venden más y cuánto dinero generan.
+        </div>
+
+
+        <div
+            class="nn-productos-resumen"
+            id="nnProductosResumen"
+        >
+
+            <div class="nn-producto-card">
+
+                <small>
+                    🥇 Más vendido
+                </small>
+
+                <strong id="nnProductoTop">
+                    —
+                </strong>
+
+            </div>
+
+
+            <div class="nn-producto-card">
+
+                <small>
+                    👟 Piezas vendidas
+                </small>
+
+                <strong id="nnPiezasVendidas">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="nn-producto-card">
+
+                <small>
+                    💰 Ingresos por productos
+                </small>
+
+                <strong id="nnIngresosProductos">
+                    $0.00
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="nn-productos-tabla"
+            id="nnTablaProductosVendidos"
+        >
+
+            <div class="nn-producto-vacio">
+                Cargando productos...
+            </div>
+
+        </div>
+
+    `;
+
+
+    tablaReportes
+    .parentElement
+    .insertAdjacentElement(
+        "afterend",
+        panel
+    );
+
+}
+
+
+/* =====================================================
+   OBTENER Y MOSTRAR PRODUCTOS VENDIDOS
+===================================================== */
+
+async function cargarProductosMasVendidosNN(
+    ventasParaReporte
+){
+
+    crearReporteProductosNN();
+
+
+    const contenedor =
+    document.getElementById(
+        "nnTablaProductosVendidos"
+    );
+
+    if(!contenedor){
+        return;
+    }
+
+
+    try{
+
+        contenedor.innerHTML = `
+            <div class="nn-producto-vacio">
+                🟡 Consultando ventas...
+            </div>
+        `;
+
+
+        /*
+           Obtener únicamente los detalles
+           de las ventas que estamos mostrando.
+        */
+
+        const idsVentas =
+        (ventasParaReporte || [])
+        .map(function(v){
+
+            return v.id;
+
+        })
+        .filter(Boolean);
+
+
+        if(!idsVentas.length){
+
+            mostrarProductosMasVendidosNN([]);
+
+            return;
+
+        }
+
+
+        const resultado =
+        await supabaseClient
+            .from("venta_detalles")
+            .select(
+                "venta_id,producto_id,producto_nombre,talla,cantidad,precio_unitario,subtotal"
+            )
+            .in(
+                "venta_id",
+                idsVentas
+            );
+
+
+        if(resultado.error){
+
+            throw resultado.error;
+
+        }
+
+
+        const detalles =
+        resultado.data || [];
+
+
+        mostrarProductosMasVendidosNN(
+            detalles
+        );
+
+
+    }catch(error){
+
+        console.error(
+            "Error productos vendidos:",
+            error
+        );
+
+
+        contenedor.innerHTML = `
+
+            <div class="nn-producto-vacio">
+
+                ❌ No se pudieron cargar
+                los productos vendidos.
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =====================================================
+   CALCULAR RANKING
+===================================================== */
+
+function mostrarProductosMasVendidosNN(
+    detalles
+){
+
+    const contenedor =
+    document.getElementById(
+        "nnTablaProductosVendidos"
+    );
+
+
+    const topProducto =
+    document.getElementById(
+        "nnProductoTop"
+    );
+
+
+    const piezas =
+    document.getElementById(
+        "nnPiezasVendidas"
+    );
+
+
+    const ingresos =
+    document.getElementById(
+        "nnIngresosProductos"
+    );
+
+
+    if(!contenedor){
+        return;
+    }
+
+
+    if(!detalles.length){
+
+        if(topProducto){
+            topProducto.textContent = "—";
+        }
+
+        if(piezas){
+            piezas.textContent = "0";
+        }
+
+        if(ingresos){
+            ingresos.textContent = "$0.00";
+        }
+
+
+        contenedor.innerHTML = `
+
+            <div class="nn-producto-vacio">
+
+                👟 No hay productos vendidos
+                en este periodo.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    const productosVendidos = {};
+
+
+    detalles.forEach(function(d){
+
+        /*
+           Los cobros manuales no tienen
+           detalle de producto.
+        */
+
+        if(!d.producto_nombre){
+            return;
+        }
+
+
+        const nombre =
+        String(
+            d.producto_nombre
+        ).trim();
+
+
+        if(!nombre){
+            return;
+        }
+
+
+        /*
+           Agrupamos por producto.
+
+           Si vendes el mismo tenis en
+           diferentes tallas, se acumula
+           como el mismo producto.
+        */
+
+        const clave =
+        d.producto_id
+        ? String(d.producto_id)
+        : nombre.toLowerCase();
+
+
+        if(!productosVendidos[clave]){
+
+            productosVendidos[clave] = {
+
+                nombre:nombre,
+
+                producto_id:
+                    d.producto_id || "",
+
+                piezas:0,
+
+                ingresos:0
+
+            };
+
+        }
+
+
+        const cantidad =
+        Number(
+            d.cantidad || 0
+        );
+
+
+        const subtotal =
+        Number(
+            d.subtotal ||
+            (
+                cantidad *
+                Number(
+                    d.precio_unitario || 0
+                )
+            )
+        );
+
+
+        productosVendidos[clave].piezas +=
+        cantidad;
+
+
+        productosVendidos[clave].ingresos +=
+        subtotal;
+
+    });
+
+
+    const lista =
+    Object.values(
+        productosVendidos
+    );
+
+
+    lista.sort(function(a,b){
+
+        return b.piezas - a.piezas;
+
+    });
+
+
+    if(!lista.length){
+
+        mostrarProductosMasVendidosNN([]);
+
+        return;
+
+    }
+
+
+    const totalPiezas =
+    lista.reduce(
+        function(total,p){
+
+            return total + p.piezas;
+
+        },
+        0
+    );
+
+
+    const totalIngresos =
+    lista.reduce(
+        function(total,p){
+
+            return total + p.ingresos;
+
+        },
+        0
+    );
+
+
+    if(topProducto){
+
+        topProducto.textContent =
+        lista[0].nombre;
+
+    }
+
+
+    if(piezas){
+
+        piezas.textContent =
+        totalPiezas;
+
+    }
+
+
+    if(ingresos){
+
+        ingresos.textContent =
+        moneda(totalIngresos);
+
+    }
+
+
+    contenedor.innerHTML = `
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        #
+                    </th>
+
+                    <th>
+                        👟 Producto
+                    </th>
+
+                    <th>
+                        🔢 Piezas
+                    </th>
+
+                    <th>
+                        💰 Ingresos
+                    </th>
+
+                    <th>
+                        📊 % de piezas
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                ${
+                    lista.map(
+                        function(p,index){
+
+                            const porcentaje =
+                            totalPiezas > 0
+                            ? (
+                                p.piezas /
+                                totalPiezas
+                            ) * 100
+                            : 0;
+
+
+                            let posicion =
+                            index + 1;
+
+
+                            let icono =
+                            posicion === 1
+                            ? "🥇"
+                            : posicion === 2
+                            ? "🥈"
+                            : posicion === 3
+                            ? "🥉"
+                            : posicion;
+
+
+                            return `
+
+                                <tr>
+
+                                    <td
+                                        class="nn-ranking"
+                                    >
+                                        <span
+                                            class="nn-medalla"
+                                        >
+                                            ${icono}
+                                        </span>
+                                    </td>
+
+
+                                    <td>
+                                        <strong>
+                                            ${escapeHTML(
+                                                p.nombre
+                                            )}
+                                        </strong>
+                                    </td>
+
+
+                                    <td>
+                                        ${p.piezas}
+                                    </td>
+
+
+                                    <td>
+                                        ${moneda(
+                                            p.ingresos
+                                        )}
+                                    </td>
+
+
+                                    <td>
+                                        ${porcentaje.toFixed(1)}%
+                                    </td>
+
+                                </tr>
+
+                            `;
+
+                        }
+                    ).join("")
+                }
+
+            </tbody>
+
+        </table>
+
+    `;
+
+}
+
+
+/* =====================================================
+   CONECTAR CON LOS REPORTES ACTUALES
+   SIN REEMPLAZAR TU RENDER
+===================================================== */
+
+(function(){
+
+    const renderOriginal =
+    window.renderReportes;
+
+
+    if(
+        typeof renderOriginal ===
+        "function"
+    ){
+
+        window.renderReportes =
+        function(){
+
+            renderOriginal();
+
+            cargarProductosMasVendidosNN(
+                ventas
+            );
+
+        };
+
+    }
+
+
+    const renderFiltradoOriginal =
+    window.renderReportesFiltradosNN;
+
+
+    if(
+        typeof renderFiltradoOriginal ===
+        "function"
+    ){
+
+        window.renderReportesFiltradosNN =
+        function(
+            ventasFiltradas
+        ){
+
+            renderFiltradoOriginal(
+                ventasFiltradas
+            );
+
+
+            cargarProductosMasVendidosNN(
+                ventasFiltradas
+            );
+
+        };
+
+    }
+
+})();
+
+
+/* =====================================================
+   SI EL REPORTE YA ESTÁ CARGADO,
+   MOSTRARLO TAMBIÉN
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        setTimeout(
+            function(){
+
+                if(
+                    typeof ventas !==
+                    "undefined"
+                ){
+
+                    cargarProductosMasVendidosNN(
+                        ventas
+                    );
+
+                }
+
+            },
+            1200
+        );
+
+    }
+);
+
+</script>
     
 </body>
 </html>
