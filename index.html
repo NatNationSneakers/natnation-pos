@@ -4655,6 +4655,10 @@ function renderReportes(){
                         Total
                     </th>
 
+                    <th>
+                        Ticket
+                    </th>
+
                 </tr>
 
             </thead>
@@ -4692,6 +4696,16 @@ function renderReportes(){
                             ${moneda(
                                 v.total
                             )}
+                        </td>
+
+                        <td>
+                            <button
+                                type="button"
+                                onclick="reimprimirVenta('${String(v.id).replace(/'/g,"\\'")}')"
+                                style="padding:8px 10px;border-radius:10px;background:#111;color:#fff;font-weight:bold;cursor:pointer;"
+                            >
+                                🖨️ Imprimir de nuevo
+                            </button>
                         </td>
 
                     </tr>
@@ -5118,6 +5132,150 @@ function mostrarTicketTexto(venta){
     },100);
 }
 
+
+async function reimprimirVenta(ventaId){
+
+    if(!ventaId){
+        alert("No se encontró el ID de la venta.");
+        return;
+    }
+
+    try{
+
+        const resultado = await supabaseClient
+            .from("ventas")
+            .select("*")
+            .eq("id", ventaId)
+            .single();
+
+        if(resultado.error){
+            throw resultado.error;
+        }
+
+        const venta = resultado.data;
+
+        const detalleResultado = await supabaseClient
+            .from("venta_detalles")
+            .select("*")
+            .eq("venta_id", venta.id);
+
+        if(detalleResultado.error){
+            throw detalleResultado.error;
+        }
+
+        const detalles = detalleResultado.data || [];
+
+        const items = detalles.map(function(d){
+            return {
+                producto_id: d.producto_id,
+                producto_nombre: d.producto_nombre || "Producto",
+                talla: d.talla || "",
+                cantidad: Number(d.cantidad || 0),
+                precio_unitario: Number(d.precio_unitario || 0),
+                es_cobro: false
+            };
+        });
+
+        // Venta de cobro manual: puede no tener detalles de producto.
+        if(!items.length && Number(venta.total || 0) > 0){
+            items.push({
+                producto_nombre: "Cobro manual",
+                talla: "",
+                cantidad: 1,
+                precio_unitario: Number(venta.total || 0),
+                es_cobro: true
+            });
+        }
+
+        prepararTicketDesdeItems(
+            venta,
+            venta.metodo_pago || venta.pago || "efectivo",
+            Number(venta.efectivo_recibido || 0),
+            Number(venta.cambio || 0),
+            items
+        );
+
+        // Muestra exactamente ese ticket; no crea otra venta ni cambia el folio.
+        mostrarTicketTexto(venta);
+
+    }catch(error){
+
+        console.error(error);
+        alert(
+            "No se pudo recuperar el ticket para imprimir de nuevo:\n\n" +
+            error.message
+        );
+    }
+}
+
+function prepararTicketDesdeItems(venta, metodo, efectivo, cambio, items){
+
+    const cliente = clientes.find(function(c){
+        return c.id === venta.cliente_id;
+    });
+
+    const elFolio = document.getElementById("ticketFolio");
+    const elFecha = document.getElementById("ticketFecha");
+    const elCliente = document.getElementById("ticketCliente");
+    const elSubtotal = document.getElementById("ticketSubtotal");
+    const elTotal = document.getElementById("ticketTotal");
+    const elPago = document.getElementById("ticketPago");
+    const elPuntos = document.getElementById("ticketPuntos");
+    const elProductos = document.getElementById("ticketProductos");
+
+    if(elFolio) elFolio.textContent = venta.folio || "—";
+    if(elFecha) elFecha.textContent = fecha(venta.fecha);
+    if(elCliente) elCliente.textContent = cliente ? cliente.nombre : "Venta sin cliente";
+    if(elSubtotal) elSubtotal.textContent = moneda(venta.total);
+    if(elTotal) elTotal.textContent = moneda(venta.total);
+    if(elPago) elPago.textContent = metodoTexto(metodo);
+
+    const esEfectivo = String(metodo || "").toLowerCase() === "efectivo";
+    const filaEfectivo = document.getElementById("ticketEfectivoFila");
+    const filaCambio = document.getElementById("ticketCambioFila");
+
+    if(esEfectivo){
+        if(filaEfectivo) filaEfectivo.style.display = "flex";
+        if(filaCambio) filaCambio.style.display = "flex";
+        const elEfectivo = document.getElementById("ticketEfectivo");
+        const elCambio = document.getElementById("ticketCambio");
+        if(elEfectivo) elEfectivo.textContent = moneda(efectivo);
+        if(elCambio) elCambio.textContent = moneda(cambio);
+    }else{
+        if(filaEfectivo) filaEfectivo.style.display = "none";
+        if(filaCambio) filaCambio.style.display = "none";
+    }
+
+    if(elPuntos) elPuntos.textContent = Number(venta.puntos_ganados || 0);
+
+    if(elProductos){
+        elProductos.innerHTML = items.map(function(item){
+
+            const subtotal = Number(item.cantidad || 0) * Number(item.precio_unitario || 0);
+
+            if(item.es_cobro){
+                return `
+                    <div style="margin:9px 0;padding-bottom:8px;border-bottom:1px solid #ddd">
+                        <div style="display:flex;justify-content:space-between;gap:10px">
+                            <span>💰 ${escapeHTML(item.producto_nombre || "Cobro manual")}</span>
+                            <strong>${moneda(subtotal)}</strong>
+                        </div>
+                        <div style="font-size:13px;margin-top:3px">Cobro manual</div>
+                    </div>`;
+            }
+
+            return `
+                <div style="margin:9px 0;padding-bottom:8px;border-bottom:1px solid #ddd">
+                    <div style="display:flex;justify-content:space-between;gap:10px">
+                        <span>${item.cantidad} x ${escapeHTML(item.producto_nombre || "Producto")}</span>
+                        <strong>${moneda(subtotal)}</strong>
+                    </div>
+                    <div style="font-size:13px;margin-top:3px">Talla #${escapeHTML(item.talla || "")}</div>
+                </div>`;
+
+        }).join("");
+    }
+}
 
 function imprimirTicketNormal(){
 
