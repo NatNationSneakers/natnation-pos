@@ -4330,13 +4330,9 @@ function renderClientes(){
         "tablaClientes"
     );
 
-
     if(!contenedor){
-
         return;
-
     }
-
 
     const buscar =
     (
@@ -4348,25 +4344,21 @@ function renderClientes(){
     .toLowerCase()
     .trim();
 
-
     const filtrados =
     clientes.filter(function(c){
 
         const texto = [
-
             c.nombre,
             c.telefono,
-            c.codigo_tarjeta
-
+            c.codigo_tarjeta,
+            c.tarjeta
         ]
         .join(" ")
         .toLowerCase();
 
-
         return texto.includes(buscar);
 
     });
-
 
     if(!filtrados.length){
 
@@ -4377,7 +4369,6 @@ function renderClientes(){
 
     }
 
-
     contenedor.innerHTML = `
 
         <table class="table">
@@ -4386,26 +4377,19 @@ function renderClientes(){
 
                 <tr>
 
-                    <th>
-                        Nombre
-                    </th>
+                    <th>Nombre</th>
 
-                    <th>
-                        Teléfono
-                    </th>
+                    <th>Teléfono</th>
 
-                    <th>
-                        Tarjeta
-                    </th>
+                    <th>Tarjeta</th>
 
-                    <th>
-                        Puntos
-                    </th>
+                    <th>Puntos</th>
+
+                    <th>Acciones</th>
 
                 </tr>
 
             </thead>
-
 
             <tbody>
 
@@ -4416,7 +4400,9 @@ function renderClientes(){
                     <tr>
 
                         <td>
-                            ${escapeHTML(c.nombre)}
+                            ${escapeHTML(
+                                c.nombre || "—"
+                            )}
                         </td>
 
                         <td>
@@ -4440,6 +4426,44 @@ function renderClientes(){
                             )}
                         </td>
 
+                        <td>
+
+                            <button
+                                type="button"
+                                class="btn"
+                                onclick="editarCliente('${c.id}')"
+                                style="
+                                    background:#d41470;
+                                    color:white;
+                                    border:none;
+                                    border-radius:8px;
+                                    padding:8px 10px;
+                                    margin:2px;
+                                    cursor:pointer;
+                                "
+                            >
+                                ✏️ Editar
+                            </button>
+
+                            <button
+                                type="button"
+                                class="btn"
+                                onclick="eliminarCliente('${c.id}')"
+                                style="
+                                    background:#dc3545;
+                                    color:white;
+                                    border:none;
+                                    border-radius:8px;
+                                    padding:8px 10px;
+                                    margin:2px;
+                                    cursor:pointer;
+                                "
+                            >
+                                🗑️ Eliminar
+                            </button>
+
+                        </td>
+
                     </tr>
 
                     `;
@@ -4453,7 +4477,6 @@ function renderClientes(){
     `;
 
 }
-
 
 /* =====================================================
    PUNTOS
@@ -7456,5 +7479,451 @@ document.addEventListener(
      FIN DEL AGREGADO
 ========================================================= -->
 
+<!-- =====================================================
+     EDITAR Y ELIMINAR CLIENTES
+===================================================== -->
+
+<style>
+
+#modalEditarClienteNN{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    z-index:10000;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+#modalEditarClienteNN .nn-editar-box{
+    background:white;
+    width:min(500px,100%);
+    border-radius:20px;
+    padding:25px;
+    box-shadow:0 15px 50px rgba(0,0,0,.3);
+}
+
+#modalEditarClienteNN h2{
+    margin-top:0;
+    color:#d41470;
+}
+
+.nn-editar-input{
+    width:100%;
+    box-sizing:border-box;
+    padding:13px;
+    margin:6px 0 15px;
+    border:1px solid #ccc;
+    border-radius:10px;
+    font-size:16px;
+}
+
+.nn-editar-btn{
+    border:none;
+    border-radius:10px;
+    padding:12px 18px;
+    font-weight:bold;
+    cursor:pointer;
+    margin:4px;
+}
+
+</style>
+
+
+<div id="modalEditarClienteNN">
+
+    <div class="nn-editar-box">
+
+        <h2>
+            ✏️ Editar cliente
+        </h2>
+
+        <input
+            type="hidden"
+            id="nnEditarClienteId"
+        >
+
+        <label>
+            Nombre
+        </label>
+
+        <input
+            id="nnEditarNombre"
+            class="nn-editar-input"
+            type="text"
+            placeholder="Nombre del cliente"
+        >
+
+        <label>
+            Teléfono
+        </label>
+
+        <input
+            id="nnEditarTelefono"
+            class="nn-editar-input"
+            type="text"
+            placeholder="Teléfono"
+        >
+
+        <label>
+            Número de tarjeta
+        </label>
+
+        <input
+            id="nnEditarTarjeta"
+            class="nn-editar-input"
+            type="text"
+            placeholder="Número de tarjeta"
+        >
+
+        <div style="text-align:right">
+
+            <button
+                type="button"
+                class="nn-editar-btn"
+                style="
+                    background:#eee;
+                    color:#222;
+                "
+                onclick="cerrarEditarCliente()"
+            >
+                Cancelar
+            </button>
+
+            <button
+                type="button"
+                class="nn-editar-btn"
+                style="
+                    background:#d41470;
+                    color:white;
+                "
+                onclick="guardarEdicionCliente()"
+            >
+                💾 Guardar cambios
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   EDITAR CLIENTE
+===================================================== */
+
+async function editarCliente(id){
+
+    const cliente =
+    clientes.find(function(c){
+
+        return String(c.id) ===
+        String(id);
+
+    });
+
+
+    if(!cliente){
+
+        alert(
+            "No se encontró el cliente."
+        );
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "nnEditarClienteId"
+    ).value =
+    cliente.id;
+
+
+    document.getElementById(
+        "nnEditarNombre"
+    ).value =
+    cliente.nombre || "";
+
+
+    document.getElementById(
+        "nnEditarTelefono"
+    ).value =
+    cliente.telefono || "";
+
+
+    document.getElementById(
+        "nnEditarTarjeta"
+    ).value =
+    cliente.codigo_tarjeta ||
+    cliente.tarjeta ||
+    "";
+
+
+    document.getElementById(
+        "modalEditarClienteNN"
+    ).style.display =
+    "flex";
+
+}
+
+
+/* =====================================================
+   CERRAR EDICIÓN
+===================================================== */
+
+function cerrarEditarCliente(){
+
+    document.getElementById(
+        "modalEditarClienteNN"
+    ).style.display =
+    "none";
+
+}
+
+
+/* =====================================================
+   GUARDAR CAMBIOS
+===================================================== */
+
+async function guardarEdicionCliente(){
+
+    const id =
+    document.getElementById(
+        "nnEditarClienteId"
+    ).value;
+
+
+    const nombre =
+    document.getElementById(
+        "nnEditarNombre"
+    ).value.trim();
+
+
+    const telefono =
+    document.getElementById(
+        "nnEditarTelefono"
+    ).value.trim();
+
+
+    const codigoTarjeta =
+    document.getElementById(
+        "nnEditarTarjeta"
+    ).value.trim();
+
+
+    if(!id){
+
+        alert(
+            "No se encontró el ID del cliente."
+        );
+
+        return;
+
+    }
+
+
+    if(!nombre){
+
+        alert(
+            "El nombre del cliente es obligatorio."
+        );
+
+        return;
+
+    }
+
+
+    try{
+
+        const resultado =
+        await supabaseClient
+            .from("clientes")
+            .update({
+
+                nombre:nombre,
+
+                telefono:
+                telefono || null,
+
+                codigo_tarjeta:
+                codigoTarjeta || null
+
+            })
+            .eq(
+                "id",
+                id
+            );
+
+
+        if(resultado.error){
+
+            throw resultado.error;
+
+        }
+
+
+        cerrarEditarCliente();
+
+
+        await cargarTodo();
+
+
+        alert(
+            "✅ Cliente actualizado correctamente."
+        );
+
+
+    }catch(error){
+
+        console.error(
+            error
+        );
+
+        alert(
+            "❌ No se pudo actualizar el cliente:\n\n" +
+            error.message
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   ELIMINAR CLIENTE
+===================================================== */
+
+async function eliminarCliente(id){
+
+    const cliente =
+    clientes.find(function(c){
+
+        return String(c.id) ===
+        String(id);
+
+    });
+
+
+    if(!cliente){
+
+        alert(
+            "No se encontró el cliente."
+        );
+
+        return;
+
+    }
+
+
+    const confirmar =
+    confirm(
+
+        "⚠️ ¿Eliminar este cliente?\n\n" +
+
+        "Nombre: " +
+        (cliente.nombre || "Sin nombre") +
+
+        "\nTeléfono: " +
+        (cliente.telefono || "Sin teléfono") +
+
+        "\nTarjeta: " +
+        (
+            cliente.codigo_tarjeta ||
+            cliente.tarjeta ||
+            "Sin tarjeta"
+        ) +
+
+        "\n\nEsta acción eliminará el registro del cliente."
+
+    );
+
+
+    if(!confirmar){
+
+        return;
+
+    }
+
+
+    try{
+
+        const resultado =
+        await supabaseClient
+            .from("clientes")
+            .delete()
+            .eq(
+                "id",
+                id
+            );
+
+
+        if(resultado.error){
+
+            throw resultado.error;
+
+        }
+
+
+        await cargarTodo();
+
+
+        alert(
+            "✅ Cliente eliminado correctamente."
+        );
+
+
+    }catch(error){
+
+        console.error(
+            error
+        );
+
+        alert(
+            "❌ No se pudo eliminar el cliente.\n\n" +
+            error.message
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   CERRAR MODAL AL TOCAR FUERA
+===================================================== */
+
+document.addEventListener(
+    "click",
+    function(event){
+
+        const modal =
+        document.getElementById(
+            "modalEditarClienteNN"
+        );
+
+
+        if(
+            modal &&
+            event.target === modal
+        ){
+
+            cerrarEditarCliente();
+
+        }
+
+    }
+);
+
+</script>
+
+<!-- =====================================================
+     FIN EDITAR / ELIMINAR CLIENTES
+===================================================== -->
+    
 </body>
 </html>
