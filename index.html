@@ -801,6 +801,13 @@ h2{
         </button>
 
         <button
+    id="menuNia"
+    onclick="mostrarSeccion('nia')">
+    👟✨ &nbsp; Nia
+</button>
+
+
+        <button
             id="menuConfiguracion"
             onclick="mostrarSeccion('configuracion')">
             ⚙️ &nbsp; Configuración
@@ -1292,6 +1299,180 @@ h2{
     <div class="panel">
 
         <div id="tablaReportes"></div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     NIA
+===================================================== -->
+
+<section
+    id="nia"
+    style="display:none">
+
+    <h2>👟✨ Nia</h2>
+
+    <div class="subtitle">
+        Tu asistente inteligente de Nat.Nation.
+    </div>
+
+    <div class="panel"
+         style="
+            max-width:850px;
+            margin:20px auto;
+            border-radius:22px;
+            padding:25px;
+         ">
+
+        <div style="
+            display:flex;
+            align-items:center;
+            gap:15px;
+            margin-bottom:20px;
+        ">
+
+            <div style="
+                width:60px;
+                height:60px;
+                border-radius:50%;
+                background:#f23886;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                font-size:30px;
+            ">
+                🎀
+            </div>
+
+            <div>
+
+                <h3 style="
+                    margin:0;
+                    font-size:25px;
+                ">
+                    Nia
+                </h3>
+
+                <div style="
+                    color:#777;
+                    margin-top:4px;
+                ">
+                    Tu asistente inteligente de Nat.Nation
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div id="niaChat"
+             style="
+                min-height:220px;
+                max-height:400px;
+                overflow-y:auto;
+                padding:10px;
+             ">
+
+            <div style="
+                background:#fff0f6;
+                padding:18px;
+                border-radius:18px;
+                margin-bottom:15px;
+                line-height:1.6;
+            ">
+
+                💕 <strong>Hola, soy Nia.</strong>
+
+                <br>
+
+                Analicé tus ventas y tu inventario.
+                ¿Qué quieres saber?
+
+            </div>
+
+        </div>
+
+
+        <div style="
+            display:flex;
+            gap:10px;
+            margin-top:15px;
+        ">
+
+            <input
+                id="niaPregunta"
+                type="text"
+                placeholder="Pregúntale algo a Nia..."
+                style="
+                    flex:1;
+                    padding:15px;
+                    border:1px solid #ddd;
+                    border-radius:14px;
+                    font-size:16px;
+                "
+                onkeydown="
+                    if(event.key==='Enter'){
+                        preguntarANia();
+                    }
+                "
+            >
+
+            <button
+                type="button"
+                class="btn btn-primary"
+                onclick="preguntarANia()"
+                style="
+                    border-radius:14px;
+                    padding:0 22px;
+                "
+            >
+                💬 Preguntar
+            </button>
+
+        </div>
+
+
+        <div style="
+            display:flex;
+            flex-wrap:wrap;
+            gap:8px;
+            margin-top:18px;
+        ">
+
+            <button
+                class="btn"
+                onclick="preguntaRapidaNia('¿Qué tenis vendo más?')">
+                🔥 Más vendidos
+            </button>
+
+            <button
+                class="btn"
+                onclick="preguntaRapidaNia('¿Qué productos debería reponer?')">
+                📦 Qué reponer
+            </button>
+
+            <button
+                class="btn"
+                onclick="preguntaRapidaNia('¿En qué me conviene invertir?')">
+                💰 En qué invertir
+            </button>
+
+            <button
+                class="btn"
+                onclick="preguntaRapidaNia('¿Cómo van mis ventas?')">
+                📊 Mis ventas
+            </button>
+
+            <button
+                class="btn"
+                onclick="preguntaRapidaNia('¿Qué productos se venden menos?')">
+                📉 Menos vendidos
+            </button>
+
+        </div>
 
     </div>
 
@@ -2284,6 +2465,7 @@ function mostrarSeccion(nombre){
         "clientes",
         "puntos",
         "reportes",
+        "nia",
         "configuracion"
 
     ];
@@ -2329,6 +2511,8 @@ function mostrarSeccion(nombre){
 
         reportes:"menuReportes",
 
+        nia:"menuNia",
+
         configuracion:"menuConfiguracion"
 
     };
@@ -2360,6 +2544,8 @@ function mostrarSeccion(nombre){
         puntos:"Puntos",
 
         reportes:"Reportes",
+
+        nia:"Nia",
 
         configuracion:"Configuración"
 
@@ -9693,7 +9879,264 @@ document.addEventListener(
     }
 );
 
-</script>
+/* =====================================================
+   NIA - ASISTENTE NAT.NATION
+===================================================== */
+
+function preguntaRapidaNia(pregunta){
+
+    document.getElementById(
+        "niaPregunta"
+    ).value = pregunta;
+
+    preguntarANia();
+
+}
+
+
+function agregarMensajeNia(texto, usuario){
+
+    const chat =
+        document.getElementById("niaChat");
+
+    const mensaje =
+        document.createElement("div");
+
+    mensaje.style.padding = "15px";
+    mensaje.style.borderRadius = "18px";
+    mensaje.style.marginBottom = "12px";
+    mensaje.style.lineHeight = "1.6";
+
+    if(usuario){
+
+        mensaje.style.background = "#f23886";
+        mensaje.style.color = "#fff";
+        mensaje.style.marginLeft = "15%";
+
+    }else{
+
+        mensaje.style.background = "#fff0f6";
+        mensaje.style.marginRight = "15%";
+
+    }
+
+    mensaje.innerHTML = texto;
+
+    chat.appendChild(mensaje);
+
+    chat.scrollTop = chat.scrollHeight;
+
+}
+
+
+async function preguntarANia(){
+
+    const input =
+        document.getElementById("niaPregunta");
+
+    const pregunta =
+        input.value.trim();
+
+    if(!pregunta){
+
+        return;
+
+    }
+
+    agregarMensajeNia(
+        escapeHTML(pregunta),
+        true
+    );
+
+    input.value = "";
+
+
+    const preguntaLower =
+        pregunta.toLowerCase();
+
+
+    /* =========================================
+       PRODUCTOS MÁS VENDIDOS
+    ========================================= */
+
+    if(
+        preguntaLower.includes("más vendido") ||
+        preguntaLower.includes("vendo más") ||
+        preguntaLower.includes("se vende más")
+    ){
+
+        if(!ventas.length){
+
+            agregarMensajeNia(
+                "💕 Todavía no tengo ventas suficientes para analizar tus productos."
+            );
+
+            return;
+
+        }
+
+
+        /*
+         * Aquí posteriormente conectaremos
+         * venta_detalles para obtener el
+         * producto exacto y cantidad vendida.
+         */
+
+        agregarMensajeNia(
+            "👟✨ Puedo analizar tus productos vendidos y decirte cuáles tienen mayor rotación. " +
+            "La siguiente mejora será conectar Nia directamente con tus detalles de venta para darte " +
+            "el ranking exacto por modelo, talla, piezas y dinero generado."
+        );
+
+        return;
+
+    }
+
+
+    /* =========================================
+       VENTAS
+    ========================================= */
+
+    if(
+        preguntaLower.includes("ventas") ||
+        preguntaLower.includes("vendí") ||
+        preguntaLower.includes("vendido")
+    ){
+
+        const totalVentas =
+            ventas.length;
+
+        const ingresos =
+            ventas.reduce(
+                function(total,venta){
+
+                    return total +
+                    Number(
+                        venta.total || 0
+                    );
+
+                },
+                0
+            );
+
+
+        agregarMensajeNia(
+            `💕 Revisé tus datos actuales.<br><br>
+             🧾 <strong>${totalVentas}</strong> ventas registradas.<br>
+             💰 <strong>${moneda(ingresos)}</strong> de ingresos registrados.<br><br>
+             Puedo analizar estos datos para ayudarte a tomar decisiones de compra.`
+        );
+
+        return;
+
+    }
+
+
+    /* =========================================
+       INVENTARIO / REPONER
+    ========================================= */
+
+    if(
+        preguntaLower.includes("reponer") ||
+        preguntaLower.includes("inventario") ||
+        preguntaLower.includes("stock")
+    ){
+
+        const bajos =
+            productos.filter(
+                function(producto){
+
+                    return Number(
+                        producto.stock || 0
+                    ) <= 3;
+
+                }
+            );
+
+
+        if(!bajos.length){
+
+            agregarMensajeNia(
+                "💕 Por ahora no detecto productos con stock igual o menor a 3."
+            );
+
+            return;
+
+        }
+
+
+        const lista =
+            bajos
+            .slice(0,10)
+            .map(function(producto){
+
+                return `
+                    👟 <strong>
+                    ${escapeHTML(
+                        producto.nombre || "Producto"
+                    )}
+                    </strong>
+                    — ${Number(
+                        producto.stock || 0
+                    )} disponibles
+                `;
+
+            })
+            .join("<br>");
+
+
+        agregarMensajeNia(
+            `📦 <strong>Yo revisaría primero estos productos:</strong><br><br>
+            ${lista}`
+        );
+
+        return;
+
+    }
+
+
+    /* =========================================
+       INVERSIÓN
+    ========================================= */
+
+    if(
+        preguntaLower.includes("invertir") ||
+        preguntaLower.includes("inversión") ||
+        preguntaLower.includes("invertiría")
+    ){
+
+        agregarMensajeNia(
+            `💗 <strong>Claro.</strong><br><br>
+            Para recomendarte en qué invertir, Nia debe cruzar
+            tus ventas con tu inventario y detectar cuáles modelos
+            tienen mayor rotación.<br><br>
+            👟 No quiero recomendarte algo al azar.
+            Quiero basarme en los datos reales de Nat.Nation.`
+        );
+
+        return;
+
+    }
+
+
+    /* =========================================
+       RESPUESTA GENERAL
+    ========================================= */
+
+    agregarMensajeNia(
+        `💕 Entiendo tu pregunta.<br><br>
+        Puedo ayudarte a analizar tus ventas, productos,
+        inventario y rendimiento.<br><br>
+        Prueba preguntarme:
+        <br>🔥 <strong>¿Qué tenis vendo más?</strong>
+        <br>📦 <strong>¿Qué debería reponer?</strong>
+        <br>💰 <strong>¿En qué me conviene invertir?</strong>
+        <br>📊 <strong>¿Cómo van mis ventas?</strong>`
+    );
+
+}
+
     
+</script>            
 </body>
 </html>
