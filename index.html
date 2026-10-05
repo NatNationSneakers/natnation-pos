@@ -3217,260 +3217,90 @@ async function subirImagen(file){
 /* =====================================================
    GUARDAR PRODUCTO
 ===================================================== */
+
 async function guardarProducto(event){
 
     event.preventDefault();
 
-    const boton = event.submitter;
+
+    const boton =
+    event.submitter;
+
 
     boton.disabled = true;
-    boton.textContent = "Guardando...";
+
+    boton.textContent =
+    "Guardando...";
+
 
     try{
 
         const file =
-            document.getElementById("imagen").files[0];
+        document.getElementById(
+            "imagen"
+        ).files[0];
 
-        let imagenUrl = imagenActual;
+
+        let imagenUrl =
+        imagenActual;
+
 
         if(file){
-            imagenUrl = await subirImagen(file);
-        }
 
-
-        // ==========================================
-        // DATOS GENERALES DEL PRODUCTO
-        // ==========================================
-
-        const modelo =
-            document.getElementById("modelo").value.trim();
-
-        const sku =
-            document.getElementById("sku").value.trim() || null;
-
-        const codigo_barras =
-            document.getElementById("codigoBarras").value.trim() || null;
-
-        const precio =
-            Number(document.getElementById("precio").value || 0);
-
-        const costo =
-            Number(document.getElementById("costo").value || 0);
-
-
-        // ==========================================
-        // VALIDAR TALLAS
-        // ==========================================
-
-        if(
-            !tallasProductoEditor ||
-            tallasProductoEditor.length === 0
-        ){
-            throw new Error(
-                "Agrega al menos una talla."
-            );
-        }
-
-
-        for(const item of tallasProductoEditor){
-
-            const talla =
-                String(item.talla || "").trim();
-
-            const stock =
-                Number(item.stock || 0);
-
-            if(!talla){
-                throw new Error(
-                    "Hay una talla vacía. Completa todas las tallas."
-                );
-            }
-
-            if(stock < 0){
-                throw new Error(
-                    "El stock no puede ser negativo."
-                );
-            }
-        }
-
-
-        // ==========================================
-        // GUARDAR CADA TALLA
-        // ==========================================
-
-        for(const item of tallasProductoEditor){
-
-            const datos = {
-
-                modelo: modelo,
-
-                talla:
-                    String(item.talla).trim(),
-
-                sku: sku,
-
-                codigo_barras:
-                    codigo_barras,
-
-                precio: precio,
-
-                costo: costo,
-
-                stock:
-                    Number(item.stock || 0),
-
-                activo: true,
-
-                imagen_url:
-                    imagenUrl || null
-            };
-
-
-            // ======================================
-            // SI YA EXISTE → ACTUALIZAR
-            // ======================================
-
-            if(item.id){
-
-                const resultado =
-                    await supabaseClient
-                        .from("productos")
-                        .update(datos)
-                        .eq("id", item.id);
-
-                if(resultado.error){
-                    throw resultado.error;
-                }
-
-            }
-
-            // ======================================
-            // SI ES NUEVA → INSERTAR
-            // ======================================
-
-            else{
-
-                const resultado =
-                    await supabaseClient
-                        .from("productos")
-                        .insert(datos);
-
-                if(resultado.error){
-                    throw resultado.error;
-                }
-
-            }
+            imagenUrl =
+            await subirImagen(file);
 
         }
 
 
-        // ==========================================
-        // CERRAR Y RECARGAR
-        // ==========================================
+        const datos = {
 
-        cerrarProducto();
+            modelo:
+            document
+            .getElementById("modelo")
+            .value
+            .trim(),
 
-        await cargarTodo();
+            talla:
+            document
+            .getElementById("talla")
+            .value
+            .trim(),
 
-        mostrarSeccion("productos");
+            sku:
+            document
+            .getElementById("sku")
+            .value
+            .trim() ||
+            null,
 
+            precio:
+            Number(
+                document
+                .getElementById("precio")
+                .value ||
+                0
+            ),
 
-    }catch(error){
+            costo:
+            Number(
+                document
+                .getElementById("costo")
+                .value ||
+                0
+            ),
 
-        console.error(error);
+            stock:
+            Number(
+                document
+                .getElementById("stock")
+                .value ||
+                0
+            ),
 
-        alert(
-            "No se pudo guardar el producto:\n\n" +
-            error.message
-        );
+            activo:true
 
-    }finally{
-
-        boton.disabled = false;
-
-        boton.textContent =
-            "Guardar producto";
-
-    }
-
-}
-
-
-// =====================================================
-// VALIDAR TALLAS
-// =====================================================
-
-if (!tallasProductoEditor || tallasProductoEditor.length === 0) {
-    throw new Error("Agrega al menos una talla.");
-}
-
-for (const item of tallasProductoEditor) {
-
-    if (!String(item.talla || "").trim()) {
-        throw new Error("Hay una talla vacía. Completa todas las tallas.");
-    }
-
-    if (Number(item.stock || 0) < 0) {
-        throw new Error("El stock no puede ser negativo.");
-    }
-}
-
-
-// =====================================================
-// GUARDAR CADA TALLA
-// =====================================================
-
-for (const item of tallasProductoEditor) {
-
-    const datos = {
-
-        modelo: modelo,
-
-        talla: String(item.talla).trim(),
-
-        sku: sku,
-
-        codigo_barras: codigo_barras,
-
-        precio: precio,
-
-        costo: costo,
-
-        stock: Number(item.stock || 0),
-
-        activo: true
-
-    };
-
-    datos.imagen_url = imagenUrl || null;
-
-
-    if (item.id) {
-
-        const resultado =
-            await supabaseClient
-                .from("productos")
-                .update(datos)
-                .eq("id", item.id);
-
-        if (resultado.error) {
-            throw resultado.error;
-        }
-
-    } else {
-
-        const resultado =
-            await supabaseClient
-                .from("productos")
-                .insert(datos);
-
-        if (resultado.error) {
-            throw resultado.error;
-        }
-
-    }
-
-}
+        };
 
 
         /*
@@ -3546,7 +3376,6 @@ for (const item of tallasProductoEditor) {
     }
 
 }
-
 
 /* =====================================================
    ELIMINAR PRODUCTO
