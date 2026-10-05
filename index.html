@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -1888,10 +1888,12 @@ h2{
 
 </div>
 </div>
+
 <!-- =====================================================
      MODAL CLIENTE
 ===================================================== -->
 
+    
 <div
     id="modalCliente"
     class="modal">
@@ -2761,183 +2763,65 @@ function actualizarInicio(){
 
 
 /* =====================================================
-   EDITOR DE TALLAS
-===================================================== */
-
-let tallasProductoEditor = [];
-
-
-function agregarTallaProducto(talla = "", stock = 0){
-
-    tallasProductoEditor.push({
-        talla: talla,
-        stock: Number(stock || 0)
-    });
-
-    renderTallasProductoEditor();
-}
-
-
-function eliminarTallaProducto(index){
-
-    tallasProductoEditor.splice(index, 1);
-
-    renderTallasProductoEditor();
-}
-
-
-function actualizarTallaProducto(index, campo, valor){
-
-    if(!tallasProductoEditor[index]) return;
-
-    if(campo === "talla"){
-
-        tallasProductoEditor[index].talla = valor;
-
-    }
-
-    if(campo === "stock"){
-
-        tallasProductoEditor[index].stock =
-            Number(valor || 0);
-
-    }
-}
-
-
-function renderTallasProductoEditor(){
-
-    const contenedor =
-        document.getElementById(
-            "listaTallasProducto"
-        );
-
-    if(!contenedor) return;
-
-
-    contenedor.innerHTML =
-        tallasProductoEditor.map(function(item,index){
-
-            return `
-
-            <div
-                style="
-                    display:grid;
-                    grid-template-columns:1fr 1fr auto;
-                    gap:8px;
-                    align-items:center;
-                    padding:10px;
-                    background:#fafafa;
-                    border:1px solid #eee;
-                    border-radius:12px;
-                ">
-
-                <input
-                    type="text"
-                    placeholder="Talla"
-                    value="${escapeHTML(item.talla || "")}"
-                    oninput="
-                        actualizarTallaProducto(
-                            ${index},
-                            'talla',
-                            this.value
-                        )
-                    "
-                    style="
-                        width:100%;
-                        padding:10px;
-                        border:1px solid #ddd;
-                        border-radius:8px;
-                    "
-                >
-
-                <input
-                    type="number"
-                    min="0"
-                    step="1"
-                    placeholder="Stock"
-                    value="${Number(item.stock || 0)}"
-                    oninput="
-                        actualizarTallaProducto(
-                            ${index},
-                            'stock',
-                            this.value
-                        )
-                    "
-                    style="
-                        width:100%;
-                        padding:10px;
-                        border:1px solid #ddd;
-                        border-radius:8px;
-                    "
-                >
-
-                <button
-                    type="button"
-                    onclick="eliminarTallaProducto(${index})"
-                    style="
-                        border:0;
-                        background:#ffe1e8;
-                        color:#d60055;
-                        border-radius:8px;
-                        padding:10px 12px;
-                        cursor:pointer;
-                    ">
-
-                    ×
-
-                </button>
-
-            </div>
-
-            `;
-
-        }).join("");
-}
-
-    
-/* =====================================================
    PRODUCTOS
 ===================================================== */
 
 function abrirProducto(id){
 
     productoEditando = null;
-
     imagenActual = null;
 
-
     document
-    .getElementById("formProducto")
-    .reset();
-    tallasProductoEditor = [];
-
+        .getElementById("formProducto")
+        .reset();
 
     document.getElementById(
         "productoId"
     ).value = "";
 
-
     document.getElementById(
         "tituloProducto"
     ).textContent =
-    "Nuevo producto";
-
+        "Nuevo producto";
 
     document.getElementById(
         "preview"
     ).innerHTML =
-    '<span class="no-img">👟</span>';
+        '<span class="no-img">👟</span>';
 
+
+    /* ==========================================
+       LIMPIAR TALLAS
+    ========================================== */
+
+    tallasProductoEditor = [];
+
+    renderTallasProductoEditor();
+
+
+    /* ==========================================
+       NUEVO PRODUCTO
+    ========================================== */
+
+    if(!id){
+
+        agregarTallaProducto();
+
+    }
+
+
+    /* ==========================================
+       EDITAR PRODUCTO
+    ========================================== */
 
     if(id){
 
         const p =
-        productos.find(function(x){
+            productos.find(function(x){
 
-            return x.id === id;
+                return x.id === id;
 
-        });
+            });
 
 
         if(!p){
@@ -2953,95 +2837,128 @@ function abrirProducto(id){
         document.getElementById(
             "tituloProducto"
         ).textContent =
-        "Editar producto";
+            "Editar producto";
 
 
         document.getElementById(
             "productoId"
         ).value =
-        p.id;
+            p.id;
 
 
         document.getElementById(
             "modelo"
         ).value =
-        p.modelo || "";
-
-
-        document.getElementById(
-            "talla"
-        ).value =
-        p.talla || "";
+            p.modelo || "";
 
 
         document.getElementById(
             "sku"
         ).value =
-        p.sku || "";
+            p.sku || "";
 
 
         document.getElementById(
             "codigoBarras"
         ).value =
-        p.codigo_barras || "";
+            p.codigo_barras || "";
 
 
         document.getElementById(
             "precio"
         ).value =
-        p.precio || 0;
+            p.precio || 0;
 
 
         document.getElementById(
             "costo"
         ).value =
-        p.costo || 0;
+            p.costo || 0;
 
 
-       /* Cargar todas las tallas del mismo modelo/código */
+        /* ======================================
+           CARGAR TODAS LAS TALLAS DEL PRODUCTO
+        ====================================== */
 
-const codigoProducto =
-    String(p.codigo_barras || "").trim();
-
-
-const grupoTallas =
-    productos.filter(function(x){
-
-        return
-            String(x.codigo_barras || "").trim()
-            === codigoProducto
-            &&
-            String(x.modelo || "").trim()
-            === String(p.modelo || "").trim();
-
-    });
+        const codigo =
+            String(
+                p.codigo_barras || ""
+            ).trim();
 
 
-tallasProductoEditor =
-    grupoTallas.length
-    ? grupoTallas.map(function(x){
-
-        return {
-            talla: x.talla || "",
-            stock: Number(x.stock || 0),
-            id: x.id
-        };
-
-    })
-    : [{
-        talla: p.talla || "",
-        stock: Number(p.stock || 0),
-        id: p.id
-    }];
+        const modelo =
+            String(
+                p.modelo || ""
+            ).trim();
 
 
-renderTallasProductoEditor();
+        const tallas =
+            productos.filter(function(x){
 
+                return (
+
+                    String(
+                        x.codigo_barras || ""
+                    ).trim() === codigo
+
+                    &&
+
+                    String(
+                        x.modelo || ""
+                    ).trim() === modelo
+
+                );
+
+            });
+
+
+        tallasProductoEditor =
+            tallas.map(function(x){
+
+                return {
+
+                    id: x.id,
+
+                    talla:
+                        String(
+                            x.talla || ""
+                        ),
+
+                    stock:
+                        Number(
+                            x.stock || 0
+                        )
+
+                };
+
+            });
+
+
+        /* ======================================
+           SI NO ENCUENTRA TALLAS
+        ====================================== */
+
+        if(!tallasProductoEditor.length){
+
+            agregarTallaProducto();
+
+        }
+
+        else{
+
+            renderTallasProductoEditor();
+
+        }
+
+
+        /* ======================================
+           IMAGEN
+        ====================================== */
 
         imagenActual =
-        p.imagen_url ||
-        p.photo_url ||
-        null;
+            p.imagen_url ||
+            p.photo_url ||
+            null;
 
 
         if(imagenActual){
@@ -3066,15 +2983,6 @@ renderTallasProductoEditor();
 
 }
 
-    if(!tallasProductoEditor.length){
-
-    agregarTallaProducto();
-
-}else{
-
-    renderTallasProductoEditor();
-
-}
 
 function cerrarProducto(){
 
@@ -3190,142 +3098,188 @@ async function subirImagen(file){
    GUARDAR PRODUCTO
 ===================================================== */
 
+/* =====================================================
+   GUARDAR PRODUCTO CON TALLAS
+===================================================== */
+
 async function guardarProducto(event){
 
     event.preventDefault();
 
-
-    const boton =
-    event.submitter;
-
+    const boton = event.submitter;
 
     boton.disabled = true;
-
-    boton.textContent =
-    "Guardando...";
-
+    boton.textContent = "Guardando...";
 
     try{
 
         const file =
-        document.getElementById(
-            "imagen"
-        ).files[0];
+            document.getElementById("imagen").files[0];
 
-
-        let imagenUrl =
-        imagenActual;
-
+        let imagenUrl = imagenActual;
 
         if(file){
-
-            imagenUrl =
-            await subirImagen(file);
-
+            imagenUrl = await subirImagen(file);
         }
 
 
-        const datos = {
+        /* =====================================================
+           DATOS GENERALES DEL PRODUCTO
+        ===================================================== */
 
-            modelo:
+        const modelo =
             document
             .getElementById("modelo")
             .value
-            .trim(),
+            .trim();
 
-            talla:
-            document
-            .getElementById("talla")
-            .value
-            .trim(),
-
-            sku:
+        const sku =
             document
             .getElementById("sku")
             .value
-            .trim() ||
-            null,
+            .trim() || null;
 
-            codigo_barras:
+        const codigo_barras =
             document
             .getElementById("codigoBarras")
             .value
-            .trim() ||
-             null,
-            
-            precio:
+            .trim() || null;
+
+        const precio =
             Number(
                 document
                 .getElementById("precio")
-                .value ||
-                0
-            ),
+                .value || 0
+            );
 
-            costo:
+        const costo =
             Number(
                 document
                 .getElementById("costo")
-                .value ||
-                0
-            ),
-
-            stock:
-            Number(
-                document
-                .getElementById("stock")
-                .value ||
-                0
-            ),
-
-            activo:true
-
-        };
+                .value || 0
+            );
 
 
-        /*
-         * IMPORTANTE:
-         * Tu código original usa imagen_url.
-         * Lo conservamos.
-         */
+        /* =====================================================
+           VERIFICAR TALLAS
+        ===================================================== */
 
-        datos.imagen_url =
-        imagenUrl || null;
+        if(
+            !tallasProductoEditor ||
+            !tallasProductoEditor.length
+        ){
+
+            throw new Error(
+                "Agrega al menos una talla."
+            );
+
+        }
 
 
-        if(productoEditando){
+        /* =====================================================
+           GUARDAR CADA TALLA
+        ===================================================== */
 
-            const resultado =
-            await supabaseClient
-                .from("productos")
-                .update(datos)
-                .eq(
-                    "id",
-                    productoEditando.id
+        for(
+            const tallaItem
+            of tallasProductoEditor
+        ){
+
+            const talla =
+                String(
+                    tallaItem.talla || ""
+                ).trim();
+
+            const stock =
+                Number(
+                    tallaItem.stock || 0
                 );
 
 
-            if(resultado.error){
+            if(!talla){
 
-                throw resultado.error;
+                throw new Error(
+                    "Hay una talla vacía. Completa todas las tallas."
+                );
 
             }
 
-        }else{
 
-            const resultado =
-            await supabaseClient
-                .from("productos")
-                .insert(datos);
+            const datos = {
+
+                modelo: modelo,
+
+                talla: talla,
+
+                sku: sku,
+
+                codigo_barras: codigo_barras,
+
+                precio: precio,
+
+                costo: costo,
+
+                stock: stock,
+
+                activo: true,
+
+                imagen_url:
+                    imagenUrl || null
+
+            };
 
 
-            if(resultado.error){
+            /* =====================================================
+               SI LA TALLA YA EXISTE → ACTUALIZAR
+            ===================================================== */
 
-                throw resultado.error;
+            if(tallaItem.id){
+
+                const resultado =
+                    await supabaseClient
+                    .from("productos")
+                    .update(datos)
+                    .eq(
+                        "id",
+                        tallaItem.id
+                    );
+
+
+                if(resultado.error){
+
+                    throw resultado.error;
+
+                }
+
+            }
+
+
+            /* =====================================================
+               SI ES UNA TALLA NUEVA → INSERTAR
+            ===================================================== */
+
+            else{
+
+                const resultado =
+                    await supabaseClient
+                    .from("productos")
+                    .insert(datos);
+
+
+                if(resultado.error){
+
+                    throw resultado.error;
+
+                }
 
             }
 
         }
 
+
+        /* =====================================================
+           CERRAR Y RECARGAR
+        ===================================================== */
 
         cerrarProducto();
 
@@ -3338,7 +3292,6 @@ async function guardarProducto(event){
 
         console.error(error);
 
-
         alert(
             "No se pudo guardar el producto:\n\n" +
             error.message
@@ -3350,12 +3303,11 @@ async function guardarProducto(event){
         boton.disabled = false;
 
         boton.textContent =
-        "Guardar producto";
+            "Guardar producto";
 
     }
 
 }
-
 
 /* =====================================================
    ELIMINAR PRODUCTO
@@ -10133,9 +10085,7 @@ async function preguntarANia(){
         input.value.trim();
 
     if(!pregunta){
-
         return;
-
     }
 
     agregarMensajeNia(
@@ -10145,61 +10095,393 @@ async function preguntarANia(){
 
     input.value = "";
 
-
     const preguntaLower =
-        pregunta.toLowerCase();
+        pregunta
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g,"");
 
 
-    /* =========================================
-       PRODUCTOS MÁS VENDIDOS
-    ========================================= */
+    /* =====================================================
+       FUNCIONES INTERNAS DE NIA
+    ===================================================== */
 
-    if(
-        preguntaLower.includes("más vendido") ||
-        preguntaLower.includes("vendo más") ||
-        preguntaLower.includes("se vende más")
-    ){
+    function obtenerNombreProducto(producto){
 
-        if(!ventas.length){
+        return String(
+            producto.modelo ||
+            producto.nombre ||
+            producto.producto_nombre ||
+            "Producto"
+        ).trim();
 
-            agregarMensajeNia(
-                "💕 Todavía no tengo ventas suficientes para analizar tus productos."
+    }
+
+
+    function agruparDetalles(detalles){
+
+        const grupos = {};
+
+        detalles.forEach(function(detalle){
+
+            const nombre =
+                String(
+                    detalle.producto_nombre ||
+                    "Producto"
+                ).trim();
+
+            const clave =
+                nombre.toLowerCase();
+
+            if(!grupos[clave]){
+
+                grupos[clave] = {
+
+                    nombre: nombre,
+
+                    piezas: 0,
+
+                    ingresos: 0,
+
+                    tallas: {}
+
+                };
+
+            }
+
+
+            const cantidad =
+                Number(
+                    detalle.cantidad || 0
+                );
+
+            const subtotal =
+                Number(
+                    detalle.subtotal ||
+                    (
+                        Number(
+                            detalle.precio_unitario || 0
+                        ) * cantidad
+                    ) ||
+                    0
+                );
+
+
+            grupos[clave].piezas += cantidad;
+
+            grupos[clave].ingresos += subtotal;
+
+
+            const talla =
+                String(
+                    detalle.talla || ""
+                ).trim();
+
+
+            if(talla){
+
+                if(!grupos[clave].tallas[talla]){
+
+                    grupos[clave].tallas[talla] = 0;
+
+                }
+
+                grupos[clave].tallas[talla] += cantidad;
+
+            }
+
+        });
+
+
+        return Object.values(grupos);
+
+    }
+
+
+    async function obtenerDetallesVenta(){
+
+        const resultado =
+            await supabaseClient
+            .from("venta_detalles")
+            .select(
+                "venta_id,producto_id,producto_nombre,talla,cantidad,precio_unitario,subtotal"
             );
 
-            return;
+
+        if(resultado.error){
+
+            throw resultado.error;
 
         }
 
 
-        /*
-         * Aquí posteriormente conectaremos
-         * venta_detalles para obtener el
-         * producto exacto y cantidad vendida.
-         */
+        return resultado.data || [];
 
-        agregarMensajeNia(
-            "👟✨ Puedo analizar tus productos vendidos y decirte cuáles tienen mayor rotación. " +
-            "La siguiente mejora será conectar Nia directamente con tus detalles de venta para darte " +
-            "el ranking exacto por modelo, talla, piezas y dinero generado."
+    }
+
+
+    function ordenarPorPiezas(lista){
+
+        return lista.sort(
+            function(a,b){
+
+                return b.piezas - a.piezas;
+
+            }
         );
+
+    }
+
+
+    function monedaSegura(valor){
+
+        return moneda(
+            Number(valor || 0)
+        );
+
+    }
+
+
+    /* =====================================================
+       PRODUCTOS MÁS VENDIDOS
+    ===================================================== */
+
+    if(
+        preguntaLower.includes("mas vendido") ||
+        preguntaLower.includes("vendo mas") ||
+        preguntaLower.includes("se vende mas") ||
+        preguntaLower.includes("que tenis vendo")
+    ){
+
+        try{
+
+            const detalles =
+                await obtenerDetallesVenta();
+
+            if(!detalles.length){
+
+                agregarMensajeNia(
+                    "💕 Todavía no tengo detalles de ventas suficientes para determinar qué tenis vendes más."
+                );
+
+                return;
+
+            }
+
+
+            const grupos =
+                ordenarPorPiezas(
+                    agruparDetalles(detalles)
+                );
+
+
+            const mejores =
+                grupos.slice(0,5);
+
+
+            let html =
+                "🔥 <strong>Tus productos más vendidos</strong><br><br>";
+
+
+            mejores.forEach(
+                function(producto,index){
+
+                    const numero =
+                        index + 1;
+
+                    const porcentaje =
+                        detalles.reduce(
+                            function(total,d){
+
+                                return total +
+                                Number(
+                                    d.cantidad || 0
+                                );
+
+                            },
+                            0
+                        ) > 0
+                        ?
+                        (
+                            producto.piezas /
+                            detalles.reduce(
+                                function(total,d){
+
+                                    return total +
+                                    Number(
+                                        d.cantidad || 0
+                                    );
+
+                                },
+                                0
+                            )
+                        ) * 100
+                        : 0;
+
+
+                    html +=
+                    `${numero}. 👟 <strong>${escapeHTML(producto.nombre)}</strong><br>
+                    &nbsp;&nbsp;🔢 ${producto.piezas} piezas<br>
+                    &nbsp;&nbsp;💰 ${monedaSegura(producto.ingresos)}<br>
+                    &nbsp;&nbsp;📊 ${porcentaje.toFixed(1)}% de tus piezas vendidas<br><br>`;
+
+                }
+            );
+
+
+            const primero =
+                mejores[0];
+
+
+            if(primero){
+
+                html +=
+                `🎀 <strong>Nia dice:</strong><br>
+                <strong>${escapeHTML(primero.nombre)}</strong> es actualmente tu modelo con mayor rotación.`;
+
+            }
+
+
+            agregarMensajeNia(html);
+
+        }catch(error){
+
+            console.error(error);
+
+            agregarMensajeNia(
+                "⚠️ Nia no pudo consultar los detalles de venta en este momento."
+            );
+
+        }
 
         return;
 
     }
 
 
-    /* =========================================
+    /* =====================================================
+       TALLA MÁS VENDIDA
+    ===================================================== */
+
+    if(
+        preguntaLower.includes("talla") &&
+        (
+            preguntaLower.includes("vende mas") ||
+            preguntaLower.includes("mas vendida") ||
+            preguntaLower.includes("mejor")
+        )
+    ){
+
+        try{
+
+            const detalles =
+                await obtenerDetallesVenta();
+
+
+            const tallas = {};
+
+
+            detalles.forEach(
+                function(detalle){
+
+                    const talla =
+                        String(
+                            detalle.talla || ""
+                        ).trim();
+
+                    if(!talla){
+                        return;
+                    }
+
+
+                    if(!tallas[talla]){
+
+                        tallas[talla] = 0;
+
+                    }
+
+
+                    tallas[talla] +=
+                        Number(
+                            detalle.cantidad || 0
+                        );
+
+                }
+            );
+
+
+            const lista =
+                Object.entries(tallas)
+                .sort(
+                    function(a,b){
+                        return b[1] - a[1];
+                    }
+                );
+
+
+            if(!lista.length){
+
+                agregarMensajeNia(
+                    "💕 Todavía no tengo suficientes datos de tallas vendidas."
+                );
+
+                return;
+
+            }
+
+
+            let html =
+                "👟 <strong>Las tallas con mayor movimiento</strong><br><br>";
+
+
+            lista
+            .slice(0,5)
+            .forEach(
+                function(item,index){
+
+                    html +=
+                    `${index + 1}. Talla <strong>${escapeHTML(item[0])}</strong> — ${item[1]} piezas<br>`;
+
+                }
+            );
+
+
+            html +=
+                "<br>🎀 Esto te ayuda a decidir qué tallas pedir con mayor prioridad.";
+
+
+            agregarMensajeNia(html);
+
+        }catch(error){
+
+            console.error(error);
+
+            agregarMensajeNia(
+                "⚠️ No pude consultar las tallas vendidas."
+            );
+
+        }
+
+        return;
+
+    }
+
+
+    /* =====================================================
        VENTAS
-    ========================================= */
+    ===================================================== */
 
     if(
         preguntaLower.includes("ventas") ||
-        preguntaLower.includes("vendí") ||
-        preguntaLower.includes("vendido")
+        preguntaLower.includes("cuanto vendi") ||
+        preguntaLower.includes("cuanto he vendido") ||
+        preguntaLower.includes("ingresos") ||
+        preguntaLower.includes("como van mis ventas")
     ){
 
         const totalVentas =
             ventas.length;
+
 
         const ingresos =
             ventas.reduce(
@@ -10215,118 +10497,586 @@ async function preguntarANia(){
             );
 
 
-        agregarMensajeNia(
-            `💕 Revisé tus datos actuales.<br><br>
-             🧾 <strong>${totalVentas}</strong> ventas registradas.<br>
-             💰 <strong>${moneda(ingresos)}</strong> de ingresos registrados.<br><br>
-             Puedo analizar estos datos para ayudarte a tomar decisiones de compra.`
-        );
+        try{
+
+            const detalles =
+                await obtenerDetallesVenta();
+
+
+            const piezas =
+                detalles.reduce(
+                    function(total,detalle){
+
+                        return total +
+                        Number(
+                            detalle.cantidad || 0
+                        );
+
+                    },
+                    0
+                );
+
+
+            agregarMensajeNia(
+                `💕 <strong>Así van tus ventas</strong><br><br>
+                🧾 Ventas registradas: <strong>${totalVentas}</strong><br>
+                👟 Piezas vendidas: <strong>${piezas}</strong><br>
+                💰 Ingresos: <strong>${monedaSegura(ingresos)}</strong><br><br>
+                🎀 Nia puede cruzar estos datos con tus costos e inventario para ayudarte a decidir qué comprar.`
+            );
+
+        }catch(error){
+
+            console.error(error);
+
+            agregarMensajeNia(
+                `💕 Tienes <strong>${totalVentas}</strong> ventas registradas y ${monedaSegura(ingresos)} en ingresos.`
+            );
+
+        }
 
         return;
 
     }
 
 
-    /* =========================================
+    /* =====================================================
        INVENTARIO / REPONER
-    ========================================= */
+    ===================================================== */
 
     if(
         preguntaLower.includes("reponer") ||
         preguntaLower.includes("inventario") ||
-        preguntaLower.includes("stock")
+        preguntaLower.includes("stock") ||
+        preguntaLower.includes("que debo pedir") ||
+        preguntaLower.includes("que deberia pedir")
     ){
 
-        const bajos =
-            productos.filter(
-                function(producto){
+        try{
 
-                    return Number(
-                        producto.stock || 0
-                    ) <= 3;
+            const detalles =
+                await obtenerDetallesVenta();
+
+
+            const vendidos =
+                agruparDetalles(detalles);
+
+
+            const mapaVentas = {};
+
+
+            vendidos.forEach(
+                function(item){
+
+                    mapaVentas[
+                        item.nombre.toLowerCase()
+                    ] = item;
 
                 }
             );
 
 
-        if(!bajos.length){
+            const candidatos =
+                productos
+                .map(
+                    function(producto){
 
-            agregarMensajeNia(
-                "💕 Por ahora no detecto productos con stock igual o menor a 3."
+                        const nombre =
+                            obtenerNombreProducto(
+                                producto
+                            );
+
+
+                        const venta =
+                            mapaVentas[
+                                nombre.toLowerCase()
+                            ];
+
+
+                        const stock =
+                            Number(
+                                producto.stock || 0
+                            );
+
+
+                        const piezasVendidas =
+                            venta
+                            ? venta.piezas
+                            : 0;
+
+
+                        return {
+
+                            producto: producto,
+
+                            nombre: nombre,
+
+                            stock: stock,
+
+                            vendidas:
+                                piezasVendidas
+
+                        };
+
+                    }
+                )
+                .filter(
+                    function(item){
+
+                        return (
+                            item.stock <= 3 &&
+                            item.vendidas > 0
+                        );
+
+                    }
+                )
+                .sort(
+                    function(a,b){
+
+                        if(
+                            b.vendidas !==
+                            a.vendidas
+                        ){
+
+                            return (
+                                b.vendidas -
+                                a.vendidas
+                            );
+
+                        }
+
+                        return (
+                            a.stock -
+                            b.stock
+                        );
+
+                    }
+                );
+
+
+            if(!candidatos.length){
+
+                agregarMensajeNia(
+                    "💕 No encontré por ahora un producto que combine stock bajo con ventas recientes."
+                );
+
+                return;
+
+            }
+
+
+            let html =
+                "📦 <strong>Yo repondría primero estos productos:</strong><br><br>";
+
+
+            candidatos
+            .slice(0,8)
+            .forEach(
+                function(item,index){
+
+                    html +=
+                    `${index + 1}. 👟 <strong>${escapeHTML(item.nombre)}</strong><br>
+                    &nbsp;&nbsp;📦 Stock actual: ${item.stock}<br>
+                    &nbsp;&nbsp;🔥 Vendidos: ${item.vendidas}<br><br>`;
+
+                }
             );
 
-            return;
+
+            html +=
+                "🎀 <strong>Prioridad:</strong> primero los que tienen poco stock pero siguen teniendo movimiento.";
+
+
+            agregarMensajeNia(html);
+
+        }catch(error){
+
+            console.error(error);
+
+            agregarMensajeNia(
+                "⚠️ No pude cruzar tu inventario con las ventas."
+            );
 
         }
 
+        return;
 
-        const lista =
-            bajos
-            .slice(0,10)
-            .map(function(producto){
-
-                return `
-                    👟 <strong>
-                    ${escapeHTML(
-                        producto.nombre || "Producto"
-                    )}
-                    </strong>
-                    — ${Number(
-                        producto.stock || 0
-                    )} disponibles
-                `;
-
-            })
-            .join("<br>");
+    }
 
 
-        agregarMensajeNia(
-            `📦 <strong>Yo revisaría primero estos productos:</strong><br><br>
-            ${lista}`
-        );
+    /* =====================================================
+       MENOS VENDIDOS
+    ===================================================== */
+
+    if(
+        preguntaLower.includes("menos vendido") ||
+        preguntaLower.includes("vendo menos") ||
+        preguntaLower.includes("que se vende menos")
+    ){
+
+        try{
+
+            const detalles =
+                await obtenerDetallesVenta();
+
+
+            const vendidos =
+                agruparDetalles(detalles);
+
+
+            if(!vendidos.length){
+
+                agregarMensajeNia(
+                    "💕 Todavía no tengo suficientes ventas para determinar los productos con menor movimiento."
+                );
+
+                return;
+
+            }
+
+
+            const lista =
+                vendidos.sort(
+                    function(a,b){
+
+                        return a.piezas - b.piezas;
+
+                    }
+                );
+
+
+            let html =
+                "📉 <strong>Productos con menor movimiento</strong><br><br>";
+
+
+            lista
+            .slice(0,5)
+            .forEach(
+                function(item,index){
+
+                    html +=
+                    `${index + 1}. 👟 <strong>${escapeHTML(item.nombre)}</strong> — ${item.piezas} piezas<br>`;
+
+                }
+            );
+
+
+            html +=
+                "<br>🎀 No significa automáticamente que debas eliminarlos; primero conviene revisar margen, stock y promociones.";
+
+
+            agregarMensajeNia(html);
+
+        }catch(error){
+
+            console.error(error);
+
+            agregarMensajeNia(
+                "⚠️ No pude analizar los productos con menor movimiento."
+            );
+
+        }
 
         return;
 
     }
 
 
-    /* =========================================
-       INVERSIÓN
-    ========================================= */
+    /* =====================================================
+       GANANCIA / MARGEN
+    ===================================================== */
+
+    if(
+        preguntaLower.includes("ganancia") ||
+        preguntaLower.includes("ganancias") ||
+        preguntaLower.includes("margen") ||
+        preguntaLower.includes("utilidad")
+    ){
+
+        try{
+
+            const detalles =
+                await obtenerDetallesVenta();
+
+
+            let gananciaTotal = 0;
+
+
+            detalles.forEach(
+                function(detalle){
+
+                    const producto =
+                        productos.find(
+                            function(p){
+
+                                return (
+                                    p.id ===
+                                    detalle.producto_id
+                                );
+
+                            }
+                        );
+
+
+                    if(!producto){
+                        return;
+                    }
+
+
+                    const cantidad =
+                        Number(
+                            detalle.cantidad || 0
+                        );
+
+
+                    const precio =
+                        Number(
+                            detalle.precio_unitario || 0
+                        );
+
+
+                    const costo =
+                        Number(
+                            producto.costo || 0
+                        );
+
+
+                    gananciaTotal +=
+                        (
+                            precio -
+                            costo
+                        ) *
+                        cantidad;
+
+                }
+            );
+
+
+            agregarMensajeNia(
+                `💰 <strong>Utilidad bruta estimada</strong><br><br>
+                ${monedaSegura(gananciaTotal)}<br><br>
+                📌 Este cálculo usa el costo registrado actualmente en cada producto. Si cambiaste costos después de vender, la cifra es una estimación.<br><br>
+                🎀 Nia puede usar esta información junto con la rotación para recomendarte qué productos te convienen más.`
+            );
+
+        }catch(error){
+
+            console.error(error);
+
+            agregarMensajeNia(
+                "⚠️ No pude calcular la utilidad con los datos actuales."
+            );
+
+        }
+
+        return;
+
+    }
+
+
+    /* =====================================================
+       INVERSIÓN INTELIGENTE
+    ===================================================== */
 
     if(
         preguntaLower.includes("invertir") ||
-        preguntaLower.includes("inversión") ||
-        preguntaLower.includes("invertiría")
+        preguntaLower.includes("inversion") ||
+        preguntaLower.includes("invertiria") ||
+        preguntaLower.includes("en que me conviene")
     ){
 
-        agregarMensajeNia(
-            `💗 <strong>Claro.</strong><br><br>
-            Para recomendarte en qué invertir, Nia debe cruzar
-            tus ventas con tu inventario y detectar cuáles modelos
-            tienen mayor rotación.<br><br>
-            👟 No quiero recomendarte algo al azar.
-            Quiero basarme en los datos reales de Nat.Nation.`
-        );
+        try{
+
+            const detalles =
+                await obtenerDetallesVenta();
+
+
+            const vendidos =
+                agruparDetalles(detalles);
+
+
+            const recomendaciones = [];
+
+
+            vendidos.forEach(
+                function(venta){
+
+                    const producto =
+                        productos.find(
+                            function(p){
+
+                                return (
+                                    obtenerNombreProducto(p)
+                                    .toLowerCase() ===
+                                    venta.nombre.toLowerCase()
+                                );
+
+                            }
+                        );
+
+
+                    if(!producto){
+                        return;
+                    }
+
+
+                    const precio =
+                        Number(
+                            producto.precio || 0
+                        );
+
+
+                    const costo =
+                        Number(
+                            producto.costo || 0
+                        );
+
+
+                    const stock =
+                        Number(
+                            producto.stock || 0
+                        );
+
+
+                    const utilidad =
+                        precio -
+                        costo;
+
+
+                    const margen =
+                        precio > 0
+                        ?
+                        (
+                            utilidad /
+                            precio
+                        ) * 100
+                        : 0;
+
+
+                    const puntuacion =
+                        (
+                            venta.piezas * 2
+                        ) +
+                        (
+                            margen
+                        ) -
+                        (
+                            stock * 0.5
+                        );
+
+
+                    recomendaciones.push({
+
+                        nombre:
+                            venta.nombre,
+
+                        piezas:
+                            venta.piezas,
+
+                        ingresos:
+                            venta.ingresos,
+
+                        stock:
+                            stock,
+
+                        utilidad:
+                            utilidad,
+
+                        margen:
+                            margen,
+
+                        puntuacion:
+                            puntuacion
+
+                    });
+
+                }
+            );
+
+
+            recomendaciones.sort(
+                function(a,b){
+
+                    return (
+                        b.puntuacion -
+                        a.puntuacion
+                    );
+
+                }
+            );
+
+
+            if(!recomendaciones.length){
+
+                agregarMensajeNia(
+                    "💕 Todavía no tengo suficientes datos combinados de ventas, costos e inventario para recomendarte una inversión."
+                );
+
+                return;
+
+            }
+
+
+            const mejores =
+                recomendaciones.slice(0,3);
+
+
+            let html =
+                "💰 <strong>Nia recomienda priorizar:</strong><br><br>";
+
+
+            mejores.forEach(
+                function(item,index){
+
+                    html +=
+                    `${index + 1}. 👟 <strong>${escapeHTML(item.nombre)}</strong><br>
+                    &nbsp;&nbsp;🔥 ${item.piezas} piezas vendidas<br>
+                    &nbsp;&nbsp;📦 Stock actual: ${item.stock}<br>
+                    &nbsp;&nbsp;💵 Utilidad por pieza: ${monedaSegura(item.utilidad)}<br>
+                    &nbsp;&nbsp;📊 Margen: ${item.margen.toFixed(1)}%<br><br>`;
+
+                }
+            );
+
+
+            html +=
+                `🎀 <strong>Conclusión de Nia:</strong><br>
+                Conviene priorizar productos que combinan buena rotación, margen atractivo y un stock que no sea excesivamente alto.<br><br>
+                ⚠️ Esta es una recomendación; Nia no realiza ninguna compra automáticamente.`;
+
+
+            agregarMensajeNia(html);
+
+        }catch(error){
+
+            console.error(error);
+
+            agregarMensajeNia(
+                "⚠️ No pude calcular la recomendación de inversión."
+            );
+
+        }
 
         return;
 
     }
 
 
-    /* =========================================
-       RESPUESTA GENERAL
-    ========================================= */
+    /* =====================================================
+       AYUDA GENERAL
+    ===================================================== */
 
     agregarMensajeNia(
-        `💕 Entiendo tu pregunta.<br><br>
-        Puedo ayudarte a analizar tus ventas, productos,
-        inventario y rendimiento.<br><br>
-        Prueba preguntarme:
-        <br>🔥 <strong>¿Qué tenis vendo más?</strong>
-        <br>📦 <strong>¿Qué debería reponer?</strong>
-        <br>💰 <strong>¿En qué me conviene invertir?</strong>
-        <br>📊 <strong>¿Cómo van mis ventas?</strong>`
+        `💕 <strong>Soy Nia, tu asistente de Nat.Nation 🎀</strong><br><br>
+        Ya puedo analizar tus datos reales de ventas e inventario.<br><br>
+        Prueba preguntarme:<br>
+        🔥 <strong>¿Qué tenis vendo más?</strong><br>
+        📦 <strong>¿Qué debería reponer?</strong><br>
+        👟 <strong>¿Qué talla vendo más?</strong><br>
+        📉 <strong>¿Qué vendo menos?</strong><br>
+        💰 <strong>¿Cuánto gano?</strong><br>
+        📊 <strong>¿Cómo van mis ventas?</strong><br>
+        💸 <strong>¿En qué me conviene invertir?</strong>`
     );
 
 }
@@ -10765,3 +11515,4 @@ function cerrarSelectorTalla(){
     
 </script>            
 </body>
+</html>
