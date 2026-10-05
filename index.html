@@ -10762,6 +10762,155 @@ function cerrarSelectorTalla(){
     cantidadTallaSeleccionada = 1;
 }
 
+
+/* =====================================================
+   AGREGAR TALLA + STOCK AL PRODUCTO
+===================================================== */
+
+function agregarTallaProducto(talla = "", stock = 0){
+
+    if(typeof tallasProductoEditor === "undefined"){
+        window.tallasProductoEditor = [];
+    }
+
+    tallasProductoEditor.push({
+        talla: String(talla || ""),
+        stock: Number(stock || 0)
+    });
+
+    renderTallasProductoEditor();
+}
+
+
+/* =====================================================
+   BORRAR TALLA
+===================================================== */
+
+function eliminarTallaProducto(index){
+
+    if(!tallasProductoEditor[index]) return;
+
+    tallasProductoEditor.splice(index, 1);
+
+    renderTallasProductoEditor();
+}
+
+
+/* =====================================================
+   ACTUALIZAR TALLA / STOCK
+===================================================== */
+
+function actualizarTallaProducto(index, campo, valor){
+
+    if(!tallasProductoEditor[index]) return;
+
+    if(campo === "talla"){
+        tallasProductoEditor[index].talla = valor;
+    }
+
+    if(campo === "stock"){
+        tallasProductoEditor[index].stock = Number(valor || 0);
+    }
+}
+
+
+/* =====================================================
+   MOSTRAR TALLAS
+===================================================== */
+
+function renderTallasProductoEditor(){
+
+    const contenedor =
+        document.getElementById("listaTallasProducto");
+
+    if(!contenedor) return;
+
+    contenedor.innerHTML = "";
+
+    tallasProductoEditor.forEach(function(item, index){
+
+        const fila = document.createElement("div");
+
+        fila.style.cssText = `
+            display:grid;
+            grid-template-columns:1fr 1fr auto;
+            gap:10px;
+            align-items:center;
+            padding:10px;
+            background:#fafafa;
+            border:1px solid #eee;
+            border-radius:12px;
+        `;
+
+        fila.innerHTML = `
+            <input
+                type="text"
+                placeholder="Talla"
+                value="${String(item.talla || "").replace(/"/g, '&quot;')}"
+                style="
+                    width:100%;
+                    padding:10px;
+                    border:1px solid #ddd;
+                    border-radius:8px;
+                    box-sizing:border-box;
+                "
+            >
+
+            <input
+                type="number"
+                min="0"
+                step="1"
+                placeholder="Stock"
+                value="${Number(item.stock || 0)}"
+                style="
+                    width:100%;
+                    padding:10px;
+                    border:1px solid #ddd;
+                    border-radius:8px;
+                    box-sizing:border-box;
+                "
+            >
+
+            <button
+                type="button"
+                style="
+                    border:none;
+                    background:#ffe5ec;
+                    color:#d6336c;
+                    width:36px;
+                    height:36px;
+                    border-radius:10px;
+                    font-size:20px;
+                    cursor:pointer;
+                "
+            >×</button>
+        `;
+
+        const inputs = fila.querySelectorAll("input");
+
+        inputs[0].addEventListener("input", function(){
+            actualizarTallaProducto(
+                index,
+                "talla",
+                this.value
+            );
+        });
+
+        inputs[1].addEventListener("input", function(){
+            actualizarTallaProducto(
+                index,
+                "stock",
+                this.value
+            );
+        });
+
+        fila.querySelector("button").addEventListener("click", function(){
+            eliminarTallaProducto(index);
+        });
+
+        contenedor.appendChild(fila);
+    });
+}
     
 </script>            
 </body>
