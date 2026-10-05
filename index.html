@@ -977,12 +977,22 @@ h2{
 
         <div class="panel">
 
-            <input
-                id="buscarVenta"
-                class="search"
-                placeholder="Buscar producto..."
-                oninput="renderProductosVenta()">
+           <div class="buscador-barcode">
 
+    <div class="icono-busqueda">🔍</div>
+
+    <input
+        id="buscarVenta"
+        class="search"
+        placeholder="Escanear código de barras o buscar producto..."
+        autocomplete="off"
+        oninput="renderProductosVenta()"
+        onkeydown="procesarCodigoBarras(event)"
+    >
+
+    <div class="icono-barcode">▥</div>
+
+</div>
             <button
                 type="button"
                 class="btn btn-primary"
@@ -10134,6 +10144,86 @@ async function preguntarANia(){
         <br>📊 <strong>¿Cómo van mis ventas?</strong>`
     );
 
+}
+
+
+function procesarCodigoBarras(event){
+
+    if(event.key !== "Enter"){
+        return;
+    }
+
+    const input =
+        document.getElementById("buscarVenta");
+
+    if(!input){
+        return;
+    }
+
+    const codigo =
+        input.value.trim().replace(/\s+/g,"");
+
+    if(!codigo){
+        return;
+    }
+
+    event.preventDefault();
+
+    buscarProductoPorCodigo(codigo);
+}
+
+    function buscarProductoPorCodigo(codigo){
+
+    codigo =
+        String(codigo || "")
+        .trim();
+
+    const encontrados =
+        productos.filter(function(p){
+
+            return String(
+                p.codigo_barras || ""
+            ).trim() === codigo;
+
+        });
+
+    if(!encontrados.length){
+
+        const agregar =
+            confirm(
+                "Producto no encontrado.\n\n" +
+                "Código: " + codigo +
+                "\n\n¿Quieres agregar este producto?"
+            );
+
+        if(agregar){
+
+            abrirProducto();
+
+            setTimeout(function(){
+
+                const campo =
+                    document.getElementById(
+                        "codigoBarras"
+                    );
+
+                if(campo){
+
+                    campo.value =
+                        codigo;
+
+                    campo.focus();
+
+                }
+
+            },100);
+
+        }
+
+        return;
+    }
+
+    abrirSelectorTallaCodigo(encontrados);
 }
 
     
