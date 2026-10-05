@@ -1746,6 +1746,19 @@ h2{
             <div class="field">
 
                 <label>
+                    Talla
+                </label>
+
+                <input
+                    id="talla"
+                    required>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
                     SKU
                 </label>
 
@@ -1797,33 +1810,21 @@ h2{
             </div>
 
 
-           <div class="field full">
+            <div class="field">
 
-    <label>
-        Tallas y existencias
-    </label>
+                <label>
+                    Stock
+                </label>
 
-    <div
-        id="listaTallasProducto"
-        style="
-            display:flex;
-            flex-direction:column;
-            gap:10px;
-            margin-top:8px;
-        ">
-    </div>
+                <input
+                    id="stock"
+                    type="number"
+                    min="0"
+                    step="1"
+                    value="0"
+                    required>
 
-    <button
-        type="button"
-        class="btn btn-secondary"
-        style="margin-top:10px;"
-        onclick="agregarTallaProducto()">
-
-        + Agregar talla
-
-    </button>
-
-</div>
+            </div>
 
 
             <div class="field">
@@ -1887,8 +1888,6 @@ h2{
 
 </div>
 </div>
-
-
 <!-- =====================================================
      MODAL CLIENTE
 ===================================================== -->
