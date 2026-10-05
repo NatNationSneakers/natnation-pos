@@ -10233,6 +10233,357 @@ function procesarCodigoBarras(event){
     abrirSelectorTallaCodigo(encontrados);
 }
 
+    /* =====================================================
+   ESCÁNER DE CÓDIGO DE BARRAS
+===================================================== */
+
+let productoTallaSeleccionado = null;
+let cantidadTallaSeleccionada = 1;
+
+function procesarCodigoBarras(event){
+
+    if(event.key !== "Enter") return;
+
+    const input = document.getElementById("buscarVenta");
+
+    if(!input) return;
+
+    const codigo = input.value.trim();
+
+    if(!codigo) return;
+
+    event.preventDefault();
+
+    buscarProductoPorCodigo(codigo);
+}
+
+
+function buscarProductoPorCodigo(codigo){
+
+    codigo = String(codigo).trim();
+
+    const encontrados = productos.filter(p =>
+        String(p.codigo_barras || "").trim() === codigo &&
+        Number(p.stock || 0) > 0 &&
+        p.activo !== false
+    );
+
+    /* PRODUCTO NO EXISTE */
+
+    if(!encontrados.length){
+
+        const agregar = confirm(
+            "Producto no encontrado.\n\n" +
+            "Código: " + codigo +
+            "\n\n¿Quieres agregar este producto?"
+        );
+
+        if(agregar){
+
+            abrirProducto();
+
+            setTimeout(() => {
+
+                const campo =
+                    document.getElementById("codigoBarras");
+
+                if(campo){
+
+                    campo.value = codigo;
+
+                    campo.focus();
+
+                }
+
+            },100);
+        }
+
+        return;
+    }
+
+    /* PRODUCTO ENCONTRADO */
+
+    abrirSelectorTallaCodigo(codigo);
+}
+
+
+/* =====================================================
+   ABRIR SELECTOR DE TALLAS
+===================================================== */
+
+function abrirSelectorTallaCodigo(codigo){
+
+    const filas = productos.filter(p =>
+        String(p.codigo_barras || "").trim() === String(codigo).trim() &&
+        Number(p.stock || 0) > 0 &&
+        p.activo !== false
+    );
+
+    if(!filas.length){
+
+        alert("No hay tallas disponibles.");
+
+        return;
+    }
+
+    const producto = filas[0];
+
+    productoTallaSeleccionado = null;
+
+    cantidadTallaSeleccionada = 1;
+
+    document.getElementById(
+        "selectorTallaModelo"
+    ).textContent = producto.modelo || "Producto";
+
+    document.getElementById(
+        "selectorTallaModeloTexto"
+    ).textContent = producto.modelo || "—";
+
+    document.getElementById(
+        "selectorTallaCodigoTexto"
+    ).textContent = codigo;
+
+    document.getElementById(
+        "selectorTallaPrecio"
+    ).textContent = moneda(producto.precio);
+
+    document.getElementById(
+        "selectorCantidad"
+    ).textContent = "1";
+
+    document.getElementById(
+        "selectorExistencia"
+    ).textContent = "Selecciona una talla";
+
+
+    const imagen =
+        producto.imagen_url ||
+        producto.photo_url ||
+        null;
+
+    document.getElementById(
+        "selectorTallaImagen"
+    ).innerHTML = imagen
+
+        ? `<img
+             src="${escapeHTML(imagen)}"
+             style="width:100%;height:100%;object-fit:contain"
+           >`
+
+        : `<span style="font-size:70px">👟</span>`;
+
+
+    document.getElementById(
+        "selectorTallas"
+    ).innerHTML = filas.map(p => `
+
+        <button
+            type="button"
+            class="barcode-size-option"
+            data-product-id="${p.id}"
+            onclick="seleccionarTallaVenta('${p.id}')">
+
+            <span class="barcode-size-number">
+                ${p.talla}
+            </span>
+
+            <span class="barcode-size-stock">
+                ${p.stock} pares
+            </span>
+
+        </button>
+
+    `).join("");
+
+
+    const modal =
+        document.getElementById("selectorTallaModal");
+
+    modal.classList.add("show");
+
+    modal.setAttribute(
+        "aria-hidden",
+        "false"
+    );
+}
+
+
+/* =====================================================
+   SELECCIONAR TALLA
+===================================================== */
+
+function seleccionarTallaVenta(id){
+
+    const producto = productos.find(
+        p => String(p.id) === String(id)
+    );
+
+    if(!producto) return;
+
+    productoTallaSeleccionado = producto;
+
+    cantidadTallaSeleccionada = 1;
+
+
+    document.querySelectorAll(
+        "#selectorTallas .barcode-size-option"
+    ).forEach(btn => {
+
+        btn.classList.toggle(
+            "selected",
+            btn.dataset.productId === String(id)
+        );
+
+    });
+
+
+    document.getElementById(
+        "selectorCantidad"
+    ).textContent = "1";
+
+
+    document.getElementById(
+        "selectorExistencia"
+    ).textContent =
+        producto.stock + " pares";
+}
+
+
+/* =====================================================
+   CANTIDAD
+===================================================== */
+
+function cambiarCantidadTalla(delta){
+
+    if(!productoTallaSeleccionado) return;
+
+    const max =
+        Number(productoTallaSeleccionado.stock || 0);
+
+    cantidadTallaSeleccionada =
+        Math.max(
+            1,
+            Math.min(
+                max,
+                cantidadTallaSeleccionada + delta
+            )
+        );
+
+    document.getElementById(
+        "selectorCantidad"
+    ).textContent =
+        cantidadTallaSeleccionada;
+}
+
+
+/* =====================================================
+   AGREGAR AL CARRITO
+===================================================== */
+
+function confirmarAgregarTalla(){
+
+    if(!productoTallaSeleccionado){
+
+        alert("Selecciona una talla primero.");
+
+        return;
+    }
+
+    const producto =
+        productoTallaSeleccionado;
+
+    const cantidad =
+        cantidadTallaSeleccionada;
+
+
+    const existente = carrito.find(
+        x => x.producto_id === producto.id
+    );
+
+
+    if(existente){
+
+        if(
+            existente.cantidad + cantidad >
+            Number(producto.stock || 0)
+        ){
+
+            alert("No hay suficiente stock.");
+
+            return;
+        }
+
+        existente.cantidad += cantidad;
+
+    }else{
+
+        carrito.push({
+
+            producto_id: producto.id,
+
+            producto_nombre:
+                producto.modelo,
+
+            talla:
+                producto.talla,
+
+            cantidad:
+                cantidad,
+
+            precio_unitario:
+                Number(producto.precio || 0)
+
+        });
+
+    }
+
+
+    renderCarrito();
+
+    cerrarSelectorTalla();
+
+
+    const input =
+        document.getElementById("buscarVenta");
+
+    if(input){
+
+        input.value = "";
+
+        renderProductosVenta();
+
+        input.focus();
+
+    }
+}
+
+
+/* =====================================================
+   CERRAR
+===================================================== */
+
+function cerrarSelectorTalla(){
+
+    const modal =
+        document.getElementById(
+            "selectorTallaModal"
+        );
+
+    if(!modal) return;
+
+    modal.classList.remove("show");
+
+    modal.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+    productoTallaSeleccionado = null;
+
+    cantidadTallaSeleccionada = 1;
+}
+
     
 </script>            
 </body>
