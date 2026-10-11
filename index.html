@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -26,7 +26,6 @@ button{
     border:0;
 }
 
-    
 /* =========================
    ESTRUCTURA
 ========================= */
@@ -1744,15 +1743,33 @@ h2{
             </div>
 
 
-            <div class="field">
+          <div class="field full">
 
-                <label>
-                    Talla
-                </label>
+    <label>
+        Tallas y existencias
+    </label>
 
-                <input
-                    id="talla"
-                    required>
+    <div
+        id="listaTallasProducto"
+        style="
+            display:flex;
+            flex-direction:column;
+            gap:10px;
+            margin-top:8px;
+        ">
+    </div>
+
+    <button
+        type="button"
+        class="btn btn-secondary"
+        style="margin-top:10px;"
+        onclick="agregarTallaProducto()">
+
+        + Agregar talla
+
+    </button>
+
+</div>
 
             </div>
 
@@ -1811,22 +1828,7 @@ h2{
             </div>
 
 
-            <div class="field">
-
-                <label>
-                    Stock
-                </label>
-
-                <input
-                    id="stock"
-                    type="number"
-                    min="0"
-                    step="1"
-                    value="0"
-                    required>
-
-            </div>
-
+          
 
             <div class="field">
 
@@ -1889,6 +1891,8 @@ h2{
 
 </div>
 </div>
+
+    
 
 <!-- =====================================================
      MODAL CLIENTE
@@ -2763,20 +2767,6 @@ function actualizarInicio(){
 }
 
 
-let tallasProductoEditor = [];
-
-function renderTallasProductoEditor(){
-    // El formulario actual usa los campos talla y stock.
-}
-
-function agregarTallaProducto(){
-    tallasProductoEditor = [{
-        talla: document.getElementById("talla").value || "",
-        stock: Number(document.getElementById("stock").value || 0)
-    }];
-}
-
-    
 /* =====================================================
    PRODUCTOS
 ===================================================== */
@@ -3175,34 +3165,20 @@ async function guardarProducto(event){
             );
 
 
-tallasProductoEditor = [{
-    id: tallasProductoEditor[0]?.id || null,
-    talla: document.getElementById("talla").value.trim(),
-    stock: Number(document.getElementById("stock").value || 0)
-}];
-        
-       
-/* VERIFICAR Y LEER TALLA DEL FORMULARIO */
+        /* =====================================================
+           VERIFICAR TALLAS
+        ===================================================== */
 
-const tallaFormulario = document
-    .getElementById("talla")
-    .value
-    .trim();
+        if(
+            !tallasProductoEditor ||
+            !tallasProductoEditor.length
+        ){
 
-const stockFormulario = Number(
-    document.getElementById("stock").value || 0
-);
+            throw new Error(
+                "Agrega al menos una talla."
+            );
 
-if (!tallaFormulario) {
-    throw new Error("Escribe la talla del producto.");
-}
-
-tallasProductoEditor = [{
-    id: document.getElementById("productoId").value || null,
-    talla: tallaFormulario,
-    stock: stockFormulario
-}];
-
+        }
 
 
         /* =====================================================
