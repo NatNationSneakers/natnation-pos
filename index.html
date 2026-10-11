@@ -3181,20 +3181,28 @@ tallasProductoEditor = [{
     stock: Number(document.getElementById("stock").value || 0)
 }];
         
-        /* =====================================================
-           VERIFICAR TALLAS
-        ===================================================== */
+       
+/* VERIFICAR Y LEER TALLA DEL FORMULARIO */
 
-        if(
-            !tallasProductoEditor ||
-            !tallasProductoEditor.length
-        ){
+const tallaFormulario = document
+    .getElementById("talla")
+    .value
+    .trim();
 
-            throw new Error(
-                "Agrega al menos una talla."
-            );
+const stockFormulario = Number(
+    document.getElementById("stock").value || 0
+);
 
-        }
+if (!tallaFormulario) {
+    throw new Error("Escribe la talla del producto.");
+}
+
+tallasProductoEditor = [{
+    id: document.getElementById("productoId").value || null,
+    talla: tallaFormulario,
+    stock: stockFormulario
+}];
+
 
 
         /* =====================================================
