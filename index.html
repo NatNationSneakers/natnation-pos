@@ -2312,6 +2312,7 @@ let carrito = [];
 
 let productoEditando = null;
 let imagenActual = null;
+let tallasProductoEditor = [];
 
 
 /* =====================================================
@@ -3099,9 +3100,6 @@ async function subirImagen(file){
 }
 
 
-/* =====================================================
-   GUARDAR PRODUCTO
-===================================================== */
 
 /* =====================================================
    GUARDAR PRODUCTO CON TALLAS
@@ -3109,12 +3107,12 @@ async function subirImagen(file){
 
 async function guardarProducto(event){
 
-    event.preventDefault();
+   const boton = document.querySelector(
+    '#formProducto button[type="submit"]'
+);
 
-    const boton = event.submitter;
-
-    boton.disabled = true;
-    boton.textContent = "Guardando...";
+boton.disabled = true;
+boton.textContent = "Guardando...";
 
     try{
 
@@ -3323,7 +3321,7 @@ async function eliminarProducto(id){
     const p =
     productos.find(function(x){
 
-        return x.id === id;
+      return String(x.id) === String(id);
 
     });
 
