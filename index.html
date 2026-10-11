@@ -3175,6 +3175,12 @@ async function guardarProducto(event){
             );
 
 
+tallasProductoEditor = [{
+    id: tallasProductoEditor[0]?.id || null,
+    talla: document.getElementById("talla").value.trim(),
+    stock: Number(document.getElementById("stock").value || 0)
+}];
+        
         /* =====================================================
            VERIFICAR TALLAS
         ===================================================== */
