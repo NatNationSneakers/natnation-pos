@@ -2763,6 +2763,20 @@ function actualizarInicio(){
 }
 
 
+let tallasProductoEditor = [];
+
+function renderTallasProductoEditor(){
+    // El formulario actual usa los campos talla y stock.
+}
+
+function agregarTallaProducto(){
+    tallasProductoEditor = [{
+        talla: document.getElementById("talla").value || "",
+        stock: Number(document.getElementById("stock").value || 0)
+    }];
+}
+
+    
 /* =====================================================
    PRODUCTOS
 ===================================================== */
