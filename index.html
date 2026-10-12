@@ -3913,7 +3913,7 @@ function renderCarrito(){
     }
 
     contenedor.innerHTML =
-    carrito.map(function(item){
+    carrito.map(function(item, indice){
 
         if(item.es_cobro){
 
@@ -3928,7 +3928,7 @@ function renderCarrito(){
                     <strong>${moneda(item.precio_unitario)}</strong>
                     <button
                         class="btn btn-danger"
-                        onclick="quitarCobroManual()">
+                        onclick="quitarCobroManual(${indice})">
                         ×
                     </button>
                 </div>
