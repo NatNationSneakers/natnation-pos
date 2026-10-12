@@ -7323,7 +7323,7 @@ function nnMostrarRetiros(){
    CORTE DE CAJA
 ========================================================= */
 
-function nnCalcularCorte(){
+async function nnCalcularCorte(){
 
     const c =
     nnCalculos();
@@ -7407,10 +7407,11 @@ function nnCalcularCorte(){
     );
 
 
-    nnPrepararCorteImpresion(
-        contado,
-        diferencia
-    );
+    await nnPrepararCorteImpresion(
+    contado,
+    diferencia
+);
+    
 
 }
 
@@ -7419,13 +7420,89 @@ function nnCalcularCorte(){
    PREPARAR CORTE PARA IMPRESIÓN
 ========================================================= */
 
-function nnPrepararCorteImpresion(
+async function nnPrepararCorteImpresion(
     contado,
     diferencia
 ){
 
     const c =
     nnCalculos();
+
+    // Obtener los detalles de las ventas del día
+const idsVentas = c.ventasHoy.map(function(v){
+    return v.id;
+});
+
+let detallesVentas = [];
+
+if(idsVentas.length){
+
+    const resultadoDetalles = await supabaseClient
+        .from("venta_detalles")
+        .select("*")
+        .in("venta_id", idsVentas);
+
+    if(resultadoDetalles.error){
+        alert(
+            "No se pudieron obtener los productos vendidos: " +
+            resultadoDetalles.error.message
+        );
+        return;
+    }
+
+    detallesVentas = resultadoDetalles.data || [];
+}
+
+// Agrupar los productos por venta
+const ventasDetalladasHTML = c.ventasHoy.map(function(v){
+
+    const detalles = detallesVentas.filter(function(d){
+        return String(d.venta_id) === String(v.id);
+    });
+
+    const productosHTML = detalles.length
+        ? detalles.map(function(d){
+
+            const cantidad = Number(d.cantidad || 0);
+            const precio = Number(d.precio_unitario || 0);
+            const subtotal = Number(
+                d.subtotal ?? cantidad * precio
+            );
+
+            return `
+                <div style="margin:6px 0;">
+                    ${cantidad} x ${d.producto_nombre || "Producto"}
+                    ${d.talla ? " | Talla " + d.talla : ""}
+                    <br>
+                    Precio unitario: ${nnMoneda(precio)}
+                    <br>
+                    Importe: ${nnMoneda(subtotal)}
+                </div>
+            `;
+
+        }).join("")
+        : `
+            <div style="margin:6px 0;">
+                Cobro manual u operación sin detalle de productos.
+            </div>
+        `;
+
+    return `
+        <div style="
+            margin:12px 0;
+            padding-bottom:8px;
+            border-bottom:1px dashed #777;
+            text-align:left;
+        ">
+            <strong>Folio: ${v.folio || v.id}</strong>
+            <br>
+            Pago: ${v.metodo_pago || v.pago || "—"}
+            ${productosHTML}
+            <strong>Total de venta: ${nnMoneda(v.total)}</strong>
+        </div>
+    `;
+
+}).join("");
 
 
     const retirosHTML =
@@ -7500,6 +7577,14 @@ function nnPrepararCorteImpresion(
                     "es-MX"
                 )}
             </p>
+
+            <hr>
+
+<h3>DETALLE DE VENTAS</h3>
+
+${ventasDetalladasHTML}
+
+<hr>
 
             <hr>
 
